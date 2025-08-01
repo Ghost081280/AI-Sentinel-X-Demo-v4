@@ -30,6 +30,8 @@
             --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
             --gradient-quantum: linear-gradient(135deg, #7c3aed 0%, #ff00ff 50%, #00ccff 100%);
             --gradient-hybrid: linear-gradient(135deg, #00ff88 0%, #7c3aed 50%, #00ccff 100%);
+            --gradient-banner: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(124, 58, 237, 0.1) 50%, rgba(0, 204, 255, 0.15) 100%);
+            --gradient-vpn: linear-gradient(135deg, rgba(0, 204, 255, 0.15) 0%, rgba(0, 255, 136, 0.1) 50%, rgba(124, 58, 237, 0.15) 100%);
         }
 
         body {
@@ -340,29 +342,133 @@
             font-weight: bold;
         }
 
-        /* VPN Status Banner */
+        /* Enhanced V3-Style VPN Status Banner */
         .vpn-status-banner {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 18px 25px;
-            border-radius: 12px;
+            background: var(--gradient-vpn);
+            border: 2px solid;
+            border-image: var(--gradient-hybrid) 1;
+            border-radius: 15px;
+            padding: 25px 35px;
             text-align: center;
-            font-weight: normal;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 14px;
-            margin-bottom: 25px;
-            backdrop-filter: blur(15px);
+            letter-spacing: 2px;
+            font-size: 16px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 0 60px rgba(0, 204, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: vpnBannerPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes vpnBannerPulse {
+            0%, 100% { 
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 60px rgba(0, 204, 255, 0.1);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 12px 48px rgba(0, 204, 255, 0.3), inset 0 0 80px rgba(0, 255, 136, 0.15);
+                transform: scale(1.01);
+            }
+        }
+
+        .vpn-status-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: vpnBannerScan 3s linear infinite;
+        }
+
+        @keyframes vpnBannerScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .vpn-banner-content {
+            position: relative;
+            z-index: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
+            gap: 20px;
+            flex-wrap: wrap;
         }
 
-        .vpn-icon {
-            font-size: 20px;
-            filter: drop-shadow(0 0 10px var(--primary));
+        .vpn-banner-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+        }
+
+        .vpn-banner-icon {
+            font-size: 18px;
+            filter: drop-shadow(0 0 10px currentColor);
+            animation: vpnIconGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes vpnIconGlow {
+            0% { filter: drop-shadow(0 0 10px currentColor); }
+            100% { filter: drop-shadow(0 0 20px currentColor); }
+        }
+
+        .vpn-banner-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .vpn-banner-separator {
+            color: var(--accent);
+            font-size: 18px;
+            animation: separatorPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes separatorPulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* VPN Threat Level Indicator */
+        .vpn-threat-level {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--warning);
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: threatLevelPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes threatLevelPulse {
+            0%, 100% { border-color: var(--warning); color: var(--warning); }
+            50% { border-color: var(--danger); color: var(--danger); }
+        }
+
+        .threat-level-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--warning);
+            animation: pulse 2s ease-in-out infinite;
         }
 
         /* Main Content Grid */
@@ -450,45 +556,68 @@
         /* Active Services Grid */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
         }
 
         .service-card {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.02) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 204, 255, 0.02) 100%);
+            border: 1px solid rgba(0, 204, 255, 0.2);
             border-radius: 12px;
-            padding: 20px;
+            padding: 25px;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--secondary), var(--primary), var(--accent));
+            border-radius: 12px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            opacity: 0.3;
         }
 
         .service-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
-            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 204, 255, 0.3);
+            border-color: var(--secondary);
         }
 
         .service-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .service-name {
             font-weight: bold;
-            font-size: 16px;
+            font-size: 18px;
             color: var(--primary);
         }
 
         .service-status {
-            padding: 4px 12px;
-            border-radius: 15px;
+            padding: 6px 14px;
+            border-radius: 20px;
             font-size: 11px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
         .service-status.active {
@@ -506,14 +635,21 @@
         .service-details {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            font-size: 13px;
+            gap: 15px;
+            font-size: 14px;
+            margin-bottom: 20px;
         }
 
         .service-detail {
             display: flex;
             justify-content: space-between;
             color: var(--text-secondary);
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .service-detail-label {
+            font-weight: 500;
         }
 
         .service-detail-value {
@@ -521,27 +657,50 @@
             font-weight: bold;
         }
 
+        .service-encryption {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(124, 58, 237, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+        .service-encryption-label {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .service-encryption-value {
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+        }
+
         /* Live Connections */
         .connections-list {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
         }
 
         .connection-card {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.02) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.2);
             border-radius: 12px;
-            padding: 18px;
+            padding: 20px;
             transition: all 0.3s ease;
             cursor: pointer;
+            position: relative;
         }
 
         .connection-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
             border-color: var(--primary);
         }
 
@@ -549,13 +708,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .connection-device {
             font-weight: bold;
             color: var(--primary);
-            font-size: 15px;
+            font-size: 16px;
         }
 
         .connection-status {
@@ -566,22 +725,31 @@
             color: var(--success);
             font-weight: bold;
             text-transform: uppercase;
+            background: rgba(0, 255, 136, 0.1);
+            padding: 4px 12px;
+            border-radius: 15px;
+            border: 1px solid var(--success);
         }
 
         .connection-details {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
+            gap: 15px;
             font-size: 12px;
+            margin-bottom: 15px;
         }
 
         .connection-detail {
             text-align: center;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .connection-detail-label {
             color: var(--text-secondary);
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             text-transform: uppercase;
             font-size: 10px;
             letter-spacing: 1px;
@@ -590,29 +758,78 @@
         .connection-detail-value {
             color: var(--text-primary);
             font-weight: bold;
+            font-size: 13px;
+        }
+
+        .connection-security {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 11px;
+        }
+
+        .connection-threat-score {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .threat-score {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .threat-score.low {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .threat-score.medium {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .threat-score.high {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
         }
 
         /* Security Overview */
         .security-overview-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .overview-card {
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid rgba(0, 255, 136, 0.2);
+            background: rgba(0, 204, 255, 0.05);
+            border: 1px solid rgba(0, 204, 255, 0.2);
             border-radius: 12px;
-            padding: 18px;
+            padding: 20px;
             text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 204, 255, 0.2);
         }
 
         .overview-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            color: var(--primary);
+            color: var(--secondary);
             margin-bottom: 8px;
+            text-shadow: 0 0 15px currentColor;
         }
 
         .overview-label {
@@ -620,6 +837,27 @@
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .overview-trend {
+            font-size: 10px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+        }
+
+        .trend-up {
+            color: var(--success);
+        }
+
+        .trend-down {
+            color: var(--danger);
+        }
+
+        .trend-stable {
+            color: var(--text-secondary);
         }
 
         /* Protocols List */
@@ -633,42 +871,64 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 16px;
+            padding: 15px 18px;
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .protocol-item:hover {
+            background: rgba(0, 204, 255, 0.05);
+            border-color: rgba(0, 204, 255, 0.2);
+        }
+
+        .protocol-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
         }
 
         .protocol-name {
             font-weight: bold;
             color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .protocol-status {
+            font-size: 11px;
+            color: var(--success);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .protocol-usage {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
         }
 
         .usage-bar {
-            width: 60px;
-            height: 4px;
+            width: 80px;
+            height: 6px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .usage-fill {
             height: 100%;
-            background: var(--primary);
-            border-radius: 2px;
+            background: var(--secondary);
+            border-radius: 3px;
             transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 204, 255, 0.5);
         }
 
         .usage-percent {
             font-size: 12px;
-            color: var(--text-secondary);
+            color: var(--secondary);
             font-weight: bold;
+            min-width: 35px;
         }
 
         /* Anomaly Alerts */
@@ -676,23 +936,40 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
-            max-height: 300px;
+            max-height: 400px;
             overflow-y: auto;
         }
 
         .alert-item {
-            padding: 15px;
-            border-radius: 10px;
+            padding: 18px 20px;
+            border-radius: 12px;
             border-left: 4px solid;
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .alert-item:hover::before {
+            left: 100%;
         }
 
         .alert-item:hover {
-            transform: translateX(5px);
+            transform: translateX(8px);
         }
 
         .alert-item.high {
@@ -712,12 +989,33 @@
 
         .alert-content {
             flex: 1;
+            position: relative;
+            z-index: 1;
         }
 
         .alert-message {
             font-weight: bold;
             color: var(--text-primary);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .alert-details {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .alert-ip {
+            color: var(--secondary);
+            font-family: 'Courier New', monospace;
+        }
+
+        .alert-action {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .alert-time {
@@ -726,104 +1024,145 @@
         }
 
         .alert-severity {
-            padding: 4px 8px;
-            border-radius: 12px;
+            padding: 6px 12px;
+            border-radius: 15px;
             font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
         }
 
         .alert-severity.high {
             background: rgba(255, 0, 68, 0.2);
             color: var(--danger);
+            border: 1px solid var(--danger);
         }
 
         .alert-severity.medium {
             background: rgba(255, 170, 0, 0.2);
             color: var(--warning);
+            border: 1px solid var(--warning);
         }
 
         .alert-severity.low {
             background: rgba(0, 204, 255, 0.2);
             color: var(--secondary);
+            border: 1px solid var(--secondary);
         }
 
         /* Suggested Actions */
         .actions-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
         }
 
         .action-item {
             background: rgba(0, 255, 136, 0.05);
             border: 1px solid rgba(0, 255, 136, 0.2);
             border-radius: 12px;
-            padding: 18px;
+            padding: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .action-item:hover::before {
+            left: 100%;
         }
 
         .action-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 255, 136, 0.3);
+            border-color: var(--primary);
         }
 
         .action-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .action-title {
             font-weight: bold;
             color: var(--primary);
+            font-size: 16px;
         }
 
         .action-priority {
-            padding: 4px 10px;
-            border-radius: 12px;
+            padding: 6px 14px;
+            border-radius: 15px;
             font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .action-priority.high {
             background: rgba(255, 0, 68, 0.2);
             color: var(--danger);
+            border: 1px solid var(--danger);
         }
 
         .action-priority.medium {
             background: rgba(255, 170, 0, 0.2);
             color: var(--warning);
+            border: 1px solid var(--warning);
         }
 
         .action-priority.low {
             background: rgba(0, 204, 255, 0.2);
             color: var(--secondary);
+            border: 1px solid var(--secondary);
         }
 
         .action-description {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .action-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
         }
 
         .action-estimate {
-            font-size: 11px;
             color: var(--text-primary);
             font-weight: bold;
         }
 
-        /* Real-time Feed - Same as threats.html */
+        .action-impact {
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Real-time Feed */
         .feed-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 25px;
-            height: 450px;
+            height: 500px;
             display: flex;
             flex-direction: column;
             backdrop-filter: blur(15px);
@@ -876,12 +1215,18 @@
         }
 
         .feed-item {
-            background: rgba(0, 255, 136, 0.05);
-            border-left: 3px solid var(--primary);
+            background: rgba(0, 204, 255, 0.05);
+            border-left: 3px solid var(--secondary);
             padding: 15px 20px;
             margin-bottom: 15px;
             border-radius: 0 10px 10px 0;
             animation: feedSlide 0.3s ease;
+            transition: all 0.3s ease;
+        }
+
+        .feed-item:hover {
+            background: rgba(0, 204, 255, 0.1);
+            transform: translateX(5px);
         }
 
         @keyframes feedSlide {
@@ -1153,6 +1498,21 @@
             .security-overview-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .vpn-banner-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .vpn-banner-section {
+                font-size: 12px;
+            }
+
+            .vpn-threat-level {
+                position: static;
+                margin-top: 15px;
+                justify-content: center;
+            }
         }
 
         /* Custom Scrollbar */
@@ -1279,13 +1639,31 @@
             </a>
         </nav>
 
-        <!-- VPN Status Banner -->
+        <!-- Enhanced V3-Style VPN Status Banner -->
         <div class="vpn-status-banner">
-            <span class="vpn-icon">🔒</span>
-            <span>VPNMONITOR • <span id="activeConnections">12</span> ACTIVE CONNECTIONS • HYBRID-RESISTANT ENCRYPTION</span>
+            <div class="vpn-threat-level">
+                <div class="threat-level-dot"></div>
+                <span>ELEVATED THREAT</span>
+            </div>
+            <div class="vpn-banner-content">
+                <div class="vpn-banner-section">
+                    <span class="vpn-banner-icon">🔒</span>
+                    <span class="vpn-banner-text">VPNMONITOR</span>
+                </div>
+                <div class="vpn-banner-separator">•</div>
+                <div class="vpn-banner-section">
+                    <span class="vpn-banner-icon">🌐</span>
+                    <span class="vpn-banner-text"><span id="activeConnections">12</span> ACTIVE CONNECTIONS</span>
+                </div>
+                <div class="vpn-banner-separator">•</div>
+                <div class="vpn-banner-section">
+                    <span class="vpn-banner-icon">🛡️</span>
+                    <span class="vpn-banner-text">HYBRID-RESISTANT ENCRYPTION</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Main Content -->
+        <!-- Main Content - Reorganized Layout -->
         <div class="main-content">
             <!-- Left Column -->
             <div class="left-column">
@@ -1326,6 +1704,23 @@
 
             <!-- Right Column -->
             <div class="right-column">
+                <!-- Anomaly Alerts - Moved above Security Overview -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span>⚠️</span>
+                            <span>Anomaly Alerts</span>
+                        </h2>
+                        <div class="section-status">
+                            <div class="status-dot warning"></div>
+                            <span id="alertCount">3 Critical</span>
+                        </div>
+                    </div>
+                    <div class="alerts-list" id="alertsList">
+                        <!-- Alerts will be populated by JavaScript -->
+                    </div>
+                </div>
+
                 <!-- Security Overview -->
                 <div class="section-card">
                     <div class="section-header">
@@ -1342,39 +1737,38 @@
                         <div class="overview-card">
                             <div class="overview-value" id="totalCerts">15</div>
                             <div class="overview-label">Certificates</div>
+                            <div class="overview-trend trend-stable">
+                                <span>→</span>
+                                <span>Stable</span>
+                            </div>
                         </div>
                         <div class="overview-card">
                             <div class="overview-value" id="validCerts">13</div>
                             <div class="overview-label">Valid</div>
+                            <div class="overview-trend trend-up">
+                                <span>↗</span>
+                                <span>+2 This Week</span>
+                            </div>
                         </div>
                         <div class="overview-card">
                             <div class="overview-value" id="expiringCerts">2</div>
                             <div class="overview-label">Expiring</div>
+                            <div class="overview-trend trend-down">
+                                <span>↘</span>
+                                <span>30 Days</span>
+                            </div>
                         </div>
                         <div class="overview-card">
                             <div class="overview-value">0</div>
-                            <div class="overview-label">Expired</div>
+                            <div class="overview-label">Compromised</div>
+                            <div class="overview-trend trend-stable">
+                                <span>✓</span>
+                                <span>Clean</span>
+                            </div>
                         </div>
                     </div>
                     <div class="protocols-list" id="protocolsList">
                         <!-- Protocols will be populated by JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Anomaly Alerts -->
-                <div class="section-card">
-                    <div class="section-header">
-                        <h2 class="section-title">
-                            <span>⚠️</span>
-                            <span>Anomaly Alerts</span>
-                        </h2>
-                        <div class="section-status">
-                            <div class="status-dot warning"></div>
-                            <span id="alertCount">3 Alerts</span>
-                        </div>
-                    </div>
-                    <div class="alerts-list" id="alertsList">
-                        <!-- Alerts will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
@@ -1389,7 +1783,7 @@
                 </h2>
                 <div class="section-status">
                     <div class="status-dot active"></div>
-                    <span>3 Recommendations</span>
+                    <span>3 High Priority</span>
                 </div>
             </div>
             <div class="actions-list" id="actionsList">
@@ -1397,7 +1791,7 @@
             </div>
         </div>
 
-        <!-- Sub-Agent Activity Feed -->
+        <!-- VPNMonitor Activity Feed -->
         <div class="feed-section">
             <div class="feed-header">
                 <h2 class="feed-title">VPNMonitor Activity Feed</h2>
@@ -1428,7 +1822,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        VPNMonitor online. Monitoring 12 active VPN connections with hybrid-resistant encryption. OpenVPN, WireGuard, and IPSec services operational. 3 security alerts require attention.
+                        VPNMonitor online. Monitoring 12 active VPN connections with hybrid-resistant encryption. OpenVPN, WireGuard, and IPSec services operational. Elevated threat level detected - 3 critical alerts require immediate SOC attention.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1463,8 +1857,9 @@
             initializeActivityFeed();
             
             // Start periodic updates
-            setInterval(updateVPNMetrics, 5000);
-            setInterval(generateVPNFeedItem, 8000);
+            setInterval(updateVPNMetrics, 3000);
+            setInterval(generateVPNFeedItem, 6000);
+            setInterval(simulateRealTimeThreats, 8000);
         }
 
         function populateActiveServices() {
@@ -1479,28 +1874,32 @@
                 card.innerHTML = `
                     <div class="service-header">
                         <div class="service-name">${service.name}</div>
-                        <div class="service-status ${service.status}">${service.status.toUpperCase()}</div>
+                        <div class="service-status ${service.status}">
+                            <div class="status-dot ${service.status}"></div>
+                            <span>${service.status.toUpperCase()}</span>
+                        </div>
                     </div>
                     <div class="service-details">
                         <div class="service-detail">
-                            <span>Protocol:</span>
+                            <span class="service-detail-label">Protocol:</span>
                             <span class="service-detail-value">${service.protocol}</span>
                         </div>
                         <div class="service-detail">
-                            <span>Port:</span>
+                            <span class="service-detail-label">Port:</span>
                             <span class="service-detail-value">${service.port}</span>
                         </div>
                         <div class="service-detail">
-                            <span>Connections:</span>
+                            <span class="service-detail-label">Connections:</span>
                             <span class="service-detail-value">${service.connections}</span>
                         </div>
                         <div class="service-detail">
-                            <span>Location:</span>
+                            <span class="service-detail-label">Location:</span>
                             <span class="service-detail-value">${service.location}</span>
                         </div>
                     </div>
-                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 11px; color: var(--text-secondary);">
-                        <strong style="color: var(--primary);">Encryption:</strong> ${service.encryption}
+                    <div class="service-encryption">
+                        <div class="service-encryption-label">🔐 Encryption Stack</div>
+                        <div class="service-encryption-value">${service.encryption}</div>
                     </div>
                 `;
                 
@@ -1512,10 +1911,14 @@
             const list = document.getElementById('connectionsList');
             list.innerHTML = '';
 
-            VPNConfigs.liveConnections.forEach(conn => {
+            VPNConfigs.liveConnections.forEach((conn, index) => {
                 const card = document.createElement('div');
                 card.className = 'connection-card';
                 card.onclick = () => openConnectionDetails(conn.id);
+                
+                // Calculate threat score based on various factors
+                const threatScore = calculateThreatScore(conn);
+                const threatLevel = threatScore > 7 ? 'high' : threatScore > 4 ? 'medium' : 'low';
                 
                 card.innerHTML = `
                     <div class="connection-header">
@@ -1551,6 +1954,15 @@
                             <div class="connection-detail-value">${conn.clientIP}</div>
                         </div>
                     </div>
+                    <div class="connection-security">
+                        <div class="connection-threat-score">
+                            <span style="color: var(--text-secondary); font-size: 11px;">THREAT SCORE:</span>
+                            <div class="threat-score ${threatLevel}">${threatScore}/10</div>
+                        </div>
+                        <div style="color: var(--text-secondary); font-size: 11px;">
+                            Last Auth: ${getRandomTimeAgo()}
+                        </div>
+                    </div>
                 `;
                 
                 list.appendChild(card);
@@ -1566,9 +1978,13 @@
                 item.className = 'protocol-item';
                 
                 const usagePercent = parseInt(protocol.usage);
+                const statusColor = protocol.status === 'future-proof' ? 'var(--accent)' : 'var(--success)';
                 
                 item.innerHTML = `
-                    <div class="protocol-name">${protocol.name}</div>
+                    <div class="protocol-info">
+                        <div class="protocol-name">${protocol.name}</div>
+                        <div class="protocol-status" style="color: ${statusColor};">${protocol.status.replace('-', ' ')}</div>
+                    </div>
                     <div class="protocol-usage">
                         <div class="usage-bar">
                             <div class="usage-fill" style="width: ${usagePercent}%"></div>
@@ -1580,18 +1996,26 @@
                 list.appendChild(item);
             });
 
-            // Update certificate counts
+            // Update certificate counts with animation
             const certStatus = VPNConfigs.securityOverview.certificateStatus;
-            document.getElementById('totalCerts').textContent = certStatus.total;
-            document.getElementById('validCerts').textContent = certStatus.valid;
-            document.getElementById('expiringCerts').textContent = certStatus.expiring;
+            animateValue('totalCerts', certStatus.total);
+            animateValue('validCerts', certStatus.valid);
+            animateValue('expiringCerts', certStatus.expiring);
         }
 
         function populateAnomalyAlerts() {
             const list = document.getElementById('alertsList');
             list.innerHTML = '';
 
-            VPNConfigs.anomalyAlerts.forEach(alert => {
+            // Enhanced alerts with more SOC-focused details
+            const enhancedAlerts = VPNConfigs.anomalyAlerts.map(alert => ({
+                ...alert,
+                geoScore: calculateGeoRiskScore(alert),
+                behaviorScore: Math.floor(Math.random() * 10) + 1,
+                recommendation: getAlertRecommendation(alert)
+            }));
+
+            enhancedAlerts.forEach(alert => {
                 const item = document.createElement('div');
                 item.className = `alert-item ${alert.severity}`;
                 item.onclick = () => openAlertDetails(alert.id);
@@ -1601,10 +2025,17 @@
                 item.innerHTML = `
                     <div class="alert-content">
                         <div class="alert-message">${alert.message}</div>
-                        <div class="alert-time">${timeAgo} • Action: ${alert.action}</div>
+                        <div class="alert-details">
+                            <span class="alert-ip">IP: ${alert.clientIP}</span>
+                            <span class="alert-action">Action: ${alert.action}</span>
+                        </div>
+                        <div class="alert-time">${timeAgo} • Geo Risk: ${alert.geoScore}/10 • Behavior: ${alert.behaviorScore}/10</div>
                     </div>
                     <div class="alert-severity ${alert.severity}">${alert.severity}</div>
                 `;
+                
+                item.addEventListener('mouseenter', () => showAlertTooltip(alert, item));
+                item.addEventListener('mouseleave', hideAlertTooltip);
                 
                 list.appendChild(item);
             });
@@ -1614,7 +2045,14 @@
             const list = document.getElementById('actionsList');
             list.innerHTML = '';
 
-            VPNConfigs.suggestedActions.forEach(action => {
+            // Enhanced actions with SOC impact analysis
+            const enhancedActions = VPNConfigs.suggestedActions.map(action => ({
+                ...action,
+                impact: getActionImpact(action),
+                automation: getAutomationLevel(action)
+            }));
+
+            enhancedActions.forEach(action => {
                 const item = document.createElement('div');
                 item.className = 'action-item';
                 item.onclick = () => executeAction(action.id);
@@ -1625,7 +2063,10 @@
                         <div class="action-priority ${action.priority}">${action.priority}</div>
                     </div>
                     <div class="action-description">${action.reason}</div>
-                    <div class="action-estimate">Estimated time: ${action.estimated}</div>
+                    <div class="action-footer">
+                        <div class="action-estimate">⏱️ ${action.estimated}</div>
+                        <div class="action-impact">${action.impact}</div>
+                    </div>
                 `;
                 
                 list.appendChild(item);
@@ -1633,12 +2074,13 @@
         }
 
         function initializeActivityFeed() {
-            addVPNFeedItem('🔒 VPNMonitor initialized. Monitoring 3 VPN services with hybrid encryption.', '', 'VPNMonitor');
+            addVPNFeedItem('🔒 VPNMonitor V4 initialized. Enhanced SOC integration active.', '', 'VPNMonitor');
             addVPNFeedItem('🌐 OpenVPN service: 8 active connections verified', '', 'VPNMonitor');
             addVPNFeedItem('⚡ WireGuard mobile gateway: 4 connections stable', '', 'VPNMonitor');
-            addVPNFeedItem('🔐 IPSec site-to-site tunnel established', 'encryption', 'VPNMonitor');
-            addVPNFeedItem('⚠️ New country access detected from Russia - flagged for review', 'warning', 'VPNMonitor');
-            addVPNFeedItem('🚫 5 failed authentication attempts blocked from external IP', 'danger', 'VPNMonitor');
+            addVPNFeedItem('🔐 IPSec site-to-site tunnel established with PQC keys', 'encryption', 'VPNMonitor');
+            addVPNFeedItem('⚠️ ELEVATED THREAT: Suspicious geo-patterns detected from Russia', 'warning', 'VPNMonitor');
+            addVPNFeedItem('🚫 Automated IP blocking: 5 failed auth attempts from 203.45.67.89', 'danger', 'VPNMonitor');
+            addVPNFeedItem('🎯 Behavioral analysis: Anomalous traffic pattern flagged for review', 'warning', 'VPNMonitor');
         }
 
         function addVPNFeedItem(message, type = '', agent = '') {
@@ -1655,32 +2097,35 @@
             
             feed.insertBefore(item, feed.firstChild);
             
-            // Keep only last 20 items
-            while (feed.children.length > 20) {
+            // Keep only last 25 items for better history
+            while (feed.children.length > 25) {
                 feed.removeChild(feed.lastChild);
             }
         }
 
-        const vpnFeedMessages = [
-            { msg: '🔒 VPN certificate auto-renewed for client ' + Math.floor(Math.random() * 99 + 1), type: 'encryption', agent: 'VPNMonitor' },
-            { msg: '🌍 New connection from ' + ['Australia', 'Brazil', 'Sweden', 'Singapore'][Math.floor(Math.random() * 4)] + ' authenticated', type: '', agent: 'VPNMonitor' },
-            { msg: '🔐 Hybrid encryption key rotation completed for OpenVPN', type: 'encryption', agent: 'VPNMonitor' },
-            { msg: '📊 Traffic analysis: ' + (Math.random() * 2 + 0.5).toFixed(1) + 'GB transferred in last hour', type: '', agent: 'VPNMonitor' },
-            { msg: '🚫 Suspicious login attempt blocked from ' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.*.*', type: 'warning', agent: 'VPNMonitor' },
-            { msg: '✅ Certificate health check passed - all ' + VPNConfigs.securityOverview.certificateStatus.total + ' certs valid', type: '', agent: 'VPNMonitor' },
-            { msg: '⚡ WireGuard tunnel optimization completed - latency reduced by ' + Math.floor(Math.random() * 20 + 10) + 'ms', type: '', agent: 'VPNMonitor' },
-            { msg: '🔍 Anomaly detection: unusual traffic pattern from client device analyzed', type: 'warning', agent: 'VPNMonitor' },
-            { msg: '🛡️ Coordinated with ThreatScanner: blocked VPN-based attack attempt', type: 'danger', agent: 'VPNMonitor' },
-            { msg: '📜 Certificate deployment completed with Dilithium-3 signatures', type: 'encryption', agent: 'VPNMonitor' }
+        // Enhanced feed messages for SOC operations
+        const socFeedMessages = [
+            { msg: '🔒 Certificate auto-renewal: VPN-CERT-' + Math.floor(Math.random() * 999 + 100), type: 'encryption', agent: 'VPNMonitor' },
+            { msg: '🌍 Geographic anomaly detected: ' + getRandomSuspiciousCountry() + ' access pattern unusual', type: 'warning', agent: 'VPNMonitor' },
+            { msg: '🔐 Quantum-safe key exchange completed for ' + Math.floor(Math.random() * 5 + 1) + ' tunnels', type: 'encryption', agent: 'VPNMonitor' },
+            { msg: '📊 Traffic analysis: ' + (Math.random() * 3 + 0.5).toFixed(1) + 'GB/hr average, +' + Math.floor(Math.random() * 50 + 10) + '% from baseline', type: '', agent: 'VPNMonitor' },
+            { msg: '🚫 Brute force attack blocked: ' + generateRandomIP() + ' (' + Math.floor(Math.random() * 20 + 5) + ' attempts)', type: 'danger', agent: 'VPNMonitor' },
+            { msg: '✅ SOC-2 compliance verification: All VPN logs properly encrypted and stored', type: '', agent: 'VPNMonitor' },
+            { msg: '⚡ Zero-trust validation: Device certificate chain verified for ' + Math.floor(Math.random() * 10 + 1) + ' endpoints', type: '', agent: 'VPNMonitor' },
+            { msg: '🔍 Behavioral analytics: User login pattern deviation detected - flagged for investigation', type: 'warning', agent: 'VPNMonitor' },
+            { msg: '🛡️ DPI bypass attempt detected and blocked from ' + generateRandomIP(), type: 'danger', agent: 'VPNMonitor' },
+            { msg: '📈 Performance metrics: Avg latency ' + Math.floor(Math.random() * 50 + 20) + 'ms, packet loss < 0.1%', type: '', agent: 'VPNMonitor' },
+            { msg: '🔒 Steganography detection: Suspicious payload patterns in tunnel ' + Math.floor(Math.random() * 99 + 1), type: 'warning', agent: 'VPNMonitor' },
+            { msg: '🎯 ML model updated: Threat detection accuracy improved to 99.' + Math.floor(Math.random() * 9 + 1) + '%', type: '', agent: 'VPNMonitor' }
         ];
 
         function generateVPNFeedItem() {
-            const item = vpnFeedMessages[Math.floor(Math.random() * vpnFeedMessages.length)];
+            const item = socFeedMessages[Math.floor(Math.random() * socFeedMessages.length)];
             addVPNFeedItem(item.msg, item.type, item.agent);
         }
 
         function updateVPNMetrics() {
-            // Randomly update connection count
+            // Dynamic connection count updates
             if (Math.random() > 0.85) {
                 const currentConnections = VPNConfigs.liveConnections.length;
                 const newCount = Math.max(8, currentConnections + Math.floor(Math.random() * 3 - 1));
@@ -1688,11 +2133,129 @@
                 document.getElementById('connectionCount').textContent = newCount + ' Active';
             }
 
-            // Update alert count occasionally
-            if (Math.random() > 0.92) {
-                const alertCount = Math.max(1, VPNConfigs.anomalyAlerts.length + Math.floor(Math.random() * 2 - 1));
-                document.getElementById('alertCount').textContent = alertCount + ' Alerts';
+            // Update alert count with severity indication
+            if (Math.random() > 0.9) {
+                const criticalAlerts = Math.max(1, Math.floor(Math.random() * 5 + 1));
+                document.getElementById('alertCount').textContent = criticalAlerts + ' Critical';
             }
+
+            // Simulate certificate changes
+            if (Math.random() > 0.95) {
+                const expiring = Math.max(0, Math.floor(Math.random() * 4));
+                animateValue('expiringCerts', expiring);
+            }
+        }
+
+        function simulateRealTimeThreats() {
+            // Simulate real-time threat level changes
+            const threatLevel = document.querySelector('.vpn-threat-level span');
+            const threatDot = document.querySelector('.threat-level-dot');
+            
+            if (Math.random() > 0.7) {
+                const levels = [
+                    { text: 'LOW THREAT', color: 'var(--success)' },
+                    { text: 'ELEVATED THREAT', color: 'var(--warning)' },
+                    { text: 'HIGH THREAT', color: 'var(--danger)' },
+                    { text: 'CRITICAL THREAT', color: 'var(--danger)' }
+                ];
+                
+                const level = levels[Math.floor(Math.random() * levels.length)];
+                threatLevel.textContent = level.text;
+                threatLevel.parentElement.style.borderColor = level.color;
+                threatLevel.style.color = level.color;
+                threatDot.style.background = level.color;
+                
+                // Add corresponding feed message
+                if (level.text === 'CRITICAL THREAT') {
+                    addVPNFeedItem('🚨 CRITICAL THREAT LEVEL: Multiple attack vectors detected - SOC escalation initiated', 'danger', 'VPNMonitor');
+                } else if (level.text === 'HIGH THREAT') {
+                    addVPNFeedItem('⚠️ HIGH THREAT LEVEL: Coordinated attack patterns identified', 'warning', 'VPNMonitor');
+                }
+            }
+        }
+
+        // Utility functions for enhanced SOC features
+        function calculateThreatScore(connection) {
+            let score = 1;
+            
+            // Geographic risk
+            const suspiciousCountries = ['Russia', 'China', 'North Korea', 'Iran'];
+            if (suspiciousCountries.includes(connection.country)) score += 3;
+            
+            // Data transfer anomalies
+            const dataIn = parseFloat(connection.bytesIn.replace(/[^0-9.]/g, ''));
+            const dataOut = parseFloat(connection.bytesOut.replace(/[^0-9.]/g, ''));
+            if (dataIn > 1000 || dataOut > 500) score += 2;
+            
+            // Connection duration
+            const duration = connection.duration;
+            if (duration.includes('h') && parseInt(duration) < 1) score += 1;
+            
+            // Random behavioral factors
+            score += Math.floor(Math.random() * 3);
+            
+            return Math.min(10, score);
+        }
+
+        function calculateGeoRiskScore(alert) {
+            const riskCountries = {
+                'Russia': 9, 'China': 8, 'North Korea': 10, 'Iran': 8, 
+                'Belarus': 7, 'Myanmar': 6, 'Syria': 7
+            };
+            
+            for (const [country, risk] of Object.entries(riskCountries)) {
+                if (alert.message.includes(country)) return risk;
+            }
+            return Math.floor(Math.random() * 5 + 1);
+        }
+
+        function getAlertRecommendation(alert) {
+            const recommendations = {
+                'new-country': 'Implement geo-blocking or additional MFA',
+                'multiple-failures': 'Add IP to WAF blacklist and enable CAPTCHA',
+                'traffic-spike': 'Monitor for data exfiltration patterns'
+            };
+            return recommendations[alert.type] || 'Review and investigate further';
+        }
+
+        function getActionImpact(action) {
+            const impacts = ['Low Impact', 'Medium Impact', 'High Impact', 'Critical Impact'];
+            return impacts[Math.floor(Math.random() * impacts.length)];
+        }
+
+        function getAutomationLevel(action) {
+            const levels = ['Manual', 'Semi-Automated', 'Fully Automated'];
+            return levels[Math.floor(Math.random() * levels.length)];
+        }
+
+        function getRandomSuspiciousCountry() {
+            const countries = ['Russia', 'China', 'Iran', 'North Korea', 'Belarus', 'Myanmar'];
+            return countries[Math.floor(Math.random() * countries.length)];
+        }
+
+        function generateRandomIP() {
+            return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+        }
+
+        function getRandomTimeAgo() {
+            const times = ['2m ago', '5m ago', '12m ago', '28m ago', '1h ago', '3h ago'];
+            return times[Math.floor(Math.random() * times.length)];
+        }
+
+        function animateValue(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const currentValue = parseInt(element.textContent);
+            const increment = targetValue > currentValue ? 1 : -1;
+            let value = currentValue;
+            
+            const animation = setInterval(() => {
+                value += increment;
+                element.textContent = value;
+                
+                if (value === targetValue) {
+                    clearInterval(animation);
+                }
+            }, 100);
         }
 
         // Helper functions
@@ -1718,12 +2281,14 @@
                 const service = VPNConfigs.activeServices.find(s => s.id === serviceId);
                 if (service) {
                     sentinelChat?.addMessage(`VPNMonitor: Service Details - ${service.name}
-• Protocol: ${service.protocol}
-• Port: ${service.port}
+• Protocol: ${service.protocol} (Hybrid-Resistant)
+• Port: ${service.port} (Secured)
 • Active Connections: ${service.connections}
-• Encryption: ${service.encryption}
+• Encryption Stack: ${service.encryption}
 • Location: ${service.location}
-• Status: ${service.status.toUpperCase()}`, false);
+• Status: ${service.status.toUpperCase()}
+• SOC Alert Level: ${service.connections > 6 ? 'ELEVATED' : 'NORMAL'}
+• Certificate Status: Valid until ${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toDateString()}`, false);
                 }
             }, 300);
         }
@@ -1735,14 +2300,17 @@
             setTimeout(() => {
                 const conn = VPNConfigs.liveConnections.find(c => c.id === connectionId);
                 if (conn) {
-                    sentinelChat?.addMessage(`VPNMonitor: Connection Details - ${conn.deviceName}
+                    const threatScore = calculateThreatScore(conn);
+                    sentinelChat?.addMessage(`VPNMonitor: Connection Analysis - ${conn.deviceName}
 • Location: ${conn.city}, ${conn.country}
-• Protocol: ${conn.protocol}
-• Duration: ${conn.duration}
-• Data Transferred: ${conn.bytesIn} in, ${conn.bytesOut} out
-• Client IP: ${conn.clientIP}
-• Server IP: ${conn.serverIP}
-• Status: CONNECTED with hybrid encryption`, false);
+• Protocol: ${conn.protocol} with Hybrid Encryption
+• Session Duration: ${conn.duration}
+• Data Transfer: ${conn.bytesIn} ↓ | ${conn.bytesOut} ↑
+• Client IP: ${conn.clientIP} → Server: ${conn.serverIP}
+• Threat Score: ${threatScore}/10 ${threatScore > 7 ? '(HIGH RISK)' : threatScore > 4 ? '(MEDIUM RISK)' : '(LOW RISK)'}
+• Authentication: Multi-factor verified
+• Certificate: Valid (Hybrid signatures)
+• SOC Recommendation: ${threatScore > 7 ? 'Monitor closely' : 'Continue normal operation'}`, false);
                 }
             }, 300);
         }
@@ -1754,12 +2322,17 @@
             setTimeout(() => {
                 const alert = VPNConfigs.anomalyAlerts.find(a => a.id === alertId);
                 if (alert) {
-                    sentinelChat?.addMessage(`VPNMonitor: Alert Details - ${alert.message}
-• Severity: ${alert.severity.toUpperCase()}
+                    const geoScore = calculateGeoRiskScore(alert);
+                    sentinelChat?.addMessage(`VPNMonitor: SOC Alert Analysis - ${alert.message}
+• Severity: ${alert.severity.toUpperCase()} PRIORITY
 • Timestamp: ${alert.timestamp}
-• Client IP: ${alert.clientIP}
+• Source IP: ${alert.clientIP}
+• Geographic Risk Score: ${geoScore}/10
 • Action Taken: ${alert.action}
-• Recommendation: Review and approve/deny access as needed`, false);
+• Behavioral Pattern: ${alert.behaviorScore || Math.floor(Math.random() * 10) + 1}/10 risk
+• Recommendation: ${getAlertRecommendation(alert)}
+• SOC Escalation: ${alert.severity === 'high' ? 'REQUIRED' : 'OPTIONAL'}
+• Next Steps: ${alert.severity === 'high' ? 'Immediate investigation and potential IP blocking' : 'Continue monitoring for patterns'}`, false);
                 }
             }, 300);
         }
@@ -1771,12 +2344,36 @@
             setTimeout(() => {
                 const action = VPNConfigs.suggestedActions.find(a => a.id === actionId);
                 if (action) {
-                    sentinelChat?.addMessage(`VPNMonitor: Executing "${action.action}"...`, false, 'system');
+                    sentinelChat?.addMessage(`VPNMonitor: Executing SOC Action - "${action.action}"...`, false, 'system');
+                    
+                    // Simulate multi-step execution
                     setTimeout(() => {
-                        sentinelChat?.addMessage(`✅ Action completed successfully. ${action.reason}. Estimated time was ${action.estimated}. VPN security enhanced with hybrid encryption.`, false);
+                        sentinelChat?.addMessage(`⚙️ Step 1/3: Preparing ${action.action.toLowerCase()}...`, false, 'system');
+                    }, 1000);
+                    
+                    setTimeout(() => {
+                        sentinelChat?.addMessage(`⚙️ Step 2/3: Applying security policies and hybrid encryption...`, false, 'system');
                     }, 2000);
+                    
+                    setTimeout(() => {
+                        sentinelChat?.addMessage(`✅ Step 3/3: Action completed successfully!
+• Execution Time: ${action.estimated}
+• Impact Level: ${getActionImpact(action)}
+• SOC Status: All VPN tunnels remain secure
+• Hybrid Encryption: Maintained throughout process
+• Compliance: SOC-2 and NIST standards upheld
+• Next Action: ${action.priority === 'high' ? 'Monitor results closely' : 'Standard monitoring resumed'}`, false);
+                    }, 3000);
                 }
             }, 300);
+        }
+
+        function showAlertTooltip(alert, element) {
+            // Could implement tooltip showing additional alert context
+        }
+
+        function hideAlertTooltip() {
+            // Hide tooltip
         }
 
         // Global functions for compatibility
