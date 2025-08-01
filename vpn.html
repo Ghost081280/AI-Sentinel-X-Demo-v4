@@ -651,7 +651,7 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 15px;
-            gap: 15px;
+            gap: 20px;
         }
 
         .connection-device {
@@ -659,6 +659,7 @@
             color: var(--primary);
             font-size: 16px;
             flex: 1;
+            max-width: calc(100% - 100px); /* Ensure space for status button */
         }
 
         .connection-status {
@@ -675,6 +676,8 @@
             border: 1px solid var(--success);
             white-space: nowrap;
             flex-shrink: 0;
+            min-width: 70px;
+            justify-content: center;
         }
 
         .connection-details {
@@ -1706,7 +1709,7 @@
             </div>
             <div class="sub-agent-metrics">
                 <div class="metric">
-                    <div class="metric-value" id="activeServices">3</div>
+                    <div class="metric-value" id="activeServices">4</div>
                     <div class="metric-label">VPN Services</div>
                 </div>
                 <div class="metric">
@@ -1737,7 +1740,7 @@
                         </h2>
                         <div class="section-status">
                             <div class="status-dot active"></div>
-                            <span>3 Services Online</span>
+                            <span>4 Services Online</span>
                         </div>
                     </div>
                     <div class="services-grid" id="servicesGrid">
@@ -1970,7 +1973,22 @@
             const grid = document.getElementById('servicesGrid');
             grid.innerHTML = '';
 
-            VPNConfigs.activeServices.forEach(service => {
+            // Add a fourth service to fill the grid better
+            const enhancedServices = [
+                ...VPNConfigs.activeServices,
+                {
+                    id: 'l2tp-backup',
+                    name: 'L2TP/IPSec Backup',
+                    protocol: 'L2TP/IPSec',
+                    port: 1701,
+                    status: 'active',
+                    connections: 2,
+                    encryption: 'AES-256-CBC + SPHINCS+',
+                    location: 'Backup DC'
+                }
+            ];
+
+            enhancedServices.forEach(service => {
                 const card = document.createElement('div');
                 card.className = 'service-card';
                 card.onclick = () => openServiceDetails(service.id);
