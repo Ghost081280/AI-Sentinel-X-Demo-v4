@@ -348,133 +348,69 @@
             font-weight: bold;
         }
 
-        /* Enhanced V3-Style VPN Status Banner */
-        .vpn-status-banner {
-            background: var(--gradient-vpn);
-            border: 2px solid;
-            border-image: var(--gradient-hybrid) 1;
-            border-radius: 15px;
-            padding: 25px 35px;
-            text-align: center;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 16px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 0 60px rgba(0, 204, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-            animation: vpnBannerPulse 4s ease-in-out infinite;
+        /* Sub-Agent Status Banner */
+        .sub-agent-status {
+            background: linear-gradient(135deg, rgba(0, 204, 255, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
+            border: 1px solid rgba(0, 204, 255, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            backdrop-filter: blur(15px);
         }
 
-        @keyframes vpnBannerPulse {
-            0%, 100% { 
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 60px rgba(0, 204, 255, 0.1);
-                transform: scale(1);
-            }
-            50% { 
-                box-shadow: 0 12px 48px rgba(0, 204, 255, 0.3), inset 0 0 80px rgba(0, 255, 136, 0.15);
-                transform: scale(1.01);
-            }
+        .sub-agent-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .vpn-status-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: vpnBannerScan 3s linear infinite;
-        }
-
-        @keyframes vpnBannerScan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .vpn-banner-content {
-            position: relative;
-            z-index: 1;
+        .sub-agent-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(0, 204, 255, 0.3);
         }
 
-        .vpn-banner-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .sub-agent-details h3 {
+            font-size: 18px;
+            color: var(--secondary);
+            margin-bottom: 5px;
+        }
+
+        .sub-agent-details p {
             font-size: 14px;
+            color: var(--text-secondary);
         }
 
-        .vpn-banner-icon {
-            font-size: 18px;
-            filter: drop-shadow(0 0 10px currentColor);
-            animation: vpnIconGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes vpnIconGlow {
-            0% { filter: drop-shadow(0 0 10px currentColor); }
-            100% { filter: drop-shadow(0 0 20px currentColor); }
-        }
-
-        .vpn-banner-text {
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: bold;
-        }
-
-        .vpn-banner-separator {
-            color: var(--accent);
-            font-size: 18px;
-            animation: separatorPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes separatorPulse {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
-        }
-
-        /* VPN Threat Level Indicator */
-        .vpn-threat-level {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid var(--warning);
-            border-radius: 20px;
-            padding: 8px 16px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--warning);
+        .sub-agent-metrics {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            animation: threatLevelPulse 3s ease-in-out infinite;
+            gap: 30px;
         }
 
-        @keyframes threatLevelPulse {
-            0%, 100% { border-color: var(--warning); color: var(--warning); }
-            50% { border-color: var(--danger); color: var(--danger); }
+        .metric {
+            text-align: center;
         }
 
-        .threat-level-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--warning);
-            animation: pulse 2s ease-in-out infinite;
+        .metric-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
         }
 
         /* Main Content Grid */
@@ -1624,19 +1560,14 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .vpn-banner-content {
+            .sub-agent-metrics {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
             }
 
-            .vpn-banner-section {
-                font-size: 12px;
-            }
-
-            .vpn-threat-level {
-                position: static;
-                margin-top: 15px;
-                justify-content: center;
+            .sub-agent-status {
+                flex-direction: column;
+                text-align: center;
             }
         }
 
@@ -1764,26 +1695,31 @@
             </a>
         </nav>
 
-        <!-- Enhanced V3-Style VPN Status Banner -->
-        <div class="vpn-status-banner">
-            <div class="vpn-threat-level">
-                <div class="threat-level-dot"></div>
-                <span>ELEVATED THREAT</span>
+        <!-- Sub-Agent Status Banner -->
+        <div class="sub-agent-status">
+            <div class="sub-agent-info">
+                <div class="sub-agent-icon">🔒</div>
+                <div class="sub-agent-details">
+                    <h3>VPNMonitor Sub-Agent</h3>
+                    <p>VPN security monitoring • Connection analysis • Certificate management • Reports to Main Agent</p>
+                </div>
             </div>
-            <div class="vpn-banner-content">
-                <div class="vpn-banner-section">
-                    <span class="vpn-banner-icon">🔒</span>
-                    <span class="vpn-banner-text">VPNMONITOR</span>
+            <div class="sub-agent-metrics">
+                <div class="metric">
+                    <div class="metric-value" id="activeServices">3</div>
+                    <div class="metric-label">VPN Services</div>
                 </div>
-                <div class="vpn-banner-separator">•</div>
-                <div class="vpn-banner-section">
-                    <span class="vpn-banner-icon">🌐</span>
-                    <span class="vpn-banner-text"><span id="activeConnections">12</span> ACTIVE CONNECTIONS</span>
+                <div class="metric">
+                    <div class="metric-value" id="activeConnections">12</div>
+                    <div class="metric-label">Connections</div>
                 </div>
-                <div class="vpn-banner-separator">•</div>
-                <div class="vpn-banner-section">
-                    <span class="vpn-banner-icon">🛡️</span>
-                    <span class="vpn-banner-text">HYBRID-RESISTANT ENCRYPTION</span>
+                <div class="metric">
+                    <div class="metric-value" id="securityAlerts">3</div>
+                    <div class="metric-label">Alerts</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="certificatesMonitored">15</div>
+                    <div class="metric-label">Certificates</div>
                 </div>
             </div>
         </div>
@@ -1818,7 +1754,7 @@
                         </h2>
                         <div class="section-status">
                             <div class="status-dot active"></div>
-                            <span id="connectionCount">12 Active</span>
+                            <span id="connectionCount">Active</span>
                         </div>
                     </div>
                     <div class="connections-list" id="connectionsList">
@@ -2000,6 +1936,159 @@
 
     <script src="shared.js"></script>
     <script>
+        // VPN monitoring configurations
+        const VPNConfigs = {
+            activeServices: [
+                {
+                    id: 'openvpn-main',
+                    name: 'OpenVPN Primary',
+                    protocol: 'OpenVPN',
+                    port: 1194,
+                    status: 'active',
+                    connections: 8,
+                    encryption: 'AES-256-GCM + Kyber-1024',
+                    location: 'Primary DC'
+                },
+                {
+                    id: 'wireguard-mobile',
+                    name: 'WireGuard Mobile',
+                    protocol: 'WireGuard',
+                    port: 51820,
+                    status: 'active',
+                    connections: 4,
+                    encryption: 'ChaCha20-Poly1305 + Hybrid KEX',
+                    location: 'Mobile Gateway'
+                },
+                {
+                    id: 'ipsec-site',
+                    name: 'IPSec Site-to-Site',
+                    protocol: 'IPSec',
+                    port: 500,
+                    status: 'active',
+                    connections: 0,
+                    encryption: 'AES-256-CBC + Dilithium-3',
+                    location: 'Branch Office'
+                }
+            ],
+            liveConnections: [
+                {
+                    id: 'conn-001',
+                    clientIP: '192.168.1.105',
+                    serverIP: '10.0.1.1',
+                    country: 'Germany',
+                    city: 'Frankfurt',
+                    deviceName: 'Mobile-Device-47',
+                    protocol: 'OpenVPN',
+                    connected: '2024-12-19T14:23:15Z',
+                    duration: '2h 15m',
+                    bytesIn: '245MB',
+                    bytesOut: '89MB',
+                    status: 'connected'
+                },
+                {
+                    id: 'conn-002',
+                    clientIP: '192.168.1.178',
+                    serverIP: '10.0.1.2',
+                    country: 'Japan',
+                    city: 'Tokyo',
+                    deviceName: 'Laptop-Executive-12',
+                    protocol: 'WireGuard',
+                    connected: '2024-12-19T13:45:22Z',
+                    duration: '2h 53m',
+                    bytesIn: '1.2GB',
+                    bytesOut: '456MB',
+                    status: 'connected'
+                },
+                {
+                    id: 'conn-003',
+                    clientIP: '192.168.1.234',
+                    serverIP: '10.0.1.1',
+                    country: 'Canada',
+                    city: 'Toronto',
+                    deviceName: 'Workstation-Dev-08',
+                    protocol: 'OpenVPN',
+                    connected: '2024-12-19T15:12:08Z',
+                    duration: '1h 26m',
+                    bytesIn: '678MB',
+                    bytesOut: '234MB',
+                    status: 'connected'
+                }
+            ],
+            securityOverview: {
+                encryptionProtocols: [
+                    { name: 'AES-256-GCM', usage: '67%', status: 'secure' },
+                    { name: 'ChaCha20-Poly1305', usage: '33%', status: 'secure' },
+                    { name: 'Kyber-1024 (PQC)', usage: '100%', status: 'future-proof' },
+                    { name: 'Dilithium-3 (PQC)', usage: '100%', status: 'future-proof' }
+                ],
+                certificateStatus: {
+                    total: 15,
+                    valid: 13,
+                    expiring: 2,
+                    expired: 0,
+                    nextExpiry: '2025-01-15T23:59:59Z'
+                },
+                keyRotation: {
+                    lastRotation: '2024-12-18T02:00:00Z',
+                    nextRotation: '2024-12-25T02:00:00Z',
+                    status: 'scheduled',
+                    frequency: 'weekly'
+                }
+            },
+            anomalyAlerts: [
+                {
+                    id: 'alert-001',
+                    type: 'new-country',
+                    severity: 'medium',
+                    message: 'New country login detected: Russia (Moscow)',
+                    timestamp: '2024-12-19T15:45:12Z',
+                    clientIP: '192.168.1.189',
+                    action: 'flagged-for-review'
+                },
+                {
+                    id: 'alert-002',
+                    type: 'multiple-failures',
+                    severity: 'high',
+                    message: '5 failed authentication attempts from 203.45.67.89',
+                    timestamp: '2024-12-19T15:32:18Z',
+                    clientIP: '203.45.67.89',
+                    action: 'ip-blocked'
+                },
+                {
+                    id: 'alert-003',
+                    type: 'traffic-spike',
+                    severity: 'low',
+                    message: 'Unusual traffic volume: 2.3GB in 30 minutes',
+                    timestamp: '2024-12-19T15:20:45Z',
+                    clientIP: '192.168.1.234',
+                    action: 'monitoring'
+                }
+            ],
+            suggestedActions: [
+                {
+                    id: 'action-001',
+                    priority: 'high',
+                    action: 'Rotate OpenVPN server keys',
+                    reason: 'Scheduled weekly rotation',
+                    estimated: '5 minutes'
+                },
+                {
+                    id: 'action-002',
+                    priority: 'medium',
+                    action: 'Review new country access',
+                    reason: 'Unusual location detected',
+                    estimated: '2 minutes'
+                },
+                {
+                    id: 'action-003',
+                    priority: 'low',
+                    action: 'Upgrade to PQC-only mode',
+                    reason: 'Enhanced future security',
+                    estimated: '15 minutes'
+                }
+            ]
+        };
+
         // VPN-specific state management
         let vpnAutoExecution = true;
         let autoExecutionInterval;
@@ -2021,9 +2110,12 @@
             startAutoExecution();
             
             // Start periodic updates
-            setInterval(updateVPNMetrics, 3000);
-            setInterval(generateVPNFeedItem, 6000);
-            setInterval(simulateRealTimeThreats, 8000);
+            setInterval(() => {
+                updateVPNMetrics();
+            }, 3000);
+            setInterval(() => {
+                generateVPNFeedItem();
+            }, 6000);
         }
 
         function populateActiveServices() {
@@ -2274,7 +2366,7 @@
             addVPNFeedItem('🌐 OpenVPN service: 8 active connections verified', '', 'VPNMonitor');
             addVPNFeedItem('⚡ WireGuard mobile gateway: 4 connections stable', '', 'VPNMonitor');
             addVPNFeedItem('🔐 IPSec site-to-site tunnel established with PQC keys', 'encryption', 'VPNMonitor');
-            addVPNFeedItem('⚠️ ELEVATED THREAT: Suspicious geo-patterns detected from Russia', 'warning', 'VPNMonitor');
+            addVPNFeedItem('⚠️ Geographic anomaly: Suspicious login pattern from Russia', 'warning', 'VPNMonitor');
             addVPNFeedItem('🚫 Automated IP blocking: 5 failed auth attempts from 203.45.67.89', 'danger', 'VPNMonitor');
             addVPNFeedItem('🎯 Behavioral analysis: Anomalous traffic pattern flagged for review', 'warning', 'VPNMonitor');
             addVPNFeedItem('🤖 Auto-execution enabled: Actions will execute automatically every 15 seconds', '', 'Main Agent');
@@ -2411,14 +2503,16 @@
             if (Math.random() > 0.92) { // Much less frequent updates
                 const currentConnections = VPNConfigs.liveConnections.length;
                 const newCount = Math.max(10, currentConnections + Math.floor(Math.random() * 3 - 1));
+                
+                // Update the sub-agent banner metric
                 document.getElementById('activeConnections').textContent = newCount;
-                document.getElementById('connectionCount').textContent = newCount + ' Active';
             }
 
             // Update alert count occasionally
             if (Math.random() > 0.95) {
                 const criticalAlerts = Math.max(1, Math.floor(Math.random() * 4 + 1));
                 document.getElementById('alertCount').textContent = criticalAlerts + ' Critical';
+                document.getElementById('securityAlerts').textContent = criticalAlerts;
             }
 
             // Very rare certificate changes
@@ -2448,34 +2542,6 @@
                     clearInterval(animation);
                 }
             }, 300); // Much slower for readability
-        }
-
-        function simulateRealTimeThreats() {
-            // Simulate real-time threat level changes
-            const threatLevel = document.querySelector('.vpn-threat-level span');
-            const threatDot = document.querySelector('.threat-level-dot');
-            
-            if (Math.random() > 0.7) {
-                const levels = [
-                    { text: 'LOW THREAT', color: 'var(--success)' },
-                    { text: 'ELEVATED THREAT', color: 'var(--warning)' },
-                    { text: 'HIGH THREAT', color: 'var(--danger)' },
-                    { text: 'CRITICAL THREAT', color: 'var(--danger)' }
-                ];
-                
-                const level = levels[Math.floor(Math.random() * levels.length)];
-                threatLevel.textContent = level.text;
-                threatLevel.parentElement.style.borderColor = level.color;
-                threatLevel.style.color = level.color;
-                threatDot.style.background = level.color;
-                
-                // Add corresponding feed message
-                if (level.text === 'CRITICAL THREAT') {
-                    addVPNFeedItem('🚨 CRITICAL THREAT LEVEL: Multiple attack vectors detected - SOC escalation initiated', 'danger', 'VPNMonitor → Main Agent');
-                } else if (level.text === 'HIGH THREAT') {
-                    addVPNFeedItem('⚠️ HIGH THREAT LEVEL: Coordinated attack patterns identified', 'warning', 'VPNMonitor → ThreatScanner');
-                }
-            }
         }
 
         // Utility functions for enhanced SOC features
@@ -2522,20 +2588,6 @@
             return recommendations[alert.type] || 'Review and investigate further';
         }
 
-        function getActionImpact(action) {
-            const impacts = ['Low Impact', 'Medium Impact', 'High Impact'];
-            return impacts[Math.floor(Math.random() * impacts.length)];
-        }
-
-        function getSubAgentCoordination(action) {
-            const coordinations = {
-                'action-001': 'VPNMonitor → CertificateManager → EncryptionManager',
-                'action-002': 'VPNMonitor → ThreatScanner → AnalyticsEngine',
-                'action-003': 'VPNMonitor → EncryptionDeployer → ComplianceMonitor'
-            };
-            return coordinations[action.id] || 'VPNMonitor → DefenseOrchestrator';
-        }
-
         function getRandomSuspiciousCountry() {
             const countries = ['Russia', 'China', 'Iran', 'North Korea', 'Belarus', 'Myanmar'];
             return countries[Math.floor(Math.random() * countries.length)];
@@ -2548,24 +2600,6 @@
         function getRandomTimeAgo() {
             const times = ['2m ago', '5m ago', '12m ago', '28m ago', '1h ago', '3h ago'];
             return times[Math.floor(Math.random() * times.length)];
-        }
-
-        function animateValue(elementId, targetValue) {
-            const element = document.getElementById(elementId);
-            if (!element) return;
-            
-            const currentValue = parseInt(element.textContent);
-            const increment = targetValue > currentValue ? 1 : -1;
-            let value = currentValue;
-            
-            const animation = setInterval(() => {
-                value += increment;
-                element.textContent = value;
-                
-                if (value === targetValue) {
-                    clearInterval(animation);
-                }
-            }, 100);
         }
 
         // Helper functions
