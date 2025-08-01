@@ -30,6 +30,7 @@
             --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
             --gradient-quantum: linear-gradient(135deg, #7c3aed 0%, #ff00ff 50%, #00ccff 100%);
             --gradient-hybrid: linear-gradient(135deg, #00ff88 0%, #7c3aed 50%, #00ccff 100%);
+            --gradient-banner: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(124, 58, 237, 0.1) 50%, rgba(0, 204, 255, 0.15) 100%);
         }
 
         body {
@@ -340,20 +341,100 @@
             font-weight: bold;
         }
 
-        /* FIXED: System Status Banner - Made flat, no animation */
+        /* Enhanced V3-Style System Status Banner */
         .system-status-banner {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            color: var(--text-primary);
-            padding: 18px 25px;
-            border-radius: 12px;
+            background: var(--gradient-banner);
+            border: 2px solid;
+            border-image: var(--gradient-hybrid) 1;
+            border-radius: 15px;
+            padding: 25px 35px;
             text-align: center;
-            font-weight: normal;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-size: 16px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 0 60px rgba(0, 255, 136, 0.1);
+            position: relative;
+            overflow: hidden;
+            animation: bannerPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes bannerPulse {
+            0%, 100% { 
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 60px rgba(0, 255, 136, 0.1);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 12px 48px rgba(0, 255, 136, 0.3), inset 0 0 80px rgba(124, 58, 237, 0.15);
+                transform: scale(1.01);
+            }
+        }
+
+        .system-status-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            animation: bannerScan 3s linear infinite;
+        }
+
+        @keyframes bannerScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .banner-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             font-size: 14px;
-            margin-bottom: 25px;
-            backdrop-filter: blur(15px);
+        }
+
+        .banner-icon {
+            font-size: 18px;
+            filter: drop-shadow(0 0 10px currentColor);
+            animation: iconGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes iconGlow {
+            0% { filter: drop-shadow(0 0 10px currentColor); }
+            100% { filter: drop-shadow(0 0 20px currentColor); }
+        }
+
+        .banner-text {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: bold;
+        }
+
+        .banner-separator {
+            color: var(--accent);
+            font-size: 18px;
+            animation: separatorPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes separatorPulse {
+            0%, 100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
         /* Dashboard Grid */
@@ -717,61 +798,7 @@
             font-style: italic;
         }
 
-        /* New Additional Module */
-        .threat-analysis-module {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(15px);
-            margin-bottom: 25px;
-        }
-
-        .module-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .module-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .analysis-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .analysis-item {
-            background: rgba(0, 255, 136, 0.05);
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .analysis-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 8px;
-        }
-
-        .analysis-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-        }
-
-        /* System Metrics - Enhanced with more details */
+        /* System Metrics */
         .system-metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -787,7 +814,6 @@
             text-align: center;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
         .metric-card:hover {
@@ -810,15 +836,7 @@
             letter-spacing: 1px;
         }
 
-        .metric-description {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-top: 8px;
-            line-height: 1.3;
-            opacity: 0.8;
-        }
-
-        /* AI Chat Widget - Fixed */
+        /* AI Chat Widget */
         .ai-chat-widget {
             position: fixed;
             bottom: 30px;
@@ -1131,6 +1149,15 @@
             .sub-agents-grid {
                 grid-template-columns: 1fr;
             }
+
+            .banner-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .banner-section {
+                font-size: 12px;
+            }
         }
 
         /* Custom Scrollbar */
@@ -1195,7 +1222,6 @@
                     </div>
                 </div>
                 <div class="header-right">
-                    <!-- Separate Encryption Badges -->
                     <div class="encryption-badges">
                         <div class="encryption-badge classical">
                             <div class="status-light active" id="classicalStatus"></div>
@@ -1258,9 +1284,24 @@
             </a>
         </nav>
 
-        <!-- System Status Banner (no version numbers, flat) -->
+        <!-- Enhanced V3-Style System Status Banner -->
         <div class="system-status-banner">
-            AI SENTINEL-X HYBRID • 10 SUB-AGENTS ONLINE • 247 DEVICES PROTECTED
+            <div class="banner-content">
+                <div class="banner-section">
+                    <span class="banner-icon">🤖</span>
+                    <span class="banner-text">AI SENTINEL-X HYBRID</span>
+                </div>
+                <div class="banner-separator">•</div>
+                <div class="banner-section">
+                    <span class="banner-icon">🔗</span>
+                    <span class="banner-text">10 SUB-AGENTS ONLINE</span>
+                </div>
+                <div class="banner-separator">•</div>
+                <div class="banner-section">
+                    <span class="banner-icon">🛡️</span>
+                    <span class="banner-text">247 DEVICES PROTECTED</span>
+                </div>
+            </div>
         </div>
 
         <!-- Dashboard Grid -->
@@ -1334,66 +1375,34 @@
                         <!-- Feed items will be populated by JavaScript -->
                     </div>
                 </div>
-
-                <!-- New Threat Analysis Module -->
-                <div class="threat-analysis-module">
-                    <div class="module-header">
-                        <h2 class="module-title">Real-time Analysis</h2>
-                        <span style="color: var(--text-secondary); font-size: 12px;">Last updated: <span id="lastUpdate">Now</span></span>
-                    </div>
-                    <div class="analysis-grid">
-                        <div class="analysis-item">
-                            <div class="analysis-value" id="analysisThreats">7</div>
-                            <div class="analysis-label">Active Threats</div>
-                        </div>
-                        <div class="analysis-item">
-                            <div class="analysis-value" id="analysisBlocked">2.3K</div>
-                            <div class="analysis-label">Blocked Today</div>
-                        </div>
-                        <div class="analysis-item">
-                            <div class="analysis-value" id="analysisVPN">12</div>
-                            <div class="analysis-label">VPN Connections</div>
-                        </div>
-                        <div class="analysis-item">
-                            <div class="analysis-value" id="analysisCompliance">98%</div>
-                            <div class="analysis-label">Compliance Score</div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
-        <!-- Enhanced System Metrics with descriptions -->
+        <!-- System Metrics -->
         <div class="system-metrics">
-            <div class="metric-card" onclick="openMetricChat('threats')">
+            <div class="metric-card">
                 <div class="metric-value" id="threatCount">7</div>
                 <div class="metric-label">Active Threats</div>
-                <div class="metric-description">Currently detected and being mitigated by ThreatScanner AI with 99.8% accuracy</div>
             </div>
-            <div class="metric-card" onclick="openMetricChat('devices')">
+            <div class="metric-card">
                 <div class="metric-value" id="deviceCount">247</div>
                 <div class="metric-label">Protected Devices</div>
-                <div class="metric-description">Network endpoints monitored by NetworkMapper with hybrid encryption deployed</div>
             </div>
-            <div class="metric-card" onclick="openMetricChat('uptime')">
+            <div class="metric-card">
                 <div class="metric-value" id="uptime">99.98%</div>
                 <div class="metric-label">System Uptime</div>
-                <div class="metric-description">AI agent availability with automatic failover and local CLI mode backup</div>
             </div>
-            <div class="metric-card" onclick="openMetricChat('blocked')">
-                <div class="metric-value" id="blockedCount">15.4K</div>
+            <div class="metric-card">
+                <div class="metric-value" id="blockedCount">12.4K</div>
                 <div class="metric-label">Attacks Blocked</div>
-                <div class="metric-description">Automatically neutralized threats today using DefenseOrchestrator playbooks</div>
             </div>
-            <div class="metric-card" onclick="openMetricChat('crypto')">
-                <div class="metric-value" id="encryptionOps">2.3M</div>
+            <div class="metric-card">
+                <div class="metric-value" id="encryptionOps">2.1M</div>
                 <div class="metric-label">Crypto Ops/Sec</div>
-                <div class="metric-description">Real-time encryption operations using hybrid classical + post-quantum algorithms</div>
             </div>
-            <div class="metric-card" onclick="openMetricChat('deployments')">
+            <div class="metric-card">
                 <div class="metric-value" id="deploymentCount">47</div>
                 <div class="metric-label">Deployments Today</div>
-                <div class="metric-description">Security patches and encryption modules deployed by EncryptionDeployer</div>
             </div>
         </div>
     </div>
@@ -1414,7 +1423,7 @@
         </div>
     </div>
 
-    <!-- AI Chat Widget - Fixed with robot icon and proper placeholder -->
+    <!-- AI Chat Widget -->
     <div class="ai-chat-widget">
         <div class="ai-chat-window" id="aiChatWindow">
             <div class="ai-chat-header">
@@ -1472,11 +1481,6 @@
             setInterval(() => {
                 updateDashboardMetrics();
             }, 3000);
-
-            // Update analysis module
-            setInterval(() => {
-                updateAnalysisModule();
-            }, 4000);
 
             // Simulate encryption status changes occasionally
             setInterval(() => {
@@ -1569,7 +1573,7 @@
             { msg: '✅ Compliance scan completed: ' + Math.floor(Math.random() * 3 + 97) + '% score', type: '', agent: 'ComplianceMonitor' },
             { msg: '🔒 VPN connection from ' + ['Germany', 'Japan', 'Canada', 'UK'][Math.floor(Math.random() * 4)] + ' authenticated', type: '', agent: 'VPNMonitor' },
             { msg: '🔒 VPN certificate renewal for client ' + Math.floor(Math.random() * 99 + 1), type: 'encryption', agent: 'VPNMonitor' },
-            { msg: '🔒 Suspicious VPN login attempt blocked from ' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.*.* ', type: 'warning', agent: 'VPNMonitor' },
+            { msg: '🔒 Suspicious VPN login attempt blocked from ' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.*.*', type: 'warning', agent: 'VPNMonitor' },
             { msg: '⚔️ Honeypot triggered by external scanner', type: 'warning', agent: 'DefenseOrchestrator' },
             { msg: '📊 AI model accuracy: 99.' + Math.floor(Math.random() * 9) + '%', type: '', agent: 'AnalyticsEngine' },
             { msg: '📝 Audit log signed with Dilithium-3 signature', type: '', agent: 'LogAgent' },
@@ -1621,38 +1625,6 @@
             }
         }
 
-        function updateAnalysisModule() {
-            // Update analysis values with slight variations
-            const threatsEl = document.getElementById('analysisThreats');
-            if (Math.random() > 0.9) {
-                const current = parseInt(threatsEl.textContent);
-                threatsEl.textContent = Math.max(0, current + Math.floor(Math.random() * 3 - 1));
-            }
-
-            const blockedEl = document.getElementById('analysisBlocked');
-            const blocked = parseFloat(blockedEl.textContent.replace('K', ''));
-            blockedEl.textContent = (blocked + 0.1).toFixed(1) + 'K';
-
-            const vpnEl = document.getElementById('analysisVPN');
-            if (Math.random() > 0.85) {
-                const current = parseInt(vpnEl.textContent);
-                vpnEl.textContent = Math.max(8, current + Math.floor(Math.random() * 3 - 1));
-            }
-
-            const complianceEl = document.getElementById('analysisCompliance');
-            if (Math.random() > 0.95) {
-                const compliance = 97 + Math.random() * 2;
-                complianceEl.textContent = compliance.toFixed(0) + '%';
-            }
-
-            // Update timestamp
-            const lastUpdateEl = document.getElementById('lastUpdate');
-            if (lastUpdateEl) {
-                const now = new Date();
-                lastUpdateEl.textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            }
-        }
-
         function simulateEncryptionStatusChange() {
             // Rarely simulate an encryption layer going offline
             if (Math.random() > 0.8) {
@@ -1689,40 +1661,6 @@
             }
             setTimeout(() => {
                 sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and 3 encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with hybrid-resistant encryption.', false);
-            }, 300);
-        }
-
-        // New function to handle metric card clicks
-        function openMetricChat(metricType) {
-            if (!SentinelState.chatOpen && sentinelChat) {
-                sentinelChat.toggle();
-            }
-            
-            setTimeout(() => {
-                let message = '';
-                switch(metricType) {
-                    case 'threats':
-                        message = 'ThreatScanner: Currently monitoring 7 active threats with 99.8% detection accuracy. Hybrid-resistant encryption protecting all threat intelligence. Coordinating with DefenseOrchestrator for automated response.';
-                        break;
-                    case 'devices':
-                        message = 'NetworkMapper: 247 devices under protection across your network. Hybrid encryption deployed to all critical endpoints. Real-time discovery active with EncryptionDeployer standing by for new devices.';
-                        break;
-                    case 'uptime':
-                        message = 'System Monitor: 99.98% uptime maintained with automatic failover capabilities. Local CLI mode available if external connections fail. All 10 sub-agents operational with redundant communication paths.';
-                        break;
-                    case 'blocked':
-                        message = 'DefenseOrchestrator: 15.4K attacks automatically blocked today using AI-driven playbooks. Average response time: 0.3 seconds. All defensive actions logged with Dilithium-3 signatures.';
-                        break;
-                    case 'crypto':
-                        message = 'EncryptionManager: Processing 2.3M cryptographic operations per second using hybrid algorithms. Key rotation every 24 hours. Classical AES-256-GCM + Post-Quantum Kyber-1024 active.';
-                        break;
-                    case 'deployments':
-                        message = 'EncryptionDeployer: 47 security modules deployed today including TLS enforcement, certificate renewals, and hybrid encryption upgrades. Zero downtime deployments with automatic rollback capability.';
-                        break;
-                    default:
-                        message = 'Main Agent: All metrics operational and within normal parameters. Hybrid-resistant encryption protecting all data flows.';
-                }
-                sentinelChat?.addMessage(message, false);
             }, 300);
         }
 
