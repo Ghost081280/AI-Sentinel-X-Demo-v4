@@ -861,8 +861,60 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
+        /* Real-time Feed - Same as threats.html */
+        .feed-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(15px);
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feed-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--danger);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+
         .feed-content {
-            max-height: 400px;
+            flex: 1;
             overflow-y: auto;
             padding-right: 10px;
         }
@@ -870,13 +922,13 @@
         .feed-item {
             background: rgba(0, 255, 136, 0.05);
             border-left: 3px solid var(--primary);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 0 8px 8px 0;
-            animation: slideIn 0.5s ease;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 0 10px 10px 0;
+            animation: feedSlide 0.3s ease;
         }
 
-        @keyframes slideIn {
+        @keyframes feedSlide {
             from { opacity: 0; transform: translateX(-20px); }
             to { opacity: 1; transform: translateX(0); }
         }
@@ -897,18 +949,20 @@
         }
 
         .feed-time {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-secondary);
             margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .feed-message {
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .feed-agent {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--accent);
             margin-top: 5px;
             font-style: italic;
@@ -1388,7 +1442,7 @@
         </div>
 
         <!-- Sub-Agent Activity Feed -->
-        <div class="activity-feed">
+        <div class="feed-section">
             <div class="feed-header">
                 <h2 class="feed-title">VPNMonitor Activity Feed</h2>
                 <div class="live-indicator">
@@ -1396,7 +1450,7 @@
                     <span>LIVE</span>
                 </div>
             </div>
-            <div class="feed-content" id="activityFeed">
+            <div class="feed-content" id="vpnFeed">
                 <!-- Feed items will be populated by JavaScript -->
             </div>
         </div>
@@ -1454,7 +1508,7 @@
             
             // Start periodic updates
             setInterval(updateVPNMetrics, 5000);
-            setInterval(generateActivityFeedItem, 8000);
+            setInterval(generateVPNFeedItem, 8000);
         }
 
         function populateActiveServices() {
@@ -1623,16 +1677,16 @@
         }
 
         function initializeActivityFeed() {
-            addActivityFeedItem('🔒 VPNMonitor initialized. Monitoring 3 VPN services with hybrid encryption.', '', 'VPNMonitor');
-            addActivityFeedItem('🌐 OpenVPN service: 8 active connections verified', '', 'VPNMonitor');
-            addActivityFeedItem('⚡ WireGuard mobile gateway: 4 connections stable', '', 'VPNMonitor');
-            addActivityFeedItem('🔐 IPSec site-to-site tunnel established', 'encryption', 'VPNMonitor');
-            addActivityFeedItem('⚠️ New country access detected from Russia - flagged for review', 'warning', 'VPNMonitor');
-            addActivityFeedItem('🚫 5 failed authentication attempts blocked from external IP', 'danger', 'VPNMonitor');
+            addVPNFeedItem('🔒 VPNMonitor initialized. Monitoring 3 VPN services with hybrid encryption.', '', 'VPNMonitor');
+            addVPNFeedItem('🌐 OpenVPN service: 8 active connections verified', '', 'VPNMonitor');
+            addVPNFeedItem('⚡ WireGuard mobile gateway: 4 connections stable', '', 'VPNMonitor');
+            addVPNFeedItem('🔐 IPSec site-to-site tunnel established', 'encryption', 'VPNMonitor');
+            addVPNFeedItem('⚠️ New country access detected from Russia - flagged for review', 'warning', 'VPNMonitor');
+            addVPNFeedItem('🚫 5 failed authentication attempts blocked from external IP', 'danger', 'VPNMonitor');
         }
 
-        function addActivityFeedItem(message, type = '', agent = '') {
-            const feed = document.getElementById('activityFeed');
+        function addVPNFeedItem(message, type = '', agent = '') {
+            const feed = document.getElementById('vpnFeed');
             const item = document.createElement('div');
             item.className = `feed-item ${type}`;
             
@@ -1645,8 +1699,8 @@
             
             feed.insertBefore(item, feed.firstChild);
             
-            // Keep only last 15 items
-            while (feed.children.length > 15) {
+            // Keep only last 20 items
+            while (feed.children.length > 20) {
                 feed.removeChild(feed.lastChild);
             }
         }
@@ -1659,12 +1713,14 @@
             { msg: '🚫 Suspicious login attempt blocked from ' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.*.*', type: 'warning', agent: 'VPNMonitor' },
             { msg: '✅ Certificate health check passed - all ' + VPNConfigs.securityOverview.certificateStatus.total + ' certs valid', type: '', agent: 'VPNMonitor' },
             { msg: '⚡ WireGuard tunnel optimization completed - latency reduced by ' + Math.floor(Math.random() * 20 + 10) + 'ms', type: '', agent: 'VPNMonitor' },
-            { msg: '🔍 Anomaly detection: unusual traffic pattern from client device analyzed', type: 'warning', agent: 'VPNMonitor' }
+            { msg: '🔍 Anomaly detection: unusual traffic pattern from client device analyzed', type: 'warning', agent: 'VPNMonitor' },
+            { msg: '🛡️ Coordinated with ThreatScanner: blocked VPN-based attack attempt', type: 'danger', agent: 'VPNMonitor' },
+            { msg: '📜 Certificate deployment completed with Dilithium-3 signatures', type: 'encryption', agent: 'VPNMonitor' }
         ];
 
-        function generateActivityFeedItem() {
+        function generateVPNFeedItem() {
             const item = vpnFeedMessages[Math.floor(Math.random() * vpnFeedMessages.length)];
-            addActivityFeedItem(item.msg, item.type, item.agent);
+            addVPNFeedItem(item.msg, item.type, item.agent);
         }
 
         function updateVPNMetrics() {
