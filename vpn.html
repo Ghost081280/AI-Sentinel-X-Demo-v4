@@ -651,7 +651,8 @@
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 15px;
-            gap: 20px;
+            gap: 25px;
+            padding-right: 5px;
         }
 
         .connection-device {
@@ -659,7 +660,8 @@
             color: var(--primary);
             font-size: 16px;
             flex: 1;
-            max-width: calc(100% - 100px); /* Ensure space for status button */
+            max-width: calc(100% - 120px);
+            word-wrap: break-word;
         }
 
         .connection-status {
@@ -671,13 +673,16 @@
             font-weight: bold;
             text-transform: uppercase;
             background: rgba(0, 255, 136, 0.1);
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 12px;
             border: 1px solid var(--success);
             white-space: nowrap;
             flex-shrink: 0;
-            min-width: 70px;
+            min-width: 80px;
             justify-content: center;
+            margin-left: auto;
+            position: relative;
+            z-index: 1;
         }
 
         .connection-details {
