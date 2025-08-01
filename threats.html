@@ -350,98 +350,67 @@
 
         /* Sub-Agent Status Banner */
         .sub-agent-status {
-            background: var(--gradient-threat);
-            border: 2px solid;
-            border-image: linear-gradient(135deg, var(--danger) 0%, var(--warning) 50%, var(--danger) 100%) 1;
-            border-radius: 15px;
-            padding: 25px 35px;
-            text-align: center;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 16px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 0 60px rgba(255, 0, 68, 0.1);
-            position: relative;
-            overflow: hidden;
-            animation: threatBannerPulse 4s ease-in-out infinite;
+            background: linear-gradient(135deg, rgba(255, 0, 68, 0.1) 0%, rgba(255, 170, 0, 0.05) 100%);
+            border: 1px solid rgba(255, 0, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            backdrop-filter: blur(15px);
         }
 
-        @keyframes threatBannerPulse {
-            0%, 100% { 
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 60px rgba(255, 0, 68, 0.1);
-                transform: scale(1);
-            }
-            50% { 
-                box-shadow: 0 12px 48px rgba(255, 0, 68, 0.3), inset 0 0 80px rgba(255, 170, 0, 0.15);
-                transform: scale(1.01);
-            }
+        .sub-agent-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .sub-agent-status::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 0, 68, 0.2), transparent);
-            animation: threatScan 3s linear infinite;
-        }
-
-        @keyframes threatScan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .banner-content {
-            position: relative;
-            z-index: 1;
+        .sub-agent-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-danger);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(255, 0, 68, 0.3);
         }
 
-        .banner-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .sub-agent-details h3 {
+            font-size: 18px;
+            color: var(--danger);
+            margin-bottom: 5px;
+        }
+
+        .sub-agent-details p {
             font-size: 14px;
+            color: var(--text-secondary);
         }
 
-        .banner-icon {
-            font-size: 18px;
-            filter: drop-shadow(0 0 10px currentColor);
-            animation: iconGlow 2s ease-in-out infinite alternate;
+        .sub-agent-metrics {
+            display: flex;
+            gap: 30px;
         }
 
-        @keyframes iconGlow {
-            0% { filter: drop-shadow(0 0 10px currentColor); }
-            100% { filter: drop-shadow(0 0 20px currentColor); }
+        .metric {
+            text-align: center;
         }
 
-        .banner-text {
-            background: linear-gradient(135deg, var(--danger) 0%, var(--warning) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .metric-value {
+            font-size: 24px;
             font-weight: bold;
+            color: var(--danger);
         }
 
-        .banner-separator {
-            color: var(--accent);
-            font-size: 18px;
-            animation: separatorPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes separatorPulse {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
         }
 
         /* Main Content Grid */
@@ -683,6 +652,66 @@
             gap: 5px;
         }
 
+        /* Threat Statistics */
+        .threat-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: rgba(255, 0, 68, 0.05);
+            border: 1px solid rgba(255, 0, 68, 0.2);
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 0, 68, 0.2);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--danger);
+            margin-bottom: 8px;
+            text-shadow: 0 0 15px currentColor;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        .stat-trend {
+            font-size: 9px;
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+        }
+
+        .trend-up {
+            color: var(--danger);
+        }
+
+        .trend-down {
+            color: var(--success);
+        }
+
+        .trend-stable {
+            color: var(--text-secondary);
+        }
+
         /* Real-time Activity Feed */
         .feed-section {
             background: var(--bg-card);
@@ -794,66 +823,6 @@
             color: var(--accent);
             margin-top: 5px;
             font-style: italic;
-        }
-
-        /* Threat Statistics */
-        .threat-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background: rgba(255, 0, 68, 0.05);
-            border: 1px solid rgba(255, 0, 68, 0.2);
-            border-radius: 12px;
-            padding: 18px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 0, 68, 0.2);
-        }
-
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--danger);
-            margin-bottom: 8px;
-            text-shadow: 0 0 15px currentColor;
-        }
-
-        .stat-label {
-            font-size: 11px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            line-height: 1.2;
-        }
-
-        .stat-trend {
-            font-size: 9px;
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-        }
-
-        .trend-up {
-            color: var(--danger);
-        }
-
-        .trend-down {
-            color: var(--success);
-        }
-
-        .trend-stable {
-            color: var(--text-secondary);
         }
 
         /* AI Chat Widget */
@@ -1149,6 +1118,16 @@
                 -webkit-overflow-scrolling: touch;
             }
             
+            .sub-agent-status {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .sub-agent-metrics {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
             .ai-chat-window {
                 width: calc(100vw - 40px);
                 height: calc(100vh - 120px);
@@ -1162,15 +1141,6 @@
 
             .threat-stats {
                 grid-template-columns: repeat(2, 1fr);
-            }
-
-            .banner-content {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            .banner-section {
-                font-size: 12px;
             }
         }
 
@@ -1298,22 +1268,31 @@
             </a>
         </nav>
 
-        <!-- Enhanced V4-Style ThreatScanner Status Banner -->
+        <!-- Sub-Agent Status Banner -->
         <div class="sub-agent-status">
-            <div class="banner-content">
-                <div class="banner-section">
-                    <span class="banner-icon">🛡️</span>
-                    <span class="banner-text">THREATSCANNER SUB-AGENT</span>
+            <div class="sub-agent-info">
+                <div class="sub-agent-icon">🛡️</div>
+                <div class="sub-agent-details">
+                    <h3>ThreatScanner Sub-Agent</h3>
+                    <p>Enhanced V4 threat detection • VPN security monitoring • Encryption gap analysis • Reports to Main Agent</p>
                 </div>
-                <div class="banner-separator">•</div>
-                <div class="banner-section">
-                    <span class="banner-icon">⚡</span>
-                    <span class="banner-text">147K EVENTS/SEC</span>
+            </div>
+            <div class="sub-agent-metrics">
+                <div class="metric">
+                    <div class="metric-value" id="activeThreats">7</div>
+                    <div class="metric-label">Active Threats</div>
                 </div>
-                <div class="banner-separator">•</div>
-                <div class="banner-section">
-                    <span class="banner-icon">🎯</span>
-                    <span class="banner-text">7 ACTIVE THREATS</span>
+                <div class="metric">
+                    <div class="metric-value" id="blockedToday">2,847</div>
+                    <div class="metric-label">Blocked Today</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">99.8%</div>
+                    <div class="metric-label">Detection Rate</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="encryptionGaps">3</div>
+                    <div class="metric-label">Enc Gaps</div>
                 </div>
             </div>
         </div>
@@ -1364,7 +1343,7 @@
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="blockedToday">2,847</div>
+                            <div class="stat-value" id="blockedTodayStats">2,847</div>
                             <div class="stat-label">Blocked Today</div>
                             <div class="stat-trend trend-up">
                                 <span>↗</span>
@@ -1380,7 +1359,7 @@
                             </div>
                         </div>
                         <div class="stat-card">
-                            <div class="stat-value" id="encryptionGaps">3</div>
+                            <div class="stat-value" id="encryptionGapsStats">3</div>
                             <div class="stat-label">Encryption Gaps</div>
                             <div class="stat-trend trend-down">
                                 <span>↘</span>
@@ -1405,20 +1384,20 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- ThreatScanner Activity Feed -->
-                <div class="feed-section">
-                    <div class="feed-header">
-                        <h2 class="feed-title">ThreatScanner Activity Feed</h2>
-                        <div class="live-indicator">
-                            <div class="live-dot"></div>
-                            <span>LIVE</span>
-                        </div>
-                    </div>
-                    <div class="feed-content" id="threatFeed">
-                        <!-- Feed items will be populated by JavaScript -->
-                    </div>
+        <!-- ThreatScanner Activity Feed -->
+        <div class="feed-section">
+            <div class="feed-header">
+                <h2 class="feed-title">ThreatScanner Activity Feed</h2>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>LIVE</span>
                 </div>
+            </div>
+            <div class="feed-content" id="threatFeed">
+                <!-- Feed items will be populated by JavaScript -->
             </div>
         </div>
     </div>
@@ -1455,7 +1434,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        ThreatScanner V4 online. Enhanced encryption gap detection and compliance threat analysis active. Processing 147K events/sec with hybrid-resistant encryption. 7 active threats under autonomous management.
+                        ThreatScanner V4 online. Enhanced VPN security monitoring and encryption gap detection active. Processing 147K events/sec with hybrid-resistant encryption. 7 active threats under autonomous management.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1702,27 +1681,39 @@
         }
 
         function updateThreatMetrics() {
-            // Update blocked count
+            // Update blocked count in both banner and stats
             const blocked = document.getElementById('blockedToday');
+            const blockedStats = document.getElementById('blockedTodayStats');
             const current = parseInt(blocked.textContent.replace(',', ''));
-            blocked.textContent = (current + Math.floor(Math.random() * 15 + 5)).toLocaleString();
+            const newCount = current + Math.floor(Math.random() * 15 + 5);
+            const formatted = newCount.toLocaleString();
+            
+            blocked.textContent = formatted;
+            blockedStats.textContent = formatted;
             
             // Occasionally change threat count
             if (Math.random() > 0.85) {
                 const threats = document.getElementById('totalThreats');
+                const threatsActive = document.getElementById('activeThreats');
                 const currentThreats = parseInt(threats.textContent);
-                const newCount = Math.max(5, currentThreats + Math.floor(Math.random() * 3 - 1));
-                threats.textContent = newCount;
+                const newThreats = Math.max(5, currentThreats + Math.floor(Math.random() * 3 - 1));
+                
+                threats.textContent = newThreats;
+                threatsActive.textContent = newThreats;
                 
                 // Update status text
-                document.getElementById('threatStatus').textContent = `${newCount} Critical Threats`;
+                document.getElementById('threatStatus').textContent = `${newThreats} Critical Threats`;
             }
             
             // Update encryption gaps count (trending down as they get fixed)
             if (Math.random() > 0.9) {
                 const gaps = document.getElementById('encryptionGaps');
+                const gapsStats = document.getElementById('encryptionGapsStats');
                 const currentGaps = parseInt(gaps.textContent);
-                gaps.textContent = Math.max(0, currentGaps + Math.floor(Math.random() * 2 - 1));
+                const newGaps = Math.max(0, currentGaps + Math.floor(Math.random() * 2 - 1));
+                
+                gaps.textContent = newGaps;
+                gapsStats.textContent = newGaps;
             }
         }
 
