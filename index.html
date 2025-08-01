@@ -41,6 +41,7 @@
             justify-content: center;
             padding: 20px;
             overflow-x: hidden;
+            position: relative;
         }
 
         /* Neural Network Background */
@@ -563,23 +564,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Version Footer */
-        .version-footer {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 11px;
-            color: var(--text-secondary);
-            opacity: 0.6;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 16px;
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
         /* Mobile Responsive */
         @media (max-width: 600px) {
             body {
@@ -713,6 +697,25 @@
                 padding-top: 15px;
             }
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
     </style>
 </head>
 <body>
@@ -757,7 +760,7 @@
         <div class="agent-status-badge">
             <div class="agent-status-content">
                 <div class="agent-status-title">🤖 AI AGENT READY</div>
-                <div>Main Agent + 10 Sub-Agents • Hybrid-Resistant Encryption • Manual Override Available</div>
+                <div>Main Agent + Sub-Agents • Hybrid-Resistant Encryption • Manual Override Available</div>
             </div>
         </div>
 
@@ -791,22 +794,22 @@
                     required
                     autocomplete="current-password"
                 >
-                <div class="input-description">Secure access to your autonomous cyber defense dashboard</div>
+                <div class="input-description">Secure access to your autonomous cyber defense system</div>
             </div>
 
             <button type="submit" class="login-btn" id="loginBtn">
-                ACCESS DASHBOARD
+                ACCESS AGENT
             </button>
 
             <div class="status-message" id="statusMessage"></div>
         </form>
 
         <div class="demo-info">
-            <p>🚀 Experience AI Sentinel-X: autonomous defense with 10 specialized sub-agents and hybrid-resistant encryption</p>
+            <p>🚀 Experience AI Sentinel-X: autonomous defense with specialized sub-agents and hybrid-resistant encryption</p>
             
             <div class="demo-instructions">
                 <strong>🔐 Demo Access Instructions:</strong>
-                Use the credentials below to access the AI Sentinel-X dashboard and explore all 10 sub-agents including the new VPNMonitor with hybrid encryption capabilities.
+                Use the credentials below to access the AI Sentinel-X system and explore all sub-agents including VPNMonitor with hybrid encryption capabilities.
                 
                 <div class="demo-credentials-highlight">
                     Email: demo@demo.com<br>
@@ -816,11 +819,6 @@
                 After login, you'll have full access to the autonomous cyber defense system including threat detection, network monitoring, encryption management, VPN security, and compliance reporting.
             </div>
         </div>
-    </div>
-
-    <!-- Version Footer -->
-    <div class="version-footer">
-        AI Sentinel-X Hybrid • Build 2024.12.19 • 10 Sub-Agents Active
     </div>
 
     <script>
@@ -965,9 +963,9 @@
                             statusMessage.textContent = '🔑 Loading security modules...';
                             
                             setTimeout(() => {
-                                // Check demo credentials - Updated to use demo@demo.com
+                                // Check demo credentials
                                 if (email.toLowerCase() === 'demo@demo.com' && password === 'demo') {
-                                    statusMessage.textContent = '✅ Authentication successful - Loading dashboard...';
+                                    statusMessage.textContent = '✅ Authentication successful - Loading system...';
                                     
                                     setTimeout(() => {
                                         // Store credentials with realistic auth structure
@@ -976,11 +974,11 @@
                                             authenticated: true,
                                             timestamp: Date.now(),
                                             accountType: 'demo',
-                                            needsSetup: true  // New users need to complete setup
+                                            needsSetup: true
                                         }));
                                         
                                         statusMessage.className = 'status-message success';
-                                        statusMessage.textContent = '🚀 ACCESS GRANTED - REDIRECTING TO DASHBOARD';
+                                        statusMessage.textContent = '🚀 ACCESS GRANTED - REDIRECTING TO SYSTEM';
                                         
                                         // Redirect to dashboard
                                         setTimeout(() => {
@@ -991,7 +989,7 @@
                                     statusMessage.className = 'status-message error';
                                     statusMessage.textContent = '❌ Invalid credentials. Please use demo@demo.com and password: demo';
                                     loginBtn.disabled = false;
-                                    loginBtn.innerHTML = 'ACCESS DASHBOARD';
+                                    loginBtn.innerHTML = 'ACCESS AGENT';
                                 }
                             }, 800);
                         }, 600);
@@ -1005,7 +1003,7 @@
             initMatrix();
             initNeuralBackground();
             
-            // FIXED: Only check if auth is valid and recent, don't auto-redirect
+            // Check if auth is valid and recent, don't auto-redirect
             const auth = localStorage.getItem('sentinel_auth');
             if (auth) {
                 try {
@@ -1013,7 +1011,7 @@
                     // Check if auth is more than 24 hours old
                     if (Date.now() - authData.timestamp > 24 * 60 * 60 * 1000) {
                         localStorage.removeItem('sentinel_auth');
-                        localStorage.removeItem('sentinel_scale'); // Clean up old scale data
+                        localStorage.removeItem('sentinel_scale');
                     }
                 } catch (e) {
                     // Invalid auth data, remove it
