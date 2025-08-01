@@ -515,6 +515,35 @@
                 inset 0 0 20px rgba(0, 255, 136, 0.02);
         }
 
+        .demo-instructions {
+            background: rgba(0, 204, 255, 0.05);
+            border: 1px solid rgba(0, 204, 255, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+        .demo-instructions strong {
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .demo-credentials-highlight {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.4);
+            border-radius: 6px;
+            padding: 8px 12px;
+            margin: 8px 0;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
         /* Enhanced Loading Animation */
         .loading {
             display: inline-block;
@@ -774,8 +803,17 @@
 
         <div class="demo-info">
             <p>🚀 Experience AI Sentinel-X: autonomous defense with 10 specialized sub-agents and hybrid-resistant encryption</p>
-            <div class="demo-credentials">
-                Demo credentials: demo / demo
+            
+            <div class="demo-instructions">
+                <strong>🔐 Demo Access Instructions:</strong>
+                Use the credentials below to access the AI Sentinel-X dashboard and explore all 10 sub-agents including the new VPNMonitor with hybrid encryption capabilities.
+                
+                <div class="demo-credentials-highlight">
+                    Email: demo@demo.com<br>
+                    Password: demo
+                </div>
+                
+                After login, you'll have full access to the autonomous cyber defense system including threat detection, network monitoring, encryption management, VPN security, and compliance reporting.
             </div>
         </div>
     </div>
@@ -927,8 +965,8 @@
                             statusMessage.textContent = '🔑 Loading security modules...';
                             
                             setTimeout(() => {
-                                // Check demo credentials
-                                if (email.toLowerCase() === 'demo' && password === 'demo') {
+                                // Check demo credentials - Updated to use demo@demo.com
+                                if (email.toLowerCase() === 'demo@demo.com' && password === 'demo') {
                                     statusMessage.textContent = '✅ Authentication successful - Loading dashboard...';
                                     
                                     setTimeout(() => {
@@ -951,7 +989,7 @@
                                     }, 600);
                                 } else {
                                     statusMessage.className = 'status-message error';
-                                    statusMessage.textContent = '❌ Invalid credentials. Please check your email and password.';
+                                    statusMessage.textContent = '❌ Invalid credentials. Please use demo@demo.com and password: demo';
                                     loginBtn.disabled = false;
                                     loginBtn.innerHTML = 'ACCESS DASHBOARD';
                                 }
