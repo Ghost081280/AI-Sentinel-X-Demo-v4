@@ -207,6 +207,7 @@
             border: 2px solid;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .encryption-badge.classical {
@@ -219,6 +220,11 @@
             background: rgba(124, 58, 237, 0.1);
             border-color: var(--accent);
             color: var(--accent);
+        }
+
+        .encryption-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .status-light {
@@ -1052,7 +1058,7 @@
             border: 1px solid var(--secondary);
         }
 
-        /* Suggested Actions */
+        /* Suggested Actions with Automation */
         .actions-list {
             display: flex;
             flex-direction: column;
@@ -1068,6 +1074,17 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+        }
+
+        .action-item.auto-executing {
+            background: rgba(0, 204, 255, 0.1);
+            border-color: var(--secondary);
+            animation: autoExecutionPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes autoExecutionPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 204, 255, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(0, 204, 255, 0.6); }
         }
 
         .action-item::before {
@@ -1134,7 +1151,7 @@
         .action-description {
             font-size: 14px;
             color: var(--text-secondary);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             line-height: 1.4;
         }
 
@@ -1152,6 +1169,42 @@
 
         .action-impact {
             color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Automation Progress Bar */
+        .automation-progress {
+            margin-top: 15px;
+            padding: 10px 0;
+            display: none;
+        }
+
+        .automation-progress.active {
+            display: block;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .progress-text {
+            font-size: 11px;
+            color: var(--secondary);
+            text-align: center;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -1267,6 +1320,95 @@
             color: var(--accent);
             margin-top: 5px;
             font-style: italic;
+        }
+
+        /* Agent Shutdown Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--warning);
+            margin-bottom: 10px;
+        }
+
+        .modal-content {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .modal-btn-primary {
+            background: var(--gradient-1);
+            color: var(--bg-darker);
+        }
+
+        .modal-btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
         /* AI Chat Widget */
@@ -1578,11 +1720,11 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical">
+                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
                             <div class="status-light active" id="classicalStatus"></div>
                             <span>CLASSICAL</span>
                         </div>
-                        <div class="encryption-badge quantum">
+                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
                             <div class="status-light active" id="quantumStatus"></div>
                             <span>HYBRID</span>
                         </div>
@@ -1704,7 +1846,7 @@
 
             <!-- Right Column -->
             <div class="right-column">
-                <!-- Anomaly Alerts - Moved above Security Overview -->
+                <!-- Anomaly Alerts - Moved above Security Overview for better UX priority -->
                 <div class="section-card">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -1735,23 +1877,23 @@
                     </div>
                     <div class="security-overview-grid">
                         <div class="overview-card">
-                            <div class="overview-value" id="totalCerts">15</div>
-                            <div class="overview-label">Certificates</div>
+                            <div class="overview-value" id="totalCerts">4</div>
+                            <div class="overview-label">VPN Certificates</div>
                             <div class="overview-trend trend-stable">
                                 <span>→</span>
                                 <span>Stable</span>
                             </div>
                         </div>
                         <div class="overview-card">
-                            <div class="overview-value" id="validCerts">13</div>
+                            <div class="overview-value" id="validCerts">3</div>
                             <div class="overview-label">Valid</div>
                             <div class="overview-trend trend-up">
                                 <span>↗</span>
-                                <span>+2 This Week</span>
+                                <span>Secure</span>
                             </div>
                         </div>
                         <div class="overview-card">
-                            <div class="overview-value" id="expiringCerts">2</div>
+                            <div class="overview-value" id="expiringCerts">1</div>
                             <div class="overview-label">Expiring</div>
                             <div class="overview-trend trend-down">
                                 <span>↘</span>
@@ -1774,7 +1916,7 @@
             </div>
         </div>
 
-        <!-- Suggested Actions -->
+        <!-- Suggested Actions with Auto-Execution -->
         <div class="section-card">
             <div class="section-header">
                 <h2 class="section-title">
@@ -1783,7 +1925,7 @@
                 </h2>
                 <div class="section-status">
                     <div class="status-dot active"></div>
-                    <span>3 High Priority</span>
+                    <span>🤖 Auto-Execution Enabled</span>
                 </div>
             </div>
             <div class="actions-list" id="actionsList">
@@ -1802,6 +1944,22 @@
             </div>
             <div class="feed-content" id="vpnFeed">
                 <!-- Feed items will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Agent Shutdown Modal -->
+    <div class="modal-overlay" id="agentShutdownModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">⚠️ Agent Control Toggle</h2>
+            </div>
+            <div class="modal-content">
+                Toggle autonomous mode? When paused, manual control remains available through the AI chat bot CLI. System will fallback to local control mode if external APIs are offline.
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="confirmAgentShutdown()">Toggle Agent Mode</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
             </div>
         </div>
     </div>
@@ -1843,6 +2001,10 @@
 
     <script src="shared.js"></script>
     <script>
+        // VPN-specific state management
+        let vpnAutoExecution = true;
+        let autoExecutionInterval;
+        
         // VPN page initialization
         document.addEventListener('DOMContentLoaded', () => {
             initializeVPNPage();
@@ -1855,6 +2017,9 @@
             populateAnomalyAlerts();
             populateSuggestedActions();
             initializeActivityFeed();
+            
+            // Start automated systems
+            startAutoExecution();
             
             // Start periodic updates
             setInterval(updateVPNMetrics, 3000);
@@ -1923,7 +2088,7 @@
                 card.innerHTML = `
                     <div class="connection-header">
                         <div class="connection-device">${conn.deviceName}</div>
-                        <div class="connection-status">
+                        <div class="connection-status" style="margin-left: auto;">
                             <div class="status-dot active"></div>
                             <span>${conn.status.toUpperCase()}</span>
                         </div>
@@ -1998,9 +2163,9 @@
 
             // Update certificate counts with animation
             const certStatus = VPNConfigs.securityOverview.certificateStatus;
-            animateValue('totalCerts', certStatus.total);
-            animateValue('validCerts', certStatus.valid);
-            animateValue('expiringCerts', certStatus.expiring);
+            animateValue('totalCerts', 4); // Realistic VPN cert count
+            animateValue('validCerts', 3);
+            animateValue('expiringCerts', 1);
         }
 
         function populateAnomalyAlerts() {
@@ -2034,9 +2199,6 @@
                     <div class="alert-severity ${alert.severity}">${alert.severity}</div>
                 `;
                 
-                item.addEventListener('mouseenter', () => showAlertTooltip(alert, item));
-                item.addEventListener('mouseleave', hideAlertTooltip);
-                
                 list.appendChild(item);
             });
         }
@@ -2045,27 +2207,37 @@
             const list = document.getElementById('actionsList');
             list.innerHTML = '';
 
-            // Enhanced actions with SOC impact analysis
-            const enhancedActions = VPNConfigs.suggestedActions.map(action => ({
+            // Enhanced actions with proper sub-agent coordination
+            const enhancedActions = VPNConfigs.suggestedActions.map((action, index) => ({
                 ...action,
                 impact: getActionImpact(action),
-                automation: getAutomationLevel(action)
+                automation: 'Auto-Execute',
+                subAgentCoordination: getSubAgentCoordination(action),
+                progress: 0,
+                executing: false
             }));
 
-            enhancedActions.forEach(action => {
+            enhancedActions.forEach((action, index) => {
                 const item = document.createElement('div');
                 item.className = 'action-item';
-                item.onclick = () => executeAction(action.id);
+                item.id = `action-${action.id}`;
+                item.onclick = () => executeActionManually(action.id);
                 
                 item.innerHTML = `
                     <div class="action-header">
                         <div class="action-title">${action.action}</div>
                         <div class="action-priority ${action.priority}">${action.priority}</div>
                     </div>
-                    <div class="action-description">${action.reason}</div>
+                    <div class="action-description">${action.reason} - ${action.subAgentCoordination}</div>
                     <div class="action-footer">
                         <div class="action-estimate">⏱️ ${action.estimated}</div>
-                        <div class="action-impact">${action.impact}</div>
+                        <div class="action-impact">🤖 ${action.automation}</div>
+                    </div>
+                    <div class="automation-progress" id="progress-${action.id}">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="progress-text">Auto-executing...</div>
                     </div>
                 `;
                 
@@ -2081,6 +2253,7 @@
             addVPNFeedItem('⚠️ ELEVATED THREAT: Suspicious geo-patterns detected from Russia', 'warning', 'VPNMonitor');
             addVPNFeedItem('🚫 Automated IP blocking: 5 failed auth attempts from 203.45.67.89', 'danger', 'VPNMonitor');
             addVPNFeedItem('🎯 Behavioral analysis: Anomalous traffic pattern flagged for review', 'warning', 'VPNMonitor');
+            addVPNFeedItem('🤖 Auto-execution enabled: Actions will execute automatically every 15 seconds', '', 'Main Agent');
         }
 
         function addVPNFeedItem(message, type = '', agent = '') {
@@ -2103,19 +2276,107 @@
             }
         }
 
+        // Auto-execution system
+        function startAutoExecution() {
+            if (autoExecutionInterval) clearInterval(autoExecutionInterval);
+            
+            autoExecutionInterval = setInterval(() => {
+                if (vpnAutoExecution && SentinelState.agentActive) {
+                    executeRandomAction();
+                }
+            }, 15000); // Execute every 15 seconds
+        }
+
+        function executeRandomAction() {
+            const actions = VPNConfigs.suggestedActions;
+            const actionIndex = Math.floor(Math.random() * actions.length);
+            const action = actions[actionIndex];
+            
+            executeActionAutomatically(action.id, actionIndex);
+        }
+
+        function executeActionAutomatically(actionId, index) {
+            const actionElement = document.getElementById(`action-${actionId}`);
+            const progressElement = document.getElementById(`progress-${actionId}`);
+            
+            if (!actionElement || !progressElement) return;
+            
+            // Mark as executing
+            actionElement.classList.add('auto-executing');
+            progressElement.classList.add('active');
+            
+            // Simulate progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 20 + 10;
+                const progressFill = progressElement.querySelector('.progress-fill');
+                const progressText = progressElement.querySelector('.progress-text');
+                
+                if (progressFill) {
+                    progressFill.style.width = Math.min(progress, 100) + '%';
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    completeActionExecution(actionId, index, actionElement, progressElement);
+                }
+            }, 500);
+        }
+
+        function completeActionExecution(actionId, index, actionElement, progressElement) {
+            const action = VPNConfigs.suggestedActions.find(a => a.id === actionId);
+            if (!action) return;
+            
+            // Complete execution
+            actionElement.classList.remove('auto-executing');
+            progressElement.classList.remove('active');
+            
+            // Reset progress for next execution
+            setTimeout(() => {
+                const progressFill = progressElement.querySelector('.progress-fill');
+                if (progressFill) progressFill.style.width = '0%';
+            }, 1000);
+            
+            // Add completion notification to feed
+            const subAgentCoord = getSubAgentCoordination(action);
+            addVPNFeedItem(`✅ Auto-executed: ${action.action} completed successfully`, 'encryption', 'Main Agent');
+            addVPNFeedItem(`🔗 ${subAgentCoord} - Action impact: ${getActionImpact(action)}`, '', 'VPNMonitor');
+            
+            // Notify chat if open
+            if (SentinelState.chatOpen && sentinelChat) {
+                sentinelChat.addMessage(`🤖 VPNMonitor: Auto-executed "${action.action}" successfully. ${subAgentCoord}. All VPN tunnels remain secure with hybrid encryption.`, false, 'system');
+            }
+        }
+
+        function executeActionManually(actionId) {
+            // Override automatic execution with manual command
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                const action = VPNConfigs.suggestedActions.find(a => a.id === actionId);
+                if (action) {
+                    sentinelChat?.addMessage(`Manual override requested for: "${action.action}". Stopping auto-execution for this action.`, true);
+                    setTimeout(() => {
+                        sentinelChat?.addMessage(`VPNMonitor: Manual execution initiated. ${getSubAgentCoordination(action)}. Estimated completion: ${action.estimated}. Use "override ${actionId}" to pause automation.`, false);
+                    }, 800);
+                }
+            }, 300);
+        }
+
         // Enhanced feed messages for SOC operations
         const socFeedMessages = [
-            { msg: '🔒 Certificate auto-renewal: VPN-CERT-' + Math.floor(Math.random() * 999 + 100), type: 'encryption', agent: 'VPNMonitor' },
-            { msg: '🌍 Geographic anomaly detected: ' + getRandomSuspiciousCountry() + ' access pattern unusual', type: 'warning', agent: 'VPNMonitor' },
-            { msg: '🔐 Quantum-safe key exchange completed for ' + Math.floor(Math.random() * 5 + 1) + ' tunnels', type: 'encryption', agent: 'VPNMonitor' },
-            { msg: '📊 Traffic analysis: ' + (Math.random() * 3 + 0.5).toFixed(1) + 'GB/hr average, +' + Math.floor(Math.random() * 50 + 10) + '% from baseline', type: '', agent: 'VPNMonitor' },
-            { msg: '🚫 Brute force attack blocked: ' + generateRandomIP() + ' (' + Math.floor(Math.random() * 20 + 5) + ' attempts)', type: 'danger', agent: 'VPNMonitor' },
-            { msg: '✅ SOC-2 compliance verification: All VPN logs properly encrypted and stored', type: '', agent: 'VPNMonitor' },
-            { msg: '⚡ Zero-trust validation: Device certificate chain verified for ' + Math.floor(Math.random() * 10 + 1) + ' endpoints', type: '', agent: 'VPNMonitor' },
-            { msg: '🔍 Behavioral analytics: User login pattern deviation detected - flagged for investigation', type: 'warning', agent: 'VPNMonitor' },
-            { msg: '🛡️ DPI bypass attempt detected and blocked from ' + generateRandomIP(), type: 'danger', agent: 'VPNMonitor' },
+            { msg: '🔒 Certificate auto-renewal: VPN-CERT-' + Math.floor(Math.random() * 999 + 100), type: 'encryption', agent: 'VPNMonitor → CertificateManager' },
+            { msg: '🌍 Geographic anomaly detected: ' + getRandomSuspiciousCountry() + ' access pattern unusual', type: 'warning', agent: 'VPNMonitor → ThreatScanner' },
+            { msg: '🔐 Quantum-safe key exchange completed for ' + Math.floor(Math.random() * 5 + 1) + ' tunnels', type: 'encryption', agent: 'VPNMonitor → EncryptionManager' },
+            { msg: '📊 Traffic analysis: ' + (Math.random() * 3 + 0.5).toFixed(1) + 'GB/hr average, +' + Math.floor(Math.random() * 50 + 10) + '% from baseline', type: '', agent: 'VPNMonitor → AnalyticsEngine' },
+            { msg: '🚫 Brute force attack blocked: ' + generateRandomIP() + ' (' + Math.floor(Math.random() * 20 + 5) + ' attempts)', type: 'danger', agent: 'VPNMonitor → DefenseOrchestrator' },
+            { msg: '✅ SOC-2 compliance verification: All VPN logs properly encrypted and stored', type: '', agent: 'VPNMonitor → ComplianceMonitor' },
+            { msg: '⚡ Zero-trust validation: Device certificate chain verified for ' + Math.floor(Math.random() * 10 + 1) + ' endpoints', type: '', agent: 'VPNMonitor → CertificateManager' },
+            { msg: '🔍 Behavioral analytics: User login pattern deviation detected - flagged for investigation', type: 'warning', agent: 'VPNMonitor → AnalyticsEngine' },
+            { msg: '🛡️ DPI bypass attempt detected and blocked from ' + generateRandomIP(), type: 'danger', agent: 'VPNMonitor → DefenseOrchestrator' },
             { msg: '📈 Performance metrics: Avg latency ' + Math.floor(Math.random() * 50 + 20) + 'ms, packet loss < 0.1%', type: '', agent: 'VPNMonitor' },
-            { msg: '🔒 Steganography detection: Suspicious payload patterns in tunnel ' + Math.floor(Math.random() * 99 + 1), type: 'warning', agent: 'VPNMonitor' },
+            { msg: '🔒 Steganography detection: Suspicious payload patterns in tunnel ' + Math.floor(Math.random() * 99 + 1), type: 'warning', agent: 'VPNMonitor → ThreatScanner' },
             { msg: '🎯 ML model updated: Threat detection accuracy improved to 99.' + Math.floor(Math.random() * 9 + 1) + '%', type: '', agent: 'VPNMonitor' }
         ];
 
@@ -2141,7 +2402,7 @@
 
             // Simulate certificate changes
             if (Math.random() > 0.95) {
-                const expiring = Math.max(0, Math.floor(Math.random() * 4));
+                const expiring = Math.max(0, Math.floor(Math.random() * 3));
                 animateValue('expiringCerts', expiring);
             }
         }
@@ -2167,9 +2428,9 @@
                 
                 // Add corresponding feed message
                 if (level.text === 'CRITICAL THREAT') {
-                    addVPNFeedItem('🚨 CRITICAL THREAT LEVEL: Multiple attack vectors detected - SOC escalation initiated', 'danger', 'VPNMonitor');
+                    addVPNFeedItem('🚨 CRITICAL THREAT LEVEL: Multiple attack vectors detected - SOC escalation initiated', 'danger', 'VPNMonitor → Main Agent');
                 } else if (level.text === 'HIGH THREAT') {
-                    addVPNFeedItem('⚠️ HIGH THREAT LEVEL: Coordinated attack patterns identified', 'warning', 'VPNMonitor');
+                    addVPNFeedItem('⚠️ HIGH THREAT LEVEL: Coordinated attack patterns identified', 'warning', 'VPNMonitor → ThreatScanner');
                 }
             }
         }
@@ -2219,13 +2480,17 @@
         }
 
         function getActionImpact(action) {
-            const impacts = ['Low Impact', 'Medium Impact', 'High Impact', 'Critical Impact'];
+            const impacts = ['Low Impact', 'Medium Impact', 'High Impact'];
             return impacts[Math.floor(Math.random() * impacts.length)];
         }
 
-        function getAutomationLevel(action) {
-            const levels = ['Manual', 'Semi-Automated', 'Fully Automated'];
-            return levels[Math.floor(Math.random() * levels.length)];
+        function getSubAgentCoordination(action) {
+            const coordinations = {
+                'action-001': 'VPNMonitor → CertificateManager → EncryptionManager',
+                'action-002': 'VPNMonitor → ThreatScanner → AnalyticsEngine',
+                'action-003': 'VPNMonitor → EncryptionDeployer → ComplianceMonitor'
+            };
+            return coordinations[action.id] || 'VPNMonitor → DefenseOrchestrator';
         }
 
         function getRandomSuspiciousCountry() {
@@ -2244,6 +2509,8 @@
 
         function animateValue(elementId, targetValue) {
             const element = document.getElementById(elementId);
+            if (!element) return;
+            
             const currentValue = parseInt(element.textContent);
             const increment = targetValue > currentValue ? 1 : -1;
             let value = currentValue;
@@ -2288,7 +2555,7 @@
 • Location: ${service.location}
 • Status: ${service.status.toUpperCase()}
 • SOC Alert Level: ${service.connections > 6 ? 'ELEVATED' : 'NORMAL'}
-• Certificate Status: Valid until ${new Date(Date.now() + 90 * 24 * 60 * 60 * 1000).toDateString()}`, false);
+• Sub-Agent Coordination: VPNMonitor → EncryptionManager → CertificateManager`, false);
                 }
             }, 300);
         }
@@ -2310,7 +2577,7 @@
 • Threat Score: ${threatScore}/10 ${threatScore > 7 ? '(HIGH RISK)' : threatScore > 4 ? '(MEDIUM RISK)' : '(LOW RISK)'}
 • Authentication: Multi-factor verified
 • Certificate: Valid (Hybrid signatures)
-• SOC Recommendation: ${threatScore > 7 ? 'Monitor closely' : 'Continue normal operation'}`, false);
+• Sub-Agent Status: ${threatScore > 7 ? 'ThreatScanner alerted' : 'Normal monitoring'}`, false);
                 }
             }, 300);
         }
@@ -2329,51 +2596,25 @@
 • Source IP: ${alert.clientIP}
 • Geographic Risk Score: ${geoScore}/10
 • Action Taken: ${alert.action}
-• Behavioral Pattern: ${alert.behaviorScore || Math.floor(Math.random() * 10) + 1}/10 risk
+• Behavioral Pattern: ${Math.floor(Math.random() * 10) + 1}/10 risk
 • Recommendation: ${getAlertRecommendation(alert)}
-• SOC Escalation: ${alert.severity === 'high' ? 'REQUIRED' : 'OPTIONAL'}
-• Next Steps: ${alert.severity === 'high' ? 'Immediate investigation and potential IP blocking' : 'Continue monitoring for patterns'}`, false);
+• Sub-Agent Coordination: VPNMonitor → ${alert.severity === 'high' ? 'ThreatScanner → DefenseOrchestrator' : 'AnalyticsEngine'}
+• Auto-Response: ${alert.severity === 'high' ? 'IP blocked automatically' : 'Monitoring increased'}`, false);
                 }
             }, 300);
         }
 
-        function executeAction(actionId) {
+        function showEncryptionStatus(type) {
             if (sentinelChat && !SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                const action = VPNConfigs.suggestedActions.find(a => a.id === actionId);
-                if (action) {
-                    sentinelChat?.addMessage(`VPNMonitor: Executing SOC Action - "${action.action}"...`, false, 'system');
-                    
-                    // Simulate multi-step execution
-                    setTimeout(() => {
-                        sentinelChat?.addMessage(`⚙️ Step 1/3: Preparing ${action.action.toLowerCase()}...`, false, 'system');
-                    }, 1000);
-                    
-                    setTimeout(() => {
-                        sentinelChat?.addMessage(`⚙️ Step 2/3: Applying security policies and hybrid encryption...`, false, 'system');
-                    }, 2000);
-                    
-                    setTimeout(() => {
-                        sentinelChat?.addMessage(`✅ Step 3/3: Action completed successfully!
-• Execution Time: ${action.estimated}
-• Impact Level: ${getActionImpact(action)}
-• SOC Status: All VPN tunnels remain secure
-• Hybrid Encryption: Maintained throughout process
-• Compliance: SOC-2 and NIST standards upheld
-• Next Action: ${action.priority === 'high' ? 'Monitor results closely' : 'Standard monitoring resumed'}`, false);
-                    }, 3000);
+                if (type === 'classical') {
+                    sentinelChat?.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all VPN tunnels. Performance: 2.1M ops/sec. Integration with VPNMonitor: Real-time key rotation every 24 hours.`, false);
+                } else {
+                    sentinelChat?.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) deployed on 100% of VPN connections. Future-proof against quantum attacks. VPNMonitor reports all tunnels hybrid-ready.`, false);
                 }
             }, 300);
-        }
-
-        function showAlertTooltip(alert, element) {
-            // Could implement tooltip showing additional alert context
-        }
-
-        function hideAlertTooltip() {
-            // Hide tooltip
         }
 
         // Global functions for compatibility
@@ -2390,8 +2631,55 @@
                 sendChatMessage();
             }
         };
-        window.showAgentShutdownModal = () => SentinelEventHandlers.showAgentShutdownModal();
-        window.handleLogout = () => handleLogout();
+        window.showAgentShutdownModal = () => document.getElementById('agentShutdownModal').style.display = 'flex';
+        window.closeModal = () => document.getElementById('agentShutdownModal').style.display = 'none';
+        window.closeModalOnOverlay = (e) => {if (e.target.classList.contains('modal-overlay')) closeModal();};
+        window.confirmAgentShutdown = () => {
+            SentinelState.agentActive = !SentinelState.agentActive;
+            
+            // Update UI elements
+            const agentStatus = document.querySelector('.agent-status');
+            const agentTitle = document.querySelector('.agent-title');
+            const agentStatusText = document.querySelector('.agent-status-text');
+            
+            if (SentinelState.agentActive) {
+                agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
+                agentStatus.style.borderColor = '#00ff88';
+                agentTitle.textContent = 'AI Agent Active';
+                agentTitle.style.color = 'var(--primary)';
+                agentStatusText.textContent = 'Autonomous with Manual Override';
+                
+                // Restart auto-execution
+                vpnAutoExecution = true;
+                startAutoExecution();
+                addVPNFeedItem('🤖 Main Agent resumed: Auto-execution enabled', '', 'Main Agent');
+            } else {
+                agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
+                agentStatus.style.borderColor = '#ffaa00';
+                agentTitle.textContent = 'AI Agent Paused';
+                agentTitle.style.color = '#ffaa00';
+                agentStatusText.textContent = 'Manual Control Only';
+                
+                // Stop auto-execution
+                vpnAutoExecution = false;
+                if (autoExecutionInterval) clearInterval(autoExecutionInterval);
+                addVPNFeedItem('⚠️ Main Agent paused: Manual control only', 'warning', 'Main Agent');
+            }
+            
+            closeModal();
+            
+            if (SentinelState.chatOpen && sentinelChat) {
+                const status = SentinelState.agentActive ? 'resumed autonomous operation with auto-execution' : 'switched to manual control mode';
+                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. VPNMonitor coordination ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
+            }
+        };
+        window.handleLogout = () => {
+            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your VPN connections autonomously.')) {
+                localStorage.removeItem('sentinel_auth');
+                localStorage.removeItem('sentinel_scale');
+                window.location.href = 'index.html';
+            }
+        };
     </script>
 </body>
 </html>
