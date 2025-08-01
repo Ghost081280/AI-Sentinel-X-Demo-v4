@@ -432,7 +432,7 @@ const EncryptionPlaybooks = [
         status: 'Active',
         agent: 'VPNMonitor → ThreatScanner'
     }
-};
+];
 
 // Scale-specific configurations for network module
 const ScaleConfigs = {
@@ -906,8 +906,8 @@ class SentinelChat {
             
             if (lowerCommand.includes('pricing') || lowerCommand.includes('cost') || lowerCommand.includes('license')) {
                 return `NetworkMapper: Current deployment: ${config.text}
-• License Fee: ${config.licenseFeeMo}/month
-• Endpoint Cost: ${config.endpointCostMo}/endpoint/month
+• License Fee: $${config.licenseFeeMo}/month
+• Endpoint Cost: $${config.endpointCostMo}/endpoint/month
 • Description: ${config.description}
 • Cost Model: You pay a base license fee plus per-endpoint charges for discovered internal assets.`;
             }
@@ -922,8 +922,8 @@ class SentinelChat {
         if (currentScale && ScaleConfigs[currentScale]) {
             const config = ScaleConfigs[currentScale];
             return `NetworkMapper: Endpoint pricing for ${config.text} tier:
-• License Fee: ${config.licenseFeeMo}/month (includes AI agent, threat detection, basic monitoring)
-• Internal Endpoint Discovery: ${config.endpointCostMo}/endpoint/month
+• License Fee: $${config.licenseFeeMo}/month (includes AI agent, threat detection, basic monitoring)
+• Internal Endpoint Discovery: $${config.endpointCostMo}/endpoint/month
 • You only pay for endpoints the agent discovers during internal scanning
 • Install the agent only where you need monitoring to control costs
 • Annual subscriptions include 20% discount on license fees`;
@@ -1029,8 +1029,8 @@ class SentinelChat {
 
         if (config) {
             statusText += `
-• License: ${config.licenseFeeMo}/month
-• Endpoint Rate: ${config.endpointCostMo}/endpoint/month`;
+• License: $${config.licenseFeeMo}/month
+• Endpoint Rate: $${config.endpointCostMo}/endpoint/month`;
         }
 
         return statusText;
@@ -1169,8 +1169,8 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
 • Type: ${currentScale.toUpperCase()}
 • Max Ranges: ${config.maxRanges}
 • Device Range: ${config.deviceRange[0]}-${config.deviceRange[1]}
-• License Fee: ${config.licenseFeeMo}/month
-• Endpoint Cost: ${config.endpointCostMo}/endpoint/month
+• License Fee: $${config.licenseFeeMo}/month
+• Endpoint Cost: $${config.endpointCostMo}/endpoint/month
 • Description: ${config.description}`;
                 }
                 return '[CLI] Scale: Not configured. Please select deployment type.';
@@ -1181,8 +1181,8 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
                 if (currentScale && ScaleConfigs[currentScale]) {
                     const config = ScaleConfigs[currentScale];
                     return `[CLI] ${config.text} Pricing:
-• License Fee: ${config.licenseFeeMo}/month
-• Endpoint Discovery: ${config.endpointCostMo}/endpoint/month
+• License Fee: $${config.licenseFeeMo}/month
+• Endpoint Discovery: $${config.endpointCostMo}/endpoint/month
 • Billing: Monthly based on discovered endpoints
 • Annual discount: 20% off license fees`;
                 }
