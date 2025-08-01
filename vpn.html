@@ -713,28 +713,32 @@
         .connection-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 15px;
+            gap: 15px;
         }
 
         .connection-device {
             font-weight: bold;
             color: var(--primary);
             font-size: 16px;
+            flex: 1;
         }
 
         .connection-status {
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 11px;
+            gap: 6px;
+            font-size: 10px;
             color: var(--success);
             font-weight: bold;
             text-transform: uppercase;
             background: rgba(0, 255, 136, 0.1);
-            padding: 4px 12px;
-            border-radius: 15px;
+            padding: 4px 10px;
+            border-radius: 12px;
             border: 1px solid var(--success);
+            white-space: nowrap;
+            flex-shrink: 0;
         }
 
         .connection-details {
@@ -807,10 +811,10 @@
             border: 1px solid var(--danger);
         }
 
-        /* Security Overview */
+        /* Security Overview - Realistic Numbers */
         .security-overview-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
         }
@@ -819,7 +823,7 @@
             background: rgba(0, 204, 255, 0.05);
             border: 1px solid rgba(0, 204, 255, 0.2);
             border-radius: 12px;
-            padding: 20px;
+            padding: 18px;
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -831,7 +835,7 @@
         }
 
         .overview-value {
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
             color: var(--secondary);
             margin-bottom: 8px;
@@ -839,19 +843,20 @@
         }
 
         .overview-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
+            line-height: 1.2;
         }
 
         .overview-trend {
-            font-size: 10px;
+            font-size: 9px;
             margin-top: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 3px;
         }
 
         .trend-up {
@@ -1058,151 +1063,129 @@
             border: 1px solid var(--secondary);
         }
 
-        /* Suggested Actions with Automation */
-        .actions-list {
-            display: flex;
-            flex-direction: column;
+        /* Automated Response Actions - Compact SOC Design */
+        .response-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 15px;
         }
 
-        .action-item {
+        .response-item {
             background: rgba(0, 255, 136, 0.05);
             border: 1px solid rgba(0, 255, 136, 0.2);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .action-item.auto-executing {
+        .response-item.auto-executing {
             background: rgba(0, 204, 255, 0.1);
             border-color: var(--secondary);
-            animation: autoExecutionPulse 2s ease-in-out infinite;
         }
 
-        @keyframes autoExecutionPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(0, 204, 255, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(0, 204, 255, 0.6); }
-        }
-
-        .action-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .action-item:hover::before {
-            left: 100%;
-        }
-
-        .action-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(0, 255, 136, 0.3);
+        .response-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 255, 136, 0.3);
             border-color: var(--primary);
         }
 
-        .action-header {
+        .response-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
-        .action-title {
+        .response-title {
             font-weight: bold;
             color: var(--primary);
-            font-size: 16px;
+            font-size: 14px;
         }
 
-        .action-priority {
-            padding: 6px 14px;
-            border-radius: 15px;
-            font-size: 10px;
+        .response-priority {
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .action-priority.high {
+        .response-priority.high {
             background: rgba(255, 0, 68, 0.2);
             color: var(--danger);
             border: 1px solid var(--danger);
         }
 
-        .action-priority.medium {
+        .response-priority.medium {
             background: rgba(255, 170, 0, 0.2);
             color: var(--warning);
             border: 1px solid var(--warning);
         }
 
-        .action-priority.low {
+        .response-priority.low {
             background: rgba(0, 204, 255, 0.2);
             color: var(--secondary);
             border: 1px solid var(--secondary);
         }
 
-        .action-description {
-            font-size: 14px;
+        .response-details {
+            font-size: 12px;
             color: var(--text-secondary);
-            margin-bottom: 15px;
-            line-height: 1.4;
+            margin-bottom: 10px;
+            line-height: 1.3;
         }
 
-        .action-footer {
+        .response-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 11px;
+            font-size: 10px;
         }
 
-        .action-estimate {
+        .response-eta {
             color: var(--text-primary);
             font-weight: bold;
         }
 
-        .action-impact {
+        .response-status {
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* Automation Progress Bar */
-        .automation-progress {
-            margin-top: 15px;
-            padding: 10px 0;
+        /* Compact Progress Bar */
+        .response-progress {
+            margin-top: 10px;
             display: none;
         }
 
-        .automation-progress.active {
+        .response-progress.active {
             display: block;
         }
 
-        .progress-bar {
+        .response-progress-bar {
             width: 100%;
-            height: 6px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
+            border-radius: 2px;
             overflow: hidden;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
-        .progress-fill {
+        .response-progress-fill {
             height: 100%;
             background: var(--gradient-1);
-            border-radius: 3px;
+            border-radius: 2px;
             transition: width 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+            box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
         }
 
-        .progress-text {
-            font-size: 11px;
+        .response-progress-text {
+            font-size: 9px;
             color: var(--secondary);
             text-align: center;
             text-transform: uppercase;
@@ -1878,10 +1861,10 @@
                     <div class="security-overview-grid">
                         <div class="overview-card">
                             <div class="overview-value" id="totalCerts">4</div>
-                            <div class="overview-label">VPN Certificates</div>
+                            <div class="overview-label">Total Certs</div>
                             <div class="overview-trend trend-stable">
-                                <span>→</span>
-                                <span>Stable</span>
+                                <span>✓</span>
+                                <span>Managed</span>
                             </div>
                         </div>
                         <div class="overview-card">
@@ -1889,15 +1872,15 @@
                             <div class="overview-label">Valid</div>
                             <div class="overview-trend trend-up">
                                 <span>↗</span>
-                                <span>Secure</span>
+                                <span>75%</span>
                             </div>
                         </div>
                         <div class="overview-card">
                             <div class="overview-value" id="expiringCerts">1</div>
-                            <div class="overview-label">Expiring</div>
+                            <div class="overview-label">Expiring Soon</div>
                             <div class="overview-trend trend-down">
-                                <span>↘</span>
-                                <span>30 Days</span>
+                                <span>⚠</span>
+                                <span>28 Days</span>
                             </div>
                         </div>
                         <div class="overview-card">
@@ -1908,6 +1891,22 @@
                                 <span>Clean</span>
                             </div>
                         </div>
+                        <div class="overview-card">
+                            <div class="overview-value">100%</div>
+                            <div class="overview-label">Tunnel Uptime</div>
+                            <div class="overview-trend trend-stable">
+                                <span>↗</span>
+                                <span>24/7</span>
+                            </div>
+                        </div>
+                        <div class="overview-card">
+                            <div class="overview-value">12</div>
+                            <div class="overview-label">Active Sessions</div>
+                            <div class="overview-trend trend-stable">
+                                <span>→</span>
+                                <span>Normal</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="protocols-list" id="protocolsList">
                         <!-- Protocols will be populated by JavaScript -->
@@ -1916,20 +1915,20 @@
             </div>
         </div>
 
-        <!-- Suggested Actions with Auto-Execution -->
+        <!-- Automated Response Actions -->
         <div class="section-card">
             <div class="section-header">
                 <h2 class="section-title">
-                    <span>🎯</span>
-                    <span>Suggested Actions</span>
+                    <span>🚀</span>
+                    <span>Automated Response Actions</span>
                 </h2>
                 <div class="section-status">
                     <div class="status-dot active"></div>
-                    <span>🤖 Auto-Execution Enabled</span>
+                    <span>🤖 Auto-Response Active</span>
                 </div>
             </div>
-            <div class="actions-list" id="actionsList">
-                <!-- Actions will be populated by JavaScript -->
+            <div class="response-actions" id="responseActions">
+                <!-- Response actions will be populated by JavaScript -->
             </div>
         </div>
 
@@ -2088,9 +2087,9 @@
                 card.innerHTML = `
                     <div class="connection-header">
                         <div class="connection-device">${conn.deviceName}</div>
-                        <div class="connection-status" style="margin-left: auto;">
+                        <div class="connection-status">
                             <div class="status-dot active"></div>
-                            <span>${conn.status.toUpperCase()}</span>
+                            <span>ACTIVE</span>
                         </div>
                     </div>
                     <div class="connection-details">
@@ -2161,11 +2160,10 @@
                 list.appendChild(item);
             });
 
-            // Update certificate counts with animation
-            const certStatus = VPNConfigs.securityOverview.certificateStatus;
-            animateValue('totalCerts', 4); // Realistic VPN cert count
-            animateValue('validCerts', 3);
-            animateValue('expiringCerts', 1);
+            // Update certificate counts with realistic, stable numbers
+            animateValueSlow('totalCerts', 4);
+            animateValueSlow('validCerts', 3);
+            animateValueSlow('expiringCerts', 1);
         }
 
         function populateAnomalyAlerts() {
@@ -2204,40 +2202,66 @@
         }
 
         function populateSuggestedActions() {
-            const list = document.getElementById('actionsList');
+            const list = document.getElementById('responseActions');
             list.innerHTML = '';
 
-            // Enhanced actions with proper sub-agent coordination
-            const enhancedActions = VPNConfigs.suggestedActions.map((action, index) => ({
-                ...action,
-                impact: getActionImpact(action),
-                automation: 'Auto-Execute',
-                subAgentCoordination: getSubAgentCoordination(action),
-                progress: 0,
-                executing: false
-            }));
+            // SOC-focused automated response actions
+            const responseActions = [
+                {
+                    id: 'response-001',
+                    title: 'Cert Auto-Renewal',
+                    details: 'VPNMonitor → CertificateManager',
+                    priority: 'high',
+                    eta: '2m',
+                    status: 'Auto-Execute'
+                },
+                {
+                    id: 'response-002', 
+                    title: 'Geo-Block Suspicious IPs',
+                    details: 'VPNMonitor → DefenseOrchestrator',
+                    priority: 'medium',
+                    eta: '30s',
+                    status: 'Auto-Execute'
+                },
+                {
+                    id: 'response-003',
+                    title: 'Traffic Pattern Analysis',
+                    details: 'VPNMonitor → AnalyticsEngine',
+                    priority: 'low',
+                    eta: '5m',
+                    status: 'Scheduled'
+                },
+                {
+                    id: 'response-004',
+                    title: 'Failed Auth IP Block',
+                    details: 'VPNMonitor → ThreatScanner',
+                    priority: 'high',
+                    eta: '15s',
+                    status: 'Auto-Execute'
+                }
+            ];
 
-            enhancedActions.forEach((action, index) => {
+            responseActions.forEach((action) => {
                 const item = document.createElement('div');
-                item.className = 'action-item';
-                item.id = `action-${action.id}`;
-                item.onclick = () => executeActionManually(action.id);
+                item.className = 'response-item';
+                item.id = `response-${action.id}`;
+                item.onclick = () => executeResponseManually(action.id);
                 
                 item.innerHTML = `
-                    <div class="action-header">
-                        <div class="action-title">${action.action}</div>
-                        <div class="action-priority ${action.priority}">${action.priority}</div>
+                    <div class="response-header">
+                        <div class="response-title">${action.title}</div>
+                        <div class="response-priority ${action.priority}">${action.priority}</div>
                     </div>
-                    <div class="action-description">${action.reason} - ${action.subAgentCoordination}</div>
-                    <div class="action-footer">
-                        <div class="action-estimate">⏱️ ${action.estimated}</div>
-                        <div class="action-impact">🤖 ${action.automation}</div>
+                    <div class="response-details">${action.details}</div>
+                    <div class="response-footer">
+                        <div class="response-eta">⏱️ ${action.eta}</div>
+                        <div class="response-status">🤖 ${action.status}</div>
                     </div>
-                    <div class="automation-progress" id="progress-${action.id}">
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 0%"></div>
+                    <div class="response-progress" id="progress-${action.id}">
+                        <div class="response-progress-bar">
+                            <div class="response-progress-fill" style="width: 0%"></div>
                         </div>
-                        <div class="progress-text">Auto-executing...</div>
+                        <div class="response-progress-text">Executing...</div>
                     </div>
                 `;
                 
@@ -2288,15 +2312,21 @@
         }
 
         function executeRandomAction() {
-            const actions = VPNConfigs.suggestedActions;
-            const actionIndex = Math.floor(Math.random() * actions.length);
-            const action = actions[actionIndex];
+            const responseActions = [
+                { id: 'response-001', title: 'Cert Auto-Renewal' },
+                { id: 'response-002', title: 'Geo-Block Suspicious IPs' },
+                { id: 'response-003', title: 'Traffic Pattern Analysis' },
+                { id: 'response-004', title: 'Failed Auth IP Block' }
+            ];
             
-            executeActionAutomatically(action.id, actionIndex);
+            const actionIndex = Math.floor(Math.random() * responseActions.length);
+            const action = responseActions[actionIndex];
+            
+            executeActionAutomatically(action.id, actionIndex, action.title);
         }
 
-        function executeActionAutomatically(actionId, index) {
-            const actionElement = document.getElementById(`action-${actionId}`);
+        function executeActionAutomatically(actionId, index, title) {
+            const actionElement = document.getElementById(`response-${actionId}`);
             const progressElement = document.getElementById(`progress-${actionId}`);
             
             if (!actionElement || !progressElement) return;
@@ -2305,12 +2335,11 @@
             actionElement.classList.add('auto-executing');
             progressElement.classList.add('active');
             
-            // Simulate progress
+            // Simulate realistic progress
             let progress = 0;
             const progressInterval = setInterval(() => {
-                progress += Math.random() * 20 + 10;
-                const progressFill = progressElement.querySelector('.progress-fill');
-                const progressText = progressElement.querySelector('.progress-text');
+                progress += Math.random() * 15 + 5; // Slower, more realistic progress
+                const progressFill = progressElement.querySelector('.response-progress-fill');
                 
                 if (progressFill) {
                     progressFill.style.width = Math.min(progress, 100) + '%';
@@ -2318,49 +2347,41 @@
                 
                 if (progress >= 100) {
                     clearInterval(progressInterval);
-                    completeActionExecution(actionId, index, actionElement, progressElement);
+                    completeActionExecution(actionId, index, actionElement, progressElement, title);
                 }
-            }, 500);
+            }, 800); // Slower updates for readability
         }
 
-        function completeActionExecution(actionId, index, actionElement, progressElement) {
-            const action = VPNConfigs.suggestedActions.find(a => a.id === actionId);
-            if (!action) return;
-            
+        function completeActionExecution(actionId, index, actionElement, progressElement, title) {
             // Complete execution
             actionElement.classList.remove('auto-executing');
             progressElement.classList.remove('active');
             
             // Reset progress for next execution
             setTimeout(() => {
-                const progressFill = progressElement.querySelector('.progress-fill');
+                const progressFill = progressElement.querySelector('.response-progress-fill');
                 if (progressFill) progressFill.style.width = '0%';
-            }, 1000);
+            }, 2000);
             
             // Add completion notification to feed
-            const subAgentCoord = getSubAgentCoordination(action);
-            addVPNFeedItem(`✅ Auto-executed: ${action.action} completed successfully`, 'encryption', 'Main Agent');
-            addVPNFeedItem(`🔗 ${subAgentCoord} - Action impact: ${getActionImpact(action)}`, '', 'VPNMonitor');
+            addVPNFeedItem(`✅ Auto-executed: ${title} completed successfully`, 'encryption', 'Main Agent');
             
             // Notify chat if open
             if (SentinelState.chatOpen && sentinelChat) {
-                sentinelChat.addMessage(`🤖 VPNMonitor: Auto-executed "${action.action}" successfully. ${subAgentCoord}. All VPN tunnels remain secure with hybrid encryption.`, false, 'system');
+                sentinelChat.addMessage(`🤖 VPNMonitor: Auto-executed "${title}" successfully. All VPN tunnels remain secure with hybrid encryption.`, false, 'system');
             }
         }
 
-        function executeActionManually(actionId) {
+        function executeResponseManually(actionId) {
             // Override automatic execution with manual command
             if (sentinelChat && !SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                const action = VPNConfigs.suggestedActions.find(a => a.id === actionId);
-                if (action) {
-                    sentinelChat?.addMessage(`Manual override requested for: "${action.action}". Stopping auto-execution for this action.`, true);
-                    setTimeout(() => {
-                        sentinelChat?.addMessage(`VPNMonitor: Manual execution initiated. ${getSubAgentCoordination(action)}. Estimated completion: ${action.estimated}. Use "override ${actionId}" to pause automation.`, false);
-                    }, 800);
-                }
+                sentinelChat?.addMessage(`Manual override requested for response action. Stopping automation for this cycle.`, true);
+                setTimeout(() => {
+                    sentinelChat?.addMessage(`VPNMonitor: Manual execution mode enabled. Use "resume auto" to restart automated responses.`, false);
+                }, 800);
             }, 300);
         }
 
@@ -2386,25 +2407,47 @@
         }
 
         function updateVPNMetrics() {
-            // Dynamic connection count updates
-            if (Math.random() > 0.85) {
+            // Slow, realistic updates that SOC can actually read
+            if (Math.random() > 0.92) { // Much less frequent updates
                 const currentConnections = VPNConfigs.liveConnections.length;
-                const newCount = Math.max(8, currentConnections + Math.floor(Math.random() * 3 - 1));
+                const newCount = Math.max(10, currentConnections + Math.floor(Math.random() * 3 - 1));
                 document.getElementById('activeConnections').textContent = newCount;
                 document.getElementById('connectionCount').textContent = newCount + ' Active';
             }
 
-            // Update alert count with severity indication
-            if (Math.random() > 0.9) {
-                const criticalAlerts = Math.max(1, Math.floor(Math.random() * 5 + 1));
+            // Update alert count occasionally
+            if (Math.random() > 0.95) {
+                const criticalAlerts = Math.max(1, Math.floor(Math.random() * 4 + 1));
                 document.getElementById('alertCount').textContent = criticalAlerts + ' Critical';
             }
 
-            // Simulate certificate changes
-            if (Math.random() > 0.95) {
-                const expiring = Math.max(0, Math.floor(Math.random() * 3));
-                animateValue('expiringCerts', expiring);
+            // Very rare certificate changes
+            if (Math.random() > 0.98) {
+                // Only change expiring count between 0-2 for realism
+                const expiring = Math.floor(Math.random() * 3);
+                animateValueSlow('expiringCerts', expiring);
             }
+        }
+
+        // Slower animation for readability
+        function animateValueSlow(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            const currentValue = parseInt(element.textContent);
+            if (currentValue === targetValue) return; // Don't animate if same value
+            
+            const increment = targetValue > currentValue ? 1 : -1;
+            let value = currentValue;
+            
+            const animation = setInterval(() => {
+                value += increment;
+                element.textContent = value;
+                
+                if (value === targetValue) {
+                    clearInterval(animation);
+                }
+            }, 300); // Much slower for readability
         }
 
         function simulateRealTimeThreats() {
