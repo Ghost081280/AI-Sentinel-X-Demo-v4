@@ -785,7 +785,6 @@
         AI Sentinel-X Hybrid • Build 2024.12.19 • 10 Sub-Agents Active
     </div>
 
-    <script src="shared.js"></script>
     <script>
         // Neural Network Background Animation
         function initNeuralBackground() {
@@ -968,16 +967,20 @@
             initMatrix();
             initNeuralBackground();
             
-            // Check if already authenticated
+            // FIXED: Only check if auth is valid and recent, don't auto-redirect
             const auth = localStorage.getItem('sentinel_auth');
             if (auth) {
-                const authData = JSON.parse(auth);
-                // Check if auth is less than 24 hours old
-                if (Date.now() - authData.timestamp < 24 * 60 * 60 * 1000) {
-                    window.location.href = 'dashboard.html';
-                } else {
+                try {
+                    const authData = JSON.parse(auth);
+                    // Check if auth is more than 24 hours old
+                    if (Date.now() - authData.timestamp > 24 * 60 * 60 * 1000) {
+                        localStorage.removeItem('sentinel_auth');
+                        localStorage.removeItem('sentinel_scale'); // Clean up old scale data
+                    }
+                } catch (e) {
+                    // Invalid auth data, remove it
                     localStorage.removeItem('sentinel_auth');
-                    localStorage.removeItem('sentinel_scale'); // Clean up old scale data
+                    localStorage.removeItem('sentinel_scale');
                 }
             }
             
