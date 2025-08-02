@@ -1882,7 +1882,10 @@
 
         // Dashboard page initialization
         document.addEventListener('DOMContentLoaded', () => {
-            initializeDashboard();
+            // Wait for shared.js to load first
+            setTimeout(() => {
+                initializeDashboard();
+            }, 100);
         });
 
         function initializeDashboard() {
@@ -1910,6 +1913,10 @@
                 
                 // Start auto-generation every 5 seconds for dashboard
                 activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
+            } else {
+                console.log('ActivityFeedManager not available yet, retrying...');
+                setTimeout(initializeDashboard, 200);
+                return;
             }
 
             // Initialize chat system
