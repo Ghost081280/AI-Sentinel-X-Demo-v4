@@ -755,7 +755,7 @@
             border: 1px solid var(--danger);
         }
 
-        /* Security Overview - Realistic Numbers */
+        /* Security Overview */
         .security-overview-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -1007,7 +1007,7 @@
             border: 1px solid var(--secondary);
         }
 
-        /* Automated Response Actions - Compact SOC Design */
+        /* Automated Response Actions */
         .response-actions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1101,7 +1101,6 @@
             letter-spacing: 1px;
         }
 
-        /* Compact Progress Bar */
         .response-progress {
             margin-top: 10px;
             display: none;
@@ -1136,7 +1135,7 @@
             letter-spacing: 1px;
         }
 
-        /* Activity Feed - Shared styling */
+        /* Activity Feed */
         .activity-feed {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -1205,6 +1204,12 @@
             margin-bottom: 12px;
             border-radius: 0 10px 10px 0;
             transition: all 0.3s ease;
+            animation: feedSlide 0.3s ease;
+        }
+
+        @keyframes feedSlide {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .feed-item:hover {
@@ -1730,7 +1735,7 @@
             </div>
         </div>
 
-        <!-- Main Content - Reorganized Layout -->
+        <!-- Main Content -->
         <div class="main-content">
             <!-- Left Column -->
             <div class="left-column">
@@ -1771,7 +1776,7 @@
 
             <!-- Right Column -->
             <div class="right-column">
-                <!-- Anomaly Alerts - Moved above Security Overview for better UX priority -->
+                <!-- Anomaly Alerts -->
                 <div class="section-card">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -1956,8 +1961,18 @@
         });
 
         function initializeVPNPage() {
+            // Initialize neural background first
+            if (typeof initNeuralBackground === 'function') {
+                initNeuralBackground();
+            }
+
+            // Initialize page context
+            if (typeof initializePageContext === 'function') {
+                initializePageContext();
+            }
+
             // Initialize VPN activity feed
-            if (activityFeedManager) {
+            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 // Initialize VPN feed
                 activityFeedManager.initializeFeed(vpnFeedId, 'vpn');
                 activityFeedManager.setFeedContainer(vpnFeedId, 'vpnActivityFeed');
@@ -1970,6 +1985,11 @@
                 
                 // Start auto-generation every 4 seconds for VPN feed
                 activityFeedManager.startAutoGeneration(vpnFeedId, 4000);
+            }
+
+            // Initialize chat system
+            if (typeof SentinelChat !== 'undefined') {
+                window.sentinelChat = new SentinelChat();
             }
 
             populateActiveServices();
@@ -1989,6 +2009,8 @@
 
         function populateActiveServices() {
             const grid = document.getElementById('servicesGrid');
+            if (!grid) return;
+            
             grid.innerHTML = '';
 
             // Get VPN configs from shared.js
@@ -2052,6 +2074,8 @@
 
         function populateLiveConnections() {
             const list = document.getElementById('connectionsList');
+            if (!list) return;
+            
             list.innerHTML = '';
 
             if (typeof VPNConfigs !== 'undefined' && VPNConfigs.liveConnections) {
@@ -2116,6 +2140,8 @@
 
         function populateSecurityOverview() {
             const list = document.getElementById('protocolsList');
+            if (!list) return;
+            
             list.innerHTML = '';
 
             if (typeof VPNConfigs !== 'undefined' && VPNConfigs.securityOverview && VPNConfigs.securityOverview.encryptionProtocols) {
@@ -2151,6 +2177,8 @@
 
         function populateAnomalyAlerts() {
             const list = document.getElementById('alertsList');
+            if (!list) return;
+            
             list.innerHTML = '';
 
             if (typeof VPNConfigs !== 'undefined' && VPNConfigs.anomalyAlerts) {
@@ -2188,6 +2216,8 @@
 
         function populateSuggestedActions() {
             const list = document.getElementById('responseActions');
+            if (!list) return;
+            
             list.innerHTML = '';
 
             // SOC-focused automated response actions
@@ -2259,7 +2289,7 @@
             if (autoExecutionInterval) clearInterval(autoExecutionInterval);
             
             autoExecutionInterval = setInterval(() => {
-                if (vpnAutoExecution && SentinelState.agentActive) {
+                if (vpnAutoExecution && typeof SentinelState !== 'undefined' && SentinelState.agentActive) {
                     executeRandomAction();
                 }
             }, 15000); // Execute every 15 seconds
@@ -2318,26 +2348,28 @@
             }, 2000);
             
             // Add completion notification to activity feed
-            if (activityFeedManager) {
+            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 activityFeedManager.addMessage(vpnFeedId, `✅ Auto-executed: ${title} completed successfully`, 'encryption', 'Main Agent');
             }
             
             // Notify chat if open
-            if (SentinelState.chatOpen && sentinelChat) {
-                sentinelChat.addMessage(`🤖 VPNMonitor: Auto-executed "${title}" successfully. All VPN tunnels remain secure with hybrid encryption.`, false, 'system');
+            if (typeof SentinelState !== 'undefined' && SentinelState.chatOpen && window.sentinelChat) {
+                window.sentinelChat.addMessage(`🤖 VPNMonitor: Auto-executed "${title}" successfully. All VPN tunnels remain secure with hybrid encryption.`, false, 'system');
             }
         }
 
         function executeResponseManually(actionId) {
             // Override automatic execution with manual command
-            if (sentinelChat && !SentinelState.chatOpen) {
-                sentinelChat.toggle();
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
             }
             setTimeout(() => {
-                sentinelChat?.addMessage(`Manual override requested for response action. Stopping automation for this cycle.`, true);
-                setTimeout(() => {
-                    sentinelChat?.addMessage(`VPNMonitor: Manual execution mode enabled. Use "resume auto" to restart automated responses.`, false);
-                }, 800);
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`Manual override requested for response action. Stopping automation for this cycle.`, true);
+                    setTimeout(() => {
+                        window.sentinelChat.addMessage(`VPNMonitor: Manual execution mode enabled. Use "resume auto" to restart automated responses.`, false);
+                    }, 800);
+                }
             }, 300);
         }
 
@@ -2348,14 +2380,20 @@
                 const newCount = Math.max(10, currentConnections + Math.floor(Math.random() * 3 - 1));
                 
                 // Update the sub-agent banner metric
-                document.getElementById('activeConnections').textContent = newCount;
+                const activeConnectionsEl = document.getElementById('activeConnections');
+                if (activeConnectionsEl) {
+                    activeConnectionsEl.textContent = newCount;
+                }
             }
 
             // Update alert count occasionally
             if (Math.random() > 0.95) {
                 const criticalAlerts = Math.max(1, Math.floor(Math.random() * 4 + 1));
-                document.getElementById('alertCount').textContent = criticalAlerts + ' Critical';
-                document.getElementById('securityAlerts').textContent = criticalAlerts;
+                const alertCountEl = document.getElementById('alertCount');
+                const securityAlertsEl = document.getElementById('securityAlerts');
+                
+                if (alertCountEl) alertCountEl.textContent = criticalAlerts + ' Critical';
+                if (securityAlertsEl) securityAlertsEl.textContent = criticalAlerts;
             }
 
             // Very rare certificate changes
@@ -2452,14 +2490,14 @@
         }
 
         function openServiceDetails(serviceId) {
-            if (sentinelChat && !SentinelState.chatOpen) {
-                sentinelChat.toggle();
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
             }
             setTimeout(() => {
-                if (typeof VPNConfigs !== 'undefined' && VPNConfigs.activeServices) {
+                if (typeof VPNConfigs !== 'undefined' && VPNConfigs.activeServices && window.sentinelChat) {
                     const service = VPNConfigs.activeServices.find(s => s.id === serviceId);
                     if (service) {
-                        sentinelChat?.addMessage(`VPNMonitor: Service Details - ${service.name}
+                        window.sentinelChat.addMessage(`VPNMonitor: Service Details - ${service.name}
 • Protocol: ${service.protocol} (Hybrid-Resistant)
 • Port: ${service.port} (Secured)
 • Active Connections: ${service.connections}
@@ -2474,15 +2512,15 @@
         }
 
         function openConnectionDetails(connectionId) {
-            if (sentinelChat && !SentinelState.chatOpen) {
-                sentinelChat.toggle();
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
             }
             setTimeout(() => {
-                if (typeof VPNConfigs !== 'undefined' && VPNConfigs.liveConnections) {
+                if (typeof VPNConfigs !== 'undefined' && VPNConfigs.liveConnections && window.sentinelChat) {
                     const conn = VPNConfigs.liveConnections.find(c => c.id === connectionId);
                     if (conn) {
                         const threatScore = calculateThreatScore(conn);
-                        sentinelChat?.addMessage(`VPNMonitor: Connection Analysis - ${conn.deviceName}
+                        window.sentinelChat.addMessage(`VPNMonitor: Connection Analysis - ${conn.deviceName}
 • Location: ${conn.city}, ${conn.country}
 • Protocol: ${conn.protocol} with Hybrid Encryption
 • Session Duration: ${conn.duration}
@@ -2498,15 +2536,15 @@
         }
 
         function openAlertDetails(alertId) {
-            if (sentinelChat && !SentinelState.chatOpen) {
-                sentinelChat.toggle();
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
             }
             setTimeout(() => {
-                if (typeof VPNConfigs !== 'undefined' && VPNConfigs.anomalyAlerts) {
+                if (typeof VPNConfigs !== 'undefined' && VPNConfigs.anomalyAlerts && window.sentinelChat) {
                     const alert = VPNConfigs.anomalyAlerts.find(a => a.id === alertId);
                     if (alert) {
                         const geoScore = calculateGeoRiskScore(alert);
-                        sentinelChat?.addMessage(`VPNMonitor: SOC Alert Analysis - ${alert.message}
+                        window.sentinelChat.addMessage(`VPNMonitor: SOC Alert Analysis - ${alert.message}
 • Severity: ${alert.severity.toUpperCase()} PRIORITY
 • Timestamp: ${alert.timestamp}
 • Source IP: ${alert.clientIP}
@@ -2522,21 +2560,23 @@
         }
 
         function showEncryptionStatus(type) {
-            if (sentinelChat && !SentinelState.chatOpen) {
-                sentinelChat.toggle();
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
             }
             setTimeout(() => {
-                if (type === 'classical') {
-                    sentinelChat?.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all VPN tunnels. Performance: 2.1M ops/sec. Integration with VPNMonitor: Real-time key rotation every 24 hours.`, false);
-                } else {
-                    sentinelChat?.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) deployed on 100% of VPN connections. Future-proof against quantum attacks. VPNMonitor reports all tunnels hybrid-ready.`, false);
+                if (window.sentinelChat) {
+                    if (type === 'classical') {
+                        window.sentinelChat.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all VPN tunnels. Performance: 2.1M ops/sec. Integration with VPNMonitor: Real-time key rotation every 24 hours.`, false);
+                    } else {
+                        window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) deployed on 100% of VPN connections. Future-proof against quantum attacks. VPNMonitor reports all tunnels hybrid-ready.`, false);
+                    }
                 }
             }, 300);
         }
 
         // Cleanup activity feed on page unload
         window.addEventListener('beforeunload', () => {
-            if (activityFeedManager) {
+            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 activityFeedManager.stopAutoGeneration(vpnFeedId);
             }
             if (autoExecutionInterval) {
@@ -2545,67 +2585,102 @@
         });
 
         // Global functions for compatibility
-        window.toggleChat = () => sentinelChat?.toggle();
+        window.toggleChat = () => {
+            if (window.sentinelChat) {
+                window.sentinelChat.toggle();
+            }
+        };
+        
         window.sendChatMessage = () => {
             const input = document.getElementById('aiChatInput');
-            if (input && input.value.trim()) {
-                sentinelChat?.sendMessage(input.value.trim());
+            if (input && input.value.trim() && window.sentinelChat) {
+                window.sentinelChat.sendMessage(input.value.trim());
                 input.value = '';
             }
         };
+        
         window.handleChatKeyPress = (e) => {
             if (e.key === 'Enter') {
                 sendChatMessage();
             }
         };
-        window.showAgentShutdownModal = () => document.getElementById('agentShutdownModal').style.display = 'flex';
-        window.closeModal = () => document.getElementById('agentShutdownModal').style.display = 'none';
-        window.closeModalOnOverlay = (e) => {if (e.target.classList.contains('modal-overlay')) closeModal();};
-        window.confirmAgentShutdown = () => {
-            SentinelState.agentActive = !SentinelState.agentActive;
-            
-            // Update UI elements
-            const agentStatus = document.querySelector('.agent-status');
-            const agentTitle = document.querySelector('.agent-title');
-            const agentStatusText = document.querySelector('.agent-status-text');
-            
-            if (SentinelState.agentActive) {
-                agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
-                agentStatus.style.borderColor = '#00ff88';
-                agentTitle.textContent = 'AI Agent Active';
-                agentTitle.style.color = 'var(--primary)';
-                agentStatusText.textContent = 'Autonomous with Manual Override';
-                
-                // Restart auto-execution and activity feed
-                vpnAutoExecution = true;
-                startAutoExecution();
-                if (activityFeedManager) {
-                    activityFeedManager.startAutoGeneration(vpnFeedId, 4000);
-                    activityFeedManager.addMessage(vpnFeedId, '🤖 Main Agent resumed: Auto-execution enabled', '', 'Main Agent');
-                }
-            } else {
-                agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
-                agentStatus.style.borderColor = '#ffaa00';
-                agentTitle.textContent = 'AI Agent Paused';
-                agentTitle.style.color = '#ffaa00';
-                agentStatusText.textContent = 'Manual Control Only';
-                
-                // Stop auto-execution and activity feed
-                vpnAutoExecution = false;
-                if (autoExecutionInterval) clearInterval(autoExecutionInterval);
-                if (activityFeedManager) {
-                    activityFeedManager.stopAutoGeneration(vpnFeedId);
-                    activityFeedManager.addMessage(vpnFeedId, '⚠️ Main Agent paused: Manual control only', 'warning', 'Main Agent');
-                }
-            }
-            
-            closeModal();
-            
-            if (SentinelState.chatOpen && sentinelChat) {
-                const status = SentinelState.agentActive ? 'resumed autonomous operation with auto-execution' : 'switched to manual control mode';
-                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. VPNMonitor coordination ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
+        
+        window.showAgentShutdownModal = () => {
+            const modal = document.getElementById('agentShutdownModal');
+            if (modal) modal.style.display = 'flex';
+        };
+        
+        window.closeModal = () => {
+            const modal = document.getElementById('agentShutdownModal');
+            if (modal) modal.style.display = 'none';
+        };
+        
+        window.closeModalOnOverlay = (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeModal();
             }
         };
+        
+        window.confirmAgentShutdown = () => {
+            if (typeof SentinelState !== 'undefined') {
+                SentinelState.agentActive = !SentinelState.agentActive;
+                
+                // Update UI elements
+                const agentStatus = document.querySelector('.agent-status');
+                const agentTitle = document.querySelector('.agent-title');
+                const agentStatusText = document.querySelector('.agent-status-text');
+                
+                if (SentinelState.agentActive) {
+                    if (agentStatus) {
+                        agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
+                        agentStatus.style.borderColor = '#00ff88';
+                    }
+                    if (agentTitle) {
+                        agentTitle.textContent = 'AI Agent Active';
+                        agentTitle.style.color = 'var(--primary)';
+                    }
+                    if (agentStatusText) {
+                        agentStatusText.textContent = 'Autonomous with Manual Override';
+                    }
+                    
+                    // Restart auto-execution and activity feed
+                    vpnAutoExecution = true;
+                    startAutoExecution();
+                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                        activityFeedManager.startAutoGeneration(vpnFeedId, 4000);
+                        activityFeedManager.addMessage(vpnFeedId, '🤖 Main Agent resumed: Auto-execution enabled', '', 'Main Agent');
+                    }
+                } else {
+                    if (agentStatus) {
+                        agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
+                        agentStatus.style.borderColor = '#ffaa00';
+                    }
+                    if (agentTitle) {
+                        agentTitle.textContent = 'AI Agent Paused';
+                        agentTitle.style.color = '#ffaa00';
+                    }
+                    if (agentStatusText) {
+                        agentStatusText.textContent = 'Manual Control Only';
+                    }
+                    
+                    // Stop auto-execution and activity feed
+                    vpnAutoExecution = false;
+                    if (autoExecutionInterval) clearInterval(autoExecutionInterval);
+                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                        activityFeedManager.stopAutoGeneration(vpnFeedId);
+                        activityFeedManager.addMessage(vpnFeedId, '⚠️ Main Agent paused: Manual control only', 'warning', 'Main Agent');
+                    }
+                }
+                
+                closeModal();
+                
+                if (SentinelState.chatOpen && window.sentinelChat) {
+                    const status = SentinelState.agentActive ? 'resumed autonomous operation with auto-execution' : 'switched to manual control mode';
+                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. VPNMonitor coordination ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
+                }
+            }
+        };
+        
         window.handleLogout = () => {
             if (confirm('Are you sure you want to logout? The AI agent will continue protecting your VPN connections autonomously.')) {
                 localStorage.removeItem('sentinel_auth');
