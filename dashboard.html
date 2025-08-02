@@ -340,13 +340,12 @@
             font-weight: bold;
         }
 
-        /* Enhanced System Status Banner - IMPROVED DESIGN */
+        /* System Status Banner with Rounded Corners */
         .system-status-banner {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.03) 50%, rgba(124, 58, 237, 0.05) 100%);
-            border: 2px solid;
-            border-image: var(--gradient-hybrid) 1;
-            border-radius: 15px;
-            padding: 20px 30px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px 35px;
             margin-bottom: 30px;
             backdrop-filter: blur(20px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -376,23 +375,29 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 30px;
+            gap: 40px;
             flex-wrap: wrap;
         }
 
         .banner-stat {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 8px 16px;
+            gap: 15px;
+            padding: 12px 20px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 25px;
             border: 1px solid rgba(0, 255, 136, 0.2);
             backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .banner-stat:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .banner-stat-icon {
-            font-size: 20px;
+            font-size: 24px;
             filter: drop-shadow(0 0 6px currentColor);
         }
 
@@ -403,14 +408,14 @@
         }
 
         .banner-stat-value {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             color: var(--primary);
             line-height: 1;
         }
 
         .banner-stat-label {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -437,13 +442,14 @@
             gap: 25px;
         }
 
-        /* AI Agent Command Center - V3 Style */
+        /* AI Agent Command Center */
         .agent-command-center {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 25px;
             backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
         .command-center-header {
@@ -463,11 +469,11 @@
             letter-spacing: 1px;
         }
 
-        /* Main Agent Card - V3 Style */
+        /* Main Agent Card */
         .main-agent-card {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.03) 0%, rgba(0, 204, 255, 0.02) 100%);
             border: 1px solid var(--primary);
-            border-radius: 12px;
+            border-radius: 15px;
             padding: 20px;
             margin-bottom: 20px;
             cursor: pointer;
@@ -554,7 +560,7 @@
             font-style: italic;
         }
 
-        /* Sub-Agents Grid - V3 Style */
+        /* Sub-Agents Grid */
         .sub-agents-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -564,7 +570,7 @@
         .sub-agent-card {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.01) 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
+            border-radius: 15px;
             padding: 20px;
             transition: all 0.3s ease;
             cursor: pointer;
@@ -652,12 +658,13 @@
         .security-feed {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 25px;
             height: 400px;
             display: flex;
             flex-direction: column;
             backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
         .feed-header {
@@ -747,11 +754,11 @@
             font-style: italic;
         }
 
-        /* NEW: Global Intelligence Module - Replaced Advanced Operations Center */
+        /* Global Intelligence Network Module */
         .global-intel-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 25px;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -819,7 +826,7 @@
         .intel-item {
             background: rgba(0, 204, 255, 0.05);
             border: 1px solid rgba(0, 204, 255, 0.2);
-            border-radius: 10px;
+            border-radius: 12px;
             padding: 15px;
             display: flex;
             align-items: center;
@@ -873,26 +880,27 @@
             box-shadow: 0 0 8px var(--warning);
         }
 
-        /* Enhanced System Metrics */
-        .system-metrics {
+        /* Performance Modules - VPN-style Layout */
+        .performance-modules {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
-        .metric-card {
+        .performance-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 15px;
+            border-radius: 20px;
             padding: 25px;
-            text-align: center;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .metric-card::before {
+        .performance-module::before {
             content: '';
             position: absolute;
             top: 0;
@@ -904,60 +912,107 @@
             transition: opacity 0.3s ease;
         }
 
-        .metric-card:hover::before {
+        .performance-module:hover::before {
             opacity: 1;
         }
 
-        .metric-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.15);
+        .performance-module:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
         }
 
-        .metric-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 6px currentColor);
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
             position: relative;
             z-index: 1;
+        }
+
+        .module-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .module-icon {
+            font-size: 24px;
+            filter: drop-shadow(0 0 6px currentColor);
+        }
+
+        .module-status {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .module-status.optimal {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .module-status.warning {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .module-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .metric-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .metric-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+            border-color: rgba(0, 255, 136, 0.3);
         }
 
         .metric-value {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 8px;
-            text-shadow: 0 0 15px currentColor;
-            position: relative;
-            z-index: 1;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px currentColor;
         }
 
         .metric-label {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .metric-detail {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-top: 8px;
-            line-height: 1.3;
-            position: relative;
-            z-index: 1;
         }
 
         .metric-trend {
+            font-size: 11px;
+            margin-top: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 4px;
-            margin-top: 5px;
-            font-size: 10px;
-            position: relative;
-            z-index: 1;
         }
 
         .trend-up {
@@ -1254,6 +1309,10 @@
             .sub-agents-grid {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
+
+            .performance-modules {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1269,10 +1328,6 @@
             .nav-tabs {
                 overflow-x: scroll;
                 -webkit-overflow-scrolling: touch;
-            }
-            
-            .system-metrics {
-                grid-template-columns: repeat(2, 1fr);
             }
             
             .ai-chat-window {
@@ -1291,24 +1346,32 @@
             }
 
             .banner-content {
-                gap: 15px;
+                gap: 20px;
             }
 
             .banner-stat {
-                padding: 6px 12px;
-                gap: 8px;
+                padding: 8px 16px;
+                gap: 12px;
             }
 
             .banner-stat-icon {
-                font-size: 16px;
+                font-size: 20px;
             }
 
             .banner-stat-value {
-                font-size: 14px;
+                font-size: 16px;
             }
 
             .banner-stat-label {
-                font-size: 10px;
+                font-size: 11px;
+            }
+
+            .performance-modules {
+                grid-template-columns: 1fr;
+            }
+
+            .module-metrics {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -1352,7 +1415,7 @@
 
     <!-- Container -->
     <div class="container">
-        <!-- Header with rounded bottom corners -->
+        <!-- Header -->
         <header class="header">
             <div class="header-content">
                 <div class="header-left">
@@ -1436,16 +1499,9 @@
             </a>
         </nav>
 
-        <!-- IMPROVED System Status Banner -->
+        <!-- System Status Banner -->
         <div class="system-status-banner">
             <div class="banner-content">
-                <div class="banner-stat">
-                    <div class="banner-stat-icon">🤖</div>
-                    <div class="banner-stat-content">
-                        <div class="banner-stat-value">10 Agents</div>
-                        <div class="banner-stat-label">Sub-Agents Online</div>
-                    </div>
-                </div>
                 <div class="banner-stat">
                     <div class="banner-stat-icon">🛡️</div>
                     <div class="banner-stat-content">
@@ -1474,6 +1530,13 @@
                         <div class="banner-stat-label">Connections</div>
                     </div>
                 </div>
+                <div class="banner-stat">
+                    <div class="banner-stat-icon">🛰️</div>
+                    <div class="banner-stat-content">
+                        <div class="banner-stat-value">Global Intel</div>
+                        <div class="banner-stat-label">Network Sync</div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -1481,7 +1544,7 @@
         <div class="dashboard-grid">
             <!-- Left Column -->
             <div class="left-column">
-                <!-- AI Agent Command Center - V3 Style -->
+                <!-- AI Agent Command Center -->
                 <div class="agent-command-center">
                     <div class="command-center-header">
                         <h2 class="command-center-title">AI Agent Command Center</h2>
@@ -1526,7 +1589,7 @@
                         <div class="sub-agents-subtitle">Specialized AI modules coordinated by Main Agent • VPNMonitor now active</div>
                     </div>
                     
-                    <!-- Sub-Agents - V3 Style -->
+                    <!-- Sub-Agents Grid -->
                     <div class="sub-agents-grid" id="subAgentsGrid">
                         <!-- Sub-agents will be populated by JavaScript from shared.js -->
                     </div>
@@ -1549,7 +1612,7 @@
                     </div>
                 </div>
 
-                <!-- NEW: Global Intelligence Network - REPLACED Advanced Operations Center -->
+                <!-- Global Intelligence Network Module -->
                 <div class="global-intel-module">
                     <div class="intel-header">
                         <h2 class="intel-title">
@@ -1612,66 +1675,153 @@
             </div>
         </div>
 
-        <!-- Enhanced System Metrics -->
-        <div class="system-metrics">
-            <div class="metric-card">
-                <div class="metric-icon">🎯</div>
-                <div class="metric-value" id="threatCount">7</div>
-                <div class="metric-label">Active Threats</div>
-                <div class="metric-detail">2 critical, 3 high, 2 medium severity</div>
-                <div class="metric-trend trend-down">
-                    <span>↘</span>
-                    <span>-12% from yesterday</span>
+        <!-- Performance Modules -->
+        <div class="performance-modules">
+            <!-- Threat Intelligence Module -->
+            <div class="performance-module">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">🎯</span>
+                        <span>Threat Intelligence</span>
+                    </div>
+                    <div class="module-status optimal">Optimal</div>
+                </div>
+                <div class="module-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value" id="threatCount">7</div>
+                        <div class="metric-label">Active Threats</div>
+                        <div class="metric-trend trend-down">
+                            <span>↘</span>
+                            <span>-12%</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" id="blockedCount">12.4K</div>
+                        <div class="metric-label">Attacks Blocked</div>
+                        <div class="metric-trend trend-up">
+                            <span>↗</span>
+                            <span>+15%</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">99.8%</div>
+                        <div class="metric-label">Detection Rate</div>
+                        <div class="metric-trend trend-stable">
+                            <span>→</span>
+                            <span>Stable</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="metric-card">
-                <div class="metric-icon">🖥️</div>
-                <div class="metric-value" id="deviceCountMetric">247</div>
-                <div class="metric-label">Protected Devices</div>
-                <div class="metric-detail">89% servers, 11% endpoints • All encrypted</div>
-                <div class="metric-trend trend-up">
-                    <span>↗</span>
-                    <span>+3 new devices today</span>
+
+            <!-- Network Security Module -->
+            <div class="performance-module">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">🌐</span>
+                        <span>Network Security</span>
+                    </div>
+                    <div class="module-status optimal">Optimal</div>
+                </div>
+                <div class="module-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value" id="deviceCountMetric">247</div>
+                        <div class="metric-label">Protected Devices</div>
+                        <div class="metric-trend trend-up">
+                            <span>↗</span>
+                            <span>+3 today</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">99.98%</div>
+                        <div class="metric-label">Uptime</div>
+                        <div class="metric-trend trend-stable">
+                            <span>→</span>
+                            <span>847 days</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">0.3s</div>
+                        <div class="metric-label">Response Time</div>
+                        <div class="metric-trend trend-stable">
+                            <span>→</span>
+                            <span>Optimal</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="metric-card">
-                <div class="metric-icon">⏱️</div>
-                <div class="metric-value" id="uptime">99.98%</div>
-                <div class="metric-label">System Uptime</div>
-                <div class="metric-detail">847 days continuous operation</div>
-                <div class="metric-trend trend-stable">
-                    <span>→</span>
-                    <span>Above SLA target</span>
+
+            <!-- Encryption Performance Module -->
+            <div class="performance-module">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">🔐</span>
+                        <span>Encryption Performance</span>
+                    </div>
+                    <div class="module-status optimal">Optimal</div>
+                </div>
+                <div class="module-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value" id="encryptionOps">2.1M</div>
+                        <div class="metric-label">Crypto Ops/Sec</div>
+                        <div class="metric-trend trend-stable">
+                            <span>→</span>
+                            <span>Optimal</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value" id="deploymentCount">47</div>
+                        <div class="metric-label">Deployments Today</div>
+                        <div class="metric-trend trend-up">
+                            <span>↗</span>
+                            <span>Above avg</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Key Rotation</div>
+                        <div class="metric-trend trend-stable">
+                            <span>→</span>
+                            <span>Scheduled</span>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="metric-card">
-                <div class="metric-icon">🛡️</div>
-                <div class="metric-value" id="blockedCount">12.4K</div>
-                <div class="metric-label">Attacks Blocked</div>
-                <div class="metric-detail">Today: 2.8K SQL inj, 1.2K DDoS, 8.4K other</div>
-                <div class="metric-trend trend-up">
-                    <span>↗</span>
-                    <span>+15% increase detected</span>
+
+            <!-- AI Processing Module -->
+            <div class="performance-module">
+                <div class="module-header">
+                    <div class="module-title">
+                        <span class="module-icon">🧠</span>
+                        <span>AI Processing</span>
+                    </div>
+                    <div class="module-status optimal">Optimal</div>
                 </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">🔐</div>
-                <div class="metric-value" id="encryptionOps">2.1M</div>
-                <div class="metric-label">Crypto Ops/Sec</div>
-                <div class="metric-detail">AES-256 + Kyber-1024 hybrid mode</div>
-                <div class="metric-trend trend-stable">
-                    <span>→</span>
-                    <span>Optimal performance</span>
-                </div>
-            </div>
-            <div class="metric-card">
-                <div class="metric-icon">🚀</div>
-                <div class="metric-value" id="deploymentCount">47</div>
-                <div class="metric-label">Deployments Today</div>
-                <div class="metric-detail">32 encryption, 8 patches, 7 configs</div>
-                <div class="metric-trend trend-up">
-                    <span>↗</span>
-                    <span>Above daily average</span>
+                <div class="module-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value" id="decisionsPerMinCard">2.4K</div>
+                        <div class="metric-label">Decisions/Min</div>
+                        <div class="metric-trend trend-up">
+                            <span>↗</span>
+                            <span>+8%</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">99.8%</div>
+                        <div class="metric-label">Model Accuracy</div>
+                        <div class="metric-trend trend-stable">
+                            <span>→</span>
+                            <span>Optimal</span>
+                        </div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">10</div>
+                        <div class="metric-label">Agents Online</div>
+                        <div class="metric-trend trend-stable">
+                            <span>→</span>
+                            <span>100%</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1923,6 +2073,12 @@
             const decisionsEl = document.getElementById('decisionsPerMin');
             const decisions = 2.3 + Math.random() * 0.3;
             decisionsEl.textContent = decisions.toFixed(1) + 'K';
+
+            // Update decisions per minute card
+            const decisionsCardEl = document.getElementById('decisionsPerMinCard');
+            if (decisionsCardEl) {
+                decisionsCardEl.textContent = decisions.toFixed(1) + 'K';
+            }
 
             // Update deployment count
             const deploymentEl = document.getElementById('deploymentCount');
