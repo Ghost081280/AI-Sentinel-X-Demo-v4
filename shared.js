@@ -1,6 +1,6 @@
 /**
  * AI Sentinel-X Shared JavaScript Library - Hybrid V2.2
- * Enhanced modular architecture with new encryption sub-agents
+ * Enhanced modular architecture with VPNMonitor and shared activity feeds
  */
 
 // Version and configuration
@@ -24,11 +24,12 @@ const SentinelState = {
         network: '/api/v2/network',
         encryption: '/api/v2/encryption',
         analytics: '/api/v2/analytics',
-        compliance: '/api/v2/compliance'
+        compliance: '/api/v2/compliance',
+        vpn: '/api/v2/vpn'
     }
 };
 
-// Enhanced sub-agent configurations including new encryption agents
+// Enhanced sub-agent configurations including VPNMonitor
 const SubAgentConfigs = {
     threatScanner: {
         name: 'ThreatScanner',
@@ -102,8 +103,351 @@ const SubAgentConfigs = {
         activity: 'SOC2/ISO27001 verified',
         link: 'analytics.html',
         status: 'Active'
+    },
+    // VPNMonitor sub-agent
+    vpnMonitor: {
+        name: 'VPNMonitor',
+        icon: '🔒',
+        description: 'VPN security monitoring',
+        activity: '12 active connections',
+        link: 'vpn.html',
+        status: 'Active'
     }
 };
+
+// VPN Configurations for VPNMonitor
+const VPNConfigs = {
+    activeServices: [
+        {
+            id: 'openvpn-main',
+            name: 'OpenVPN Main Gateway',
+            protocol: 'OpenVPN',
+            port: 1194,
+            status: 'active',
+            connections: 8,
+            encryption: 'AES-256-GCM + Kyber-1024',
+            location: 'Primary DC'
+        },
+        {
+            id: 'wireguard-mobile',
+            name: 'WireGuard Mobile',
+            protocol: 'WireGuard',
+            port: 51820,
+            status: 'active',
+            connections: 4,
+            encryption: 'ChaCha20-Poly1305 + SPHINCS+',
+            location: 'Mobile Gateway'
+        },
+        {
+            id: 'ipsec-site2site',
+            name: 'IPSec Site-to-Site',
+            protocol: 'IPSec',
+            port: 500,
+            status: 'active',
+            connections: 1,
+            encryption: 'AES-256-CBC + Dilithium-3',
+            location: 'Remote Office'
+        }
+    ],
+    liveConnections: [
+        {
+            id: 'conn-001',
+            deviceName: 'LAPTOP-DEV-001',
+            clientIP: '10.8.0.15',
+            serverIP: '203.45.67.89',
+            city: 'San Francisco',
+            country: 'United States',
+            protocol: 'OpenVPN',
+            duration: '2h 45m',
+            bytesIn: '1.2 GB',
+            bytesOut: '456 MB'
+        },
+        {
+            id: 'conn-002',
+            deviceName: 'MOBILE-ENG-047',
+            clientIP: '10.8.0.23',
+            serverIP: '203.45.67.89',
+            city: 'London',
+            country: 'United Kingdom',
+            protocol: 'WireGuard',
+            duration: '1h 12m',
+            bytesIn: '890 MB',
+            bytesOut: '234 MB'
+        },
+        {
+            id: 'conn-003',
+            deviceName: 'WORKSTATION-SEC-12',
+            clientIP: '10.8.0.45',
+            serverIP: '203.45.67.89',
+            city: 'Tokyo',
+            country: 'Japan',
+            protocol: 'OpenVPN',
+            duration: '4h 22m',
+            bytesIn: '2.1 GB',
+            bytesOut: '789 MB'
+        },
+        {
+            id: 'conn-004',
+            deviceName: 'REMOTE-OFFICE-GW',
+            clientIP: '172.16.1.1',
+            serverIP: '203.45.67.89',
+            city: 'Frankfurt',
+            country: 'Germany',
+            protocol: 'IPSec',
+            duration: '48h 15m',
+            bytesIn: '15.2 GB',
+            bytesOut: '12.8 GB'
+        }
+    ],
+    securityOverview: {
+        encryptionProtocols: [
+            { name: 'AES-256-GCM', status: 'secure', usage: '85%' },
+            { name: 'ChaCha20-Poly1305', status: 'secure', usage: '65%' },
+            { name: 'Kyber-1024', status: 'future-proof', usage: '90%' },
+            { name: 'Dilithium-3', status: 'future-proof', usage: '75%' },
+            { name: 'SPHINCS+', status: 'future-proof', usage: '45%' }
+        ]
+    },
+    anomalyAlerts: [
+        {
+            id: 'alert-001',
+            message: 'Multiple failed authentication attempts detected',
+            clientIP: '185.234.72.45',
+            action: 'IP blocked automatically',
+            severity: 'high',
+            timestamp: new Date(Date.now() - 15 * 60 * 1000),
+            type: 'multiple-failures'
+        },
+        {
+            id: 'alert-002',
+            message: 'Unusual traffic spike from new geographic location',
+            clientIP: '203.189.45.123',
+            action: 'Enhanced monitoring activated',
+            severity: 'medium',
+            timestamp: new Date(Date.now() - 45 * 60 * 1000),
+            type: 'new-country'
+        },
+        {
+            id: 'alert-003',
+            message: 'Certificate expiration warning for mobile gateway',
+            clientIP: 'N/A',
+            action: 'Auto-renewal scheduled',
+            severity: 'low',
+            timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
+            type: 'cert-expiry'
+        }
+    ]
+};
+
+// Shared Activity Feed System
+class ActivityFeedManager {
+    constructor() {
+        this.feeds = new Map();
+        this.messageTemplates = {
+            dashboard: [
+                { msg: '🤖 Main Agent: Coordinating {subAgentCount} sub-agents with {accuracy}% ML accuracy', type: '', agent: 'Main Agent' },
+                { msg: '🛡️ Global threat correlation: {threatCount} active threats across all modules', type: 'warning', agent: 'ThreatScanner' },
+                { msg: '🌐 Network discovery: {deviceCount} devices monitored with hybrid encryption', type: '', agent: 'NetworkMapper' },
+                { msg: '🔐 Encryption deployment: {deploymentCount} modules active across infrastructure', type: 'encryption', agent: 'EncryptionManager' },
+                { msg: '📊 Analytics processing: {metricsCount} metrics/hour with predictive models active', type: '', agent: 'AnalyticsEngine' },
+                { msg: '🔒 VPN security: {vpnConnections} connections monitored by VPNMonitor sub-agent', type: '', agent: 'VPNMonitor' },
+                { msg: '✅ Compliance check: {complianceScore}% average across SOC2, ISO27001, NIST frameworks', type: '', agent: 'ComplianceMonitor' },
+                { msg: '📜 Certificate management: {certCount} certificates monitored, {expiringCount} expiring soon', type: 'warning', agent: 'CertificateManager' },
+                { msg: '⚔️ Defense coordination: {honeypotCount} honeypots active, {attacksBlocked} attacks neutralized', type: '', agent: 'DefenseOrchestrator' },
+                { msg: '🔧 Deployment status: {deploymentsToday} encryption deployments completed today', type: 'encryption', agent: 'EncryptionDeployer' }
+            ],
+            vpn: [
+                { msg: '🔒 VPN tunnel established: {protocol} connection from {location}', type: '', agent: 'VPNMonitor' },
+                { msg: '🌍 Geographic anomaly: Suspicious access pattern from {suspiciousCountry}', type: 'warning', agent: 'VPNMonitor → ThreatScanner' },
+                { msg: '🔐 Hybrid key exchange: {tunnelCount} tunnels upgraded with post-quantum algorithms', type: 'encryption', agent: 'VPNMonitor → EncryptionManager' },
+                { msg: '📊 Traffic analysis: {trafficVolume}GB/hr average, {percentChange}% from baseline', type: '', agent: 'VPNMonitor → AnalyticsEngine' },
+                { msg: '🚫 Brute force blocked: {failedAttempts} attempts from {attackerIP}', type: 'danger', agent: 'VPNMonitor → DefenseOrchestrator' },
+                { msg: '✅ Compliance verification: VPN logs encrypted and SOC-2 compliant', type: '', agent: 'VPNMonitor → ComplianceMonitor' },
+                { msg: '⚡ Certificate validation: Device cert chain verified for {deviceCount} endpoints', type: '', agent: 'VPNMonitor → CertificateManager' },
+                { msg: '🎯 Behavioral detection: Anomalous user pattern flagged for investigation', type: 'warning', agent: 'VPNMonitor → AnalyticsEngine' },
+                { msg: '🛡️ DPI bypass attempt blocked from {attackerIP}', type: 'danger', agent: 'VPNMonitor → DefenseOrchestrator' },
+                { msg: '📈 Performance metrics: Avg latency {latency}ms, packet loss < 0.1%', type: '', agent: 'VPNMonitor' },
+                { msg: '🔒 Steganography detection: Suspicious patterns in tunnel {tunnelId}', type: 'warning', agent: 'VPNMonitor → ThreatScanner' },
+                { msg: '🎯 ML model update: VPN threat detection accuracy improved to {accuracy}%', type: '', agent: 'VPNMonitor' }
+            ],
+            threats: [
+                { msg: '🛡️ Threat signature update: {newSignatures} patterns deployed globally', type: '', agent: 'ThreatScanner' },
+                { msg: '⚠️ Critical threat detected: {threatType} targeting {targetSystem}', type: 'danger', agent: 'ThreatScanner' },
+                { msg: '🔍 Behavioral analysis: {anomalyCount} anomalies detected in last hour', type: 'warning', agent: 'ThreatScanner → AnalyticsEngine' },
+                { msg: '🚫 Auto-quarantine: {quarantinedIPs} IPs isolated by DefenseOrchestrator', type: 'danger', agent: 'ThreatScanner → DefenseOrchestrator' },
+                { msg: '📊 ML confidence: {confidence}% accuracy in threat classification', type: '', agent: 'ThreatScanner' }
+            ]
+        };
+    }
+
+    initializeFeed(feedId, feedType = 'dashboard') {
+        if (!this.feeds.has(feedId)) {
+            this.feeds.set(feedId, {
+                type: feedType,
+                messages: [],
+                maxMessages: 25,
+                autoGenerate: true,
+                container: null
+            });
+        }
+        return this.feeds.get(feedId);
+    }
+
+    setFeedContainer(feedId, containerId) {
+        const feed = this.feeds.get(feedId);
+        if (feed) {
+            feed.container = document.getElementById(containerId);
+        }
+    }
+
+    addMessage(feedId, message, type = '', agent = '') {
+        const feed = this.feeds.get(feedId);
+        if (!feed) return;
+
+        const messageObj = {
+            id: Date.now() + Math.random(),
+            message,
+            type,
+            agent,
+            timestamp: new Date()
+        };
+
+        feed.messages.unshift(messageObj);
+
+        // Limit message history
+        if (feed.messages.length > feed.maxMessages) {
+            feed.messages = feed.messages.slice(0, feed.maxMessages);
+        }
+
+        this.renderFeed(feedId);
+    }
+
+    generateRandomMessage(feedId) {
+        const feed = this.feeds.get(feedId);
+        if (!feed || !feed.autoGenerate) return;
+
+        const templates = this.messageTemplates[feed.type] || this.messageTemplates.dashboard;
+        const template = templates[Math.floor(Math.random() * templates.length)];
+        
+        const message = this.processMessageTemplate(template.msg, feed.type);
+        this.addMessage(feedId, message, template.type, template.agent);
+    }
+
+    processMessageTemplate(template, feedType) {
+        const replacements = {
+            '{subAgentCount}': '10',
+            '{accuracy}': (99.6 + Math.random() * 0.3).toFixed(1),
+            '{threatCount}': Math.floor(Math.random() * 5 + 5),
+            '{deviceCount}': Math.floor(Math.random() * 10 + 245),
+            '{deploymentCount}': Math.floor(Math.random() * 3 + 15),
+            '{metricsCount}': (2.2 + Math.random() * 0.4).toFixed(1) + 'M',
+            '{vpnConnections}': Math.floor(Math.random() * 5 + 10),
+            '{complianceScore}': Math.floor(Math.random() * 3 + 97),
+            '{certCount}': Math.floor(Math.random() * 10 + 245),
+            '{expiringCount}': Math.floor(Math.random() * 3 + 1),
+            '{honeypotCount}': Math.floor(Math.random() * 3 + 8),
+            '{attacksBlocked}': Math.floor(Math.random() * 20 + 120),
+            '{deploymentsToday}': Math.floor(Math.random() * 5 + 15),
+            '{protocol}': ['OpenVPN', 'WireGuard', 'IPSec'][Math.floor(Math.random() * 3)],
+            '{location}': ['San Francisco', 'London', 'Tokyo', 'Frankfurt', 'Sydney'][Math.floor(Math.random() * 5)],
+            '{suspiciousCountry}': ['Russia', 'China', 'Iran', 'North Korea'][Math.floor(Math.random() * 4)],
+            '{tunnelCount}': Math.floor(Math.random() * 5 + 1),
+            '{trafficVolume}': (Math.random() * 3 + 0.5).toFixed(1),
+            '{percentChange}': (Math.random() > 0.5 ? '+' : '-') + Math.floor(Math.random() * 30 + 5),
+            '{failedAttempts}': Math.floor(Math.random() * 15 + 5),
+            '{attackerIP}': this.generateRandomIP(),
+            '{deviceCount}': Math.floor(Math.random() * 10 + 1),
+            '{latency}': Math.floor(Math.random() * 30 + 20),
+            '{tunnelId}': Math.floor(Math.random() * 99 + 1),
+            '{newSignatures}': Math.floor(Math.random() * 20 + 30),
+            '{threatType}': ['SQL Injection', 'DDoS', 'Malware C2', 'Zero-Day'][Math.floor(Math.random() * 4)],
+            '{targetSystem}': ['Web Server', 'Database', 'API Gateway', 'File Server'][Math.floor(Math.random() * 4)],
+            '{anomalyCount}': Math.floor(Math.random() * 10 + 3),
+            '{quarantinedIPs}': Math.floor(Math.random() * 5 + 1),
+            '{confidence}': (99.4 + Math.random() * 0.5).toFixed(1)
+        };
+
+        let processedMessage = template;
+        for (const [placeholder, value] of Object.entries(replacements)) {
+            processedMessage = processedMessage.replace(new RegExp(placeholder.replace(/[{}]/g, '\\$&'), 'g'), value);
+        }
+
+        return processedMessage;
+    }
+
+    generateRandomIP() {
+        return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+    }
+
+    renderFeed(feedId) {
+        const feed = this.feeds.get(feedId);
+        if (!feed || !feed.container) return;
+
+        feed.container.innerHTML = '';
+
+        feed.messages.forEach(messageObj => {
+            const item = document.createElement('div');
+            item.className = `feed-item ${messageObj.type}`;
+            
+            const time = messageObj.timestamp.toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            item.innerHTML = `
+                <div class="feed-time">${time}</div>
+                <div class="feed-message">${messageObj.message}</div>
+                ${messageObj.agent ? `<div class="feed-agent">via ${messageObj.agent}</div>` : ''}
+            `;
+            
+            // Add slide-in animation
+            item.style.animation = 'feedSlide 0.3s ease';
+            
+            feed.container.appendChild(item);
+        });
+    }
+
+    startAutoGeneration(feedId, intervalMs = 6000) {
+        const feed = this.feeds.get(feedId);
+        if (!feed) return;
+
+        // Clear any existing interval
+        if (feed.autoInterval) {
+            clearInterval(feed.autoInterval);
+        }
+
+        feed.autoInterval = setInterval(() => {
+            if (feed.autoGenerate && SentinelState.agentActive) {
+                this.generateRandomMessage(feedId);
+            }
+        }, intervalMs);
+    }
+
+    stopAutoGeneration(feedId) {
+        const feed = this.feeds.get(feedId);
+        if (feed && feed.autoInterval) {
+            clearInterval(feed.autoInterval);
+            feed.autoInterval = null;
+        }
+    }
+
+    pauseAllFeeds() {
+        this.feeds.forEach((feed, feedId) => {
+            this.stopAutoGeneration(feedId);
+        });
+    }
+
+    resumeAllFeeds() {
+        this.feeds.forEach((feed, feedId) => {
+            if (feed.autoGenerate) {
+                this.startAutoGeneration(feedId);
+            }
+        });
+    }
+}
+
+// Global activity feed manager instance
+let activityFeedManager;
 
 // Encryption deployment configurations
 const EncryptionDeploymentConfigs = {
@@ -319,6 +663,7 @@ function initializePageContext() {
     else if (path.includes('ai-engine')) SentinelState.currentPage = 'ai-engine';
     else if (path.includes('encryption')) SentinelState.currentPage = 'encryption';
     else if (path.includes('analytics')) SentinelState.currentPage = 'analytics';
+    else if (path.includes('vpn')) SentinelState.currentPage = 'vpn';
     else if (path.includes('settings')) SentinelState.currentPage = 'settings';
     else SentinelState.currentPage = 'general';
 }
@@ -421,7 +766,7 @@ function initNeuralBackground() {
     };
 }
 
-// Enhanced Chat System with V2.2 features
+// Enhanced Chat System with V2.2 features and VPNMonitor support
 class SentinelChat {
     constructor() {
         this.messageHistory = [];
@@ -599,12 +944,14 @@ class SentinelChat {
         if (lowerCommand.includes('defense') || lowerCommand.includes('response') || lowerCommand.includes('honeypot')) return 'defense';
         if (lowerCommand.includes('analytics') || lowerCommand.includes('report') || lowerCommand.includes('metric') || lowerCommand.includes('compliance') || lowerCommand.includes('audit')) return 'analytics';
         if (lowerCommand.includes('log') || lowerCommand.includes('audit') || lowerCommand.includes('compliance')) return 'logs';
+        if (lowerCommand.includes('vpn') || lowerCommand.includes('tunnel') || lowerCommand.includes('connection')) return 'vpn';
         if (lowerCommand.includes('scale') || lowerCommand.includes('environment') || lowerCommand.includes('reset') || lowerCommand.includes('license') || lowerCommand.includes('pricing')) return 'network';
         return SentinelState.currentPage;
     }
     
     determineSubAgent(lowerCommand, context) {
-        // Enhanced sub-agent routing including new encryption agents
+        // Enhanced sub-agent routing including VPNMonitor
+        if (lowerCommand.includes('vpn') || lowerCommand.includes('tunnel') || lowerCommand.includes('connection')) return 'VPNMonitor';
         if (lowerCommand.includes('deploy') || lowerCommand.includes('deployment')) return 'EncryptionDeployer';
         if (lowerCommand.includes('certificate') || lowerCommand.includes('cert') || lowerCommand.includes('expire')) return 'CertificateManager';
         if (lowerCommand.includes('compliance') || lowerCommand.includes('audit') || lowerCommand.includes('soc') || lowerCommand.includes('iso') || lowerCommand.includes('nist')) return 'ComplianceMonitor';
@@ -615,13 +962,14 @@ class SentinelChat {
             encryption: 'EncryptionManager',
             defense: 'DefenseOrchestrator',
             analytics: 'AnalyticsEngine',
-            logs: 'LogAgent'
+            logs: 'LogAgent',
+            vpn: 'VPNMonitor'
         };
         return agentMap[context] || 'main';
     }
     
     generateResponse(lowerCommand, context, subAgent) {
-        // Enhanced response generation with V2.2 features
+        // Enhanced response generation with V2.2 features and VPNMonitor
         const responses = this.getContextualResponses(context, subAgent);
         
         // Command-specific responses
@@ -650,6 +998,10 @@ class SentinelChat {
             return this.handleComplianceQuery(lowerCommand);
         }
         
+        if (lowerCommand.includes('vpn') || lowerCommand.includes('tunnel')) {
+            return this.handleVPNQuery(lowerCommand);
+        }
+        
         if (lowerCommand.includes('scale') || lowerCommand.includes('environment') || lowerCommand.includes('pricing') || lowerCommand.includes('license')) {
             return this.handleScaleQuery(lowerCommand);
         }
@@ -660,6 +1012,26 @@ class SentinelChat {
         
         // Fallback to contextual responses
         return responses[Math.floor(Math.random() * responses.length)];
+    }
+    
+    handleVPNQuery(lowerCommand) {
+        const activeConnections = VPNConfigs.liveConnections.length;
+        const activeServices = VPNConfigs.activeServices.filter(s => s.status === 'active').length;
+        
+        if (lowerCommand.includes('status')) {
+            return `VPNMonitor: ${activeServices} VPN services active with ${activeConnections} live connections. All tunnels protected with hybrid encryption. Geographic anomaly detection active.`;
+        }
+        
+        if (lowerCommand.includes('connections')) {
+            return `VPNMonitor: Active connections: ${VPNConfigs.liveConnections.map(conn => `${conn.deviceName} (${conn.city}, ${conn.country})`).join(', ')}. All using hybrid-resistant protocols.`;
+        }
+        
+        if (lowerCommand.includes('threats') || lowerCommand.includes('alerts')) {
+            const highAlerts = VPNConfigs.anomalyAlerts.filter(alert => alert.severity === 'high').length;
+            return `VPNMonitor: ${VPNConfigs.anomalyAlerts.length} active alerts, ${highAlerts} high priority. Auto-blocking suspicious IPs. Coordinating with ThreatScanner.`;
+        }
+        
+        return `VPNMonitor: All VPN services operational. ${activeConnections} active connections monitored with real-time threat detection and hybrid encryption.`;
     }
     
     handleEncryptionDeployment(lowerCommand) {
@@ -725,8 +1097,13 @@ class SentinelChat {
     }
     
     getContextualResponses(context, subAgent) {
-        // Enhanced responses including new sub-agents
+        // Enhanced responses including VPNMonitor and other new sub-agents
         const newAgentResponses = {
+            'VPNMonitor': [
+                'VPNMonitor: 12 VPN connections active with hybrid encryption. All tunnels monitored for anomalies and geographic threats.',
+                'VPNMonitor: Auto-blocking suspicious IPs. Coordinating with ThreatScanner for behavioral analysis.',
+                'VPNMonitor: Certificate validation complete for all VPN endpoints. Working with CertificateManager for renewals.'
+            ],
             'EncryptionDeployer': [
                 'EncryptionDeployer: 15 encryption modules deployed today. TLS coverage: 100%, Database encryption: 100%, Disk encryption: 76% complete.',
                 'EncryptionDeployer: Auto-deployment active for new devices. All deployments use hybrid algorithms with zero downtime.',
@@ -783,6 +1160,11 @@ class SentinelChat {
                 'LogAgent: Processing 147K entries/minute. All logs Dilithium-signed for compliance.',
                 'LogAgent: SOC2, ISO27001, NIST compliance verified. Tamper-proof storage active.',
                 'LogAgent: Audit trail complete with hybrid-resistant signatures. Ready for forensic analysis.'
+            ],
+            vpn: [
+                'VPNMonitor: All VPN services operational with hybrid encryption. Geographic anomaly detection active.',
+                'VPNMonitor: Real-time connection monitoring for 12 active sessions. Threat correlation with ThreatScanner.',
+                'VPNMonitor: Certificate management coordinated with CertificateManager. Auto-renewal active.'
             ]
         };
         
@@ -797,7 +1179,7 @@ class SentinelChat {
 • AI Mode: ${SentinelState.agentActive ? 'Autonomous' : 'Manual Control'}
 • Scale: ${scaleText}
 • Encryption: Hybrid Active (Classical + Post-Quantum)
-• Sub-Agents: 9 Online (including 3 encryption specialists)
+• Sub-Agents: 10 Online (including VPNMonitor and 3 encryption specialists)
 • Threat Level: Medium
 • Discovery: ${SentinelState.discoveryActive ? 'ACTIVE' : 'PAUSED'}
 • Performance: Optimal
@@ -814,12 +1196,13 @@ class SentinelChat {
     
     generateHelpResponse(context) {
         const commands = {
-            general: ['status', 'help', 'list threats', 'scan network', 'show encryption', 'view logs', 'scale info', 'pricing info', 'deploy encryption', 'cert status', 'compliance report'],
+            general: ['status', 'help', 'list threats', 'scan network', 'show encryption', 'view logs', 'vpn status', 'scale info', 'pricing info', 'deploy encryption', 'cert status', 'compliance report'],
             threats: ['list threats', 'analyze threat [ID]', 'quarantine [IP]', 'threat stats'],
             network: ['scan network', 'list devices', 'discovery status', 'device info [IP]', 'scale info', 'reset config', 'endpoint pricing', 'encryption gaps'],
             encryption: ['show encryption', 'key rotation', 'algorithm status', 'hybrid readiness', 'deploy all', 'cert status', 'deployment status'],
             defense: ['defense status', 'list honeypots', 'response time', 'playbook status', 'encryption playbooks'],
-            analytics: ['analytics report', 'threat trends', 'performance metrics', 'predictions', 'compliance report', 'audit status']
+            analytics: ['analytics report', 'threat trends', 'performance metrics', 'predictions', 'compliance report', 'audit status'],
+            vpn: ['vpn status', 'vpn connections', 'vpn threats', 'vpn certificates', 'tunnel status', 'connection details [ID]']
         };
         
         const contextCommands = commands[context] || commands.general;
@@ -857,6 +1240,7 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
 • list threats - Active threats
 • scan network - Network devices
 • show encryption - Encryption status
+• vpn status - VPN connections
 • view logs - Recent events
 • quarantine [IP] - Block IP
 • enable agent - Restore AI control
@@ -874,17 +1258,25 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
 • Version: ${SENTINEL_VERSION}
 • Threats: 7 active
 • Devices: 247 protected  
+• VPN Connections: 12 active
 • Encryption: Hybrid Active
 • Discovery: ${SentinelState.discoveryActive ? 'ACTIVE' : 'PAUSED'}
-• Sub-Agents: 9 online (6 core + 3 encryption)
+• Sub-Agents: 10 online (6 core + 3 encryption + VPNMonitor)
 • Uptime: 99.98%`,
+            
+            'vpn status': `[CLI] VPN Status:
+• Services: ${VPNConfigs.activeServices.length} active
+• Connections: ${VPNConfigs.liveConnections.length} live
+• Alerts: ${VPNConfigs.anomalyAlerts.length} active
+• Encryption: Hybrid algorithms active
+• VPNMonitor: Online and coordinating`,
             
             'version': `[CLI] AI Sentinel-X Hybrid V2.2
 • Version: ${SENTINEL_VERSION}
 • API: ${API_VERSION}
 • Encryption: Classical + Post-Quantum
 • Architecture: Modular Sub-Agent System
-• New Features: EncryptionDeployer, CertificateManager, ComplianceMonitor
+• Features: EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor
 • Status: Operational`,
             
             'deploy status': () => {
@@ -928,8 +1320,8 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
 • Type: ${currentScale.toUpperCase()}
 • Max Ranges: ${config.maxRanges}
 • Device Range: ${config.deviceRange[0]}-${config.deviceRange[1]}
-• License Fee: $${config.licenseFeeMo}/month
-• Endpoint Cost: $${config.endpointCostMo}/endpoint/month
+• License Fee: ${config.licenseFeeMo}/month
+• Endpoint Cost: ${config.endpointCostMo}/endpoint/month
 • Description: ${config.description}`;
                 }
                 return '[CLI] Scale: Not configured. Please select deployment type.';
@@ -940,8 +1332,8 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
                 if (currentScale && ScaleConfigs[currentScale]) {
                     const config = ScaleConfigs[currentScale];
                     return `[CLI] ${config.text} Pricing:
-• License Fee: $${config.licenseFeeMo}/month
-• Endpoint Discovery: $${config.endpointCostMo}/endpoint/month
+• License Fee: ${config.licenseFeeMo}/month
+• Endpoint Discovery: ${config.endpointCostMo}/endpoint/month
 • Billing: Monthly based on discovered endpoints
 • Annual discount: 20% off license fees`;
                 }
@@ -980,6 +1372,11 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
         
         // Update UI elements
         this.updateAgentStatus();
+        
+        // Resume activity feeds
+        if (activityFeedManager) {
+            activityFeedManager.resumeAllFeeds();
+        }
     }
     
     updateAgentStatus() {
@@ -1097,6 +1494,15 @@ class SentinelEventHandlers {
         if (!SentinelState.agentActive) {
             SentinelState.discoveryActive = false;
             SentinelState.scanningActive = false;
+            // Pause activity feeds
+            if (activityFeedManager) {
+                activityFeedManager.pauseAllFeeds();
+            }
+        } else {
+            // Resume activity feeds
+            if (activityFeedManager) {
+                activityFeedManager.resumeAllFeeds();
+            }
         }
         
         sentinelChat.updateAgentStatus();
@@ -1333,6 +1739,9 @@ let neuralCleanup;
 function initializeSentinel() {
     initializePageContext();
     
+    // Initialize activity feed manager
+    activityFeedManager = new ActivityFeedManager();
+    
     // Initialize chat system
     sentinelChat = new SentinelChat();
     
@@ -1421,90 +1830,10 @@ function addEnhancedCSS() {
             font-family: 'Courier New', monospace;
         }
         
-        /* Connection status indicators */
-        .connection-status {
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
-            z-index: 10001;
-            transition: all 0.3s ease;
-        }
-        
-        .connection-status.connected {
-            background: rgba(0, 255, 136, 0.2);
-            color: var(--success, #00ff88);
-        }
-        
-        .connection-status.disconnected {
-            background: rgba(255, 0, 68, 0.2);
-            color: var(--danger, #ff0044);
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        /* Enhanced reset button styling */
-        .reset-config-btn {
-            transition: all 0.3s ease;
-        }
-        
-        .reset-config-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 170, 0, 0.3);
-        }
-        
-        /* New encryption gap alert styling */
-        .encryption-gap-alert {
-            background: linear-gradient(135deg, rgba(255, 170, 0, 0.15) 0%, rgba(255, 68, 68, 0.1) 100%);
-            border: 2px solid var(--warning);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            animation: alertPulse 3s ease-in-out infinite;
-        }
-        
-        @keyframes alertPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(255, 170, 0, 0.3); }
-            50% { box-shadow: 0 0 30px rgba(255, 170, 0, 0.6); }
-        }
-        
-        .alert-content {
-            flex: 1;
-        }
-        
-        .alert-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--warning);
-            margin-bottom: 8px;
-        }
-        
-        .alert-description {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-        
-        .alert-button {
-            background: var(--gradient-1);
-            border: none;
-            border-radius: 10px;
-            padding: 12px 24px;
-            color: var(--bg-darker);
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-        }
-        
-        .alert-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
+        /* Feed slide animation */
+        @keyframes feedSlide {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
         
         /* Enhanced status badges */
@@ -1548,12 +1877,6 @@ function addEnhancedCSS() {
                 flex-direction: column;
                 gap: 10px;
             }
-            
-            .encryption-gap-alert {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
         }
     `;
     document.head.appendChild(style);
@@ -1573,17 +1896,23 @@ function cleanupSentinel() {
     if (neuralCleanup) neuralCleanup();
     if (connectionMonitor) connectionMonitor = null;
     if (sentinelChat) sentinelChat = null;
+    if (activityFeedManager) {
+        activityFeedManager.pauseAllFeeds();
+        activityFeedManager = null;
+    }
 }
 
 // Global exports for backward compatibility
 window.SentinelState = SentinelState;
 window.ScaleConfigs = ScaleConfigs;
 window.SubAgentConfigs = SubAgentConfigs;
+window.VPNConfigs = VPNConfigs;
 window.EncryptionDeploymentConfigs = EncryptionDeploymentConfigs;
 window.CertificateConfigs = CertificateConfigs;
 window.ComplianceConfigs = ComplianceConfigs;
 window.EncryptionPlaybooks = EncryptionPlaybooks;
 window.sentinelChat = sentinelChat;
+window.activityFeedManager = activityFeedManager;
 window.SentinelUtils = SentinelUtils;
 window.SentinelEventHandlers = SentinelEventHandlers;
 
@@ -1653,10 +1982,12 @@ if (typeof module !== 'undefined' && module.exports) {
         SentinelState,
         ScaleConfigs,
         SubAgentConfigs,
+        VPNConfigs,
         EncryptionDeploymentConfigs,
         CertificateConfigs,
         ComplianceConfigs,
         EncryptionPlaybooks,
+        ActivityFeedManager,
         SentinelChat,
         SentinelUtils,
         SentinelEventHandlers,
