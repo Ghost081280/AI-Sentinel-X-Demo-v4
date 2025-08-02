@@ -686,7 +686,7 @@
             box-shadow: 0 0 30px rgba(0, 204, 255, 0.3);
         }
 
-        .package-card.recommended .package-badge {
+        .package-badge {
             background: var(--gradient-2);
             color: white;
             padding: 5px 15px;
@@ -827,6 +827,7 @@
             padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .overview-metric:hover {
@@ -985,12 +986,31 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .discovery-title {
+        .device-grid-title {
             font-size: 20px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+
+        .scan-toggle {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid var(--success);
+            border-radius: 20px;
+            padding: 8px 16px;
+            color: var(--success);
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scan-toggle:hover {
+            background: rgba(0, 255, 136, 0.3);
+            transform: translateY(-2px);
         }
 
         .device-grid {
@@ -1156,11 +1176,40 @@
             box-shadow: 0 8px 25px rgba(0, 255, 136, 0.1);
         }
 
+        .range-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
         .range-name {
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 10px;
             font-size: 16px;
+        }
+
+        .range-status {
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .range-status.status-secure {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+        }
+
+        .range-status.status-warning {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+        }
+
+        .range-status.status-vulnerable {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
         }
 
         .range-info {
@@ -1276,13 +1325,18 @@
         }
 
         /* Scan Results - From V3 */
+        .scan-results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
         .scan-results-item {
             display: flex;
             justify-content: space-between;
             padding: 10px;
             background: rgba(0, 0, 0, 0.2);
             border-radius: 8px;
-            margin-bottom: 8px;
         }
 
         .scan-results-label {
@@ -2042,10 +2096,10 @@
 
         <!-- Discovery Section -->
         <div class="discovery-section" id="discoverySection">
-            <div class="discovery-title">🎯 Intelligent Network Discovery</div>
-            <div class="discovery-subtitle">
+            <h1 class="discovery-title">🎯 Intelligent Network Discovery</h1>
+            <p class="discovery-subtitle">
                 AI Sentinel-X will automatically discover your network infrastructure, detect all endpoints, and configure optimal security monitoring with hybrid-resistant encryption.
-            </div>
+            </p>
             
             <div class="auto-scan-cta">
                 <button class="scan-btn-primary" onclick="startNetworkScan()" id="scanBtn">
@@ -2129,7 +2183,9 @@
                         </div>
                     </div>
                     <div id="externalScanContent">
-                        <!-- Content will be populated by JavaScript -->
+                        <div class="scan-results-list">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
                     </div>
                 </div>
 
@@ -2143,7 +2199,9 @@
                         </div>
                     </div>
                     <div id="internalScanContent">
-                        <!-- Content will be populated by JavaScript -->
+                        <div class="service-list">
+                            <!-- Content will be populated by JavaScript -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2151,7 +2209,7 @@
             <!-- Device Discovery -->
             <div class="device-discovery" id="deviceDiscovery">
                 <div class="discovery-header">
-                    <h3 class="discovery-title" id="discoveryTitle">Device Discovery</h3>
+                    <h3 class="device-grid-title" id="discoveryTitle">Device Discovery</h3>
                     <div class="scan-toggle" id="scanToggle" onclick="toggleScanning()">Auto-Scan Active</div>
                 </div>
                 <div class="device-grid" id="deviceGrid">
@@ -2162,8 +2220,8 @@
     </div>
 
     <!-- Checkout Modal -->
-    <div class="checkout-modal" id="checkoutModal">
-        <div class="checkout-content">
+    <div class="checkout-modal" id="checkoutModal" onclick="closeModalOnOverlay(event)">
+        <div class="checkout-content" onclick="event.stopPropagation()">
             <div class="checkout-header">
                 <h2 class="checkout-title">🚀 Activate AI Sentinel-X</h2>
                 <p class="checkout-subtitle">Complete your purchase to enable full protection</p>
@@ -2224,7 +2282,7 @@
 
     <!-- Agent Shutdown Modal -->
     <div class="modal-overlay" id="agentShutdownModal" onclick="closeModalOnOverlay(event)">
-        <div class="modal">
+        <div class="modal" onclick="event.stopPropagation()">
             <div class="modal-header">
                 <h2 class="modal-title">⚠️ Agent Control Toggle</h2>
             </div>
