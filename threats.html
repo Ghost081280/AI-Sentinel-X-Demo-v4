@@ -419,6 +419,7 @@
             grid-template-columns: 2fr 1fr;
             gap: 25px;
             margin-bottom: 30px;
+            align-items: stretch;
         }
 
         .left-column {
@@ -441,6 +442,15 @@
             padding: 25px;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Make the intelligence section fill available height */
+        .section-card.intelligence-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .section-header {
@@ -795,7 +805,7 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            min-height: 500px;
+            flex: 1;
         }
 
         .intelligence-card {
@@ -1939,7 +1949,7 @@
                 </div>
 
                 <!-- Threat Intelligence & Correlation -->
-                <div class="section-card">
+                <div class="section-card intelligence-section">
                     <div class="section-header">
                         <h2 class="section-title">
                             <span>🧠</span>
