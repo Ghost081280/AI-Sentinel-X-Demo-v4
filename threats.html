@@ -656,13 +656,13 @@
         .critical-alerts-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
             max-height: 400px;
             overflow-y: auto;
         }
 
         .critical-alert-item {
-            padding: 18px 20px;
+            padding: 20px;
             border-radius: 12px;
             border-left: 4px solid;
             display: flex;
@@ -672,6 +672,8 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            min-height: 100px;
+            gap: 15px;
         }
 
         .critical-alert-item::before {
@@ -712,47 +714,60 @@
             flex: 1;
             position: relative;
             z-index: 1;
+            min-width: 0;
         }
 
         .critical-alert-message {
             font-weight: bold;
             color: var(--text-primary);
-            margin-bottom: 8px;
-            font-size: 14px;
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.4;
+            word-wrap: break-word;
         }
 
         .critical-alert-details {
             display: flex;
-            gap: 20px;
-            margin-bottom: 8px;
-            font-size: 12px;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 13px;
         }
 
         .critical-alert-source {
             color: var(--secondary);
             font-family: 'Courier New', monospace;
+            font-size: 12px;
         }
 
         .critical-alert-action {
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 11px;
+            font-weight: bold;
         }
 
         .critical-alert-time {
             font-size: 11px;
             color: var(--text-secondary);
+            line-height: 1.3;
         }
 
         .critical-alert-severity {
-            padding: 6px 12px;
-            border-radius: 15px;
-            font-size: 10px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 11px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             position: relative;
             z-index: 1;
+            white-space: nowrap;
+            flex-shrink: 0;
+            min-width: 80px;
+            text-align: center;
+            height: fit-content;
         }
 
         .critical-alert-severity.critical {
@@ -902,22 +917,24 @@
             letter-spacing: 1px;
         }
 
-        /* Threat Hunting & Investigation */
+        /* Threat Hunting & Investigation - Extended height */
         .threat-hunting-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: 1fr;
             gap: 20px;
+            min-height: 500px;
         }
 
         .threat-hunting-card {
             background: linear-gradient(135deg, rgba(255, 170, 0, 0.05) 0%, rgba(255, 68, 68, 0.02) 100%);
             border: 1px solid rgba(255, 170, 0, 0.3);
             border-radius: 12px;
-            padding: 20px;
+            padding: 22px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            min-height: 220px;
         }
 
         .threat-hunting-card::before {
@@ -2144,57 +2161,62 @@
             }
         ];
 
-        // Critical threat alerts data for real-time feed
+        // Critical threat alerts data for real-time feed - NON-DUPLICATIVE CONTENT
         const criticalThreatAlerts = [
             {
                 id: 'alert-001',
-                message: 'APT-29 signature detected in network traffic',
+                message: 'Multi-stage malware campaign detected across 12 endpoints',
                 severity: 'critical',
-                source: '45.12.78.92',
-                action: 'Auto-blocked',
-                timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+                source: '185.243.112.45',
+                action: 'Auto-isolated',
+                timestamp: new Date(Date.now() - 3 * 60 * 1000).toISOString(),
                 geoRisk: 9,
-                behaviorScore: 8
+                behaviorScore: 8,
+                type: 'Advanced Persistent Threat'
             },
             {
                 id: 'alert-002',
-                message: 'Ransomware deployment attempt blocked',
+                message: 'Credential harvesting via fake authentication portal',
                 severity: 'critical',
-                source: '192.168.1.234',
-                action: 'Quarantined',
-                timestamp: new Date(Date.now() - 12 * 60 * 1000).toISOString(),
-                geoRisk: 6,
-                behaviorScore: 9
+                source: 'phishing.malicious-site.com',
+                action: 'Domain blocked',
+                timestamp: new Date(Date.now() - 8 * 60 * 1000).toISOString(),
+                geoRisk: 7,
+                behaviorScore: 9,
+                type: 'Social Engineering'
             },
             {
                 id: 'alert-003',
-                message: 'Lateral movement detected on internal network',
+                message: 'Suspicious PowerShell execution with encoded commands',
                 severity: 'high',
-                source: '10.0.1.87',
-                action: 'Investigating',
-                timestamp: new Date(Date.now() - 18 * 60 * 1000).toISOString(),
-                geoRisk: 3,
-                behaviorScore: 7
+                source: '192.168.1.156',
+                action: 'Process terminated',
+                timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
+                geoRisk: 4,
+                behaviorScore: 8,
+                type: 'Living off the Land'
             },
             {
                 id: 'alert-004',
-                message: 'Zero-day exploit targeting web application',
-                severity: 'critical',
-                source: 'Unknown',
-                action: 'Analyzing',
-                timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
+                message: 'DNS tunneling detected - potential data exfiltration',
+                severity: 'high',
+                source: 'tunnel.evil-c2.org',
+                action: 'DNS blocked',
+                timestamp: new Date(Date.now() - 22 * 60 * 1000).toISOString(),
                 geoRisk: 8,
-                behaviorScore: 10
+                behaviorScore: 7,
+                type: 'Data Exfiltration'
             },
             {
                 id: 'alert-005',
-                message: 'Credential stuffing attack on login portal',
-                severity: 'high',
-                source: '203.45.67.89',
-                action: 'Rate-limited',
+                message: 'Registry modification indicating persistence mechanism',
+                severity: 'medium',
+                source: '10.0.2.47',
+                action: 'Investigating',
                 timestamp: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
-                geoRisk: 7,
-                behaviorScore: 6
+                geoRisk: 3,
+                behaviorScore: 6,
+                type: 'Persistence'
             }
         ];
 
@@ -2322,7 +2344,7 @@
             }
         ];
 
-        // Threat Hunting & Investigation data
+        // Threat Hunting & Investigation data - Extended content
         const threatHunting = [
             {
                 id: 'apt-campaign-hunt',
@@ -2330,7 +2352,7 @@
                 priority: 'critical',
                 status: 'active',
                 progress: 78,
-                description: 'Investigating suspected APT-29 campaign targeting financial infrastructure with novel TTPs',
+                description: 'Investigating suspected APT-29 campaign targeting financial infrastructure with novel TTPs and custom malware variants',
                 iocs: [
                     'SHA256:a4b2c3d4...',
                     '45.12.78.92',
@@ -2345,7 +2367,7 @@
                 priority: 'high',
                 status: 'investigating',
                 progress: 45,
-                description: 'Anomalous data access patterns from privileged accounts during off-hours detected',
+                description: 'Anomalous data access patterns from privileged accounts during off-hours, potential data theft investigation',
                 iocs: [
                     'user.jdoe@corp',
                     '192.168.1.105',
@@ -2353,6 +2375,36 @@
                     'MITRE:T1078'
                 ],
                 agents: ['ThreatScanner', 'AnalyticsEngine', 'NetworkMapper', 'LogAgent']
+            },
+            {
+                id: 'supply-chain-hunt',
+                title: '🔗 Supply Chain Hunt',
+                priority: 'high',
+                status: 'active',
+                progress: 23,
+                description: 'Investigating potential compromise of third-party software dependencies and update mechanisms in development environment',
+                iocs: [
+                    'update-server.lib',
+                    'MD5:9a8b7c6d...',
+                    'signed-malware',
+                    'MITRE:T1195'
+                ],
+                agents: ['ThreatScanner', 'AI Engine', 'EncryptionManager', 'ComplianceMonitor']
+            },
+            {
+                id: 'living-off-land-hunt',
+                title: '⚡ Living-off-Land Hunt',
+                priority: 'medium',
+                status: 'active',
+                progress: 67,
+                description: 'Tracking abuse of legitimate system tools for malicious purposes, including PowerShell and WMI exploitation patterns',
+                iocs: [
+                    'powershell.exe',
+                    'wmic.exe',
+                    'base64-payload',
+                    'MITRE:T1059'
+                ],
+                agents: ['ThreatScanner', 'AnalyticsEngine', 'LogAgent']
             }
         ];
 
@@ -2408,10 +2460,10 @@
                     <div class="critical-alert-content">
                         <div class="critical-alert-message">${alert.message}</div>
                         <div class="critical-alert-details">
-                            <span class="critical-alert-source">Source: ${alert.source}</span>
-                            <span class="critical-alert-action">Action: ${alert.action}</span>
+                            <div class="critical-alert-source">Source: ${alert.source}</div>
+                            <div class="critical-alert-action">Action: ${alert.action}</div>
+                            <div class="critical-alert-time">${timeAgo} • Type: ${alert.type} • Geo Risk: ${alert.geoRisk}/10</div>
                         </div>
-                        <div class="critical-alert-time">${timeAgo} • Geo Risk: ${alert.geoRisk}/10 • Behavior: ${alert.behaviorScore}/10</div>
                     </div>
                     <div class="critical-alert-severity ${alert.severity}">${alert.severity}</div>
                 `;
@@ -2421,21 +2473,25 @@
         }
 
         function updateCriticalAlerts() {
-            // Occasionally add new critical alerts
+            // Occasionally add new critical alerts - NON-DUPLICATIVE
             if (Math.random() > 0.85) {
                 const newAlerts = [
-                    'Data exfiltration attempt blocked',
-                    'Command & control communication detected',
-                    'Privilege escalation via service account',
-                    'Suspicious PowerShell execution detected',
-                    'Living-off-the-land binary abuse detected',
-                    'DNS tunneling attempt identified',
-                    'Registry modification by malware blocked'
+                    'Fileless malware injection detected in memory',
+                    'Backdoor communication via legitimate cloud service',
+                    'Privilege escalation using unpatched vulnerability',
+                    'Suspicious network scanning from internal host',
+                    'Encrypted payload delivery via email attachment',
+                    'Unauthorized certificate installation detected',
+                    'Process hollowing technique identified',
+                    'Memory dump analysis reveals credential theft',
+                    'Rogue wireless access point broadcasting',
+                    'USB device auto-execution blocked'
                 ];
                 
-                const sources = ['203.45.67.89', '45.12.78.92', '192.168.1.105', '10.0.1.87', 'Unknown'];
-                const actions = ['Auto-blocked', 'Quarantined', 'Investigating', 'Rate-limited', 'Analyzing'];
+                const sources = ['172.16.10.45', '203.0.113.89', '198.51.100.23', '192.0.2.156', 'scanner.threat-actor.net', 'Unknown'];
+                const actions = ['Auto-blocked', 'Quarantined', 'Investigating', 'Monitoring', 'Analyzing', 'Terminated'];
                 const severities = ['critical', 'high', 'medium'];
+                const types = ['Malware', 'Network Attack', 'Insider Threat', 'Data Exfiltration', 'Persistence', 'Reconnaissance'];
                 
                 const newAlert = {
                     id: 'alert-' + Date.now(),
@@ -2445,7 +2501,8 @@
                     action: actions[Math.floor(Math.random() * actions.length)],
                     timestamp: new Date().toISOString(),
                     geoRisk: Math.floor(Math.random() * 10) + 1,
-                    behaviorScore: Math.floor(Math.random() * 10) + 1
+                    behaviorScore: Math.floor(Math.random() * 10) + 1,
+                    type: types[Math.floor(Math.random() * types.length)]
                 };
                 
                 // Add to beginning of array and limit to 10 items
@@ -2472,14 +2529,16 @@
                 if (alert) {
                     sentinelChat?.addMessage(`ThreatScanner Critical Alert: ${alert.message}
 • Severity: ${alert.severity.toUpperCase()} PRIORITY
+• Type: ${alert.type}
 • Source: ${alert.source}
 • Action Taken: ${alert.action}
 • Geographic Risk Score: ${alert.geoRisk}/10
 • Behavioral Score: ${alert.behaviorScore}/10
 • Timestamp: ${alert.timestamp}
-• AI Correlation: Pattern matches known threat signatures
+• AI Correlation: Pattern matches known ${alert.type.toLowerCase()} signatures
 • Sub-Agent Coordination: ThreatScanner → ${alert.severity === 'critical' ? 'DefenseOrchestrator → AnalyticsEngine' : 'AnalyticsEngine'}
 • Data Protection: All threat data encrypted with hybrid-resistant algorithms
+• MITRE ATT&CK: Mapped to framework for threat correlation
 • Auto-Response: ${alert.action === 'Auto-blocked' || alert.action === 'Quarantined' ? 'Successfully executed' : 'In progress'}`, false);
                 }
             }, 300);
