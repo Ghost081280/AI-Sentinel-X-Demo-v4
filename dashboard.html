@@ -1683,6 +1683,92 @@
 
     <script src="shared.js"></script>
     <script>
+        // Enhanced sub-agent configurations including VPNMonitor and encryption agents
+        const SubAgentConfigs = {
+            threatScanner: {
+                name: 'ThreatScanner',
+                icon: '🛡️',
+                description: 'Analyzing 147K events/sec',
+                activity: '7 active threats detected',
+                link: 'threats.html',
+                status: 'Active'
+            },
+            networkMapper: {
+                name: 'NetworkMapper',
+                icon: '🌐',
+                description: 'Monitoring 247 devices',
+                activity: '12 new devices today',
+                link: 'network.html',
+                status: 'Active'
+            },
+            defenseOrchestrator: {
+                name: 'DefenseOrchestrator',
+                icon: '⚔️',
+                description: '8 honeypots active',
+                activity: '124 attacks neutralized',
+                link: 'defense.html',
+                status: 'Active'
+            },
+            encryptionManager: {
+                name: 'EncryptionManager',
+                icon: '🔐',
+                description: 'Hybrid mode active',
+                activity: '8 algorithms protecting data',
+                link: 'encryption.html',
+                status: 'Active'
+            },
+            analyticsEngine: {
+                name: 'AnalyticsEngine',
+                icon: '📊',
+                description: 'Processing 2.4M metrics',
+                activity: '99.8% prediction accuracy',
+                link: 'analytics.html',
+                status: 'Active'
+            },
+            logAgent: {
+                name: 'LogAgent',
+                icon: '📝',
+                description: 'Securing audit trails',
+                activity: 'All logs Dilithium signed',
+                link: 'analytics.html',
+                status: 'Active'
+            },
+            // New encryption sub-agents
+            encryptionDeployer: {
+                name: 'EncryptionDeployer',
+                icon: '🔧',
+                description: 'Deploying encryption modules',
+                activity: '15 deployments today',
+                link: 'encryption.html',
+                status: 'Active'
+            },
+            certificateManager: {
+                name: 'CertificateManager',
+                icon: '📜',
+                description: 'Managing certificates',
+                activity: '247 certs monitored',
+                link: 'encryption.html',
+                status: 'Active'
+            },
+            complianceMonitor: {
+                name: 'ComplianceMonitor',
+                icon: '✅',
+                description: 'Monitoring compliance',
+                activity: 'SOC2/ISO27001 verified',
+                link: 'analytics.html',
+                status: 'Active'
+            },
+            // VPNMonitor sub-agent
+            vpnMonitor: {
+                name: 'VPNMonitor',
+                icon: '🔒',
+                description: 'VPN security monitoring',
+                activity: '12 active connections',
+                link: 'vpn.html',
+                status: 'Active'
+            }
+        };
+
         // Global Network Updates - Customer-facing data from command center
         const globalUpdates = [
             {
