@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+{ msg: '🔍 APT Campaign Hunt: Investigation 80% complete - novel TTPs identified', type: 'warning', agent: 'ThreatScanner → AI Engine' },
+            { msg: '👤 Insider Behavior Hunt: Anomalous access patterns from privileged accounts', type: 'warning', agent: 'ThreatScanner → AnalyticsEngine' },
+            { msg: '🔗 Supply Chain Hunt: Third-party dependency compromise investigation active', type: 'ai-action', agent: 'ThreatScanner → AI Engine' },
+            { msg: '⛏️ Crypto Mining Hunt: Persistent mining activity across 12 endpoints detected', type: 'warning', agent: 'ThreatScanner → NetworkMapper' },<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -836,6 +839,207 @@
             border: 1px solid rgba(0, 255, 136, 0.3);
             border-radius: 8px;
             font-size: 10px;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* NEW: Threat Hunting & Investigation Module */
+        .threat-hunting-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .threat-hunting-card {
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.05) 0%, rgba(255, 68, 68, 0.02) 100%);
+            border: 1px solid rgba(255, 170, 0, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .threat-hunting-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 170, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .threat-hunting-card:hover::before {
+            left: 100%;
+        }
+
+        .threat-hunting-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(255, 170, 0, 0.2);
+            border-color: var(--warning);
+        }
+
+        .threat-hunting-card.active {
+            background: linear-gradient(135deg, rgba(255, 0, 68, 0.05) 0%, rgba(255, 170, 0, 0.02) 100%);
+            border-color: var(--danger);
+        }
+
+        .threat-hunting-card.investigating {
+            background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(255, 170, 0, 0.02) 100%);
+            border-color: var(--accent);
+        }
+
+        .hunting-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .hunting-title {
+            font-weight: bold;
+            color: var(--warning);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hunting-priority {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hunting-priority.critical {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .hunting-priority.high {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .hunting-priority.medium {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .hunting-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .hunting-iocs {
+            margin-bottom: 15px;
+        }
+
+        .hunting-iocs-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--warning);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hunting-iocs-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .hunting-ioc {
+            padding: 3px 8px;
+            background: rgba(255, 170, 0, 0.1);
+            border: 1px solid rgba(255, 170, 0, 0.3);
+            border-radius: 8px;
+            font-size: 10px;
+            color: var(--warning);
+            font-family: 'Courier New', monospace;
+        }
+
+        .hunting-progress {
+            margin-bottom: 15px;
+        }
+
+        .hunting-progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .hunting-progress-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hunting-progress-percent {
+            font-size: 11px;
+            color: var(--warning);
+            font-weight: bold;
+        }
+
+        .hunting-progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .hunting-progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 3px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+        }
+
+        .hunting-agents {
+            padding: 12px;
+            background: rgba(255, 170, 0, 0.05);
+            border: 1px solid rgba(255, 170, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .hunting-agents-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--warning);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hunting-agents-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .hunting-agent {
+            padding: 3px 8px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 8px;
+            font-size: 9px;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -1731,6 +1935,23 @@
             </div>
         </div>
 
+        <!-- NEW: Threat Hunting & Investigation -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🔍</span>
+                    <span>Threat Hunting & Investigation</span>
+                </h2>
+                <div class="section-status">
+                    <div class="status-dot active"></div>
+                    <span>3 Active Hunts</span>
+                </div>
+            </div>
+            <div class="threat-hunting-grid" id="threatHuntingGrid">
+                <!-- Threat hunting cards will be populated by JavaScript -->
+            </div>
+        </div>
+
         <!-- NEW: Threat Response Automation -->
         <div class="section-card">
             <div class="section-header">
@@ -2028,6 +2249,70 @@
             }
         ];
 
+        // Threat Hunting & Investigation data
+        const threatHunting = [
+            {
+                id: 'apt-campaign-hunt',
+                title: '🎯 APT Campaign Hunt',
+                priority: 'critical',
+                status: 'active',
+                progress: 78,
+                description: 'Investigating suspected APT-29 campaign targeting financial infrastructure with novel TTPs',
+                iocs: [
+                    'SHA256:a4b2c3d4...',
+                    '45.12.78.92',
+                    'evil.domain.com',
+                    'MITRE:T1055'
+                ],
+                agents: ['ThreatScanner', 'AnalyticsEngine', 'AI Engine', 'LogAgent']
+            },
+            {
+                id: 'insider-behavior-hunt',
+                title: '👤 Insider Behavior Hunt',
+                priority: 'high',
+                status: 'investigating',
+                progress: 45,
+                description: 'Anomalous data access patterns from privileged accounts during off-hours detected',
+                iocs: [
+                    'user.jdoe@corp',
+                    '192.168.1.105',
+                    'lateral-move',
+                    'MITRE:T1078'
+                ],
+                agents: ['ThreatScanner', 'AnalyticsEngine', 'NetworkMapper', 'LogAgent']
+            },
+            {
+                id: 'supply-chain-hunt',
+                title: '🔗 Supply Chain Hunt',
+                priority: 'high',
+                status: 'active',
+                progress: 23,
+                description: 'Investigating potential compromise of third-party software dependencies and update mechanisms',
+                iocs: [
+                    'update-server.lib',
+                    'MD5:9a8b7c6d...',
+                    'signed-malware',
+                    'MITRE:T1195'
+                ],
+                agents: ['ThreatScanner', 'AI Engine', 'EncryptionManager', 'ComplianceMonitor']
+            },
+            {
+                id: 'crypto-mining-hunt',
+                title: '⛏️ Crypto Mining Hunt',
+                priority: 'medium',
+                status: 'active',
+                progress: 89,
+                description: 'Persistent cryptocurrency mining activity across multiple endpoints with evasion techniques',
+                iocs: [
+                    'pool.monero.com',
+                    'xmrig.exe',
+                    'CPU-spike-pattern',
+                    'MITRE:T1496'
+                ],
+                agents: ['ThreatScanner', 'NetworkMapper', 'AnalyticsEngine']
+            }
+        ];
+
         // Enhanced V4 threat management
         let threatAutoExecution = true;
         let autoThreatInterval;
@@ -2041,6 +2326,7 @@
         function initializeThreatsPage() {
             populateActiveThreats();
             populateThreatIntelligence();
+            populateThreatHunting();
             populateResponseAutomation();
             initializeThreatFeed();
             
@@ -2055,6 +2341,99 @@
             setInterval(() => {
                 generateThreatFeedItem();
             }, 7000);
+            setInterval(() => {
+                updateHuntingProgress();
+            }, 8000);
+        }
+
+        function populateThreatHunting() {
+            const grid = document.getElementById('threatHuntingGrid');
+            grid.innerHTML = '';
+
+            threatHunting.forEach(hunt => {
+                const card = document.createElement('div');
+                card.className = `threat-hunting-card ${hunt.status}`;
+                card.onclick = () => openHuntDetails(hunt.id);
+                
+                card.innerHTML = `
+                    <div class="hunting-header">
+                        <div class="hunting-title">${hunt.title}</div>
+                        <div class="hunting-priority ${hunt.priority}">${hunt.priority}</div>
+                    </div>
+                    <div class="hunting-description">${hunt.description}</div>
+                    <div class="hunting-iocs">
+                        <div class="hunting-iocs-title">🔍 Key IOCs</div>
+                        <div class="hunting-iocs-list">
+                            ${hunt.iocs.map(ioc => `<span class="hunting-ioc">${ioc}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div class="hunting-progress">
+                        <div class="hunting-progress-header">
+                            <span class="hunting-progress-label">Investigation Progress</span>
+                            <span class="hunting-progress-percent">${hunt.progress}%</span>
+                        </div>
+                        <div class="hunting-progress-bar">
+                            <div class="hunting-progress-fill" style="width: ${hunt.progress}%"></div>
+                        </div>
+                    </div>
+                    <div class="hunting-agents">
+                        <div class="hunting-agents-title">🤖 Coordinating Agents</div>
+                        <div class="hunting-agents-list">
+                            ${hunt.agents.map(agent => `<span class="hunting-agent">${agent}</span>`).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function updateHuntingProgress() {
+            // Simulate hunting progress updates
+            if (Math.random() > 0.7) {
+                threatHunting.forEach((hunt, index) => {
+                    if (hunt.status === 'active' && hunt.progress < 95) {
+                        const increment = Math.floor(Math.random() * 5 + 1);
+                        hunt.progress = Math.min(95, hunt.progress + increment);
+                        
+                        // Update progress bar
+                        const card = document.querySelectorAll('.threat-hunting-card')[index];
+                        if (card) {
+                            const progressFill = card.querySelector('.hunting-progress-fill');
+                            const progressPercent = card.querySelector('.hunting-progress-percent');
+                            if (progressFill) progressFill.style.width = hunt.progress + '%';
+                            if (progressPercent) progressPercent.textContent = hunt.progress + '%';
+                        }
+                        
+                        // Add feed update
+                        if (hunt.progress % 20 === 0) {
+                            addThreatFeedItem(`🔍 ${hunt.title}: Investigation ${hunt.progress}% complete`, 'ai-action', 'ThreatScanner');
+                        }
+                    }
+                });
+            }
+        }
+
+        function openHuntDetails(huntId) {
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                const hunt = threatHunting.find(h => h.id === huntId);
+                if (hunt) {
+                    sentinelChat?.addMessage(`ThreatScanner Hunt: ${hunt.title}
+• Priority: ${hunt.priority.toUpperCase()}
+• Status: ${hunt.status.toUpperCase()}
+• Progress: ${hunt.progress}% complete
+• Description: ${hunt.description}
+• Key IOCs: ${hunt.iocs.join(', ')}
+• Coordinating Agents: ${hunt.agents.join(', ')}
+• Data Protection: All hunt data encrypted with hybrid-resistant algorithms
+• MITRE ATT&CK: Mapped to framework for threat intelligence correlation
+• Timeline: Estimated completion in ${Math.floor((100 - hunt.progress) / 10)} hours
+• AI Enhancement: Pattern recognition and behavioral analysis active`, false);
+                }
+            }, 300);
         }
 
         function populateResponseAutomation() {
