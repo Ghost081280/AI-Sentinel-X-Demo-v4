@@ -340,14 +340,14 @@
             font-weight: bold;
         }
 
-        /* System Status Banner - MATCHED SIZE */
+        /* System Status Banner - MATCHED THREATS/VPN SHAPE */
         .system-status-banner {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 20px;
+            border-radius: 12px;
             padding: 20px 25px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(20px);
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
@@ -654,8 +654,8 @@
             color: var(--bg-darker);
         }
 
-        /* Control Hub Module - BALANCED HEIGHT */
-        .control-hub-module {
+        /* Global Network Updates Module - CUSTOMER FACING */
+        .global-network-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -667,7 +667,7 @@
             height: 100%;
         }
 
-        .control-hub-module::before {
+        .global-network-module::before {
             content: '';
             position: absolute;
             top: 0;
@@ -683,7 +683,7 @@
             100% { left: 100%; }
         }
 
-        .hub-header {
+        .network-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -694,7 +694,7 @@
             z-index: 1;
         }
 
-        .hub-title {
+        .network-title {
             font-size: 18px;
             font-weight: bold;
             color: var(--secondary);
@@ -705,7 +705,7 @@
             gap: 10px;
         }
 
-        .hub-status-indicator {
+        .network-status-indicator {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -718,25 +718,25 @@
             transition: all 0.3s ease;
         }
 
-        .hub-status-indicator.online {
+        .network-status-indicator.online {
             background: rgba(0, 255, 136, 0.1);
             color: var(--success);
             border: 1px solid var(--success);
         }
 
-        .hub-status-indicator.warning {
+        .network-status-indicator.warning {
             background: rgba(255, 170, 0, 0.1);
             color: var(--warning);
             border: 1px solid var(--warning);
         }
 
-        .hub-status-indicator.offline {
+        .network-status-indicator.offline {
             background: rgba(255, 0, 68, 0.1);
             color: var(--danger);
             border: 1px solid var(--danger);
         }
 
-        .hub-status-dot {
+        .network-status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -744,7 +744,7 @@
             animation: statusPulse 2s ease-in-out infinite;
         }
 
-        .hub-content {
+        .network-content {
             position: relative;
             z-index: 1;
             height: calc(100% - 80px);
@@ -752,68 +752,103 @@
             padding-right: 10px;
         }
 
-        .hub-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
+        .network-updates {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
-        .hub-item {
+        .network-update-item {
             background: rgba(0, 204, 255, 0.05);
             border: 1px solid rgba(0, 204, 255, 0.2);
             border-radius: 12px;
             padding: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
             transition: all 0.3s ease;
             cursor: pointer;
+            border-left: 4px solid;
         }
 
-        .hub-item:hover {
+        .network-update-item:hover {
             background: rgba(0, 204, 255, 0.08);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 204, 255, 0.15);
         }
 
-        .hub-icon {
-            font-size: 20px;
-            min-width: 24px;
-            filter: drop-shadow(0 0 6px currentColor);
+        .network-update-item.system {
+            border-left-color: var(--secondary);
         }
 
-        .hub-content-text {
-            flex: 1;
+        .network-update-item.security {
+            border-left-color: var(--success);
         }
 
-        .hub-label {
+        .network-update-item.warning {
+            border-left-color: var(--warning);
+        }
+
+        .network-update-item.info {
+            border-left-color: var(--accent);
+        }
+
+        .update-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .update-title {
             font-weight: bold;
             color: var(--secondary);
             font-size: 14px;
-            margin-bottom: 3px;
         }
 
-        .hub-value {
+        .update-timestamp {
+            font-size: 11px;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+
+        .update-message {
             font-size: 12px;
             color: var(--text-secondary);
+            line-height: 1.4;
+            margin-bottom: 8px;
         }
 
-        .hub-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+        .update-source {
+            font-size: 10px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .update-priority {
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
             margin-left: auto;
-            animation: pulse 3s ease-in-out infinite;
         }
 
-        .hub-indicator.active {
-            background: var(--success);
-            box-shadow: 0 0 8px var(--success);
+        .update-priority.high {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
         }
 
-        .hub-indicator.warning {
-            background: var(--warning);
-            box-shadow: 0 0 8px var(--warning);
+        .update-priority.medium {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+        }
+
+        .update-priority.low {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--secondary);
         }
 
         /* Combined Performance Module - BOTTOM BALANCE */
@@ -1263,10 +1298,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .hub-grid {
-                grid-template-columns: 1fr;
-            }
-
             .banner-content {
                 gap: 20px;
             }
@@ -1417,7 +1448,7 @@
             </a>
         </nav>
 
-        <!-- System Status Banner - MATCHED SIZE -->
+        <!-- System Status Banner - MATCHED THREATS/VPN SHAPE -->
         <div class="system-status-banner">
             <div class="banner-content">
                 <div class="banner-stat">
@@ -1449,10 +1480,10 @@
                     </div>
                 </div>
                 <div class="banner-stat">
-                    <div class="banner-stat-icon">🎯</div>
+                    <div class="banner-stat-icon">📡</div>
                     <div class="banner-stat-content">
-                        <div class="banner-stat-value">Control Hub</div>
-                        <div class="banner-stat-label">Network Sync</div>
+                        <div class="banner-stat-value">Global Net</div>
+                        <div class="banner-stat-label">Updates Sync</div>
                     </div>
                 </div>
             </div>
@@ -1516,68 +1547,21 @@
 
             <!-- Right Column -->
             <div class="right-column">
-                <!-- Admin Control Hub Module - BALANCED HEIGHT -->
-                <div class="control-hub-module">
-                    <div class="hub-header">
-                        <h2 class="hub-title">
-                            <span>🎛️</span>
-                            <span>Admin Control Hub</span>
+                <!-- Global Network Updates Module - CUSTOMER FACING -->
+                <div class="global-network-module">
+                    <div class="network-header">
+                        <h2 class="network-title">
+                            <span>📡</span>
+                            <span>Global Network Updates</span>
                         </h2>
-                        <div class="hub-status-indicator online" id="hubStatus">
-                            <div class="hub-status-dot"></div>
-                            <span>HQ LINKED</span>
+                        <div class="network-status-indicator online" id="networkStatus">
+                            <div class="network-status-dot"></div>
+                            <span>LIVE FEED</span>
                         </div>
                     </div>
-                    <div class="hub-content" id="hubContent">
-                        <div class="hub-grid">
-                            <div class="hub-item">
-                                <div class="hub-icon">🏢</div>
-                                <div class="hub-content-text">
-                                    <div class="hub-label">Fleet Management</div>
-                                    <div class="hub-value">2,847 agents deployed globally • Central oversight active</div>
-                                </div>
-                                <div class="hub-indicator active"></div>
-                            </div>
-                            <div class="hub-item">
-                                <div class="hub-icon">💰</div>
-                                <div class="hub-content-text">
-                                    <div class="hub-label">Revenue Stream</div>
-                                    <div class="hub-value">$487K MRR • 847 active customers • Growth trending +18%</div>
-                                </div>
-                                <div class="hub-indicator active"></div>
-                            </div>
-                            <div class="hub-item">
-                                <div class="hub-icon">📊</div>
-                                <div class="hub-content-text">
-                                    <div class="hub-label">Performance Metrics</div>
-                                    <div class="hub-value">System health 99.98% • Global threat intel synchronized</div>
-                                </div>
-                                <div class="hub-indicator active"></div>
-                            </div>
-                            <div class="hub-item">
-                                <div class="hub-icon">🚀</div>
-                                <div class="hub-content-text">
-                                    <div class="hub-label">Deployment Pipeline</div>
-                                    <div class="hub-value">Mass updates ready • Rolling deployment scheduled</div>
-                                </div>
-                                <div class="hub-indicator warning"></div>
-                            </div>
-                            <div class="hub-item">
-                                <div class="hub-icon">🔒</div>
-                                <div class="hub-content-text">
-                                    <div class="hub-label">Security Operations</div>
-                                    <div class="hub-value">14.2M threats blocked today • Zero breaches recorded</div>
-                                </div>
-                                <div class="hub-indicator active"></div>
-                            </div>
-                            <div class="hub-item">
-                                <div class="hub-icon">🎫</div>
-                                <div class="hub-content-text">
-                                    <div class="hub-label">Support Queue</div>
-                                    <div class="hub-value">23 active tickets • Average response time: 4.2 minutes</div>
-                                </div>
-                                <div class="hub-indicator warning"></div>
-                            </div>
+                    <div class="network-content" id="networkContent">
+                        <div class="network-updates" id="networkUpdates">
+                            <!-- Updates will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -1678,7 +1662,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Admin Control Hub sync active with real-time fleet management updates.
+                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Global Network Updates sync active with real-time notifications from command center.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1699,6 +1683,66 @@
 
     <script src="shared.js"></script>
     <script>
+        // Global Network Updates - Customer-facing data from command center
+        const globalUpdates = [
+            {
+                type: 'system',
+                title: 'Global Fleet Update v2.3.1',
+                message: 'Enhanced VPN monitoring and certificate auto-renewal deployed across all regions. Improved threat correlation algorithms active.',
+                timestamp: '2 min ago',
+                source: 'AI Sentinel HQ',
+                priority: 'high'
+            },
+            {
+                type: 'security',
+                title: 'New Threat Signatures',
+                message: 'Command center pushed 47 new threat signatures to global network. Your agent has been updated automatically.',
+                timestamp: '15 min ago',
+                source: 'Threat Intelligence',
+                priority: 'medium'
+            },
+            {
+                type: 'info',
+                title: 'Performance Optimization',
+                message: 'Hybrid encryption performance improved by 12% after global optimization. All agents benefit from enhanced algorithms.',
+                timestamp: '45 min ago',
+                source: 'Performance Team',
+                priority: 'low'
+            },
+            {
+                type: 'warning',
+                title: 'Regional Alert - EMEA',
+                message: 'Elevated threat activity in European region. Enhanced monitoring protocols activated for all EMEA customers.',
+                timestamp: '1h ago',
+                source: 'Regional Control',
+                priority: 'high'
+            },
+            {
+                type: 'system',
+                title: 'Certificate Renewal Notice',
+                message: 'Global certificate renewal completed for 2,847 agents. Your agent certificates updated with hybrid signatures.',
+                timestamp: '2h ago',
+                source: 'Certificate Authority',
+                priority: 'medium'
+            },
+            {
+                type: 'info',
+                title: 'ML Model Enhancement',
+                message: 'Command center deployed improved behavioral analysis models. Detection accuracy increased to 99.8% across all agents.',
+                timestamp: '3h ago',
+                source: 'AI Research',
+                priority: 'low'
+            },
+            {
+                type: 'security',
+                title: 'Zero-Day Protection',
+                message: 'Emergency patch distributed for CVE-2025-0147. All agents automatically protected against new vulnerability.',
+                timestamp: '4h ago',
+                source: 'Emergency Response',
+                priority: 'high'
+            }
+        ];
+
         // Dashboard-specific initialization
         document.addEventListener('DOMContentLoaded', () => {
             initializeDashboard();
@@ -1708,23 +1752,28 @@
             // Populate sub-agents from shared.js
             populateSubAgents();
             
-            // Initialize Admin Control Hub
-            initializeControlHub();
+            // Initialize Global Network Updates
+            initializeGlobalUpdates();
             
             // Start periodic updates
             setInterval(() => {
                 updateDashboardMetrics();
             }, 3000);
 
-            // Update Control Hub status indicators
+            // Update Network status indicators
             setInterval(() => {
-                updateHubStatusIndicators();
+                updateNetworkStatusIndicators();
             }, 8000);
+
+            // Add new global updates periodically
+            setInterval(() => {
+                addRandomGlobalUpdate();
+            }, 30000);
 
             // Simulate status changes occasionally
             setInterval(() => {
                 if (Math.random() > 0.97) {
-                    simulateStatusChange();
+                    simulateNetworkStatusChange();
                 }
             }, 10000);
         }
@@ -1772,30 +1821,93 @@
             }, 300);
         }
 
-        function initializeControlHub() {
-            updateHubStatusIndicators();
-            
-            // Add periodic updates for hub items
-            setInterval(() => {
-                updateControlHubItems();
-            }, 15000);
+        function initializeGlobalUpdates() {
+            populateGlobalUpdates();
+            updateNetworkStatusIndicators();
         }
 
-        function updateControlHubItems() {
-            // Simulate dynamic updates from admin command center
-            const hubItems = document.querySelectorAll('.hub-value');
-            if (hubItems.length >= 2) {
-                const revenue = Math.floor(Math.random() * 50 + 470);
-                const customers = Math.floor(Math.random() * 20 + 840);
-                const growth = Math.floor(Math.random() * 5 + 15);
-                hubItems[1].textContent = `$${revenue}K MRR • ${customers} active customers • Growth trending +${growth}%`;
+        function populateGlobalUpdates() {
+            const container = document.getElementById('networkUpdates');
+            container.innerHTML = '';
+
+            globalUpdates.slice(0, 6).forEach(update => {
+                const updateItem = document.createElement('div');
+                updateItem.className = `network-update-item ${update.type}`;
+                updateItem.onclick = () => openUpdateDetails(update);
+                
+                updateItem.innerHTML = `
+                    <div class="update-header">
+                        <div class="update-title">${update.title}</div>
+                        <div class="update-timestamp">${update.timestamp}</div>
+                    </div>
+                    <div class="update-message">${update.message}</div>
+                    <div class="update-source">
+                        <span>📡</span>
+                        <span>${update.source}</span>
+                        <div class="update-priority ${update.priority}">${update.priority}</div>
+                    </div>
+                `;
+                
+                container.appendChild(updateItem);
+            });
+        }
+
+        function addRandomGlobalUpdate() {
+            const newUpdates = [
+                {
+                    type: 'system',
+                    title: 'Agent Health Check Complete',
+                    message: 'Global fleet health scan completed. 99.98% of agents reporting optimal status. Maintenance scheduled for 3 agents.',
+                    timestamp: 'Just now',
+                    source: 'Fleet Management',
+                    priority: 'low'
+                },
+                {
+                    type: 'security',
+                    title: 'Threat Pattern Analysis',
+                    message: 'Command center identified new attack vector targeting VPN infrastructure. All agents updated with enhanced detection.',
+                    timestamp: 'Just now',
+                    source: 'Threat Research',
+                    priority: 'high'
+                },
+                {
+                    type: 'info',
+                    title: 'Network Latency Optimization',
+                    message: 'Global routing optimization deployed. Average response time improved by 15ms across all regions.',
+                    timestamp: 'Just now',
+                    source: 'Network Operations',
+                    priority: 'low'
+                },
+                {
+                    type: 'warning',
+                    title: 'High Traffic Alert',
+                    message: 'Unusual traffic spike detected in Asia-Pacific region. Enhanced monitoring activated for next 4 hours.',
+                    timestamp: 'Just now',
+                    source: 'Traffic Analysis',
+                    priority: 'medium'
+                }
+            ];
+
+            const randomUpdate = newUpdates[Math.floor(Math.random() * newUpdates.length)];
+            globalUpdates.unshift(randomUpdate);
+            globalUpdates.pop(); // Keep only latest updates
+            populateGlobalUpdates();
+        }
+
+        function openUpdateDetails(update) {
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
             }
-            
-            if (hubItems.length >= 6) {
-                const tickets = Math.floor(Math.random() * 10 + 20);
-                const responseTime = (Math.random() * 2 + 3).toFixed(1);
-                hubItems[5].textContent = `${tickets} active tickets • Average response time: ${responseTime} minutes`;
-            }
+            setTimeout(() => {
+                sentinelChat?.addMessage(`Global Network Update Details:
+• Title: ${update.title}
+• Source: ${update.source}
+• Priority: ${update.priority.toUpperCase()}
+• Time: ${update.timestamp}
+• Message: ${update.message}
+• Impact: This update affects your agent's security posture and performance
+• Action Required: No manual intervention needed - updates applied automatically`, false);
+            }, 300);
         }
 
         function updateDashboardMetrics() {
@@ -1825,35 +1937,35 @@
             decisionsEl.textContent = decisions.toFixed(1) + 'K';
         }
 
-        function simulateStatusChange() {
-            // Rarely simulate a hub status change
+        function simulateNetworkStatusChange() {
+            // Rarely simulate a network status change
             if (Math.random() > 0.8) {
-                const hubStatus = document.getElementById('hubStatus');
-                const statusText = hubStatus.querySelector('span:last-child');
+                const networkStatus = document.getElementById('networkStatus');
+                const statusText = networkStatus.querySelector('span:last-child');
                 
                 if (Math.random() > 0.5) {
-                    // Admin connection issue
-                    hubStatus.className = 'hub-status-indicator warning';
-                    statusText.textContent = 'HQ SYNC DELAY';
+                    // Network sync delay
+                    networkStatus.className = 'network-status-indicator warning';
+                    statusText.textContent = 'SYNC DELAY';
                     
                     // Restore after 3 seconds
                     setTimeout(() => {
-                        hubStatus.className = 'hub-status-indicator online';
-                        statusText.textContent = 'HQ LINKED';
+                        networkStatus.className = 'network-status-indicator online';
+                        statusText.textContent = 'LIVE FEED';
                     }, 3000);
                 }
             }
         }
 
-        function updateHubStatusIndicators() {
-            // Occasionally update Admin Control Hub status indicators
-            const indicators = document.querySelectorAll('.hub-indicator');
+        function updateNetworkStatusIndicators() {
+            // Occasionally update Global Network status indicators
+            const indicators = document.querySelectorAll('.network-status-dot');
             indicators.forEach(indicator => {
                 if (Math.random() > 0.95) {
                     // Briefly show warning state
-                    indicator.className = 'hub-indicator warning';
+                    indicator.style.backgroundColor = 'var(--warning)';
                     setTimeout(() => {
-                        indicator.className = 'hub-indicator active';
+                        indicator.style.backgroundColor = 'currentColor';
                     }, 2000);
                 }
             });
@@ -1864,7 +1976,7 @@
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Admin Control Hub sync active with real-time fleet management oversight.', false);
+                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Global Network Updates sync active with real-time notifications from AI Sentinel command center.', false);
             }, 300);
         }
 
@@ -1911,11 +2023,11 @@
             
             if (SentinelState.chatOpen && sentinelChat) {
                 const status = SentinelState.agentActive ? 'resumed autonomous operation' : 'switched to manual control mode';
-                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. CLI mode available if external connections fail. Admin Control Hub sync ${SentinelState.agentActive ? 'maintained' : 'reduced'}.`, false, 'system');
+                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. CLI mode available if external connections fail. Global Network Updates sync ${SentinelState.agentActive ? 'maintained' : 'reduced'}.`, false, 'system');
             }
         };
         window.handleLogout = () => {
-            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously with Admin Control Hub oversight.')) {
+            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously with Global Network Updates oversight.')) {
                 localStorage.removeItem('sentinel_auth');
                 localStorage.removeItem('sentinel_scale');
                 window.location.href = 'index.html';
