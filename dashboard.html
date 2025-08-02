@@ -30,8 +30,6 @@
             --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
             --gradient-quantum: linear-gradient(135deg, #7c3aed 0%, #ff00ff 50%, #00ccff 100%);
             --gradient-hybrid: linear-gradient(135deg, #00ff88 0%, #7c3aed 50%, #00ccff 100%);
-            --gradient-banner: linear-gradient(135deg, rgba(0, 255, 136, 0.15) 0%, rgba(124, 58, 237, 0.1) 50%, rgba(0, 204, 255, 0.15) 100%);
-            --gradient-hq: linear-gradient(135deg, rgba(0, 204, 255, 0.15) 0%, rgba(124, 58, 237, 0.1) 50%, rgba(0, 255, 136, 0.15) 100%);
         }
 
         body {
@@ -51,7 +49,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.4;
+            opacity: 0.3;
         }
 
         /* Container */
@@ -104,7 +102,7 @@
             background: var(--gradient-shield);
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             position: relative;
-            animation: shieldPulse 3s ease-in-out infinite;
+            animation: shieldPulse 4s ease-in-out infinite;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -112,7 +110,7 @@
 
         @keyframes shieldPulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.03); }
         }
 
         .logo-eye {
@@ -131,14 +129,14 @@
             height: 20px;
             background: var(--gradient-1);
             border-radius: 50%;
-            box-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
         }
 
         .rotating-dots {
             position: absolute;
             width: 100%;
             height: 100%;
-            animation: rotate 10s linear infinite;
+            animation: rotate 12s linear infinite;
         }
 
         @keyframes rotate {
@@ -152,7 +150,7 @@
             height: 4px;
             background: var(--primary);
             border-radius: 50%;
-            box-shadow: 0 0 6px var(--primary);
+            box-shadow: 0 0 4px var(--primary);
         }
 
         .dot:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
@@ -225,22 +223,22 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 2s ease-in-out infinite;
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         .status-light.active {
             background: var(--success);
-            box-shadow: 0 0 10px var(--success);
+            box-shadow: 0 0 8px var(--success);
         }
 
         .status-light.inactive {
             background: var(--danger);
-            box-shadow: 0 0 10px var(--danger);
+            box-shadow: 0 0 8px var(--danger);
         }
 
         @keyframes statusPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.2); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
         .agent-status {
@@ -256,9 +254,9 @@
         }
 
         .agent-status:hover {
-            background: rgba(0, 255, 136, 0.2);
+            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .agent-icon {
@@ -342,7 +340,7 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner - FIXED with rounded corners like other v4 pages */
+        /* Sub-Agent Status Banner - FIXED with rounded corners */
         .sub-agent-status {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.05) 100%);
             border: 1px solid rgba(0, 255, 136, 0.3);
@@ -372,7 +370,7 @@
             align-items: center;
             justify-content: center;
             font-size: 24px;
-            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.25);
         }
 
         .sub-agent-details h3 {
@@ -427,7 +425,7 @@
             gap: 25px;
         }
 
-        /* AI Agent Command Center */
+        /* AI Agent Command Center - Back to V3 Design */
         .agent-command-center {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -453,38 +451,24 @@
             letter-spacing: 1px;
         }
 
-        /* Main Agent Card - Toned down glow effects */
+        /* Main Agent Card - V3 Style */
         .main-agent-card {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.03) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.03) 0%, rgba(0, 204, 255, 0.02) 100%);
             border: 1px solid var(--primary);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
         }
 
-        .main-agent-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
-            animation: agentPulse 12s linear infinite;
-        }
-
-        @keyframes agentPulse {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .main-agent-card:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.03) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.15);
         }
 
         .main-agent-content {
-            position: relative;
-            z-index: 1;
             display: flex;
             align-items: center;
             gap: 20px;
@@ -492,7 +476,7 @@
 
         .main-agent-icon {
             font-size: 48px;
-            filter: drop-shadow(0 0 10px var(--primary));
+            filter: drop-shadow(0 0 6px var(--primary));
         }
 
         .main-agent-info {
@@ -558,7 +542,7 @@
             font-style: italic;
         }
 
-        /* Sub-Agents Grid */
+        /* Sub-Agents Grid - V3 Style */
         .sub-agents-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -566,13 +550,10 @@
         }
 
         .sub-agent-card {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.01) 100%);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
@@ -580,39 +561,45 @@
 
         .sub-agent-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.15);
-            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.1);
+            border-color: rgba(0, 255, 136, 0.3);
         }
 
-        .sub-agent-icon {
+        .sub-agent-card-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sub-agent-card-icon {
             font-size: 32px;
-            filter: drop-shadow(0 0 8px currentColor);
+            filter: drop-shadow(0 0 5px currentColor);
             min-width: 40px;
         }
 
-        .sub-agent-info {
+        .sub-agent-card-info {
             flex: 1;
         }
 
-        .sub-agent-name {
+        .sub-agent-card-name {
             font-weight: bold;
             font-size: 16px;
             color: var(--primary);
             margin-bottom: 5px;
         }
 
-        .sub-agent-description {
+        .sub-agent-card-description {
             font-size: 12px;
             color: var(--text-secondary);
+            margin-bottom: 8px;
         }
 
-        .sub-agent-activity {
+        .sub-agent-card-activity {
             font-size: 11px;
             color: var(--success);
             display: flex;
             align-items: center;
             gap: 5px;
-            margin-top: 5px;
         }
 
         .activity-dot {
@@ -625,7 +612,7 @@
 
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.5); }
+            50% { opacity: 0.5; transform: scale(1.3); }
         }
 
         .sub-agent-manage-btn {
@@ -661,12 +648,12 @@
             border-radius: 10px;
             font-weight: bold;
             text-transform: uppercase;
-            animation: newAgentPulse 3s ease-in-out infinite;
+            animation: newAgentPulse 4s ease-in-out infinite;
         }
 
         @keyframes newAgentPulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
         }
 
         /* Security Feed */
@@ -675,7 +662,7 @@
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 25px;
-            height: 500px;
+            height: 400px;
             display: flex;
             flex-direction: column;
             backdrop-filter: blur(15px);
@@ -768,7 +755,109 @@
             font-style: italic;
         }
 
-        /* Global Intelligence Module - Better positioned at the bottom */
+        /* System Health Monitor - New Module */
+        .system-health-monitor {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .health-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .health-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .health-status {
+            font-size: 12px;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .health-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .health-item {
+            background: rgba(0, 255, 136, 0.03);
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .health-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.15);
+        }
+
+        .health-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .health-item-name {
+            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .health-item-value {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .health-item-details {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .health-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .health-progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+        }
+
+        /* Global Intelligence Module */
         .global-intel-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -788,9 +877,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: var(--gradient-hq);
-            opacity: 0.03;
-            animation: hqScan 8s linear infinite;
+            background: linear-gradient(135deg, rgba(0, 204, 255, 0.02) 0%, rgba(124, 58, 237, 0.01) 50%, rgba(0, 255, 136, 0.02) 100%);
+            animation: hqScan 10s linear infinite;
         }
 
         @keyframes hqScan {
@@ -851,15 +939,15 @@
         }
 
         .intel-item:hover {
-            background: rgba(0, 204, 255, 0.1);
+            background: rgba(0, 204, 255, 0.08);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 204, 255, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 204, 255, 0.15);
         }
 
         .intel-icon {
             font-size: 20px;
             min-width: 24px;
-            filter: drop-shadow(0 0 8px currentColor);
+            filter: drop-shadow(0 0 6px currentColor);
         }
 
         .intel-content {
@@ -883,20 +971,20 @@
             height: 8px;
             border-radius: 50%;
             margin-left: auto;
-            animation: pulse 2s ease-in-out infinite;
+            animation: pulse 3s ease-in-out infinite;
         }
 
         .intel-indicator.active {
             background: var(--success);
-            box-shadow: 0 0 10px var(--success);
+            box-shadow: 0 0 8px var(--success);
         }
 
         .intel-indicator.warning {
             background: var(--warning);
-            box-shadow: 0 0 10px var(--warning);
+            box-shadow: 0 0 8px var(--warning);
         }
 
-        /* Enhanced System Metrics - Better organized grid */
+        /* Enhanced System Metrics */
         .system-metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -922,7 +1010,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.02) 0%, rgba(0, 204, 255, 0.02) 100%);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.01) 0%, rgba(0, 204, 255, 0.01) 100%);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -933,13 +1021,13 @@
 
         .metric-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.15);
         }
 
         .metric-icon {
             font-size: 24px;
             margin-bottom: 10px;
-            filter: drop-shadow(0 0 10px currentColor);
+            filter: drop-shadow(0 0 6px currentColor);
             position: relative;
             z-index: 1;
         }
@@ -949,7 +1037,7 @@
             font-weight: bold;
             color: var(--primary);
             margin-bottom: 8px;
-            text-shadow: 0 0 20px currentColor;
+            text-shadow: 0 0 15px currentColor;
             position: relative;
             z-index: 1;
         }
@@ -1322,6 +1410,10 @@
             .intel-grid {
                 grid-template-columns: 1fr;
             }
+
+            .health-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Custom Scrollbar */
@@ -1448,7 +1540,7 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner - NOW with rounded corners matching other v4 pages -->
+        <!-- Sub-Agent Status Banner - FIXED with rounded corners -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">🤖</div>
@@ -1481,7 +1573,7 @@
         <div class="dashboard-grid">
             <!-- Left Column -->
             <div class="left-column">
-                <!-- AI Agent Command Center -->
+                <!-- AI Agent Command Center - V3 Style -->
                 <div class="agent-command-center">
                     <div class="command-center-header">
                         <h2 class="command-center-title">AI Agent Command Center</h2>
@@ -1526,7 +1618,7 @@
                         <div class="sub-agents-subtitle">Specialized AI modules coordinated by Main Agent • VPNMonitor now active</div>
                     </div>
                     
-                    <!-- Sub-Agents -->
+                    <!-- Sub-Agents - V3 Style -->
                     <div class="sub-agents-grid" id="subAgentsGrid">
                         <!-- Sub-agents will be populated by JavaScript from shared.js -->
                     </div>
@@ -1548,10 +1640,66 @@
                         <!-- Feed items will be populated by JavaScript -->
                     </div>
                 </div>
+
+                <!-- System Health Monitor - New Module -->
+                <div class="system-health-monitor">
+                    <div class="health-header">
+                        <h2 class="health-title">
+                            <span>💚</span>
+                            <span>System Health Monitor</span>
+                        </h2>
+                        <div class="health-status">
+                            <div class="status-dot active"></div>
+                            <span>All Systems Operational</span>
+                        </div>
+                    </div>
+                    <div class="health-grid">
+                        <div class="health-item">
+                            <div class="health-item-header">
+                                <div class="health-item-name">CPU Performance</div>
+                                <div class="health-item-value" id="cpuHealth">12%</div>
+                            </div>
+                            <div class="health-item-details">AI processing load optimized</div>
+                            <div class="health-progress">
+                                <div class="health-progress-fill" style="width: 12%"></div>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-item-header">
+                                <div class="health-item-name">Memory Usage</div>
+                                <div class="health-item-value" id="memoryHealth">68%</div>
+                            </div>
+                            <div class="health-item-details">Sub-agent coordination stable</div>
+                            <div class="health-progress">
+                                <div class="health-progress-fill" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-item-header">
+                                <div class="health-item-name">Network Latency</div>
+                                <div class="health-item-value" id="networkHealth">23ms</div>
+                            </div>
+                            <div class="health-item-details">Global sync performing well</div>
+                            <div class="health-progress">
+                                <div class="health-progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="health-item">
+                            <div class="health-item-header">
+                                <div class="health-item-name">Agent Response</div>
+                                <div class="health-item-value" id="responseHealth">0.2s</div>
+                            </div>
+                            <div class="health-item-details">Decision-making optimal</div>
+                            <div class="health-progress">
+                                <div class="health-progress-fill" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Global Intelligence Module - Better positioned at the bottom -->
+        <!-- Global Intelligence Module -->
         <div class="global-intel-module">
             <div class="intel-header">
                 <h2 class="intel-title">
@@ -1604,7 +1752,7 @@
             </div>
         </div>
 
-        <!-- Enhanced System Metrics with more details -->
+        <!-- Enhanced System Metrics -->
         <div class="system-metrics">
             <div class="metric-card">
                 <div class="metric-icon">🎯</div>
@@ -1734,6 +1882,9 @@
             // Initialize security feed
             initializeSecurityFeed();
             
+            // Initialize system health monitor
+            initializeSystemHealth();
+            
             // Start feed auto-generation
             setInterval(() => {
                 generateRandomFeedItem();
@@ -1743,6 +1894,11 @@
             setInterval(() => {
                 updateDashboardMetrics();
             }, 3000);
+
+            // Update system health periodically
+            setInterval(() => {
+                updateSystemHealth();
+            }, 4000);
 
             // Simulate encryption status changes occasionally
             setInterval(() => {
@@ -1772,13 +1928,15 @@
                 card.innerHTML = `
                     ${isNewAgent ? '<div class="new-agent-badge">NEW</div>' : ''}
                     <div class="sub-agent-manage-btn" onclick="event.stopPropagation(); manageAgent('${agentKey}')">Manage</div>
-                    <div class="sub-agent-icon">${agent.icon}</div>
-                    <div class="sub-agent-info">
-                        <div class="sub-agent-name">${agent.name}</div>
-                        <div class="sub-agent-description">${agent.description}</div>
-                        <div class="sub-agent-activity">
-                            <span class="activity-dot"></span>
-                            <span>${agent.activity}</span>
+                    <div class="sub-agent-card-content">
+                        <div class="sub-agent-card-icon">${agent.icon}</div>
+                        <div class="sub-agent-card-info">
+                            <div class="sub-agent-card-name">${agent.name}</div>
+                            <div class="sub-agent-card-description">${agent.description}</div>
+                            <div class="sub-agent-card-activity">
+                                <span class="activity-dot"></span>
+                                <span>${agent.activity}</span>
+                            </div>
                         </div>
                     </div>
                 `;
@@ -1808,6 +1966,39 @@
             addFeedItem('📜 CertificateManager: 2 certificates expiring within 30 days', 'warning', 'CertificateManager');
             addFeedItem('✅ ComplianceMonitor: SOC2 and ISO27001 compliance verified', '', 'ComplianceMonitor');
             addFeedItem('🛡️ ThreatScanner detected suspicious activity on port 445', 'warning', 'ThreatScanner');
+        }
+
+        function initializeSystemHealth() {
+            // Initialize health values
+            updateHealthValue('cpuHealth', 12, 12);
+            updateHealthValue('memoryHealth', 68, 68);
+            updateHealthValue('networkHealth', '23ms', 85);
+            updateHealthValue('responseHealth', '0.2s', 95);
+        }
+
+        function updateHealthValue(elementId, value, progressPercent) {
+            const element = document.getElementById(elementId);
+            const progressBar = element.closest('.health-item').querySelector('.health-progress-fill');
+            
+            if (element) {
+                element.textContent = typeof value === 'number' ? value + '%' : value;
+            }
+            if (progressBar && typeof progressPercent === 'number') {
+                progressBar.style.width = progressPercent + '%';
+            }
+        }
+
+        function updateSystemHealth() {
+            // Simulate realistic health metrics
+            const cpuUsage = Math.max(8, Math.min(25, 12 + Math.random() * 6 - 3));
+            const memoryUsage = Math.max(60, Math.min(80, 68 + Math.random() * 8 - 4));
+            const networkLatency = Math.max(15, Math.min(35, 23 + Math.random() * 8 - 4));
+            const responseTime = Math.max(0.1, Math.min(0.5, 0.2 + Math.random() * 0.2 - 0.1));
+            
+            updateHealthValue('cpuHealth', Math.round(cpuUsage), cpuUsage);
+            updateHealthValue('memoryHealth', Math.round(memoryUsage), memoryUsage);
+            updateHealthValue('networkHealth', Math.round(networkLatency) + 'ms', Math.max(60, 100 - networkLatency));
+            updateHealthValue('responseHealth', responseTime.toFixed(1) + 's', Math.max(70, 100 - (responseTime * 100)));
         }
 
         function addFeedItem(message, type = '', agent = '') {
@@ -1848,7 +2039,8 @@
             { msg: '🎯 Predicted attack pattern, preemptive defense deployed', type: 'warning', agent: 'ThreatScanner' },
             { msg: '✅ System health check passed. All agents operational', type: '', agent: 'Main Agent' },
             { msg: '🛰️ Global Intelligence: Global threat feed updated', type: '', agent: 'Global Network' },
-            { msg: '🔐 Fleet-wide encryption key rotation initiated by network', type: 'encryption', agent: 'Global Network' }
+            { msg: '🔐 Fleet-wide encryption key rotation initiated by network', type: 'encryption', agent: 'Global Network' },
+            { msg: '💚 System performance: CPU ' + Math.floor(Math.random() * 10 + 10) + '%, Memory ' + Math.floor(Math.random() * 15 + 65) + '%', type: '', agent: 'System Health' }
         ];
 
         function generateRandomFeedItem() {
