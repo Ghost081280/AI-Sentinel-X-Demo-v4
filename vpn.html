@@ -1136,48 +1136,52 @@
             letter-spacing: 1px;
         }
 
-        /* Real-time Feed */
-        .feed-section {
+        /* Activity Feed - Shared styling */
+        .activity-feed {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             height: 500px;
             display: flex;
             flex-direction: column;
-            backdrop-filter: blur(15px);
         }
 
         .feed-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 1px solid var(--border);
         }
 
         .feed-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .live-indicator {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             color: var(--danger);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             text-transform: uppercase;
         }
 
         .live-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: var(--danger);
             border-radius: 50%;
             animation: livePulse 2s ease-in-out infinite;
@@ -1198,20 +1202,14 @@
             background: rgba(0, 204, 255, 0.05);
             border-left: 3px solid var(--secondary);
             padding: 15px 20px;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             border-radius: 0 10px 10px 0;
-            animation: feedSlide 0.3s ease;
             transition: all 0.3s ease;
         }
 
         .feed-item:hover {
             background: rgba(0, 204, 255, 0.1);
             transform: translateX(5px);
-        }
-
-        @keyframes feedSlide {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
         }
 
         .feed-item.warning {
@@ -1230,7 +1228,7 @@
         }
 
         .feed-time {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
             margin-bottom: 5px;
             text-transform: uppercase;
@@ -1238,14 +1236,14 @@
         }
 
         .feed-message {
-            font-size: 14px;
-            line-height: 1.5;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 5px;
         }
 
         .feed-agent {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--accent);
-            margin-top: 5px;
             font-style: italic;
         }
 
@@ -1877,16 +1875,19 @@
         </div>
 
         <!-- VPNMonitor Activity Feed -->
-        <div class="feed-section">
+        <div class="activity-feed">
             <div class="feed-header">
-                <h2 class="feed-title">VPNMonitor Activity Feed</h2>
+                <h2 class="feed-title">
+                    <span>🔒</span>
+                    <span>VPNMonitor Activity Feed</span>
+                </h2>
                 <div class="live-indicator">
                     <div class="live-dot"></div>
                     <span>LIVE</span>
                 </div>
             </div>
-            <div class="feed-content" id="vpnFeed">
-                <!-- Feed items will be populated by JavaScript -->
+            <div class="feed-content" id="vpnActivityFeed">
+                <!-- Feed items will be populated by ActivityFeedManager -->
             </div>
         </div>
     </div>
@@ -1944,10 +1945,10 @@
 
     <script src="shared.js"></script>
     <script>
-        // FIXED: Remove duplicate VPNConfigs declaration - use the one from shared.js
-        // VPN-specific state management
+        // VPN page-specific state management
         let vpnAutoExecution = true;
         let autoExecutionInterval;
+        let vpnFeedId = 'vpn-feed';
         
         // VPN page initialization
         document.addEventListener('DOMContentLoaded', () => {
@@ -1955,12 +1956,27 @@
         });
 
         function initializeVPNPage() {
+            // Initialize VPN activity feed
+            if (activityFeedManager) {
+                // Initialize VPN feed
+                activityFeedManager.initializeFeed(vpnFeedId, 'vpn');
+                activityFeedManager.setFeedContainer(vpnFeedId, 'vpnActivityFeed');
+                
+                // Add initial messages
+                activityFeedManager.addMessage(vpnFeedId, '🔒 VPNMonitor V4 initialized. Enhanced SOC integration active.', '', 'VPNMonitor');
+                activityFeedManager.addMessage(vpnFeedId, '🌐 OpenVPN service: 8 active connections verified', '', 'VPNMonitor');
+                activityFeedManager.addMessage(vpnFeedId, '⚡ WireGuard mobile gateway: 4 connections stable', '', 'VPNMonitor');
+                activityFeedManager.addMessage(vpnFeedId, '🔐 IPSec site-to-site tunnel established with PQC keys', 'encryption', 'VPNMonitor');
+                
+                // Start auto-generation every 4 seconds for VPN feed
+                activityFeedManager.startAutoGeneration(vpnFeedId, 4000);
+            }
+
             populateActiveServices();
             populateLiveConnections();
             populateSecurityOverview();
             populateAnomalyAlerts();
             populateSuggestedActions();
-            initializeActivityFeed();
             
             // Start automated systems
             startAutoExecution();
@@ -1969,159 +1985,163 @@
             setInterval(() => {
                 updateVPNMetrics();
             }, 3000);
-            setInterval(() => {
-                generateVPNFeedItem();
-            }, 6000);
         }
 
         function populateActiveServices() {
             const grid = document.getElementById('servicesGrid');
             grid.innerHTML = '';
 
-            // Add a fourth service to fill the grid better
-            const enhancedServices = [
-                ...VPNConfigs.activeServices,
-                {
-                    id: 'l2tp-backup',
-                    name: 'L2TP/IPSec Backup',
-                    protocol: 'L2TP/IPSec',
-                    port: 1701,
-                    status: 'active',
-                    connections: 2,
-                    encryption: 'AES-256-CBC + SPHINCS+',
-                    location: 'Backup DC'
-                }
-            ];
+            // Get VPN configs from shared.js
+            if (typeof VPNConfigs !== 'undefined' && VPNConfigs.activeServices) {
+                // Add a fourth service to fill the grid better
+                const enhancedServices = [
+                    ...VPNConfigs.activeServices,
+                    {
+                        id: 'l2tp-backup',
+                        name: 'L2TP/IPSec Backup',
+                        protocol: 'L2TP/IPSec',
+                        port: 1701,
+                        status: 'active',
+                        connections: 2,
+                        encryption: 'AES-256-CBC + SPHINCS+',
+                        location: 'Backup DC'
+                    }
+                ];
 
-            enhancedServices.forEach(service => {
-                const card = document.createElement('div');
-                card.className = 'service-card';
-                card.onclick = () => openServiceDetails(service.id);
-                
-                card.innerHTML = `
-                    <div class="service-header">
-                        <div class="service-name">${service.name}</div>
-                        <div class="service-status ${service.status}">
-                            <div class="status-dot ${service.status}"></div>
-                            <span>${service.status.toUpperCase()}</span>
+                enhancedServices.forEach(service => {
+                    const card = document.createElement('div');
+                    card.className = 'service-card';
+                    card.onclick = () => openServiceDetails(service.id);
+                    
+                    card.innerHTML = `
+                        <div class="service-header">
+                            <div class="service-name">${service.name}</div>
+                            <div class="service-status ${service.status}">
+                                <div class="status-dot ${service.status}"></div>
+                                <span>${service.status.toUpperCase()}</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="service-details">
-                        <div class="service-detail">
-                            <span class="service-detail-label">Protocol:</span>
-                            <span class="service-detail-value">${service.protocol}</span>
+                        <div class="service-details">
+                            <div class="service-detail">
+                                <span class="service-detail-label">Protocol:</span>
+                                <span class="service-detail-value">${service.protocol}</span>
+                            </div>
+                            <div class="service-detail">
+                                <span class="service-detail-label">Port:</span>
+                                <span class="service-detail-value">${service.port}</span>
+                            </div>
+                            <div class="service-detail">
+                                <span class="service-detail-label">Connections:</span>
+                                <span class="service-detail-value">${service.connections}</span>
+                            </div>
+                            <div class="service-detail">
+                                <span class="service-detail-label">Location:</span>
+                                <span class="service-detail-value">${service.location}</span>
+                            </div>
                         </div>
-                        <div class="service-detail">
-                            <span class="service-detail-label">Port:</span>
-                            <span class="service-detail-value">${service.port}</span>
+                        <div class="service-encryption">
+                            <div class="service-encryption-label">🔐 Encryption Stack</div>
+                            <div class="service-encryption-value">${service.encryption}</div>
                         </div>
-                        <div class="service-detail">
-                            <span class="service-detail-label">Connections:</span>
-                            <span class="service-detail-value">${service.connections}</span>
-                        </div>
-                        <div class="service-detail">
-                            <span class="service-detail-label">Location:</span>
-                            <span class="service-detail-value">${service.location}</span>
-                        </div>
-                    </div>
-                    <div class="service-encryption">
-                        <div class="service-encryption-label">🔐 Encryption Stack</div>
-                        <div class="service-encryption-value">${service.encryption}</div>
-                    </div>
-                `;
-                
-                grid.appendChild(card);
-            });
+                    `;
+                    
+                    grid.appendChild(card);
+                });
+            }
         }
 
         function populateLiveConnections() {
             const list = document.getElementById('connectionsList');
             list.innerHTML = '';
 
-            VPNConfigs.liveConnections.forEach((conn, index) => {
-                const card = document.createElement('div');
-                card.className = 'connection-card';
-                card.onclick = () => openConnectionDetails(conn.id);
-                
-                // Calculate threat score based on various factors
-                const threatScore = calculateThreatScore(conn);
-                const threatLevel = threatScore > 7 ? 'high' : threatScore > 4 ? 'medium' : 'low';
-                
-                card.innerHTML = `
-                    <div class="connection-header">
-                        <div class="connection-device">${conn.deviceName}</div>
-                        <div class="connection-status">
-                            <div class="status-dot active"></div>
-                            <span>ACTIVE</span>
+            if (typeof VPNConfigs !== 'undefined' && VPNConfigs.liveConnections) {
+                VPNConfigs.liveConnections.forEach((conn, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'connection-card';
+                    card.onclick = () => openConnectionDetails(conn.id);
+                    
+                    // Calculate threat score based on various factors
+                    const threatScore = calculateThreatScore(conn);
+                    const threatLevel = threatScore > 7 ? 'high' : threatScore > 4 ? 'medium' : 'low';
+                    
+                    card.innerHTML = `
+                        <div class="connection-header">
+                            <div class="connection-device">${conn.deviceName}</div>
+                            <div class="connection-status">
+                                <div class="status-dot active"></div>
+                                <span>ACTIVE</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="connection-details">
-                        <div class="connection-detail">
-                            <div class="connection-detail-label">Location</div>
-                            <div class="connection-detail-value">${conn.city}, ${conn.country}</div>
+                        <div class="connection-details">
+                            <div class="connection-detail">
+                                <div class="connection-detail-label">Location</div>
+                                <div class="connection-detail-value">${conn.city}, ${conn.country}</div>
+                            </div>
+                            <div class="connection-detail">
+                                <div class="connection-detail-label">Protocol</div>
+                                <div class="connection-detail-value">${conn.protocol}</div>
+                            </div>
+                            <div class="connection-detail">
+                                <div class="connection-detail-label">Duration</div>
+                                <div class="connection-detail-value">${conn.duration}</div>
+                            </div>
+                            <div class="connection-detail">
+                                <div class="connection-detail-label">Data In</div>
+                                <div class="connection-detail-value">${conn.bytesIn}</div>
+                            </div>
+                            <div class="connection-detail">
+                                <div class="connection-detail-label">Data Out</div>
+                                <div class="connection-detail-value">${conn.bytesOut}</div>
+                            </div>
+                            <div class="connection-detail">
+                                <div class="connection-detail-label">Client IP</div>
+                                <div class="connection-detail-value">${conn.clientIP}</div>
+                            </div>
                         </div>
-                        <div class="connection-detail">
-                            <div class="connection-detail-label">Protocol</div>
-                            <div class="connection-detail-value">${conn.protocol}</div>
+                        <div class="connection-security">
+                            <div class="connection-threat-score">
+                                <span style="color: var(--text-secondary); font-size: 11px;">THREAT SCORE:</span>
+                                <div class="threat-score ${threatLevel}">${threatScore}/10</div>
+                            </div>
+                            <div style="color: var(--text-secondary); font-size: 11px;">
+                                Last Auth: ${getRandomTimeAgo()}
+                            </div>
                         </div>
-                        <div class="connection-detail">
-                            <div class="connection-detail-label">Duration</div>
-                            <div class="connection-detail-value">${conn.duration}</div>
-                        </div>
-                        <div class="connection-detail">
-                            <div class="connection-detail-label">Data In</div>
-                            <div class="connection-detail-value">${conn.bytesIn}</div>
-                        </div>
-                        <div class="connection-detail">
-                            <div class="connection-detail-label">Data Out</div>
-                            <div class="connection-detail-value">${conn.bytesOut}</div>
-                        </div>
-                        <div class="connection-detail">
-                            <div class="connection-detail-label">Client IP</div>
-                            <div class="connection-detail-value">${conn.clientIP}</div>
-                        </div>
-                    </div>
-                    <div class="connection-security">
-                        <div class="connection-threat-score">
-                            <span style="color: var(--text-secondary); font-size: 11px;">THREAT SCORE:</span>
-                            <div class="threat-score ${threatLevel}">${threatScore}/10</div>
-                        </div>
-                        <div style="color: var(--text-secondary); font-size: 11px;">
-                            Last Auth: ${getRandomTimeAgo()}
-                        </div>
-                    </div>
-                `;
-                
-                list.appendChild(card);
-            });
+                    `;
+                    
+                    list.appendChild(card);
+                });
+            }
         }
 
         function populateSecurityOverview() {
             const list = document.getElementById('protocolsList');
             list.innerHTML = '';
 
-            VPNConfigs.securityOverview.encryptionProtocols.forEach(protocol => {
-                const item = document.createElement('div');
-                item.className = 'protocol-item';
-                
-                const usagePercent = parseInt(protocol.usage);
-                const statusColor = protocol.status === 'future-proof' ? 'var(--accent)' : 'var(--success)';
-                
-                item.innerHTML = `
-                    <div class="protocol-info">
-                        <div class="protocol-name">${protocol.name}</div>
-                        <div class="protocol-status" style="color: ${statusColor};">${protocol.status.replace('-', ' ')}</div>
-                    </div>
-                    <div class="protocol-usage">
-                        <div class="usage-bar">
-                            <div class="usage-fill" style="width: ${usagePercent}%"></div>
+            if (typeof VPNConfigs !== 'undefined' && VPNConfigs.securityOverview && VPNConfigs.securityOverview.encryptionProtocols) {
+                VPNConfigs.securityOverview.encryptionProtocols.forEach(protocol => {
+                    const item = document.createElement('div');
+                    item.className = 'protocol-item';
+                    
+                    const usagePercent = parseInt(protocol.usage);
+                    const statusColor = protocol.status === 'future-proof' ? 'var(--accent)' : 'var(--success)';
+                    
+                    item.innerHTML = `
+                        <div class="protocol-info">
+                            <div class="protocol-name">${protocol.name}</div>
+                            <div class="protocol-status" style="color: ${statusColor};">${protocol.status.replace('-', ' ')}</div>
                         </div>
-                        <div class="usage-percent">${protocol.usage}</div>
-                    </div>
-                `;
-                
-                list.appendChild(item);
-            });
+                        <div class="protocol-usage">
+                            <div class="usage-bar">
+                                <div class="usage-fill" style="width: ${usagePercent}%"></div>
+                            </div>
+                            <div class="usage-percent">${protocol.usage}</div>
+                        </div>
+                    `;
+                    
+                    list.appendChild(item);
+                });
+            }
 
             // Update certificate counts with realistic, stable numbers
             animateValueSlow('totalCerts', 4);
@@ -2133,35 +2153,37 @@
             const list = document.getElementById('alertsList');
             list.innerHTML = '';
 
-            // Enhanced alerts with more SOC-focused details
-            const enhancedAlerts = VPNConfigs.anomalyAlerts.map(alert => ({
-                ...alert,
-                geoScore: calculateGeoRiskScore(alert),
-                behaviorScore: Math.floor(Math.random() * 10) + 1,
-                recommendation: getAlertRecommendation(alert)
-            }));
+            if (typeof VPNConfigs !== 'undefined' && VPNConfigs.anomalyAlerts) {
+                // Enhanced alerts with more SOC-focused details
+                const enhancedAlerts = VPNConfigs.anomalyAlerts.map(alert => ({
+                    ...alert,
+                    geoScore: calculateGeoRiskScore(alert),
+                    behaviorScore: Math.floor(Math.random() * 10) + 1,
+                    recommendation: getAlertRecommendation(alert)
+                }));
 
-            enhancedAlerts.forEach(alert => {
-                const item = document.createElement('div');
-                item.className = `alert-item ${alert.severity}`;
-                item.onclick = () => openAlertDetails(alert.id);
-                
-                const timeAgo = getTimeAgo(alert.timestamp);
-                
-                item.innerHTML = `
-                    <div class="alert-content">
-                        <div class="alert-message">${alert.message}</div>
-                        <div class="alert-details">
-                            <span class="alert-ip">IP: ${alert.clientIP}</span>
-                            <span class="alert-action">Action: ${alert.action}</span>
+                enhancedAlerts.forEach(alert => {
+                    const item = document.createElement('div');
+                    item.className = `alert-item ${alert.severity}`;
+                    item.onclick = () => openAlertDetails(alert.id);
+                    
+                    const timeAgo = getTimeAgo(alert.timestamp);
+                    
+                    item.innerHTML = `
+                        <div class="alert-content">
+                            <div class="alert-message">${alert.message}</div>
+                            <div class="alert-details">
+                                <span class="alert-ip">IP: ${alert.clientIP}</span>
+                                <span class="alert-action">Action: ${alert.action}</span>
+                            </div>
+                            <div class="alert-time">${timeAgo} • Geo Risk: ${alert.geoScore}/10 • Behavior: ${alert.behaviorScore}/10</div>
                         </div>
-                        <div class="alert-time">${timeAgo} • Geo Risk: ${alert.geoScore}/10 • Behavior: ${alert.behaviorScore}/10</div>
-                    </div>
-                    <div class="alert-severity ${alert.severity}">${alert.severity}</div>
-                `;
-                
-                list.appendChild(item);
-            });
+                        <div class="alert-severity ${alert.severity}">${alert.severity}</div>
+                    `;
+                    
+                    list.appendChild(item);
+                });
+            }
         }
 
         function populateSuggestedActions() {
@@ -2232,37 +2254,6 @@
             });
         }
 
-        function initializeActivityFeed() {
-            addVPNFeedItem('🔒 VPNMonitor V4 initialized. Enhanced SOC integration active.', '', 'VPNMonitor');
-            addVPNFeedItem('🌐 OpenVPN service: 8 active connections verified', '', 'VPNMonitor');
-            addVPNFeedItem('⚡ WireGuard mobile gateway: 4 connections stable', '', 'VPNMonitor');
-            addVPNFeedItem('🔐 IPSec site-to-site tunnel established with PQC keys', 'encryption', 'VPNMonitor');
-            addVPNFeedItem('⚠️ Geographic anomaly: Suspicious login pattern from Russia', 'warning', 'VPNMonitor');
-            addVPNFeedItem('🚫 Automated IP blocking: 5 failed auth attempts from 203.45.67.89', 'danger', 'VPNMonitor');
-            addVPNFeedItem('🎯 Behavioral analysis: Anomalous traffic pattern flagged for review', 'warning', 'VPNMonitor');
-            addVPNFeedItem('🤖 Auto-execution enabled: Actions will execute automatically every 15 seconds', '', 'Main Agent');
-        }
-
-        function addVPNFeedItem(message, type = '', agent = '') {
-            const feed = document.getElementById('vpnFeed');
-            const item = document.createElement('div');
-            item.className = `feed-item ${type}`;
-            
-            const time = new Date().toLocaleTimeString();
-            item.innerHTML = `
-                <div class="feed-time">${time}</div>
-                <div class="feed-message">${message}</div>
-                ${agent ? `<div class="feed-agent">via ${agent}</div>` : ''}
-            `;
-            
-            feed.insertBefore(item, feed.firstChild);
-            
-            // Keep only last 25 items for better history
-            while (feed.children.length > 25) {
-                feed.removeChild(feed.lastChild);
-            }
-        }
-
         // Auto-execution system
         function startAutoExecution() {
             if (autoExecutionInterval) clearInterval(autoExecutionInterval);
@@ -2326,8 +2317,10 @@
                 if (progressFill) progressFill.style.width = '0%';
             }, 2000);
             
-            // Add completion notification to feed
-            addVPNFeedItem(`✅ Auto-executed: ${title} completed successfully`, 'encryption', 'Main Agent');
+            // Add completion notification to activity feed
+            if (activityFeedManager) {
+                activityFeedManager.addMessage(vpnFeedId, `✅ Auto-executed: ${title} completed successfully`, 'encryption', 'Main Agent');
+            }
             
             // Notify chat if open
             if (SentinelState.chatOpen && sentinelChat) {
@@ -2348,31 +2341,10 @@
             }, 300);
         }
 
-        // Enhanced feed messages for SOC operations
-        const socFeedMessages = [
-            { msg: '🔒 Certificate auto-renewal: VPN-CERT-' + Math.floor(Math.random() * 999 + 100), type: 'encryption', agent: 'VPNMonitor → CertificateManager' },
-            { msg: '🌍 Geographic anomaly detected: ' + getRandomSuspiciousCountry() + ' access pattern unusual', type: 'warning', agent: 'VPNMonitor → ThreatScanner' },
-            { msg: '🔐 Quantum-safe key exchange completed for ' + Math.floor(Math.random() * 5 + 1) + ' tunnels', type: 'encryption', agent: 'VPNMonitor → EncryptionManager' },
-            { msg: '📊 Traffic analysis: ' + (Math.random() * 3 + 0.5).toFixed(1) + 'GB/hr average, +' + Math.floor(Math.random() * 50 + 10) + '% from baseline', type: '', agent: 'VPNMonitor → AnalyticsEngine' },
-            { msg: '🚫 Brute force attack blocked: ' + generateRandomIP() + ' (' + Math.floor(Math.random() * 20 + 5) + ' attempts)', type: 'danger', agent: 'VPNMonitor → DefenseOrchestrator' },
-            { msg: '✅ SOC-2 compliance verification: All VPN logs properly encrypted and stored', type: '', agent: 'VPNMonitor → ComplianceMonitor' },
-            { msg: '⚡ Zero-trust validation: Device certificate chain verified for ' + Math.floor(Math.random() * 10 + 1) + ' endpoints', type: '', agent: 'VPNMonitor → CertificateManager' },
-            { msg: '🔍 Behavioral analytics: User login pattern deviation detected - flagged for investigation', type: 'warning', agent: 'VPNMonitor → AnalyticsEngine' },
-            { msg: '🛡️ DPI bypass attempt detected and blocked from ' + generateRandomIP(), type: 'danger', agent: 'VPNMonitor → DefenseOrchestrator' },
-            { msg: '📈 Performance metrics: Avg latency ' + Math.floor(Math.random() * 50 + 20) + 'ms, packet loss < 0.1%', type: '', agent: 'VPNMonitor' },
-            { msg: '🔒 Steganography detection: Suspicious payload patterns in tunnel ' + Math.floor(Math.random() * 99 + 1), type: 'warning', agent: 'VPNMonitor → ThreatScanner' },
-            { msg: '🎯 ML model updated: Threat detection accuracy improved to 99.' + Math.floor(Math.random() * 9 + 1) + '%', type: '', agent: 'VPNMonitor' }
-        ];
-
-        function generateVPNFeedItem() {
-            const item = socFeedMessages[Math.floor(Math.random() * socFeedMessages.length)];
-            addVPNFeedItem(item.msg, item.type, item.agent);
-        }
-
         function updateVPNMetrics() {
             // Slow, realistic updates that SOC can actually read
             if (Math.random() > 0.92) { // Much less frequent updates
-                const currentConnections = VPNConfigs.liveConnections.length;
+                const currentConnections = typeof VPNConfigs !== 'undefined' && VPNConfigs.liveConnections ? VPNConfigs.liveConnections.length : 12;
                 const newCount = Math.max(10, currentConnections + Math.floor(Math.random() * 3 - 1));
                 
                 // Update the sub-agent banner metric
@@ -2459,15 +2431,6 @@
             return recommendations[alert.type] || 'Review and investigate further';
         }
 
-        function getRandomSuspiciousCountry() {
-            const countries = ['Russia', 'China', 'Iran', 'North Korea', 'Belarus', 'Myanmar'];
-            return countries[Math.floor(Math.random() * countries.length)];
-        }
-
-        function generateRandomIP() {
-            return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
-        }
-
         function getRandomTimeAgo() {
             const times = ['2m ago', '5m ago', '12m ago', '28m ago', '1h ago', '3h ago'];
             return times[Math.floor(Math.random() * times.length)];
@@ -2493,9 +2456,10 @@
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                const service = VPNConfigs.activeServices.find(s => s.id === serviceId);
-                if (service) {
-                    sentinelChat?.addMessage(`VPNMonitor: Service Details - ${service.name}
+                if (typeof VPNConfigs !== 'undefined' && VPNConfigs.activeServices) {
+                    const service = VPNConfigs.activeServices.find(s => s.id === serviceId);
+                    if (service) {
+                        sentinelChat?.addMessage(`VPNMonitor: Service Details - ${service.name}
 • Protocol: ${service.protocol} (Hybrid-Resistant)
 • Port: ${service.port} (Secured)
 • Active Connections: ${service.connections}
@@ -2504,6 +2468,7 @@
 • Status: ${service.status.toUpperCase()}
 • SOC Alert Level: ${service.connections > 6 ? 'ELEVATED' : 'NORMAL'}
 • Sub-Agent Coordination: VPNMonitor → EncryptionManager → CertificateManager`, false);
+                    }
                 }
             }, 300);
         }
@@ -2513,10 +2478,11 @@
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                const conn = VPNConfigs.liveConnections.find(c => c.id === connectionId);
-                if (conn) {
-                    const threatScore = calculateThreatScore(conn);
-                    sentinelChat?.addMessage(`VPNMonitor: Connection Analysis - ${conn.deviceName}
+                if (typeof VPNConfigs !== 'undefined' && VPNConfigs.liveConnections) {
+                    const conn = VPNConfigs.liveConnections.find(c => c.id === connectionId);
+                    if (conn) {
+                        const threatScore = calculateThreatScore(conn);
+                        sentinelChat?.addMessage(`VPNMonitor: Connection Analysis - ${conn.deviceName}
 • Location: ${conn.city}, ${conn.country}
 • Protocol: ${conn.protocol} with Hybrid Encryption
 • Session Duration: ${conn.duration}
@@ -2526,6 +2492,7 @@
 • Authentication: Multi-factor verified
 • Certificate: Valid (Hybrid signatures)
 • Sub-Agent Status: ${threatScore > 7 ? 'ThreatScanner alerted' : 'Normal monitoring'}`, false);
+                    }
                 }
             }, 300);
         }
@@ -2535,10 +2502,11 @@
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                const alert = VPNConfigs.anomalyAlerts.find(a => a.id === alertId);
-                if (alert) {
-                    const geoScore = calculateGeoRiskScore(alert);
-                    sentinelChat?.addMessage(`VPNMonitor: SOC Alert Analysis - ${alert.message}
+                if (typeof VPNConfigs !== 'undefined' && VPNConfigs.anomalyAlerts) {
+                    const alert = VPNConfigs.anomalyAlerts.find(a => a.id === alertId);
+                    if (alert) {
+                        const geoScore = calculateGeoRiskScore(alert);
+                        sentinelChat?.addMessage(`VPNMonitor: SOC Alert Analysis - ${alert.message}
 • Severity: ${alert.severity.toUpperCase()} PRIORITY
 • Timestamp: ${alert.timestamp}
 • Source IP: ${alert.clientIP}
@@ -2548,6 +2516,7 @@
 • Recommendation: ${getAlertRecommendation(alert)}
 • Sub-Agent Coordination: VPNMonitor → ${alert.severity === 'high' ? 'ThreatScanner → DefenseOrchestrator' : 'AnalyticsEngine'}
 • Auto-Response: ${alert.severity === 'high' ? 'IP blocked automatically' : 'Monitoring increased'}`, false);
+                    }
                 }
             }, 300);
         }
@@ -2564,6 +2533,16 @@
                 }
             }, 300);
         }
+
+        // Cleanup activity feed on page unload
+        window.addEventListener('beforeunload', () => {
+            if (activityFeedManager) {
+                activityFeedManager.stopAutoGeneration(vpnFeedId);
+            }
+            if (autoExecutionInterval) {
+                clearInterval(autoExecutionInterval);
+            }
+        });
 
         // Global functions for compatibility
         window.toggleChat = () => sentinelChat?.toggle();
@@ -2597,10 +2576,13 @@
                 agentTitle.style.color = 'var(--primary)';
                 agentStatusText.textContent = 'Autonomous with Manual Override';
                 
-                // Restart auto-execution
+                // Restart auto-execution and activity feed
                 vpnAutoExecution = true;
                 startAutoExecution();
-                addVPNFeedItem('🤖 Main Agent resumed: Auto-execution enabled', '', 'Main Agent');
+                if (activityFeedManager) {
+                    activityFeedManager.startAutoGeneration(vpnFeedId, 4000);
+                    activityFeedManager.addMessage(vpnFeedId, '🤖 Main Agent resumed: Auto-execution enabled', '', 'Main Agent');
+                }
             } else {
                 agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
                 agentStatus.style.borderColor = '#ffaa00';
@@ -2608,10 +2590,13 @@
                 agentTitle.style.color = '#ffaa00';
                 agentStatusText.textContent = 'Manual Control Only';
                 
-                // Stop auto-execution
+                // Stop auto-execution and activity feed
                 vpnAutoExecution = false;
                 if (autoExecutionInterval) clearInterval(autoExecutionInterval);
-                addVPNFeedItem('⚠️ Main Agent paused: Manual control only', 'warning', 'Main Agent');
+                if (activityFeedManager) {
+                    activityFeedManager.stopAutoGeneration(vpnFeedId);
+                    activityFeedManager.addMessage(vpnFeedId, '⚠️ Main Agent paused: Manual control only', 'warning', 'Main Agent');
+                }
             }
             
             closeModal();
