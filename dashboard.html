@@ -453,10 +453,10 @@
             letter-spacing: 1px;
         }
 
-        /* Main Agent Card */
+        /* Main Agent Card - Toned down glow effects */
         .main-agent-card {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.05) 100%);
-            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.03) 100%);
+            border: 1px solid var(--primary);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 20px;
@@ -473,8 +473,8 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
-            animation: agentPulse 8s linear infinite;
+            background: radial-gradient(circle, rgba(0, 255, 136, 0.05) 0%, transparent 70%);
+            animation: agentPulse 12s linear infinite;
         }
 
         @keyframes agentPulse {
@@ -492,7 +492,7 @@
 
         .main-agent-icon {
             font-size: 48px;
-            filter: drop-shadow(0 0 20px var(--primary));
+            filter: drop-shadow(0 0 10px var(--primary));
         }
 
         .main-agent-info {
@@ -580,13 +580,13 @@
 
         .sub-agent-card:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.15);
             border-color: var(--primary);
         }
 
         .sub-agent-icon {
             font-size: 32px;
-            filter: drop-shadow(0 0 10px currentColor);
+            filter: drop-shadow(0 0 8px currentColor);
             min-width: 40px;
         }
 
@@ -768,8 +768,8 @@
             font-style: italic;
         }
 
-        /* Command Center HQ Module - MOVED TO RIGHT COLUMN */
-        .command-hq-module {
+        /* Global Intelligence Module - Better positioned at the bottom */
+        .global-intel-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
@@ -778,9 +778,10 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
+            margin-bottom: 30px;
         }
 
-        .command-hq-module::before {
+        .global-intel-module::before {
             content: '';
             position: absolute;
             top: 0;
@@ -797,7 +798,7 @@
             100% { left: 100%; }
         }
 
-        .hq-header {
+        .intel-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -808,7 +809,7 @@
             z-index: 1;
         }
 
-        .hq-title {
+        .intel-title {
             font-size: 18px;
             font-weight: bold;
             color: var(--secondary);
@@ -819,7 +820,7 @@
             gap: 10px;
         }
 
-        .hq-version {
+        .intel-badge {
             font-size: 11px;
             color: var(--text-secondary);
             background: rgba(0, 204, 255, 0.1);
@@ -830,15 +831,15 @@
             letter-spacing: 1px;
         }
 
-        .hq-status-grid {
+        .intel-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
             position: relative;
             z-index: 1;
         }
 
-        .hq-status-item {
+        .intel-item {
             background: rgba(0, 204, 255, 0.05);
             border: 1px solid rgba(0, 204, 255, 0.2);
             border-radius: 10px;
@@ -849,35 +850,35 @@
             transition: all 0.3s ease;
         }
 
-        .hq-status-item:hover {
+        .intel-item:hover {
             background: rgba(0, 204, 255, 0.1);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 204, 255, 0.2);
         }
 
-        .hq-status-icon {
+        .intel-icon {
             font-size: 20px;
             min-width: 24px;
             filter: drop-shadow(0 0 8px currentColor);
         }
 
-        .hq-status-content {
+        .intel-content {
             flex: 1;
         }
 
-        .hq-status-label {
+        .intel-label {
             font-weight: bold;
             color: var(--secondary);
             font-size: 14px;
             margin-bottom: 3px;
         }
 
-        .hq-status-value {
+        .intel-value {
             font-size: 12px;
             color: var(--text-secondary);
         }
 
-        .hq-status-indicator {
+        .intel-indicator {
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -885,22 +886,21 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
-        .hq-status-indicator.active {
+        .intel-indicator.active {
             background: var(--success);
             box-shadow: 0 0 10px var(--success);
         }
 
-        .hq-status-indicator.warning {
+        .intel-indicator.warning {
             background: var(--warning);
             box-shadow: 0 0 10px var(--warning);
         }
 
-        /* Enhanced System Metrics */
+        /* Enhanced System Metrics - Better organized grid */
         .system-metrics {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
-            margin-top: 30px;
         }
 
         .metric-card {
@@ -1318,6 +1318,10 @@
                 flex-direction: column;
                 text-align: center;
             }
+
+            .intel-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Custom Scrollbar */
@@ -1544,58 +1548,58 @@
                         <!-- Feed items will be populated by JavaScript -->
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Command Center HQ Module - NOW in the right column below Live Security Feed -->
-                <div class="command-hq-module">
-                    <div class="hq-header">
-                        <h2 class="hq-title">
-                            <span>🛰️</span>
-                            <span>From the Command Center (Sentinel HQ)</span>
-                        </h2>
-                        <div class="hq-version">HQ Sync Preview – v2</div>
+        <!-- Global Intelligence Module - Better positioned at the bottom -->
+        <div class="global-intel-module">
+            <div class="intel-header">
+                <h2 class="intel-title">
+                    <span>🛰️</span>
+                    <span>Global Intelligence Network</span>
+                </h2>
+                <div class="intel-badge">Live Sync Active</div>
+            </div>
+            <div class="intel-grid">
+                <div class="intel-item">
+                    <div class="intel-icon">🧠</div>
+                    <div class="intel-content">
+                        <div class="intel-label">Global AI Link</div>
+                        <div class="intel-value">Secure uplink active • 847ms latency • Encrypted channel</div>
                     </div>
-                    <div class="hq-status-grid">
-                        <div class="hq-status-item">
-                            <div class="hq-status-icon">🧠</div>
-                            <div class="hq-status-content">
-                                <div class="hq-status-label">Global AI Link</div>
-                                <div class="hq-status-value">Secure uplink active • 847ms latency • Encrypted channel</div>
-                            </div>
-                            <div class="hq-status-indicator active"></div>
-                        </div>
-                        <div class="hq-status-item">
-                            <div class="hq-status-icon">🔄</div>
-                            <div class="hq-status-content">
-                                <div class="hq-status-label">Sub-Agent Sync</div>
-                                <div class="hq-status-value">All 10 agents validated with HQ • Last sync: 2m ago</div>
-                            </div>
-                            <div class="hq-status-indicator active"></div>
-                        </div>
-                        <div class="hq-status-item">
-                            <div class="hq-status-icon">🛡️</div>
-                            <div class="hq-status-content">
-                                <div class="hq-status-label">Last Security Directive</div>
-                                <div class="hq-status-value">Auto-rotate encryption keys • Deployed 14:23 UTC</div>
-                            </div>
-                            <div class="hq-status-indicator active"></div>
-                        </div>
-                        <div class="hq-status-item">
-                            <div class="hq-status-icon">🚨</div>
-                            <div class="hq-status-content">
-                                <div class="hq-status-label">Global Threat Feed</div>
-                                <div class="hq-status-value">No critical alerts • 2,847 threats processed globally</div>
-                            </div>
-                            <div class="hq-status-indicator active"></div>
-                        </div>
-                        <div class="hq-status-item">
-                            <div class="hq-status-icon">🔐</div>
-                            <div class="hq-status-content">
-                                <div class="hq-status-label">Fleet Sync Status</div>
-                                <div class="hq-status-value">92% of known nodes in compliance • 247/268 agents</div>
-                            </div>
-                            <div class="hq-status-indicator warning"></div>
-                        </div>
+                    <div class="intel-indicator active"></div>
+                </div>
+                <div class="intel-item">
+                    <div class="intel-icon">🔄</div>
+                    <div class="intel-content">
+                        <div class="intel-label">Sub-Agent Sync</div>
+                        <div class="intel-value">All 10 agents validated with network • Last sync: 2m ago</div>
                     </div>
+                    <div class="intel-indicator active"></div>
+                </div>
+                <div class="intel-item">
+                    <div class="intel-icon">🛡️</div>
+                    <div class="intel-content">
+                        <div class="intel-label">Last Security Directive</div>
+                        <div class="intel-value">Auto-rotate encryption keys • Deployed 14:23 UTC</div>
+                    </div>
+                    <div class="intel-indicator active"></div>
+                </div>
+                <div class="intel-item">
+                    <div class="intel-icon">🚨</div>
+                    <div class="intel-content">
+                        <div class="intel-label">Global Threat Feed</div>
+                        <div class="intel-value">No critical alerts • 2,847 threats processed globally</div>
+                    </div>
+                    <div class="intel-indicator active"></div>
+                </div>
+                <div class="intel-item">
+                    <div class="intel-icon">🔐</div>
+                    <div class="intel-content">
+                        <div class="intel-label">Fleet Sync Status</div>
+                        <div class="intel-value">92% of known nodes in compliance • 247/268 agents</div>
+                    </div>
+                    <div class="intel-indicator warning"></div>
                 </div>
             </div>
         </div>
@@ -1697,7 +1701,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to AI Sentinel-X Hybrid. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and 3 encryption specialists. Command Center HQ sync active with 847ms latency.
+                        Welcome to AI Sentinel-X Hybrid. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and 3 encryption specialists. Global Intelligence Network sync active with 847ms latency.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1747,9 +1751,9 @@
                 }
             }, 10000);
 
-            // Update HQ status indicators
+            // Update Global Intelligence status indicators
             setInterval(() => {
-                updateHQStatusIndicators();
+                updateIntelStatusIndicators();
             }, 8000);
         }
 
@@ -1843,8 +1847,8 @@
             { msg: '🧠 Neural pattern learned from new attack vector', type: '', agent: 'AI Engine' },
             { msg: '🎯 Predicted attack pattern, preemptive defense deployed', type: 'warning', agent: 'ThreatScanner' },
             { msg: '✅ System health check passed. All agents operational', type: '', agent: 'Main Agent' },
-            { msg: '🛰️ Command Center HQ sync: Global threat feed updated', type: '', agent: 'Command Center' },
-            { msg: '🔐 Fleet-wide encryption key rotation initiated by HQ', type: 'encryption', agent: 'Command Center' }
+            { msg: '🛰️ Global Intelligence: Global threat feed updated', type: '', agent: 'Global Network' },
+            { msg: '🔐 Fleet-wide encryption key rotation initiated by network', type: 'encryption', agent: 'Global Network' }
         ];
 
         function generateRandomFeedItem() {
@@ -1923,22 +1927,22 @@
             }
         }
 
-        function updateHQStatusIndicators() {
-            // Occasionally update HQ status indicators
-            const indicators = document.querySelectorAll('.hq-status-indicator');
+        function updateIntelStatusIndicators() {
+            // Occasionally update Global Intelligence status indicators
+            const indicators = document.querySelectorAll('.intel-indicator');
             indicators.forEach(indicator => {
                 if (Math.random() > 0.95) {
                     // Briefly show warning state
-                    indicator.className = 'hq-status-indicator warning';
+                    indicator.className = 'intel-indicator warning';
                     setTimeout(() => {
-                        indicator.className = 'hq-status-indicator active';
+                        indicator.className = 'intel-indicator active';
                     }, 2000);
                 }
             });
 
             // Update sync status text occasionally
             if (Math.random() > 0.9) {
-                const syncItems = document.querySelectorAll('.hq-status-value');
+                const syncItems = document.querySelectorAll('.intel-value');
                 const latency = Math.floor(Math.random() * 200 + 700); // 700-900ms
                 if (syncItems[0]) {
                     syncItems[0].textContent = `Secure uplink active • ${latency}ms latency • Encrypted channel`;
@@ -1951,7 +1955,7 @@
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and 3 encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with hybrid-resistant encryption. Command Center HQ sync active with 847ms latency.', false);
+                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and 3 encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with hybrid-resistant encryption. Global Intelligence Network sync active with 847ms latency.', false);
             }, 300);
         }
 
@@ -1998,18 +2002,18 @@
             
             if (SentinelState.chatOpen && sentinelChat) {
                 const status = SentinelState.agentActive ? 'resumed autonomous operation' : 'switched to manual control mode';
-                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. CLI mode available if external connections fail. Command Center HQ sync ${SentinelState.agentActive ? 'maintained' : 'reduced'}.`, false, 'system');
+                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. CLI mode available if external connections fail. Global Intelligence Network sync ${SentinelState.agentActive ? 'maintained' : 'reduced'}.`, false, 'system');
             }
 
-            // Update Command Center feed based on agent status
+            // Update Global Intelligence feed based on agent status
             if (SentinelState.agentActive) {
-                addFeedItem('🛰️ Command Center: Agent resumed, full HQ coordination restored', 'encryption', 'Command Center');
+                addFeedItem('🛰️ Global Intelligence: Agent resumed, full network coordination restored', 'encryption', 'Global Network');
             } else {
-                addFeedItem('⚠️ Command Center: Agent paused, local control mode active', 'warning', 'Command Center');
+                addFeedItem('⚠️ Global Intelligence: Agent paused, local control mode active', 'warning', 'Global Network');
             }
         };
         window.handleLogout = () => {
-            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously with Command Center oversight.')) {
+            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously with Global Intelligence oversight.')) {
                 localStorage.removeItem('sentinel_auth');
                 localStorage.removeItem('sentinel_scale');
                 window.location.href = 'index.html';
