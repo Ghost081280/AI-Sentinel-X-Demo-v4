@@ -366,6 +366,18 @@ function displayPackageOptions() {
     }).join('');
 }
 
+// Show package info from preview cards
+function showPackageInfo(packageKey) {
+    if (!SentinelState.chatOpen) {
+        sentinelChat.toggle();
+    }
+    
+    setTimeout(() => {
+        const config = packageConfigs[packageKey];
+        sentinelChat.addMessage(`NetworkMapper: ${config.name} - ${config.description}. Starting at $${config.price}/month + $${config.endpointRate}/endpoint. To get exact pricing for your infrastructure, please run the auto-scan above.`, false);
+    }, 300);
+}
+
 // Select package
 function selectPackage(packageKey) {
     console.log('Package selected:', packageKey);
@@ -441,13 +453,16 @@ function activateProtection() {
     // Hide discovery section
     document.getElementById('discoverySection').style.display = 'none';
     
+    // Show sub-agent status banner
+    document.getElementById('subAgentStatus').style.display = 'flex';
+    
     // Show main content
     document.getElementById('mainContent').style.display = 'block';
     
     // Update sub-agent status
     updateSubAgentStatus(`${packageConfigs[currentPackage].name} active • Monitoring ${endpointCount} endpoints`);
     
-    // Initialize main content with V3 features
+    // Initialize main content with V4 features
     initializeDataForPackage();
     populateAllContent();
     
@@ -456,6 +471,9 @@ function activateProtection() {
         document.getElementById('encryptionGapAlert').style.display = 'flex';
         document.getElementById('gapDescription').textContent = `${encryptionGaps} devices lack proper encryption and require immediate attention.`;
     }
+    
+    // Initialize activity feed
+    initializeActivityFeed();
 }
 
 // Initialize data structures for each package
@@ -626,7 +644,6 @@ function initializeDataForPackage() {
 // Populate all content sections
 function populateAllContent() {
     updateMetrics();
-    populateIPRangesGrid();
     populateOverviewGrid();
     populateScanningGrid();
     populateDeviceGrid();
@@ -648,65 +665,6 @@ function updateMetrics() {
     if (discoveredDevices) discoveredDevices.textContent = totalDevices.toLocaleString();
     if (openServices) openServices.textContent = totalServices.toString();
     if (newDevices) newDevices.textContent = Math.floor(Math.random() * 5 + 1).toString();
-}
-
-// Populate IP ranges grid
-function populateIPRangesGrid() {
-    const grid = document.getElementById('ipRangesGrid');
-    if (!grid) return;
-    
-    grid.innerHTML = '';
-    
-    ipRanges.forEach((range, index) => {
-        const card = document.createElement('div');
-        card.className = 'ip-range-card';
-        
-        let statusClass = 'status-secure';
-        if (range.status === 'Migrating') statusClass = 'status-warning';
-        if (range.vulnerabilities > 0) statusClass = 'status-vulnerable';
-        
-        card.innerHTML = `
-            <div class="range-header">
-                <div class="range-name">${range.name}</div>
-                <div class="range-status ${statusClass}">${range.status}</div>
-            </div>
-            <div class="range-info">
-                <div class="info-item">
-                    <div class="info-label">IP Range</div>
-                    <div class="info-value">${range.range}</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Location</div>
-                    <div class="info-value">${range.location}</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Organization</div>
-                    <div class="info-value">${range.organization}</div>
-                </div>
-                <div class="info-item">
-                    <div class="info-label">Bandwidth</div>
-                    <div class="info-value">${range.bandwidth}</div>
-                </div>
-            </div>
-            <div class="range-metrics">
-                <div class="range-metric">
-                    <div class="range-metric-value">${range.devices}</div>
-                    <div class="range-metric-label">Devices</div>
-                </div>
-                <div class="range-metric">
-                    <div class="range-metric-value">${range.services}</div>
-                    <div class="range-metric-label">Services</div>
-                </div>
-                <div class="range-metric">
-                    <div class="range-metric-value">${range.vulnerabilities}</div>
-                    <div class="range-metric-label">Vulnerabilities</div>
-                </div>
-            </div>
-        `;
-        
-        card.onclick = () => showRangeDetails(range);
-        grid.appendChild(card);
-    });
 }
 
 // Populate overview grid
@@ -966,120 +924,60 @@ function populateDeviceGrid() {
     });
 }
 
-// Show range details
-function showRangeDetails(range) {
-    if (!SentinelState.chatOpen) sentinelChat.toggle();
-    setTimeout(() => {
-        sentinelChat.addMessage(`NetworkMapper: Analyzing ${range.name} (${range.range}) in ${range.location}. ${range.devices} devices, ${range.services} services, ${range.vulnerabilities} vulnerabilities. Bandwidth: ${range.bandwidth}. Organization: ${range.organization}.`, false);
-    }, 300);
-}
-
-// Show device details
-function showDeviceDetails(device) {
-    if (!SentinelState.chatOpen) sentinelChat.toggle();
-    setTimeout(() => {
-        sentinelChat.addMessage(`NetworkMapper: Device ${device.name} (${device.ip}) - ${device.type}. OS: ${device.os}. Location: ${device.location}. Services: ${device.services}. Status: ${device.status}. Encryption: ${device.encryption}. AI Monitoring: ${device.aiStatus}.`, false);
-    }, 300);
-}
-
-// Show overview details
-function showOverviewDetails(type) {
-    if (!SentinelState.chatOpen) sentinelChat.toggle();
-    setTimeout(() => {
-        const messages = {
-            serverIP: 'NetworkMapper: Single server deployment with full hybrid encryption protection.',
-            sites: 'NetworkMapper: Multi-site deployment with cross-location monitoring and correlation.',
-            datacenters: 'NetworkMapper: Enterprise data center infrastructure with global presence.',
-            devices: 'NetworkMapper: Complete device inventory with real-time status monitoring.',
-            services: 'NetworkMapper: All services monitored with deep packet inspection.',
-            encryption: 'NetworkMapper: Hybrid-resistant encryption active across all endpoints.',
-            threats: 'NetworkMapper: Active threat monitoring with AI-powered detection.',
-            alerts: 'NetworkMapper: Alert correlation across all sites for unified visibility.',
-            critical: 'NetworkMapper: Critical issues tracked with automated remediation.',
-            uptime: 'NetworkMapper: High availability with redundant monitoring systems.',
-            sla: 'NetworkMapper: Enterprise SLA compliance with 99.9% uptime guarantee.',
-            monitoring: 'NetworkMapper: 24/7 autonomous monitoring with human oversight.',
-            regions: 'NetworkMapper: Global presence ensures low-latency monitoring.'
-        };
-        sentinelChat.addMessage(messages[type] || 'NetworkMapper: Network component analysis complete.', false);
-    }, 300);
-}
-
-// Show service details
-function showServiceDetails(service) {
-    if (!SentinelState.chatOpen) sentinelChat.toggle();
-    setTimeout(() => {
-        sentinelChat.addMessage(`NetworkMapper: Analyzing service ${service}. All protocols secured with hybrid encryption. Service health: optimal. Coordinating with EncryptionManager for continuous protection.`, false);
-    }, 300);
-}
-
-// Toggle scanning
-function toggleScanning() {
-    scanningActive = !scanningActive;
-    const toggle = document.getElementById('scanToggle');
+// Initialize activity feed
+function initializeActivityFeed() {
+    addNetworkFeedItem('🌐 NetworkMapper V4: Enhanced with encryption gap detection', 'NetworkMapper');
+    addNetworkFeedItem('🔐 All network data encrypted with hybrid-resistant algorithms', 'EncryptionManager');
+    addNetworkFeedItem('🧠 AI correlation identified multi-stage attack campaign', 'AI Engine → NetworkMapper');
+    addNetworkFeedItem('⚡ DefenseOrchestrator deployed honeypot targeting ransomware group', 'DefenseOrchestrator');
+    addNetworkFeedItem('🛡️ Essential monitoring active: CPU, RAM, Network', 'NetworkMapper');
+    addNetworkFeedItem('🤖 Threat correlation engine updated with 47 new signatures', 'NetworkMapper');
     
-    if (toggle) {
-        if (scanningActive) {
-            toggle.textContent = 'Auto-Scan Active';
-            toggle.style.background = 'rgba(0, 255, 136, 0.2)';
-            toggle.style.color = 'var(--success)';
-        } else {
-            toggle.textContent = 'Auto-Scan Paused';
-            toggle.style.background = 'rgba(255, 170, 0, 0.2)';
-            toggle.style.color = 'var(--warning)';
-        }
-    }
+    // Start generating feed items
+    setInterval(() => {
+        generateNetworkFeedItem();
+    }, 7000);
+}
+
+function addNetworkFeedItem(message, agent = '') {
+    const feed = document.getElementById('networkFeed');
+    const item = document.createElement('div');
+    item.className = 'feed-item';
     
-    if (SentinelState.chatOpen) {
-        const status = scanningActive ? 'resumed' : 'paused';
-        sentinelChat.addMessage(`NetworkMapper: Auto-scan ${status}. Discovery mode: ${scanningActive ? 'ACTIVE' : 'PAUSED'}.`, false, 'system');
+    const time = new Date().toLocaleTimeString();
+    item.innerHTML = `
+        <div class="feed-time">${time}</div>
+        <div class="feed-message">${message}</div>
+        ${agent ? `<div class="feed-agent">via ${agent}</div>` : ''}
+    `;
+    
+    feed.insertBefore(item, feed.firstChild);
+    
+    // Keep only last 25 items
+    while (feed.children.length > 25) {
+        feed.removeChild(feed.lastChild);
     }
 }
 
-// Add IP range modal
-function showAddRangeModal() {
-    alert('Add IP Range functionality would open a modal here. For demo purposes, this is disabled.');
-    
-    if (SentinelState.chatOpen) {
-        sentinelChat.addMessage('NetworkMapper: To add additional IP ranges, please upgrade your package or contact support for custom configurations.', false, 'system');
-    }
-}
+// V4 Enhanced SOC-focused feed messages
+const networkFeedMessages = [
+    { msg: '🛡️ NetworkMapper blocked advanced SQL injection with privilege escalation', agent: 'NetworkMapper' },
+    { msg: '🧠 AI correlation engine identified APT-29 attack pattern signatures', agent: 'AI Engine → NetworkMapper' },
+    { msg: '🤖 Behavioral analysis detected anomalous insider access patterns', agent: 'AnalyticsEngine → NetworkMapper' },
+    { msg: '⚡ DefenseOrchestrator deployed automated honeypot for threat analysis', agent: 'DefenseOrchestrator → NetworkMapper' },
+    { msg: '🔍 Zero-day exploit attempt detected and contained automatically', agent: 'NetworkMapper → AI Engine' },
+    { msg: '🔐 Hybrid encryption prevented data access during breach attempt', agent: 'EncryptionManager → NetworkMapper' },
+    { msg: '📊 Threat intelligence updated: 2,400 new attack patterns analyzed', agent: 'AnalyticsEngine → NetworkMapper' },
+    { msg: '🎯 Predictive model flagged potential cryptocurrency mining malware', agent: 'NetworkMapper → AnalyticsEngine' },
+    { msg: '🛡️ Phishing campaign blocked: 4,892 malicious emails intercepted', agent: 'NetworkMapper' },
+    { msg: '🔗 Sub-agent coordination enhanced: 97% correlation accuracy achieved', agent: 'NetworkMapper' },
+    { msg: '📝 All network actions logged with Dilithium-3 signatures for compliance', agent: 'LogAgent → NetworkMapper' },
+    { msg: '🚀 Automated response time improved to 0.3ms average detection speed', agent: 'NetworkMapper' }
+];
 
-// Remediate encryption gaps
-function remediateEncryptionGaps() {
-    if (!window.sentinelChat) return;
-    
-    // Open chat if not already open
-    if (!SentinelState.chatOpen) {
-        sentinelChat.toggle();
-    }
-    
-    setTimeout(() => {
-        sentinelChat.addMessage('deploy encryption to unprotected devices', true);
-        
-        setTimeout(() => {
-            sentinelChat.addMessage('🔐 EncryptionDeployer: Initiating deployment to ' + encryptionGaps + ' unencrypted devices...', false, 'system');
-        }, 500);
-        
-        setTimeout(() => {
-            sentinelChat.addMessage('📡 Establishing secure connections to target devices...', false, 'system');
-        }, 1500);
-        
-        setTimeout(() => {
-            sentinelChat.addMessage('🔧 Deploying hybrid-resistant encryption modules: AES-256-GCM + Kyber-1024...', false, 'system');
-        }, 2500);
-        
-        setTimeout(() => {
-            sentinelChat.addMessage('✅ Encryption deployment complete! All devices now protected with quantum-resistant algorithms.', false, 'system');
-            
-            // Hide alert
-            document.getElementById('encryptionGapAlert').style.display = 'none';
-            encryptionGaps = 0;
-            
-            // Update metrics
-            updateSubAgentMetrics();
-        }, 4000);
-    }, 300);
+function generateNetworkFeedItem() {
+    const item = networkFeedMessages[Math.floor(Math.random() * networkFeedMessages.length)];
+    addNetworkFeedItem(item.msg, item.agent);
 }
 
 // Update sub-agent status
@@ -1118,151 +1016,83 @@ function updateSubAgentMetrics(fromScan = false) {
     }
 }
 
-// Handle encryption status display
-function showEncryptionStatus(type) {
-    if (!window.sentinelChat) return;
-    
-    if (!SentinelState.chatOpen) {
-        sentinelChat.toggle();
-    }
-    
-    setTimeout(() => {
-        if (type === 'classical') {
-            sentinelChat.addMessage('🔐 Classical encryption status: AES-256-GCM active on all endpoints. RSA-4096 for key exchange. All classical algorithms operating at maximum security levels.', false, 'system');
-        } else {
-            sentinelChat.addMessage('🔮 Hybrid encryption status: Quantum-resistant algorithms active. Kyber-1024 for key encapsulation, Dilithium-3 for signatures. Your infrastructure is protected against both classical and quantum threats.', false, 'system');
+// Export core functions for global access
+if (typeof window !== 'undefined') {
+    window.initializeNetworkDiscovery = initializeNetworkDiscovery;
+    window.startNetworkScan = startNetworkScan;
+    window.selectPackage = selectPackage;
+    window.showPackageInfo = showPackageInfo;
+    window.closeCheckout = closeCheckout;
+    window.processPayment = processPayment;
+    window.remediateEncryptionGaps = function() {
+        if (!window.sentinelChat) return;
+        
+        // Open chat if not already open
+        if (!SentinelState.chatOpen) {
+            sentinelChat.toggle();
         }
-    }, 300);
-}
-
-// Agent control functions
-function showAgentShutdownModal() {
-    const modal = document.getElementById('agentShutdownModal');
-    if (modal) modal.style.display = 'flex';
-}
-
-function closeModal() {
-    const modal = document.getElementById('agentShutdownModal');
-    if (modal) modal.style.display = 'none';
-}
-
-function closeModalOnOverlay(event) {
-    if (event.target.classList.contains('modal-overlay')) {
-        closeModal();
-        closeCheckout();
-    }
-}
-
-function confirmAgentShutdown() {
-    if (window.SentinelEventHandlers) {
-        SentinelEventHandlers.confirmAgentShutdown();
-    }
-    closeModal();
-}
-
-// Chat functions
-function toggleChat() {
-    if (window.sentinelChat) {
-        sentinelChat.toggle();
-    }
-}
-
-function handleChatKeyPress(event) {
-    if (event.key === 'Enter') {
-        sendChatMessage();
-    }
-}
-
-function sendChatMessage() {
-    const input = document.getElementById('aiChatInput');
-    if (input && window.sentinelChat) {
-        const message = input.value.trim();
-        if (message) {
-            sentinelChat.sendMessage(message);
-            input.value = '';
-        }
-    }
-}
-
-// Logout
-function handleLogout() {
-    if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously.')) {
-        localStorage.removeItem('sentinel_auth');
-        localStorage.removeItem('sentinel_api_key');
-        localStorage.removeItem('sentinel_package');
-        window.location.href = 'index.html';
-    }
-}
-
-// Handle window resize
-window.addEventListener('resize', () => {
-    const canvas = document.getElementById('neuralCanvas');
-    if (canvas) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-});
-
-// Initialize on DOM ready
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('Network V4 module loaded');
-    initializeNetworkDiscovery();
+        
+        setTimeout(() => {
+            sentinelChat.addMessage('deploy encryption to unprotected devices', true);
+            
+            setTimeout(() => {
+                sentinelChat.addMessage('🔐 EncryptionDeployer: Initiating deployment to ' + encryptionGaps + ' unencrypted devices...', false, 'system');
+            }, 500);
+            
+            setTimeout(() => {
+                sentinelChat.addMessage('📡 Establishing secure connections to target devices...', false, 'system');
+            }, 1500);
+            
+            setTimeout(() => {
+                sentinelChat.addMessage('🔧 Deploying hybrid-resistant encryption modules: AES-256-GCM + Kyber-1024...', false, 'system');
+            }, 2500);
+            
+            setTimeout(() => {
+                sentinelChat.addMessage('✅ Encryption deployment complete! All devices now protected with quantum-resistant algorithms.', false, 'system');
+                
+                // Hide alert
+                document.getElementById('encryptionGapAlert').style.display = 'none';
+                encryptionGaps = 0;
+                
+                // Update metrics
+                updateSubAgentMetrics();
+            }, 4000);
+        }, 300);
+    };
     
-    // Check if returning user with active subscription
-    const apiKey = localStorage.getItem('sentinel_api_key');
-    const savedPackage = localStorage.getItem('sentinel_package');
+    window.showDeviceDetails = function(device) {
+        if (!SentinelState.chatOpen) sentinelChat.toggle();
+        setTimeout(() => {
+            sentinelChat.addMessage(`NetworkMapper: Device ${device.name} (${device.ip}) - ${device.type}. OS: ${device.os}. Location: ${device.location}. Services: ${device.services}. Status: ${device.status}. Encryption: ${device.encryption}. AI Monitoring: ${device.aiStatus}.`, false);
+        }, 300);
+    };
     
-    if (apiKey && savedPackage) {
-        // Skip discovery, show main content with randomized data
-        currentPackage = savedPackage;
-        
-        // Generate random scan results for returning users
-        const scenarios = [
-            { endpoints: 12, services: 23, vulnerabilities: 2, encryptionGaps: 3, locations: ['New York, US'] },
-            { endpoints: 89, services: 145, vulnerabilities: 5, encryptionGaps: 8, locations: ['Atlanta, GA', 'Charlotte, NC', 'Miami, FL'] },
-            { endpoints: 523, services: 892, vulnerabilities: 12, encryptionGaps: 28, locations: ['Virginia, US', 'Oregon, US', 'Frankfurt, DE', 'Singapore, SG'] }
-        ];
-        
-        const selectedScenario = scenarios[savedPackage === 'essential' ? 0 : savedPackage === 'multi' ? 1 : 2];
-        
-        window.scanResults = {
-            publicIPs: savedPackage === 'essential' ? 1 : savedPackage === 'multi' ? 4 : 12,
-            endpoints: selectedScenario.endpoints,
-            services: selectedScenario.services,
-            vulnerabilities: selectedScenario.vulnerabilities,
-            encryptionGaps: selectedScenario.encryptionGaps,
-            locations: selectedScenario.locations,
-            externalPorts: savedPackage === 'essential' ? [22, 80, 443] : savedPackage === 'multi' ? [22, 25, 80, 443, 3389] : [22, 25, 53, 80, 443, 1433, 3306, 3389, 5432, 8080, 8443],
-            recommendation: savedPackage,
-            confidence: 95
-        };
-        
-        endpointCount = selectedScenario.endpoints;
-        encryptionGaps = selectedScenario.encryptionGaps;
-        
-        document.getElementById('discoverySection').style.display = 'none';
-        activateProtection();
-    }
-});
-
-// Export functions for global access
-window.startNetworkScan = startNetworkScan;
-window.selectPackage = selectPackage;
-window.closeCheckout = closeCheckout;
-window.processPayment = processPayment;
-window.remediateEncryptionGaps = remediateEncryptionGaps;
-window.showEncryptionStatus = showEncryptionStatus;
-window.showAgentShutdownModal = showAgentShutdownModal;
-window.closeModal = closeModal;
-window.closeModalOnOverlay = closeModalOnOverlay;
-window.confirmAgentShutdown = confirmAgentShutdown;
-window.toggleChat = toggleChat;
-window.handleChatKeyPress = handleChatKeyPress;
-window.sendChatMessage = sendChatMessage;
-window.handleLogout = handleLogout;
-window.showRangeDetails = showRangeDetails;
-window.showDeviceDetails = showDeviceDetails;
-window.showOverviewDetails = showOverviewDetails;
-window.showServiceDetails = showServiceDetails;
-window.showAddRangeModal = showAddRangeModal;
-window.toggleScanning = toggleScanning;
+    window.showOverviewDetails = function(type) {
+        if (!SentinelState.chatOpen) sentinelChat.toggle();
+        setTimeout(() => {
+            const messages = {
+                serverIP: 'NetworkMapper: Single server deployment with full hybrid encryption protection.',
+                sites: 'NetworkMapper: Multi-site deployment with cross-location monitoring and correlation.',
+                datacenters: 'NetworkMapper: Enterprise data center infrastructure with global presence.',
+                devices: 'NetworkMapper: Complete device inventory with real-time status monitoring.',
+                services: 'NetworkMapper: All services monitored with deep packet inspection.',
+                encryption: 'NetworkMapper: Hybrid-resistant encryption active across all endpoints.',
+                threats: 'NetworkMapper: Active threat monitoring with AI-powered detection.',
+                alerts: 'NetworkMapper: Alert correlation across all sites for unified visibility.',
+                critical: 'NetworkMapper: Critical issues tracked with automated remediation.',
+                uptime: 'NetworkMapper: High availability with redundant monitoring systems.',
+                sla: 'NetworkMapper: Enterprise SLA compliance with 99.9% uptime guarantee.',
+                monitoring: 'NetworkMapper: 24/7 autonomous monitoring with human oversight.',
+                regions: 'NetworkMapper: Global presence ensures low-latency monitoring.'
+            };
+            sentinelChat.addMessage(messages[type] || 'NetworkMapper: Network component analysis complete.', false);
+        }, 300);
+    };
+    
+    window.showServiceDetails = function(service) {
+        if (!SentinelState.chatOpen) sentinelChat.toggle();
+        setTimeout(() => {
+            sentinelChat.addMessage(`NetworkMapper: Analyzing service ${service}. All protocols secured with hybrid encryption. Service health: optimal. Coordinating with EncryptionManager for continuous protection.`, false);
+        }, 300);
+    };
+}
