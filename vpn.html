@@ -1957,7 +1957,10 @@
         
         // VPN page initialization
         document.addEventListener('DOMContentLoaded', () => {
-            initializeVPNPage();
+            // Wait for shared.js to load first
+            setTimeout(() => {
+                initializeVPNPage();
+            }, 100);
         });
 
         function initializeVPNPage() {
@@ -1985,6 +1988,10 @@
                 
                 // Start auto-generation every 4 seconds for VPN feed
                 activityFeedManager.startAutoGeneration(vpnFeedId, 4000);
+            } else {
+                console.log('ActivityFeedManager not available yet, retrying...');
+                setTimeout(initializeVPNPage, 200);
+                return;
             }
 
             // Initialize chat system
