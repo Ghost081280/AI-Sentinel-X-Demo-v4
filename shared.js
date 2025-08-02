@@ -1,6 +1,6 @@
 /**
  * AI Sentinel-X Shared JavaScript Library - Hybrid V2.2
- * Enhanced modular architecture with VPNMonitor and encryption sub-agents
+ * Enhanced modular architecture with new encryption sub-agents
  */
 
 // Version and configuration
@@ -24,12 +24,11 @@ const SentinelState = {
         network: '/api/v2/network',
         encryption: '/api/v2/encryption',
         analytics: '/api/v2/analytics',
-        compliance: '/api/v2/compliance',
-        vpn: '/api/v2/vpn'
+        compliance: '/api/v2/compliance'
     }
 };
 
-// Enhanced sub-agent configurations including VPNMonitor
+// Enhanced sub-agent configurations including new encryption agents
 const SubAgentConfigs = {
     threatScanner: {
         name: 'ThreatScanner',
@@ -103,169 +102,7 @@ const SubAgentConfigs = {
         activity: 'SOC2/ISO27001 verified',
         link: 'analytics.html',
         status: 'Active'
-    },
-    // NEW: VPNMonitor sub-agent
-    vpnMonitor: {
-        name: 'VPNMonitor',
-        icon: '🔒',
-        description: 'VPN security monitoring',
-        activity: '12 active connections',
-        link: 'vpn.html',
-        status: 'Active'
     }
-};
-
-// VPN monitoring configurations
-const VPNConfigs = {
-    activeServices: [
-        {
-            id: 'openvpn-main',
-            name: 'OpenVPN Primary',
-            protocol: 'OpenVPN',
-            port: 1194,
-            status: 'active',
-            connections: 8,
-            encryption: 'AES-256-GCM + Kyber-1024',
-            location: 'Primary DC'
-        },
-        {
-            id: 'wireguard-mobile',
-            name: 'WireGuard Mobile',
-            protocol: 'WireGuard',
-            port: 51820,
-            status: 'active',
-            connections: 4,
-            encryption: 'ChaCha20-Poly1305 + Hybrid KEX',
-            location: 'Mobile Gateway'
-        },
-        {
-            id: 'ipsec-site',
-            name: 'IPSec Site-to-Site',
-            protocol: 'IPSec',
-            port: 500,
-            status: 'active',
-            connections: 0,
-            encryption: 'AES-256-CBC + Dilithium-3',
-            location: 'Branch Office'
-        }
-    ],
-    liveConnections: [
-        {
-            id: 'conn-001',
-            clientIP: '192.168.1.105',
-            serverIP: '10.0.1.1',
-            country: 'Germany',
-            city: 'Frankfurt',
-            deviceName: 'Mobile-Device-47',
-            protocol: 'OpenVPN',
-            connected: '2024-12-19T14:23:15Z',
-            duration: '2h 15m',
-            bytesIn: '245MB',
-            bytesOut: '89MB',
-            status: 'connected'
-        },
-        {
-            id: 'conn-002',
-            clientIP: '192.168.1.178',
-            serverIP: '10.0.1.2',
-            country: 'Japan',
-            city: 'Tokyo',
-            deviceName: 'Laptop-Executive-12',
-            protocol: 'WireGuard',
-            connected: '2024-12-19T13:45:22Z',
-            duration: '2h 53m',
-            bytesIn: '1.2GB',
-            bytesOut: '456MB',
-            status: 'connected'
-        },
-        {
-            id: 'conn-003',
-            clientIP: '192.168.1.234',
-            serverIP: '10.0.1.1',
-            country: 'Canada',
-            city: 'Toronto',
-            deviceName: 'Workstation-Dev-08',
-            protocol: 'OpenVPN',
-            connected: '2024-12-19T15:12:08Z',
-            duration: '1h 26m',
-            bytesIn: '678MB',
-            bytesOut: '234MB',
-            status: 'connected'
-        }
-    ],
-    securityOverview: {
-        encryptionProtocols: [
-            { name: 'AES-256-GCM', usage: '67%', status: 'secure' },
-            { name: 'ChaCha20-Poly1305', usage: '33%', status: 'secure' },
-            { name: 'Kyber-1024 (PQC)', usage: '100%', status: 'future-proof' },
-            { name: 'Dilithium-3 (PQC)', usage: '100%', status: 'future-proof' }
-        ],
-        certificateStatus: {
-            total: 15,
-            valid: 13,
-            expiring: 2,
-            expired: 0,
-            nextExpiry: '2025-01-15T23:59:59Z'
-        },
-        keyRotation: {
-            lastRotation: '2024-12-18T02:00:00Z',
-            nextRotation: '2024-12-25T02:00:00Z',
-            status: 'scheduled',
-            frequency: 'weekly'
-        }
-    },
-    anomalyAlerts: [
-        {
-            id: 'alert-001',
-            type: 'new-country',
-            severity: 'medium',
-            message: 'New country login detected: Russia (Moscow)',
-            timestamp: '2024-12-19T15:45:12Z',
-            clientIP: '192.168.1.189',
-            action: 'flagged-for-review'
-        },
-        {
-            id: 'alert-002',
-            type: 'multiple-failures',
-            severity: 'high',
-            message: '5 failed authentication attempts from 203.45.67.89',
-            timestamp: '2024-12-19T15:32:18Z',
-            clientIP: '203.45.67.89',
-            action: 'ip-blocked'
-        },
-        {
-            id: 'alert-003',
-            type: 'traffic-spike',
-            severity: 'low',
-            message: 'Unusual traffic volume: 2.3GB in 30 minutes',
-            timestamp: '2024-12-19T15:20:45Z',
-            clientIP: '192.168.1.234',
-            action: 'monitoring'
-        }
-    ],
-    suggestedActions: [
-        {
-            id: 'action-001',
-            priority: 'high',
-            action: 'Rotate OpenVPN server keys',
-            reason: 'Scheduled weekly rotation',
-            estimated: '5 minutes'
-        },
-        {
-            id: 'action-002',
-            priority: 'medium',
-            action: 'Review new country access',
-            reason: 'Unusual location detected',
-            estimated: '2 minutes'
-        },
-        {
-            id: 'action-003',
-            priority: 'low',
-            action: 'Upgrade to PQC-only mode',
-            reason: 'Enhanced future security',
-            estimated: '15 minutes'
-        }
-    ]
 };
 
 // Encryption deployment configurations
@@ -423,18 +260,10 @@ const EncryptionPlaybooks = [
         executions: 12,
         status: 'Active',
         agent: 'ComplianceMonitor → AnalyticsEngine'
-    },
-    {
-        id: 'vpn-security-check',
-        name: 'VPN Security Monitoring',
-        description: 'Monitor VPN connections for security anomalies',
-        executions: 28,
-        status: 'Active',
-        agent: 'VPNMonitor → ThreatScanner'
     }
 ];
 
-// Scale-specific configurations for network module
+// Scale-specific configurations for network module - Updated with new pricing
 const ScaleConfigs = {
     individual: {
         icon: '🌐',
@@ -490,7 +319,6 @@ function initializePageContext() {
     else if (path.includes('ai-engine')) SentinelState.currentPage = 'ai-engine';
     else if (path.includes('encryption')) SentinelState.currentPage = 'encryption';
     else if (path.includes('analytics')) SentinelState.currentPage = 'analytics';
-    else if (path.includes('vpn')) SentinelState.currentPage = 'vpn';
     else if (path.includes('settings')) SentinelState.currentPage = 'settings';
     else SentinelState.currentPage = 'general';
 }
@@ -593,7 +421,7 @@ function initNeuralBackground() {
     };
 }
 
-// Enhanced Chat System with V2.2 features including VPNMonitor
+// Enhanced Chat System with V2.2 features
 class SentinelChat {
     constructor() {
         this.messageHistory = [];
@@ -771,14 +599,12 @@ class SentinelChat {
         if (lowerCommand.includes('defense') || lowerCommand.includes('response') || lowerCommand.includes('honeypot')) return 'defense';
         if (lowerCommand.includes('analytics') || lowerCommand.includes('report') || lowerCommand.includes('metric') || lowerCommand.includes('compliance') || lowerCommand.includes('audit')) return 'analytics';
         if (lowerCommand.includes('log') || lowerCommand.includes('audit') || lowerCommand.includes('compliance')) return 'logs';
-        if (lowerCommand.includes('vpn') || lowerCommand.includes('connection') || lowerCommand.includes('tunnel')) return 'vpn';
         if (lowerCommand.includes('scale') || lowerCommand.includes('environment') || lowerCommand.includes('reset') || lowerCommand.includes('license') || lowerCommand.includes('pricing')) return 'network';
         return SentinelState.currentPage;
     }
     
     determineSubAgent(lowerCommand, context) {
-        // Enhanced sub-agent routing including VPNMonitor
-        if (lowerCommand.includes('vpn') || lowerCommand.includes('connection') || lowerCommand.includes('tunnel')) return 'VPNMonitor';
+        // Enhanced sub-agent routing including new encryption agents
         if (lowerCommand.includes('deploy') || lowerCommand.includes('deployment')) return 'EncryptionDeployer';
         if (lowerCommand.includes('certificate') || lowerCommand.includes('cert') || lowerCommand.includes('expire')) return 'CertificateManager';
         if (lowerCommand.includes('compliance') || lowerCommand.includes('audit') || lowerCommand.includes('soc') || lowerCommand.includes('iso') || lowerCommand.includes('nist')) return 'ComplianceMonitor';
@@ -789,8 +615,7 @@ class SentinelChat {
             encryption: 'EncryptionManager',
             defense: 'DefenseOrchestrator',
             analytics: 'AnalyticsEngine',
-            logs: 'LogAgent',
-            vpn: 'VPNMonitor'
+            logs: 'LogAgent'
         };
         return agentMap[context] || 'main';
     }
@@ -825,10 +650,6 @@ class SentinelChat {
             return this.handleComplianceQuery(lowerCommand);
         }
         
-        if (lowerCommand.includes('vpn') || lowerCommand.includes('connection')) {
-            return this.handleVPNQuery(lowerCommand);
-        }
-        
         if (lowerCommand.includes('scale') || lowerCommand.includes('environment') || lowerCommand.includes('pricing') || lowerCommand.includes('license')) {
             return this.handleScaleQuery(lowerCommand);
         }
@@ -839,34 +660,6 @@ class SentinelChat {
         
         // Fallback to contextual responses
         return responses[Math.floor(Math.random() * responses.length)];
-    }
-    
-    handleVPNQuery(lowerCommand) {
-        const activeConnections = VPNConfigs.liveConnections.length;
-        const totalServices = VPNConfigs.activeServices.length;
-        const alerts = VPNConfigs.anomalyAlerts.length;
-        
-        if (lowerCommand.includes('status')) {
-            return `VPNMonitor: ${activeConnections} active connections across ${totalServices} VPN services. OpenVPN: 8 connections, WireGuard: 4 connections, IPSec: Site-to-Site tunnel stable. ${alerts} security alerts requiring attention.`;
-        }
-        
-        if (lowerCommand.includes('connections') || lowerCommand.includes('list')) {
-            const connectionSummary = VPNConfigs.liveConnections.map(conn => 
-                `${conn.deviceName} (${conn.country}) - ${conn.duration}`
-            ).join(', ');
-            return `VPNMonitor: Active connections - ${connectionSummary}. All connections using hybrid-resistant encryption.`;
-        }
-        
-        if (lowerCommand.includes('security') || lowerCommand.includes('alerts')) {
-            return `VPNMonitor: ${alerts} security alerts detected. New country login from Russia flagged for review. 5 failed auth attempts blocked from external IP. Traffic monitoring active with hybrid encryption.`;
-        }
-        
-        if (lowerCommand.includes('certificates') || lowerCommand.includes('cert')) {
-            const expiring = VPNConfigs.securityOverview.certificateStatus.expiring;
-            return `VPNMonitor: ${VPNConfigs.securityOverview.certificateStatus.total} VPN certificates monitored. ${expiring} expiring soon. Next renewal scheduled with hybrid signatures. All certificates use post-quantum algorithms.`;
-        }
-        
-        return `VPNMonitor: Monitoring ${activeConnections} active VPN connections with hybrid-resistant protocols. OpenVPN, WireGuard, and IPSec services operational. ${alerts} security events under review.`;
     }
     
     handleEncryptionDeployment(lowerCommand) {
@@ -932,13 +725,8 @@ class SentinelChat {
     }
     
     getContextualResponses(context, subAgent) {
-        // Enhanced responses including VPNMonitor
+        // Enhanced responses including new sub-agents
         const newAgentResponses = {
-            'VPNMonitor': [
-                'VPNMonitor: 12 active VPN connections monitored. OpenVPN, WireGuard, and IPSec services operational with hybrid encryption.',
-                'VPNMonitor: Security analysis complete. 2 anomalies detected, 1 new country login flagged for review. All tunnels secure.',
-                'VPNMonitor: Certificate status: 13/15 valid, 2 expiring within 30 days. Auto-renewal configured with hybrid signatures.'
-            ],
             'EncryptionDeployer': [
                 'EncryptionDeployer: 15 encryption modules deployed today. TLS coverage: 100%, Database encryption: 100%, Disk encryption: 76% complete.',
                 'EncryptionDeployer: Auto-deployment active for new devices. All deployments use hybrid algorithms with zero downtime.',
@@ -947,7 +735,7 @@ class SentinelChat {
             'CertificateManager': [
                 'CertificateManager: 247 certificates monitored across all systems. 2 expiring within 30 days. Auto-renewal configured.',
                 'CertificateManager: Hybrid signature algorithms deployed: RSA+Dilithium, ECDSA+SPHINCS+, Ed25519+Falcon.',
-                'CertificateManager: Certificate transparency logs verified. All issuances logged with hybrid-resistant signatures.'
+                'CertificateManager: Certificate transparency logs verified. All issuances logged with quantum-resistant signatures.'
             ],
             'ComplianceMonitor': [
                 'ComplianceMonitor: SOC2 Type II: 100% compliant. ISO27001: 98% compliant (2 minor findings). NIST CSF: 99% compliant.',
@@ -983,7 +771,7 @@ class SentinelChat {
                 'DefenseOrchestrator: 8 honeypots active. Automated response enabled. Average mitigation time: 0.3 seconds.',
                 'DefenseOrchestrator: 124 attacks neutralized today. All actions logged with Dilithium-3 signatures.',
                 'DefenseOrchestrator: Playbook execution successful. Coordinating with ThreatScanner and NetworkMapper.',
-                'DefenseOrchestrator: 5 encryption playbooks active. Auto-encryption triggers deployed on 47 new devices.'
+                'DefenseOrchestrator: 4 encryption playbooks active. Auto-encryption triggers deployed on 47 new devices.'
             ],
             analytics: [
                 'AnalyticsEngine: Processing 2.4M metrics/hour. ML accuracy: 99.8%. Predictive models active.',
@@ -995,11 +783,6 @@ class SentinelChat {
                 'LogAgent: Processing 147K entries/minute. All logs Dilithium-signed for compliance.',
                 'LogAgent: SOC2, ISO27001, NIST compliance verified. Tamper-proof storage active.',
                 'LogAgent: Audit trail complete with hybrid-resistant signatures. Ready for forensic analysis.'
-            ],
-            vpn: [
-                'VPNMonitor: 12 active connections across 3 VPN services. All tunnels encrypted with hybrid-resistant protocols.',
-                'VPNMonitor: Real-time anomaly detection active. 2 security alerts under review, 1 new country flagged.',
-                'VPNMonitor: Certificate management integrated. 15 VPN certificates monitored, 2 scheduled for renewal.'
             ]
         };
         
@@ -1014,18 +797,11 @@ class SentinelChat {
 • AI Mode: ${SentinelState.agentActive ? 'Autonomous' : 'Manual Control'}
 • Scale: ${scaleText}
 • Encryption: Hybrid Active (Classical + Post-Quantum)
-• Sub-Agents: 10 Online (including VPNMonitor + 3 encryption specialists)
+• Sub-Agents: 9 Online (including 3 encryption specialists)
 • Threat Level: Medium
 • Discovery: ${SentinelState.discoveryActive ? 'ACTIVE' : 'PAUSED'}
 • Performance: Optimal
 • Uptime: 99.98%`;
-
-        if (context === 'vpn') {
-            statusText += `
-• VPN Services: 3 Active
-• Active Connections: ${VPNConfigs.liveConnections.length}
-• Security Alerts: ${VPNConfigs.anomalyAlerts.length}`;
-        }
 
         if (config) {
             statusText += `
@@ -1038,13 +814,12 @@ class SentinelChat {
     
     generateHelpResponse(context) {
         const commands = {
-            general: ['status', 'help', 'list threats', 'scan network', 'show encryption', 'view logs', 'vpn status', 'scale info', 'pricing info', 'deploy encryption', 'cert status', 'compliance report'],
+            general: ['status', 'help', 'list threats', 'scan network', 'show encryption', 'view logs', 'scale info', 'pricing info', 'deploy encryption', 'cert status', 'compliance report'],
             threats: ['list threats', 'analyze threat [ID]', 'quarantine [IP]', 'threat stats'],
             network: ['scan network', 'list devices', 'discovery status', 'device info [IP]', 'scale info', 'reset config', 'endpoint pricing', 'encryption gaps'],
             encryption: ['show encryption', 'key rotation', 'algorithm status', 'hybrid readiness', 'deploy all', 'cert status', 'deployment status'],
             defense: ['defense status', 'list honeypots', 'response time', 'playbook status', 'encryption playbooks'],
-            analytics: ['analytics report', 'threat trends', 'performance metrics', 'predictions', 'compliance report', 'audit status'],
-            vpn: ['vpn status', 'list connections', 'security alerts', 'cert status', 'anomaly report', 'connection stats']
+            analytics: ['analytics report', 'threat trends', 'performance metrics', 'predictions', 'compliance report', 'audit status']
         };
         
         const contextCommands = commands[context] || commands.general;
@@ -1082,7 +857,6 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
 • list threats - Active threats
 • scan network - Network devices
 • show encryption - Encryption status
-• vpn status - VPN connections
 • view logs - Recent events
 • quarantine [IP] - Block IP
 • enable agent - Restore AI control
@@ -1100,10 +874,9 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
 • Version: ${SENTINEL_VERSION}
 • Threats: 7 active
 • Devices: 247 protected  
-• VPN Connections: ${VPNConfigs.liveConnections.length} active
 • Encryption: Hybrid Active
 • Discovery: ${SentinelState.discoveryActive ? 'ACTIVE' : 'PAUSED'}
-• Sub-Agents: 10 online (7 core + 3 encryption)
+• Sub-Agents: 9 online (6 core + 3 encryption)
 • Uptime: 99.98%`,
             
             'version': `[CLI] AI Sentinel-X Hybrid V2.2
@@ -1111,21 +884,8 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
 • API: ${API_VERSION}
 • Encryption: Classical + Post-Quantum
 • Architecture: Modular Sub-Agent System
-• New Features: VPNMonitor, EncryptionDeployer, CertificateManager, ComplianceMonitor
+• New Features: EncryptionDeployer, CertificateManager, ComplianceMonitor
 • Status: Operational`,
-            
-            'vpn status': () => {
-                const connections = VPNConfigs.liveConnections.length;
-                const services = VPNConfigs.activeServices.length;
-                const alerts = VPNConfigs.anomalyAlerts.length;
-                return `[CLI] VPN Status:
-• Services: ${services} active (OpenVPN, WireGuard, IPSec)
-• Connections: ${connections} active
-• Security Alerts: ${alerts}
-• OpenVPN Port 1194: 8 connections
-• WireGuard Port 51820: 4 connections
-• IPSec Site-to-Site: Active tunnel`;
-            },
             
             'deploy status': () => {
                 const deployed = EncryptionDeploymentConfigs.modules.filter(m => m.status === 'deployed').length;
@@ -1141,11 +901,10 @@ All commands route through appropriate sub-agents with hybrid encryption.`;
             'cert status': () => {
                 const expiring = CertificateConfigs.certificates.filter(cert => cert.status === 'expiring').length;
                 const total = CertificateConfigs.certificates.length;
-                const vpnExpiring = VPNConfigs.securityOverview.certificateStatus.expiring;
-                const vpnTotal = VPNConfigs.securityOverview.certificateStatus.total;
                 return `[CLI] Certificate Status:
-• System Certs: ${total} total, ${expiring} expiring
-• VPN Certs: ${vpnTotal} total, ${vpnExpiring} expiring
+• Total: ${total} certificates
+• Valid: ${total - expiring}
+• Expiring: ${expiring}
 • Next renewal: API Gateway (6 days)
 • All use hybrid signatures`;
             },
@@ -1492,34 +1251,9 @@ class SentinelUtils {
             'compliant': 'status-secure',
             'non-compliant': 'status-vulnerable',
             'active': 'status-secure',
-            'inactive': 'status-warning',
-            'connected': 'status-secure',
-            'disconnected': 'status-vulnerable'
+            'inactive': 'status-warning'
         };
         return statusMap[status.toLowerCase()] || 'status-warning';
-    }
-    
-    static formatDuration(startTime) {
-        const start = new Date(startTime);
-        const now = new Date();
-        const diffMs = now - start;
-        
-        const hours = Math.floor(diffMs / (1000 * 60 * 60));
-        const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-        
-        if (hours > 0) {
-            return `${hours}h ${minutes}m`;
-        } else {
-            return `${minutes}m`;
-        }
-    }
-    
-    static formatBytes(bytes) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
     }
 }
 
@@ -1732,13 +1466,6 @@ function addEnhancedCSS() {
             justify-content: space-between;
             align-items: center;
             animation: alertPulse 3s ease-in-out infinite;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .encryption-gap-alert:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 170, 0, 0.4);
         }
         
         @keyframes alertPulse {
@@ -1799,45 +1526,6 @@ function addEnhancedCSS() {
             border: 1px solid var(--secondary);
         }
         
-        /* VPN-specific styling */
-        .vpn-connection-card {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.02) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
-        }
-        
-        .vpn-connection-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
-            border-color: var(--primary);
-        }
-        
-        .vpn-service-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-        
-        .vpn-service-status.active {
-            background: rgba(0, 255, 136, 0.2);
-            color: var(--success);
-            border: 1px solid var(--success);
-        }
-        
-        .vpn-service-status.inactive {
-            background: rgba(255, 0, 68, 0.2);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-        }
-        
         /* Improved responsive design */
         @media (max-width: 768px) {
             .ip-range-controls {
@@ -1865,10 +1553,6 @@ function addEnhancedCSS() {
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
-            }
-            
-            .vpn-connection-card {
-                padding: 15px;
             }
         }
     `;
@@ -1899,7 +1583,6 @@ window.EncryptionDeploymentConfigs = EncryptionDeploymentConfigs;
 window.CertificateConfigs = CertificateConfigs;
 window.ComplianceConfigs = ComplianceConfigs;
 window.EncryptionPlaybooks = EncryptionPlaybooks;
-window.VPNConfigs = VPNConfigs;
 window.sentinelChat = sentinelChat;
 window.SentinelUtils = SentinelUtils;
 window.SentinelEventHandlers = SentinelEventHandlers;
@@ -1974,7 +1657,6 @@ if (typeof module !== 'undefined' && module.exports) {
         CertificateConfigs,
         ComplianceConfigs,
         EncryptionPlaybooks,
-        VPNConfigs,
         SentinelChat,
         SentinelUtils,
         SentinelEventHandlers,
