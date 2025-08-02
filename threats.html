@@ -413,13 +413,12 @@
             text-transform: uppercase;
         }
 
-        /* Main Content Grid - Equal height columns */
+        /* Main Content Grid */
         .main-content {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 25px;
             margin-bottom: 30px;
-            align-items: start;
         }
 
         .left-column {
@@ -429,10 +428,9 @@
         }
 
         .right-column {
-            display: grid;
-            grid-template-rows: 1fr 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 25px;
-            height: fit-content;
         }
 
         /* Section Cards */
@@ -792,12 +790,12 @@
             border: 1px solid var(--success);
         }
 
-        /* Threat Intelligence & Correlation - Proper spacing */
+        /* Threat Intelligence & Correlation - Fixed grid for 6 cards */
         .intelligence-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            min-height: 400px;
+            min-height: 500px;
         }
 
         .intelligence-card {
@@ -809,7 +807,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 180px;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
         }
@@ -925,12 +923,12 @@
             letter-spacing: 1px;
         }
 
-        /* Threat Hunting & Investigation - Consistent with intelligence */
+        /* Threat Hunting & Investigation - Extended height */
         .threat-hunting-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
-            min-height: 400px;
+            min-height: 500px;
         }
 
         .threat-hunting-card {
