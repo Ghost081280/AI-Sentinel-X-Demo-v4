@@ -340,7 +340,7 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner - FIXED with rounded corners */
+        /* Sub-Agent Status Banner with rounded corners */
         .sub-agent-status {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.05) 100%);
             border: 1px solid rgba(0, 255, 136, 0.3);
@@ -425,7 +425,7 @@
             gap: 25px;
         }
 
-        /* AI Agent Command Center - Back to V3 Design */
+        /* AI Agent Command Center - V3 Style */
         .agent-command-center {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -755,108 +755,6 @@
             font-style: italic;
         }
 
-        /* System Health Monitor - New Module */
-        .system-health-monitor {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-        }
-
-        .health-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .health-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .health-status {
-            font-size: 12px;
-            color: var(--success);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .health-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .health-item {
-            background: rgba(0, 255, 136, 0.03);
-            border: 1px solid rgba(0, 255, 136, 0.15);
-            border-radius: 10px;
-            padding: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .health-item:hover {
-            background: rgba(0, 255, 136, 0.05);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.15);
-        }
-
-        .health-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .health-item-name {
-            font-weight: bold;
-            color: var(--text-primary);
-            font-size: 14px;
-        }
-
-        .health-item-value {
-            color: var(--success);
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .health-item-details {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-
-        .health-progress {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            margin-top: 8px;
-            overflow: hidden;
-        }
-
-        .health-progress-fill {
-            height: 100%;
-            background: var(--gradient-1);
-            border-radius: 2px;
-            transition: width 0.3s ease;
-            box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
-        }
-
         /* Global Intelligence Module */
         .global-intel-module {
             background: var(--bg-card);
@@ -982,6 +880,108 @@
         .intel-indicator.warning {
             background: var(--warning);
             box-shadow: 0 0 8px var(--warning);
+        }
+
+        /* Advanced Operations Center */
+        .operations-center {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .operations-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .operations-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .operations-status {
+            font-size: 12px;
+            color: var(--success);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .operations-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .operations-item {
+            background: rgba(0, 255, 136, 0.03);
+            border: 1px solid rgba(0, 255, 136, 0.15);
+            border-radius: 10px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .operations-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.15);
+        }
+
+        .operations-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .operations-item-name {
+            font-weight: bold;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .operations-item-value {
+            color: var(--success);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .operations-item-details {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        .operations-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .operations-progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
         }
 
         /* Enhanced System Metrics */
@@ -1411,7 +1411,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .health-grid {
+            .operations-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -1540,13 +1540,13 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner - FIXED with rounded corners -->
+        <!-- Sub-Agent Status Banner -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">🤖</div>
                 <div class="sub-agent-details">
-                    <h3>AI SENTINEL-X HYBRID</h3>
-                    <p>Main Agent coordinating 10 sub-agents • VPN security monitoring • Hybrid-resistant encryption</p>
+                    <h3>AI SENTINEL-X</h3>
+                    <p>Main Agent coordinating 10 sub-agents • VPN security monitoring • Advanced threat protection</p>
                 </div>
             </div>
             <div class="sub-agent-metrics">
@@ -1586,7 +1586,7 @@
                             <div class="main-agent-icon">🤖</div>
                             <div class="main-agent-info">
                                 <div class="main-agent-name">Main Agent</div>
-                                <div class="main-agent-description">Central AI orchestrating all sub-agents and security operations with hybrid-resistant encryption</div>
+                                <div class="main-agent-description">Central AI orchestrating all sub-agents and security operations with advanced encryption</div>
                                 <div class="main-agent-stats">
                                     <div class="agent-stat">
                                         <div class="stat-value" id="subAgentCountCard">10</div>
@@ -1641,57 +1641,57 @@
                     </div>
                 </div>
 
-                <!-- System Health Monitor - New Module -->
-                <div class="system-health-monitor">
-                    <div class="health-header">
-                        <h2 class="health-title">
-                            <span>💚</span>
-                            <span>System Health Monitor</span>
+                <!-- Advanced Operations Center -->
+                <div class="operations-center">
+                    <div class="operations-header">
+                        <h2 class="operations-title">
+                            <span>⚡</span>
+                            <span>Advanced Operations Center</span>
                         </h2>
-                        <div class="health-status">
+                        <div class="operations-status">
                             <div class="status-dot active"></div>
-                            <span>All Systems Operational</span>
+                            <span>All Systems Optimal</span>
                         </div>
                     </div>
-                    <div class="health-grid">
-                        <div class="health-item">
-                            <div class="health-item-header">
-                                <div class="health-item-name">CPU Performance</div>
-                                <div class="health-item-value" id="cpuHealth">12%</div>
+                    <div class="operations-grid">
+                        <div class="operations-item">
+                            <div class="operations-item-header">
+                                <div class="operations-item-name">AI Processing</div>
+                                <div class="operations-item-value" id="aiProcessing">96%</div>
                             </div>
-                            <div class="health-item-details">AI processing load optimized</div>
-                            <div class="health-progress">
-                                <div class="health-progress-fill" style="width: 12%"></div>
-                            </div>
-                        </div>
-                        <div class="health-item">
-                            <div class="health-item-header">
-                                <div class="health-item-name">Memory Usage</div>
-                                <div class="health-item-value" id="memoryHealth">68%</div>
-                            </div>
-                            <div class="health-item-details">Sub-agent coordination stable</div>
-                            <div class="health-progress">
-                                <div class="health-progress-fill" style="width: 68%"></div>
+                            <div class="operations-item-details">Multi-agent coordination optimized</div>
+                            <div class="operations-progress">
+                                <div class="operations-progress-fill" style="width: 96%"></div>
                             </div>
                         </div>
-                        <div class="health-item">
-                            <div class="health-item-header">
-                                <div class="health-item-name">Network Latency</div>
-                                <div class="health-item-value" id="networkHealth">23ms</div>
+                        <div class="operations-item">
+                            <div class="operations-item-header">
+                                <div class="operations-item-name">Threat Detection</div>
+                                <div class="operations-item-value" id="threatDetection">147K/s</div>
                             </div>
-                            <div class="health-item-details">Global sync performing well</div>
-                            <div class="health-progress">
-                                <div class="health-progress-fill" style="width: 85%"></div>
+                            <div class="operations-item-details">Real-time event processing active</div>
+                            <div class="operations-progress">
+                                <div class="operations-progress-fill" style="width: 92%"></div>
                             </div>
                         </div>
-                        <div class="health-item">
-                            <div class="health-item-header">
-                                <div class="health-item-name">Agent Response</div>
-                                <div class="health-item-value" id="responseHealth">0.2s</div>
+                        <div class="operations-item">
+                            <div class="operations-item-header">
+                                <div class="operations-item-name">Network Coverage</div>
+                                <div class="operations-item-value" id="networkCoverage">247</div>
                             </div>
-                            <div class="health-item-details">Decision-making optimal</div>
-                            <div class="health-progress">
-                                <div class="health-progress-fill" style="width: 95%"></div>
+                            <div class="operations-item-details">Devices under active protection</div>
+                            <div class="operations-progress">
+                                <div class="operations-progress-fill" style="width: 100%"></div>
+                            </div>
+                        </div>
+                        <div class="operations-item">
+                            <div class="operations-item-header">
+                                <div class="operations-item-name">Response Time</div>
+                                <div class="operations-item-value" id="responseTime">0.3s</div>
+                            </div>
+                            <div class="operations-item-details">Autonomous decision-making optimal</div>
+                            <div class="operations-progress">
+                                <div class="operations-progress-fill" style="width: 88%"></div>
                             </div>
                         </div>
                     </div>
@@ -1704,7 +1704,7 @@
             <div class="intel-header">
                 <h2 class="intel-title">
                     <span>🛰️</span>
-                    <span>Global Intelligence Network</span>
+                    <span>Global Intelligence Network (HQ)</span>
                 </h2>
                 <div class="intel-badge">Live Sync Active</div>
             </div>
@@ -1849,7 +1849,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to AI Sentinel-X Hybrid. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and 3 encryption specialists. Global Intelligence Network sync active with 847ms latency.
+                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Global Intelligence Network sync active with 847ms latency.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1882,8 +1882,8 @@
             // Initialize security feed
             initializeSecurityFeed();
             
-            // Initialize system health monitor
-            initializeSystemHealth();
+            // Initialize operations center
+            initializeOperationsCenter();
             
             // Start feed auto-generation
             setInterval(() => {
@@ -1895,9 +1895,9 @@
                 updateDashboardMetrics();
             }, 3000);
 
-            // Update system health periodically
+            // Update operations metrics periodically
             setInterval(() => {
-                updateSystemHealth();
+                updateOperationsMetrics();
             }, 4000);
 
             // Simulate encryption status changes occasionally
@@ -1960,7 +1960,7 @@
 
         function initializeSecurityFeed() {
             addFeedItem('🤖 Main Agent initialized. All 10 sub-agents online.', '', 'Main Agent');
-            addFeedItem('🔐 Hybrid encryption active: Classical + Post-Quantum', 'encryption', 'EncryptionManager');
+            addFeedItem('🔐 Advanced encryption active: Classical + Post-Quantum', 'encryption', 'EncryptionManager');
             addFeedItem('🔒 VPNMonitor: 12 active connections monitored', '', 'VPNMonitor');
             addFeedItem('🔧 EncryptionDeployer: 3/4 modules deployed successfully', 'encryption', 'EncryptionDeployer');
             addFeedItem('📜 CertificateManager: 2 certificates expiring within 30 days', 'warning', 'CertificateManager');
@@ -1968,17 +1968,17 @@
             addFeedItem('🛡️ ThreatScanner detected suspicious activity on port 445', 'warning', 'ThreatScanner');
         }
 
-        function initializeSystemHealth() {
-            // Initialize health values
-            updateHealthValue('cpuHealth', 12, 12);
-            updateHealthValue('memoryHealth', 68, 68);
-            updateHealthValue('networkHealth', '23ms', 85);
-            updateHealthValue('responseHealth', '0.2s', 95);
+        function initializeOperationsCenter() {
+            // Initialize operations values
+            updateOperationsValue('aiProcessing', 96, 96);
+            updateOperationsValue('threatDetection', '147K/s', 92);
+            updateOperationsValue('networkCoverage', 247, 100);
+            updateOperationsValue('responseTime', '0.3s', 88);
         }
 
-        function updateHealthValue(elementId, value, progressPercent) {
+        function updateOperationsValue(elementId, value, progressPercent) {
             const element = document.getElementById(elementId);
-            const progressBar = element.closest('.health-item').querySelector('.health-progress-fill');
+            const progressBar = element?.closest('.operations-item')?.querySelector('.operations-progress-fill');
             
             if (element) {
                 element.textContent = typeof value === 'number' ? value + '%' : value;
@@ -1988,17 +1988,17 @@
             }
         }
 
-        function updateSystemHealth() {
-            // Simulate realistic health metrics
-            const cpuUsage = Math.max(8, Math.min(25, 12 + Math.random() * 6 - 3));
-            const memoryUsage = Math.max(60, Math.min(80, 68 + Math.random() * 8 - 4));
-            const networkLatency = Math.max(15, Math.min(35, 23 + Math.random() * 8 - 4));
-            const responseTime = Math.max(0.1, Math.min(0.5, 0.2 + Math.random() * 0.2 - 0.1));
+        function updateOperationsMetrics() {
+            // Simulate realistic operations metrics
+            const aiProcessing = Math.max(90, Math.min(99, 96 + Math.random() * 4 - 2));
+            const threatDetectionRate = Math.max(140, Math.min(155, 147 + Math.random() * 6 - 3));
+            const networkCoverage = Math.max(245, Math.min(250, 247 + Math.random() * 2 - 1));
+            const responseTime = Math.max(0.2, Math.min(0.5, 0.3 + Math.random() * 0.1 - 0.05));
             
-            updateHealthValue('cpuHealth', Math.round(cpuUsage), cpuUsage);
-            updateHealthValue('memoryHealth', Math.round(memoryUsage), memoryUsage);
-            updateHealthValue('networkHealth', Math.round(networkLatency) + 'ms', Math.max(60, 100 - networkLatency));
-            updateHealthValue('responseHealth', responseTime.toFixed(1) + 's', Math.max(70, 100 - (responseTime * 100)));
+            updateOperationsValue('aiProcessing', Math.round(aiProcessing), aiProcessing);
+            updateOperationsValue('threatDetection', Math.round(threatDetectionRate) + 'K/s', Math.max(85, Math.min(98, threatDetectionRate * 0.6)));
+            updateOperationsValue('networkCoverage', Math.round(networkCoverage), Math.max(95, 100));
+            updateOperationsValue('responseTime', responseTime.toFixed(1) + 's', Math.max(80, 100 - (responseTime * 100)));
         }
 
         function addFeedItem(message, type = '', agent = '') {
@@ -2040,7 +2040,7 @@
             { msg: '✅ System health check passed. All agents operational', type: '', agent: 'Main Agent' },
             { msg: '🛰️ Global Intelligence: Global threat feed updated', type: '', agent: 'Global Network' },
             { msg: '🔐 Fleet-wide encryption key rotation initiated by network', type: 'encryption', agent: 'Global Network' },
-            { msg: '💚 System performance: CPU ' + Math.floor(Math.random() * 10 + 10) + '%, Memory ' + Math.floor(Math.random() * 15 + 65) + '%', type: '', agent: 'System Health' }
+            { msg: '⚡ Operations Center: All systems performing within optimal parameters', type: '', agent: 'Operations Center' }
         ];
 
         function generateRandomFeedItem() {
@@ -2147,7 +2147,7 @@
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and 3 encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with hybrid-resistant encryption. Global Intelligence Network sync active with 847ms latency.', false);
+                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Global Intelligence Network sync active with 847ms latency.', false);
             }, 300);
         }
 
