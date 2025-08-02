@@ -652,30 +652,27 @@
             gap: 5px;
         }
 
-        /* Critical Threat Alerts - Real-time Feed */
-        .critical-alerts-list {
+        /* IOC & Indicators Feed - SOC Intelligence */
+        .ioc-feed-list {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             max-height: 400px;
             overflow-y: auto;
         }
 
-        .critical-alert-item {
+        .ioc-feed-item {
             padding: 18px;
             border-radius: 12px;
             border-left: 4px solid;
-            display: flex;
-            flex-direction: column;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-height: 120px;
-            gap: 12px;
+            min-height: 100px;
         }
 
-        .critical-alert-item::before {
+        .ioc-feed-item::before {
             content: '';
             position: absolute;
             top: 0;
@@ -686,94 +683,129 @@
             transition: left 0.5s ease;
         }
 
-        .critical-alert-item:hover::before {
+        .ioc-feed-item:hover::before {
             left: 100%;
         }
 
-        .critical-alert-item:hover {
+        .ioc-feed-item:hover {
             transform: translateY(-2px);
         }
 
-        .critical-alert-item.critical {
+        .ioc-feed-item.malware {
             background: rgba(255, 0, 68, 0.1);
             border-left-color: var(--danger);
         }
 
-        .critical-alert-item.high {
-            background: rgba(255, 170, 0, 0.1);
-            border-left-color: var(--warning);
-        }
-
-        .critical-alert-item.medium {
+        .ioc-feed-item.network {
             background: rgba(0, 204, 255, 0.1);
             border-left-color: var(--secondary);
         }
 
-        .critical-alert-header {
+        .ioc-feed-item.behavioral {
+            background: rgba(255, 170, 0, 0.1);
+            border-left-color: var(--warning);
+        }
+
+        .ioc-feed-item.intelligence {
+            background: rgba(124, 58, 237, 0.1);
+            border-left-color: var(--accent);
+        }
+
+        .ioc-feed-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             gap: 15px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
 
-        .critical-alert-content {
+        .ioc-feed-content {
             flex: 1;
             min-width: 0;
         }
 
-        .critical-alert-message {
+        .ioc-feed-title {
             font-weight: bold;
             color: var(--text-primary);
             font-size: 14px;
             line-height: 1.3;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
+            margin-bottom: 8px;
+        }
+
+        .ioc-feed-value {
+            font-family: 'Courier New', monospace;
+            color: var(--secondary);
+            font-size: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 8px;
+            border-radius: 6px;
+            word-break: break-all;
             margin-bottom: 10px;
         }
 
-        .critical-alert-details {
+        .ioc-feed-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
             font-size: 11px;
-            margin-bottom: 8px;
         }
 
-        .critical-alert-source {
-            color: var(--secondary);
-            font-family: 'Courier New', monospace;
-            font-size: 10px;
-            word-break: break-all;
-        }
-
-        .critical-alert-action {
+        .ioc-feed-source {
             color: var(--accent);
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 10px;
-            font-weight: bold;
         }
 
-        .critical-alert-time {
+        .ioc-feed-confidence {
+            color: var(--primary);
+            font-size: 10px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .ioc-feed-time {
             grid-column: 1 / -1;
             font-size: 10px;
             color: var(--text-secondary);
-            line-height: 1.2;
+            margin-top: 5px;
         }
 
-        .critical-alert-severity {
-            padding: 6px 12px;
-            border-radius: 15px;
+        .ioc-feed-type {
+            padding: 4px 10px;
+            border-radius: 12px;
             font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             white-space: nowrap;
             flex-shrink: 0;
-            width: fit-content;
             text-align: center;
             height: fit-content;
+        }
+
+        .ioc-feed-type.malware {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .ioc-feed-type.network {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .ioc-feed-type.behavioral {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .ioc-feed-type.intelligence {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent);
+            border: 1px solid var(--accent);
         }
 
         .critical-alert-severity.critical {
@@ -794,24 +826,24 @@
             border: 1px solid var(--secondary);
         }
 
-        /* Threat Intelligence & Correlation - Fixed grid for 6 cards */
+        /* Threat Intelligence & Correlation - Fixed grid for 6 cards with proper height */
         .intelligence-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            min-height: 500px;
+            min-height: 620px;
         }
 
         .intelligence-card {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(0, 204, 255, 0.02) 100%);
             border: 1px solid rgba(124, 58, 237, 0.3);
             border-radius: 12px;
-            padding: 20px;
+            padding: 25px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 160px;
+            min-height: 200px;
             display: flex;
             flex-direction: column;
         }
@@ -932,7 +964,7 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
-            min-height: 500px;
+            min-height: 620px;
         }
 
         .threat-hunting-card {
@@ -2183,62 +2215,57 @@
             }
         ];
 
-        // Critical threat alerts - REAL-TIME SECURITY EVENTS (Different from ongoing threats)
-        const criticalThreatAlerts = [
+        // IOC & Indicators Feed - SOC Intelligence Data
+        const iocFeedData = [
             {
-                id: 'alert-001',
-                message: 'Memory injection attack detected',
-                severity: 'critical',
-                source: '172.16.10.45',
-                action: 'Process killed',
-                timestamp: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-                geoRisk: 7,
-                behaviorScore: 9,
-                type: 'Fileless Attack'
+                id: 'ioc-001',
+                title: 'Malicious Domain',
+                value: 'malware-c2.evil-domain.net',
+                type: 'network',
+                source: 'ThreatIntel-Feed-7',
+                confidence: '98%',
+                timestamp: new Date(Date.now() - 3 * 60 * 1000).toISOString(),
+                category: 'C2 Infrastructure'
             },
             {
-                id: 'alert-002',
-                message: 'Unauthorized certificate installed',
-                severity: 'high',
-                source: 'WORKSTATION-07',
-                action: 'Cert revoked',
-                timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-                geoRisk: 4,
-                behaviorScore: 8,
-                type: 'Certificate Abuse'
+                id: 'ioc-002',
+                title: 'File Hash (SHA256)',
+                value: 'a4b2c3d4e5f6789abcdef123456789abc...',
+                type: 'malware',
+                source: 'VirusTotal',
+                confidence: '95%',
+                timestamp: new Date(Date.now() - 8 * 60 * 1000).toISOString(),
+                category: 'Malware Sample'
             },
             {
-                id: 'alert-003',
-                message: 'Suspicious registry modification',
-                severity: 'medium',
-                source: '10.0.2.89',
-                action: 'Reverted',
-                timestamp: new Date(Date.now() - 12 * 60 * 1000).toISOString(),
-                geoRisk: 3,
-                behaviorScore: 6,
-                type: 'Persistence'
+                id: 'ioc-003',
+                title: 'Suspicious IP Range',
+                value: '185.243.112.0/24',
+                type: 'network',
+                source: 'Threat-Hunter-AI',
+                confidence: '89%',
+                timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
+                category: 'Network IOC'
             },
             {
-                id: 'alert-004',
-                message: 'USB auto-run execution blocked',
-                severity: 'high',
-                source: 'USB-DEVICE-12',
-                action: 'Blocked',
-                timestamp: new Date(Date.now() - 18 * 60 * 1000).toISOString(),
-                geoRisk: 5,
-                behaviorScore: 7,
-                type: 'Physical Media'
+                id: 'ioc-004',
+                title: 'Registry Persistence Key',
+                value: 'HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\Run\\SecurityUpdate',
+                type: 'behavioral',
+                source: 'Behavioral-Analysis',
+                confidence: '92%',
+                timestamp: new Date(Date.now() - 22 * 60 * 1000).toISOString(),
+                category: 'Persistence Mechanism'
             },
             {
-                id: 'alert-005',
-                message: 'Rogue WiFi access point detected',
-                severity: 'medium',
-                source: 'AP-EVIL-TWIN',
-                action: 'Monitoring',
-                timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
-                geoRisk: 6,
-                behaviorScore: 5,
-                type: 'Network Security'
+                id: 'ioc-005',
+                title: 'YARA Rule Match',
+                value: 'APT29_Cozy_Bear_2024_Variant',
+                type: 'intelligence',
+                source: 'YARA-Engine',
+                confidence: '97%',
+                timestamp: new Date(Date.now() - 28 * 60 * 1000).toISOString(),
+                category: 'Pattern Match'
             }
         ];
 
@@ -2464,7 +2491,7 @@
 
         function initializeThreatsPage() {
             populateActiveThreats();
-            populateCriticalThreatAlerts();
+            populateIOCFeed();
             populateThreatIntelligence();
             populateThreatHunting();
             populateResponseAutomation();
@@ -2482,35 +2509,36 @@
                 generateThreatFeedItem();
             }, 7000);
             setInterval(() => {
-                updateCriticalAlerts();
+                updateIOCFeed();
             }, 5000);
             setInterval(() => {
                 updateHuntingProgress();
             }, 8000);
         }
 
-        function populateCriticalThreatAlerts() {
-            const list = document.getElementById('criticalAlertsList');
+        function populateIOCFeed() {
+            const list = document.getElementById('iocFeedList');
             list.innerHTML = '';
 
-            criticalThreatAlerts.forEach(alert => {
+            iocFeedData.forEach(ioc => {
                 const item = document.createElement('div');
-                item.className = `critical-alert-item ${alert.severity}`;
-                item.onclick = () => openCriticalAlertDetails(alert.id);
+                item.className = `ioc-feed-item ${ioc.type}`;
+                item.onclick = () => openIOCDetails(ioc.id);
                 
-                const timeAgo = getTimeAgo(alert.timestamp);
+                const timeAgo = getTimeAgo(ioc.timestamp);
                 
                 item.innerHTML = `
-                    <div class="critical-alert-header">
-                        <div class="critical-alert-content">
-                            <div class="critical-alert-message">${alert.message}</div>
+                    <div class="ioc-feed-header">
+                        <div class="ioc-feed-content">
+                            <div class="ioc-feed-title">${ioc.title}</div>
+                            <div class="ioc-feed-value">${ioc.value}</div>
                         </div>
-                        <div class="critical-alert-severity ${alert.severity}">${alert.severity}</div>
+                        <div class="ioc-feed-type ${ioc.type}">${ioc.type}</div>
                     </div>
-                    <div class="critical-alert-details">
-                        <div class="critical-alert-source">Source: ${alert.source}</div>
-                        <div class="critical-alert-action">Action: ${alert.action}</div>
-                        <div class="critical-alert-time">${timeAgo} • Type: ${alert.type} • Risk: ${alert.geoRisk}/10</div>
+                    <div class="ioc-feed-details">
+                        <div class="ioc-feed-source">Source: ${ioc.source}</div>
+                        <div class="ioc-feed-confidence">Confidence: ${ioc.confidence}</div>
+                        <div class="ioc-feed-time">${timeAgo} • Category: ${ioc.category}</div>
                     </div>
                 `;
                 
@@ -2518,74 +2546,67 @@
             });
         }
 
-        function updateCriticalAlerts() {
-            // Occasionally add new critical alerts - REAL-TIME EVENTS (not ongoing threats)
+        function updateIOCFeed() {
+            // Occasionally add new IOCs
             if (Math.random() > 0.85) {
-                const newAlerts = [
-                    'Process injection technique blocked',
-                    'Suspicious network beacon detected',
-                    'Unauthorized file encryption started',
-                    'Memory dump attempt intercepted',
-                    'Lateral movement via WMI blocked',
-                    'Shadow copy deletion prevented',
-                    'Keylogger installation blocked',
-                    'Browser hijack attempt stopped',
-                    'Scheduled task created suspiciously',
-                    'Service creation with high privileges'
+                const newIOCs = [
+                    { title: 'Suspicious Email Header', value: 'X-Mailer: Evil-Phishing-Kit-2024', type: 'behavioral', category: 'Email IOC' },
+                    { title: 'Malicious URL', value: 'hxxps://fake-banking-site[.]com/login', type: 'network', category: 'Phishing URL' },
+                    { title: 'Process Pattern', value: 'powershell.exe -EncodedCommand [Base64]', type: 'behavioral', category: 'Execution Pattern' },
+                    { title: 'File Path IOC', value: 'C:\\ProgramData\\{random-guid}\\svchost.exe', type: 'malware', category: 'File System IOC' },
+                    { title: 'DNS Query Pattern', value: '*.evil-domain.net (DGA)', type: 'network', category: 'DNS IOC' },
+                    { title: 'Certificate Thumbprint', value: 'SHA1: AA:BB:CC:DD:EE:FF:11:22:33:44', type: 'intelligence', category: 'Certificate IOC' }
                 ];
                 
-                const sources = ['WORKSTATION-' + Math.floor(Math.random() * 50), '172.16.' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255), 'USB-DEVICE-' + Math.floor(Math.random() * 20), 'scanner-' + Math.floor(Math.random() * 100) + '.evil.net'];
-                const actions = ['Terminated', 'Blocked', 'Quarantined', 'Monitoring', 'Reverted', 'Isolated'];
-                const severities = ['critical', 'high', 'medium'];
-                const types = ['Process Injection', 'Network Threat', 'Ransomware', 'Data Theft', 'Lateral Movement', 'Persistence', 'Keylogger', 'Browser Attack', 'Scheduled Task', 'Service Abuse'];
+                const sources = ['ThreatIntel-Feed-' + Math.floor(Math.random() * 20), 'AI-Hunter-Engine', 'Behavioral-Analysis', 'YARA-Engine', 'VirusTotal', 'Hybrid-Analysis'];
+                const confidences = ['95%', '97%', '89%', '92%', '98%', '85%', '91%'];
                 
-                const newAlert = {
-                    id: 'alert-' + Date.now(),
-                    message: newAlerts[Math.floor(Math.random() * newAlerts.length)],
-                    severity: severities[Math.floor(Math.random() * severities.length)],
+                const randomIOC = newIOCs[Math.floor(Math.random() * newIOCs.length)];
+                const newIOC = {
+                    id: 'ioc-' + Date.now(),
+                    title: randomIOC.title,
+                    value: randomIOC.value,
+                    type: randomIOC.type,
                     source: sources[Math.floor(Math.random() * sources.length)],
-                    action: actions[Math.floor(Math.random() * actions.length)],
+                    confidence: confidences[Math.floor(Math.random() * confidences.length)],
                     timestamp: new Date().toISOString(),
-                    geoRisk: Math.floor(Math.random() * 10) + 1,
-                    behaviorScore: Math.floor(Math.random() * 10) + 1,
-                    type: types[Math.floor(Math.random() * types.length)]
+                    category: randomIOC.category
                 };
                 
-                // Add to beginning of array and limit to 10 items
-                criticalThreatAlerts.unshift(newAlert);
-                if (criticalThreatAlerts.length > 10) {
-                    criticalThreatAlerts.pop();
+                // Add to beginning of array and limit to 15 items
+                iocFeedData.unshift(newIOC);
+                if (iocFeedData.length > 15) {
+                    iocFeedData.pop();
                 }
                 
                 // Update display
-                populateCriticalThreatAlerts();
+                populateIOCFeed();
                 
                 // Update count
-                const criticalCount = criticalThreatAlerts.filter(alert => alert.severity === 'critical').length;
-                document.getElementById('criticalAlertCount').textContent = criticalCount + ' Critical';
+                const newCount = Math.floor(Math.random() * 50 + 100);
+                document.getElementById('iocFeedCount').textContent = newCount + ' New IOCs';
             }
         }
 
-        function openCriticalAlertDetails(alertId) {
+        function openIOCDetails(iocId) {
             if (sentinelChat && !SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                const alert = criticalThreatAlerts.find(a => a.id === alertId);
-                if (alert) {
-                    sentinelChat?.addMessage(`ThreatScanner Critical Alert: ${alert.message}
-• Severity: ${alert.severity.toUpperCase()} PRIORITY
-• Type: ${alert.type}
-• Source: ${alert.source}
-• Action Taken: ${alert.action}
-• Geographic Risk Score: ${alert.geoRisk}/10
-• Behavioral Score: ${alert.behaviorScore}/10
-• Timestamp: ${alert.timestamp}
-• AI Correlation: Pattern matches known ${alert.type.toLowerCase()} signatures
-• Sub-Agent Coordination: ThreatScanner → ${alert.severity === 'critical' ? 'DefenseOrchestrator → AnalyticsEngine' : 'AnalyticsEngine'}
-• Data Protection: All threat data encrypted with hybrid-resistant algorithms
+                const ioc = iocFeedData.find(i => i.id === iocId);
+                if (ioc) {
+                    sentinelChat?.addMessage(`ThreatScanner IOC Analysis: ${ioc.title}
+• Type: ${ioc.type.toUpperCase()}
+• Value: ${ioc.value}
+• Source: ${ioc.source}
+• Confidence Level: ${ioc.confidence}
+• Category: ${ioc.category}
+• Timestamp: ${ioc.timestamp}
+• AI Correlation: Cross-referenced with ${Math.floor(Math.random() * 20 + 5)} threat intelligence feeds
+• Sub-Agent Integration: ThreatScanner → AnalyticsEngine → DefenseOrchestrator
+• Auto-Response: ${ioc.type === 'network' ? 'DNS/IP blocking enabled' : ioc.type === 'malware' ? 'File quarantine rules updated' : 'Behavioral detection enhanced'}
 • MITRE ATT&CK: Mapped to framework for threat correlation
-• Auto-Response: ${alert.action === 'Auto-blocked' || alert.action === 'Quarantined' ? 'Successfully executed' : 'In progress'}`, false);
+• Data Protection: All IOC data encrypted with hybrid-resistant algorithms`, false);
                 }
             }, 300);
         }
