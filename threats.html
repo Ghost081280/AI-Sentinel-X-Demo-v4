@@ -662,18 +662,17 @@
         }
 
         .critical-alert-item {
-            padding: 20px;
+            padding: 18px;
             border-radius: 12px;
             border-left: 4px solid;
             display: flex;
-            justify-content: space-between;
-            align-items: stretch;
+            flex-direction: column;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-height: 110px;
-            gap: 20px;
+            min-height: 120px;
+            gap: 12px;
         }
 
         .critical-alert-item::before {
@@ -692,7 +691,7 @@
         }
 
         .critical-alert-item:hover {
-            transform: translateX(8px);
+            transform: translateY(-2px);
         }
 
         .critical-alert-item.critical {
@@ -710,40 +709,41 @@
             border-left-color: var(--secondary);
         }
 
+        .critical-alert-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
         .critical-alert-content {
             flex: 1;
-            position: relative;
-            z-index: 1;
             min-width: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
         }
 
         .critical-alert-message {
             font-weight: bold;
             color: var(--text-primary);
-            margin-bottom: 12px;
             font-size: 14px;
-            line-height: 1.4;
+            line-height: 1.3;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            hyphens: auto;
+            margin-bottom: 10px;
         }
 
         .critical-alert-details {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 11px;
             margin-bottom: 8px;
-            font-size: 12px;
         }
 
         .critical-alert-source {
             color: var(--secondary);
             font-family: 'Courier New', monospace;
-            font-size: 11px;
+            font-size: 10px;
             word-break: break-all;
         }
 
@@ -756,27 +756,24 @@
         }
 
         .critical-alert-time {
+            grid-column: 1 / -1;
             font-size: 10px;
             color: var(--text-secondary);
-            line-height: 1.3;
-            word-wrap: break-word;
+            line-height: 1.2;
         }
 
         .critical-alert-severity {
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 10px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
-            position: relative;
-            z-index: 1;
             white-space: nowrap;
             flex-shrink: 0;
-            width: 85px;
+            width: fit-content;
             text-align: center;
             height: fit-content;
-            align-self: flex-start;
         }
 
         .critical-alert-severity.critical {
@@ -1895,7 +1892,7 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner -->
+                <!-- Sub-Agent Status Banner -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">🛡️</div>
@@ -1906,11 +1903,11 @@
             </div>
             <div class="sub-agent-metrics">
                 <div class="metric">
-                    <div class="metric-value" id="activeThreats">7</div>
+                    <div class="metric-value" id="activeThreats">8</div>
                     <div class="metric-label">Active Threats</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value" id="blockedToday">2,847</div>
+                    <div class="metric-value" id="blockedToday">3,247</div>
                     <div class="metric-label">Blocked Today</div>
                 </div>
                 <div class="metric">
@@ -1918,7 +1915,7 @@
                     <div class="metric-label">Detection Rate</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value" id="correlatedThreats">14</div>
+                    <div class="metric-value" id="correlatedThreats">16</div>
                     <div class="metric-label">Correlated</div>
                 </div>
             </div>
@@ -1937,7 +1934,7 @@
                         </h2>
                         <div class="section-status">
                             <div class="status-dot danger"></div>
-                            <span id="threatStatus">7 Critical Threats</span>
+                            <span id="threatStatus">8 Critical Threats</span>
                         </div>
                     </div>
                     <div class="threats-grid" id="threatsGrid">
@@ -2086,7 +2083,7 @@
 
     <script src="shared.js"></script>
     <script>
-        // Enhanced V4 threat data including intelligence correlation
+        // Enhanced V4 threat data - ACTIVE ONGOING THREATS (8 total for full grid)
         const threats = [
             {
                 id: 1,
@@ -2171,65 +2168,77 @@
                 status: 'Contained',
                 aiAnalysis: 'Local privilege escalation attempt blocked. DefenseOrchestrator deployed countermeasures.',
                 subAgent: 'ThreatScanner → DefenseOrchestrator'
+            },
+            {
+                id: 8,
+                name: 'Command & Control Traffic',
+                type: 'Network Communications',
+                severity: 'high',
+                source: 'c2.malicious-domain.net',
+                target: 'Multiple Endpoints',
+                attempts: '156',
+                status: 'Monitoring',
+                aiAnalysis: 'Persistent C2 beaconing detected. VPNMonitor and NetworkMapper coordinating response.',
+                subAgent: 'ThreatScanner → VPNMonitor'
             }
         ];
 
-        // Critical threat alerts data for real-time feed - NON-DUPLICATIVE CONTENT
+        // Critical threat alerts - REAL-TIME SECURITY EVENTS (Different from ongoing threats)
         const criticalThreatAlerts = [
             {
                 id: 'alert-001',
-                message: 'Multi-stage malware campaign detected across 12 endpoints',
+                message: 'Memory injection attack detected',
                 severity: 'critical',
-                source: '185.243.112.45',
-                action: 'Auto-isolated',
-                timestamp: new Date(Date.now() - 3 * 60 * 1000).toISOString(),
-                geoRisk: 9,
-                behaviorScore: 8,
-                type: 'Advanced Persistent Threat'
+                source: '172.16.10.45',
+                action: 'Process killed',
+                timestamp: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
+                geoRisk: 7,
+                behaviorScore: 9,
+                type: 'Fileless Attack'
             },
             {
                 id: 'alert-002',
-                message: 'Credential harvesting via fake authentication portal',
-                severity: 'critical',
-                source: 'phishing.malicious-site.com',
-                action: 'Domain blocked',
-                timestamp: new Date(Date.now() - 8 * 60 * 1000).toISOString(),
-                geoRisk: 7,
-                behaviorScore: 9,
-                type: 'Social Engineering'
+                message: 'Unauthorized certificate installed',
+                severity: 'high',
+                source: 'WORKSTATION-07',
+                action: 'Cert revoked',
+                timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+                geoRisk: 4,
+                behaviorScore: 8,
+                type: 'Certificate Abuse'
             },
             {
                 id: 'alert-003',
-                message: 'Suspicious PowerShell execution with encoded commands',
-                severity: 'high',
-                source: '192.168.1.156',
-                action: 'Process terminated',
-                timestamp: new Date(Date.now() - 15 * 60 * 1000).toISOString(),
-                geoRisk: 4,
-                behaviorScore: 8,
-                type: 'Living off the Land'
-            },
-            {
-                id: 'alert-004',
-                message: 'DNS tunneling detected - potential data exfiltration',
-                severity: 'high',
-                source: 'tunnel.evil-c2.org',
-                action: 'DNS blocked',
-                timestamp: new Date(Date.now() - 22 * 60 * 1000).toISOString(),
-                geoRisk: 8,
-                behaviorScore: 7,
-                type: 'Data Exfiltration'
-            },
-            {
-                id: 'alert-005',
-                message: 'Registry modification indicating persistence mechanism',
+                message: 'Suspicious registry modification',
                 severity: 'medium',
-                source: '10.0.2.47',
-                action: 'Investigating',
-                timestamp: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
+                source: '10.0.2.89',
+                action: 'Reverted',
+                timestamp: new Date(Date.now() - 12 * 60 * 1000).toISOString(),
                 geoRisk: 3,
                 behaviorScore: 6,
                 type: 'Persistence'
+            },
+            {
+                id: 'alert-004',
+                message: 'USB auto-run execution blocked',
+                severity: 'high',
+                source: 'USB-DEVICE-12',
+                action: 'Blocked',
+                timestamp: new Date(Date.now() - 18 * 60 * 1000).toISOString(),
+                geoRisk: 5,
+                behaviorScore: 7,
+                type: 'Physical Media'
+            },
+            {
+                id: 'alert-005',
+                message: 'Rogue WiFi access point detected',
+                severity: 'medium',
+                source: 'AP-EVIL-TWIN',
+                action: 'Monitoring',
+                timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
+                geoRisk: 6,
+                behaviorScore: 5,
+                type: 'Network Security'
             }
         ];
 
@@ -2492,15 +2501,17 @@
                 const timeAgo = getTimeAgo(alert.timestamp);
                 
                 item.innerHTML = `
-                    <div class="critical-alert-content">
-                        <div class="critical-alert-message">${alert.message}</div>
-                        <div class="critical-alert-details">
-                            <div class="critical-alert-source">Source: ${alert.source}</div>
-                            <div class="critical-alert-action">Action: ${alert.action}</div>
-                            <div class="critical-alert-time">${timeAgo} • Type: ${alert.type} • Geo Risk: ${alert.geoRisk}/10</div>
+                    <div class="critical-alert-header">
+                        <div class="critical-alert-content">
+                            <div class="critical-alert-message">${alert.message}</div>
                         </div>
+                        <div class="critical-alert-severity ${alert.severity}">${alert.severity}</div>
                     </div>
-                    <div class="critical-alert-severity ${alert.severity}">${alert.severity}</div>
+                    <div class="critical-alert-details">
+                        <div class="critical-alert-source">Source: ${alert.source}</div>
+                        <div class="critical-alert-action">Action: ${alert.action}</div>
+                        <div class="critical-alert-time">${timeAgo} • Type: ${alert.type} • Risk: ${alert.geoRisk}/10</div>
+                    </div>
                 `;
                 
                 list.appendChild(item);
@@ -2508,25 +2519,25 @@
         }
 
         function updateCriticalAlerts() {
-            // Occasionally add new critical alerts - NON-DUPLICATIVE
+            // Occasionally add new critical alerts - REAL-TIME EVENTS (not ongoing threats)
             if (Math.random() > 0.85) {
                 const newAlerts = [
-                    'Fileless malware injection detected in memory',
-                    'Backdoor communication via legitimate cloud service',
-                    'Privilege escalation using unpatched vulnerability',
-                    'Suspicious network scanning from internal host',
-                    'Encrypted payload delivery via email attachment',
-                    'Unauthorized certificate installation detected',
-                    'Process hollowing technique identified',
-                    'Memory dump analysis reveals credential theft',
-                    'Rogue wireless access point broadcasting',
-                    'USB device auto-execution blocked'
+                    'Process injection technique blocked',
+                    'Suspicious network beacon detected',
+                    'Unauthorized file encryption started',
+                    'Memory dump attempt intercepted',
+                    'Lateral movement via WMI blocked',
+                    'Shadow copy deletion prevented',
+                    'Keylogger installation blocked',
+                    'Browser hijack attempt stopped',
+                    'Scheduled task created suspiciously',
+                    'Service creation with high privileges'
                 ];
                 
-                const sources = ['172.16.10.45', '203.0.113.89', '198.51.100.23', '192.0.2.156', 'scanner.threat-actor.net', 'Unknown'];
-                const actions = ['Auto-blocked', 'Quarantined', 'Investigating', 'Monitoring', 'Analyzing', 'Terminated'];
+                const sources = ['WORKSTATION-' + Math.floor(Math.random() * 50), '172.16.' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255), 'USB-DEVICE-' + Math.floor(Math.random() * 20), 'scanner-' + Math.floor(Math.random() * 100) + '.evil.net'];
+                const actions = ['Terminated', 'Blocked', 'Quarantined', 'Monitoring', 'Reverted', 'Isolated'];
                 const severities = ['critical', 'high', 'medium'];
-                const types = ['Malware', 'Network Attack', 'Insider Threat', 'Data Exfiltration', 'Persistence', 'Reconnaissance'];
+                const types = ['Process Injection', 'Network Threat', 'Ransomware', 'Data Theft', 'Lateral Movement', 'Persistence', 'Keylogger', 'Browser Attack', 'Scheduled Task', 'Service Abuse'];
                 
                 const newAlert = {
                     id: 'alert-' + Date.now(),
@@ -2964,11 +2975,11 @@
             
             blocked.textContent = formatted;
             
-            // Occasionally change threat count
+            // Occasionally change threat count (should match actual threats array)
             if (Math.random() > 0.85) {
                 const threats = document.getElementById('activeThreats');
                 const currentThreats = parseInt(threats.textContent);
-                const newThreats = Math.max(5, currentThreats + Math.floor(Math.random() * 3 - 1));
+                const newThreats = Math.max(6, Math.min(10, currentThreats + Math.floor(Math.random() * 3 - 1)));
                 
                 threats.textContent = newThreats;
                 
@@ -2979,7 +2990,7 @@
             // Update correlation metrics
             if (Math.random() > 0.9) {
                 const correlatedThreats = document.getElementById('correlatedThreats');
-                const newCorrelated = Math.floor(Math.random() * 20 + 10);
+                const newCorrelated = Math.floor(Math.random() * 20 + 12);
                 correlatedThreats.textContent = newCorrelated;
             }
         }
