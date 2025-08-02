@@ -563,7 +563,7 @@
         /* Sub-Agents Grid */
         .sub-agents-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 15px;
         }
 
@@ -980,6 +980,117 @@
 
         .trend-stable {
             color: var(--text-secondary);
+        }
+
+        /* Activity Feed - Shared styling */
+        .activity-feed {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feed-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--danger);
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+
+        .feed-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .feed-item {
+            background: rgba(0, 255, 136, 0.05);
+            border-left: 3px solid var(--primary);
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .feed-item:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateX(5px);
+        }
+
+        .feed-item.warning {
+            background: rgba(255, 170, 0, 0.05);
+            border-left-color: var(--warning);
+        }
+
+        .feed-item.danger {
+            background: rgba(255, 0, 68, 0.05);
+            border-left-color: var(--danger);
+        }
+
+        .feed-item.encryption {
+            background: rgba(124, 58, 237, 0.05);
+            border-left-color: var(--accent);
+        }
+
+        .feed-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .feed-message {
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+
+        .feed-agent {
+            font-size: 11px;
+            color: var(--accent);
+            font-style: italic;
         }
 
         /* AI Chat Widget - FIXED HEIGHT */
@@ -1535,12 +1646,29 @@
                             <span>🔗</span>
                             <span>Sub-Agent Network</span>
                         </div>
-                        <div class="sub-agents-subtitle">Specialized AI modules coordinated by Main Agent • VPNMonitor now active</div>
+                        <div class="sub-agents-subtitle">Specialized AI modules coordinated by Main Agent • VPNMonitor and encryption specialists active</div>
                     </div>
                     
                     <!-- Sub-Agents Grid -->
                     <div class="sub-agents-grid" id="subAgentsGrid">
                         <!-- Sub-agents will be populated by JavaScript from shared.js -->
+                    </div>
+                </div>
+
+                <!-- Dashboard Activity Feed -->
+                <div class="activity-feed">
+                    <div class="feed-header">
+                        <h2 class="feed-title">
+                            <span>📈</span>
+                            <span>System Activity Feed</span>
+                        </h2>
+                        <div class="live-indicator">
+                            <div class="live-dot"></div>
+                            <span>LIVE</span>
+                        </div>
+                    </div>
+                    <div class="feed-content" id="dashboardActivityFeed">
+                        <!-- Feed items will be populated by ActivityFeedManager -->
                     </div>
                 </div>
             </div>
@@ -1683,91 +1811,8 @@
 
     <script src="shared.js"></script>
     <script>
-        // Enhanced sub-agent configurations including VPNMonitor and encryption agents
-        const SubAgentConfigs = {
-            threatScanner: {
-                name: 'ThreatScanner',
-                icon: '🛡️',
-                description: 'Analyzing 147K events/sec',
-                activity: '7 active threats detected',
-                link: 'threats.html',
-                status: 'Active'
-            },
-            networkMapper: {
-                name: 'NetworkMapper',
-                icon: '🌐',
-                description: 'Monitoring 247 devices',
-                activity: '12 new devices today',
-                link: 'network.html',
-                status: 'Active'
-            },
-            defenseOrchestrator: {
-                name: 'DefenseOrchestrator',
-                icon: '⚔️',
-                description: '8 honeypots active',
-                activity: '124 attacks neutralized',
-                link: 'defense.html',
-                status: 'Active'
-            },
-            encryptionManager: {
-                name: 'EncryptionManager',
-                icon: '🔐',
-                description: 'Hybrid mode active',
-                activity: '8 algorithms protecting data',
-                link: 'encryption.html',
-                status: 'Active'
-            },
-            analyticsEngine: {
-                name: 'AnalyticsEngine',
-                icon: '📊',
-                description: 'Processing 2.4M metrics',
-                activity: '99.8% prediction accuracy',
-                link: 'analytics.html',
-                status: 'Active'
-            },
-            logAgent: {
-                name: 'LogAgent',
-                icon: '📝',
-                description: 'Securing audit trails',
-                activity: 'All logs Dilithium signed',
-                link: 'analytics.html',
-                status: 'Active'
-            },
-            // New encryption sub-agents
-            encryptionDeployer: {
-                name: 'EncryptionDeployer',
-                icon: '🔧',
-                description: 'Deploying encryption modules',
-                activity: '15 deployments today',
-                link: 'encryption.html',
-                status: 'Active'
-            },
-            certificateManager: {
-                name: 'CertificateManager',
-                icon: '📜',
-                description: 'Managing certificates',
-                activity: '247 certs monitored',
-                link: 'encryption.html',
-                status: 'Active'
-            },
-            complianceMonitor: {
-                name: 'ComplianceMonitor',
-                icon: '✅',
-                description: 'Monitoring compliance',
-                activity: 'SOC2/ISO27001 verified',
-                link: 'analytics.html',
-                status: 'Active'
-            },
-            // VPNMonitor sub-agent
-            vpnMonitor: {
-                name: 'VPNMonitor',
-                icon: '🔒',
-                description: 'VPN security monitoring',
-                activity: '12 active connections',
-                link: 'vpn.html',
-                status: 'Active'
-            }
-        };
+        // Dashboard-specific state and configurations
+        let dashboardFeedId = 'dashboard-feed';
 
         // Global Network Updates - Customer-facing data from command center
         const globalUpdates = [
@@ -1829,12 +1874,28 @@
             }
         ];
 
-        // Dashboard-specific initialization
+        // Dashboard page initialization
         document.addEventListener('DOMContentLoaded', () => {
             initializeDashboard();
         });
 
         function initializeDashboard() {
+            // Initialize activity feed for dashboard
+            if (activityFeedManager) {
+                // Initialize dashboard feed
+                activityFeedManager.initializeFeed(dashboardFeedId, 'dashboard');
+                activityFeedManager.setFeedContainer(dashboardFeedId, 'dashboardActivityFeed');
+                
+                // Add some initial messages
+                activityFeedManager.addMessage(dashboardFeedId, '🤖 Main Agent initialized with 10 sub-agents including VPNMonitor', '', 'Main Agent');
+                activityFeedManager.addMessage(dashboardFeedId, '🔒 VPNMonitor: 12 active connections with hybrid encryption', '', 'VPNMonitor');
+                activityFeedManager.addMessage(dashboardFeedId, '🛡️ ThreatScanner: 7 active threats detected and contained', 'warning', 'ThreatScanner');
+                activityFeedManager.addMessage(dashboardFeedId, '🌐 NetworkMapper: 247 devices discovered and protected', '', 'NetworkMapper');
+                
+                // Start auto-generation every 5 seconds for dashboard
+                activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
+            }
+
             // Populate sub-agents from shared.js
             populateSubAgents();
             
@@ -1868,6 +1929,7 @@
             const grid = document.getElementById('subAgentsGrid');
             grid.innerHTML = '';
 
+            // Get all sub-agents from shared.js SubAgentConfigs
             Object.keys(SubAgentConfigs).forEach(agentKey => {
                 const agent = SubAgentConfigs[agentKey];
                 
@@ -1892,6 +1954,9 @@
                 
                 grid.appendChild(card);
             });
+
+            // Update the sub-agent count in main agent card
+            document.getElementById('subAgentCountCard').textContent = Object.keys(SubAgentConfigs).length;
         }
 
         function manageAgent(agentKey) {
@@ -2066,6 +2131,13 @@
             }, 300);
         }
 
+        // Cleanup activity feed on page unload
+        window.addEventListener('beforeunload', () => {
+            if (activityFeedManager) {
+                activityFeedManager.stopAutoGeneration(dashboardFeedId);
+            }
+        });
+
         // Global functions for compatibility - leverage shared.js
         window.toggleChat = () => sentinelChat?.toggle();
         window.sendChatMessage = () => {
@@ -2097,12 +2169,22 @@
                 agentTitle.textContent = 'AI Agent Active';
                 agentTitle.style.color = 'var(--primary)';
                 agentStatusText.textContent = 'Autonomous with Manual Override';
+                
+                // Resume activity feed
+                if (activityFeedManager) {
+                    activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
+                }
             } else {
                 agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
                 agentStatus.style.borderColor = '#ffaa00';
                 agentTitle.textContent = 'AI Agent Paused';
                 agentTitle.style.color = '#ffaa00';
                 agentStatusText.textContent = 'Manual Control Only';
+                
+                // Pause activity feed
+                if (activityFeedManager) {
+                    activityFeedManager.stopAutoGeneration(dashboardFeedId);
+                }
             }
             
             closeModal();
