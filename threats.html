@@ -652,128 +652,233 @@
             gap: 5px;
         }
 
-        /* Critical Threat Alerts - Real-time Feed */
-        .critical-alerts-list {
-            display: flex;
-            flex-direction: column;
+        /* SOC Metrics & KPIs Dashboard */
+        .soc-metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             max-height: 400px;
             overflow-y: auto;
         }
 
-        .critical-alert-item {
-            padding: 18px;
+        .soc-metric-card {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.02) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.2);
             border-radius: 12px;
-            border-left: 4px solid;
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
+            padding: 20px;
             transition: all 0.3s ease;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
             min-height: 120px;
-            gap: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .critical-alert-item::before {
+        .soc-metric-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
             transition: left 0.5s ease;
         }
 
-        .critical-alert-item:hover::before {
+        .soc-metric-card:hover::before {
             left: 100%;
         }
 
-        .critical-alert-item:hover {
-            transform: translateY(-2px);
+        .soc-metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
         }
 
-        .critical-alert-item.critical {
-            background: rgba(255, 0, 68, 0.1);
-            border-left-color: var(--danger);
+        .soc-metric-card.warning {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(255, 170, 0, 0.02) 100%);
+            border-color: rgba(255, 170, 0, 0.3);
         }
 
-        .critical-alert-item.high {
-            background: rgba(255, 170, 0, 0.1);
-            border-left-color: var(--warning);
+        .soc-metric-card.warning:hover {
+            border-color: var(--warning);
+            box-shadow: 0 8px 25px rgba(255, 170, 0, 0.2);
         }
 
-        .critical-alert-item.medium {
-            background: rgba(0, 204, 255, 0.1);
-            border-left-color: var(--secondary);
+        .soc-metric-card.danger {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(255, 0, 68, 0.02) 100%);
+            border-color: rgba(255, 0, 68, 0.3);
         }
 
-        .critical-alert-header {
+        .soc-metric-card.danger:hover {
+            border-color: var(--danger);
+            box-shadow: 0 8px 25px rgba(255, 0, 68, 0.2);
+        }
+
+        .soc-metric-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 8px;
+            margin-bottom: 15px;
         }
 
-        .critical-alert-content {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .critical-alert-message {
+        .soc-metric-title {
             font-weight: bold;
             color: var(--text-primary);
             font-size: 14px;
             line-height: 1.3;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            margin-bottom: 10px;
         }
 
-        .critical-alert-details {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            font-size: 11px;
-            margin-bottom: 8px;
-        }
-
-        .critical-alert-source {
-            color: var(--secondary);
-            font-family: 'Courier New', monospace;
-            font-size: 10px;
-            word-break: break-all;
-        }
-
-        .critical-alert-action {
-            color: var(--accent);
+        .soc-metric-trend {
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 9px;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            white-space: nowrap;
+        }
+
+        .soc-metric-trend.up {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .soc-metric-trend.down {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .soc-metric-trend.stable {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .soc-metric-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+            text-shadow: 0 0 15px currentColor;
+        }
+
+        .soc-metric-value.warning {
+            color: var(--warning);
+        }
+
+        .soc-metric-value.danger {
+            color: var(--danger);
+        }
+
+        .soc-metric-description {
+            font-size: 11px;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+
+        .soc-metric-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .soc-metric-period {
+            font-size: 10px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .soc-metric-change {
             font-size: 10px;
             font-weight: bold;
         }
 
-        .critical-alert-time {
+        .soc-metric-change.positive {
+            color: var(--success);
+        }
+
+        .soc-metric-change.negative {
+            color: var(--danger);
+        }
+
+        .soc-metric-change.neutral {
+            color: var(--text-secondary);
+        };
+            margin-bottom: 10px;
+        }
+
+        .ioc-feed-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            font-size: 11px;
+        }
+
+        .ioc-feed-source {
+            color: var(--accent);
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .ioc-feed-confidence {
+            color: var(--primary);
+            font-size: 10px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .ioc-feed-time {
             grid-column: 1 / -1;
             font-size: 10px;
             color: var(--text-secondary);
-            line-height: 1.2;
+            margin-top: 5px;
         }
 
-        .critical-alert-severity {
-            padding: 6px 12px;
-            border-radius: 15px;
+        .ioc-feed-type {
+            padding: 4px 10px;
+            border-radius: 12px;
             font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
             white-space: nowrap;
             flex-shrink: 0;
-            width: fit-content;
             text-align: center;
             height: fit-content;
+        }
+
+        .ioc-feed-type.malware {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .ioc-feed-type.network {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .ioc-feed-type.behavioral {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .ioc-feed-type.intelligence {
+            background: rgba(124, 58, 237, 0.2);
+            color: var(--accent);
+            border: 1px solid var(--accent);
         }
 
         .critical-alert-severity.critical {
@@ -794,24 +899,24 @@
             border: 1px solid var(--secondary);
         }
 
-        /* Threat Intelligence & Correlation - Fixed grid for 6 cards */
+        /* Threat Intelligence & Correlation - Fixed grid for 6 cards with proper height */
         .intelligence-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            min-height: 500px;
+            min-height: 780px;
         }
 
         .intelligence-card {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(0, 204, 255, 0.02) 100%);
             border: 1px solid rgba(124, 58, 237, 0.3);
             border-radius: 12px;
-            padding: 20px;
+            padding: 30px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 160px;
+            min-height: 240px;
             display: flex;
             flex-direction: column;
         }
@@ -932,19 +1037,19 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
-            min-height: 500px;
+            min-height: 780px;
         }
 
         .threat-hunting-card {
             background: linear-gradient(135deg, rgba(255, 170, 0, 0.05) 0%, rgba(255, 68, 68, 0.02) 100%);
             border: 1px solid rgba(255, 170, 0, 0.3);
             border-radius: 12px;
-            padding: 22px;
+            padding: 25px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 220px;
+            min-height: 180px;
         }
 
         .threat-hunting-card::before {
@@ -2183,62 +2288,95 @@
             }
         ];
 
-        // Critical threat alerts - REAL-TIME SECURITY EVENTS (Different from ongoing threats)
-        const criticalThreatAlerts = [
+        // SOC Metrics & KPIs Dashboard Data
+        const socMetricsData = [
             {
-                id: 'alert-001',
-                message: 'Memory injection attack detected',
-                severity: 'critical',
-                source: '172.16.10.45',
-                action: 'Process killed',
-                timestamp: new Date(Date.now() - 2 * 60 * 1000).toISOString(),
-                geoRisk: 7,
-                behaviorScore: 9,
-                type: 'Fileless Attack'
+                id: 'mttr',
+                title: 'Mean Time to Response (MTTR)',
+                value: '12.3',
+                unit: 'min',
+                trend: 'down',
+                change: '-15%',
+                description: 'Average time from alert to initial response',
+                period: '24h',
+                status: 'good'
             },
             {
-                id: 'alert-002',
-                message: 'Unauthorized certificate installed',
-                severity: 'high',
-                source: 'WORKSTATION-07',
-                action: 'Cert revoked',
-                timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
-                geoRisk: 4,
-                behaviorScore: 8,
-                type: 'Certificate Abuse'
+                id: 'mttd',
+                title: 'Mean Time to Detection (MTTD)',
+                value: '4.7',
+                unit: 'min',
+                trend: 'down',
+                change: '-8%',
+                description: 'Average time from compromise to detection',
+                period: '24h',
+                status: 'good'
             },
             {
-                id: 'alert-003',
-                message: 'Suspicious registry modification',
-                severity: 'medium',
-                source: '10.0.2.89',
-                action: 'Reverted',
-                timestamp: new Date(Date.now() - 12 * 60 * 1000).toISOString(),
-                geoRisk: 3,
-                behaviorScore: 6,
-                type: 'Persistence'
+                id: 'false-positive-rate',
+                title: 'False Positive Rate',
+                value: '3.2',
+                unit: '%',
+                trend: 'up',
+                change: '+0.5%',
+                description: 'Percentage of false positive alerts',
+                period: '7d',
+                status: 'warning'
             },
             {
-                id: 'alert-004',
-                message: 'USB auto-run execution blocked',
-                severity: 'high',
-                source: 'USB-DEVICE-12',
-                action: 'Blocked',
-                timestamp: new Date(Date.now() - 18 * 60 * 1000).toISOString(),
-                geoRisk: 5,
-                behaviorScore: 7,
-                type: 'Physical Media'
+                id: 'incident-volume',
+                title: 'Daily Incident Volume',
+                value: '47',
+                unit: '',
+                trend: 'stable',
+                change: '±2%',
+                description: 'Number of security incidents per day',
+                period: '7d avg',
+                status: 'good'
             },
             {
-                id: 'alert-005',
-                message: 'Rogue WiFi access point detected',
-                severity: 'medium',
-                source: 'AP-EVIL-TWIN',
-                action: 'Monitoring',
-                timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
-                geoRisk: 6,
-                behaviorScore: 5,
-                type: 'Network Security'
+                id: 'escalation-rate',
+                title: 'Escalation Rate',
+                value: '8.4',
+                unit: '%',
+                trend: 'down',
+                change: '-2.1%',
+                description: 'Incidents requiring L2/L3 escalation',
+                period: '30d',
+                status: 'good'
+            },
+            {
+                id: 'coverage-score',
+                title: 'Detection Coverage',
+                value: '94.7',
+                unit: '%',
+                trend: 'up',
+                change: '+1.3%',
+                description: 'MITRE ATT&CK technique coverage',
+                period: 'current',
+                status: 'good'
+            },
+            {
+                id: 'analyst-efficiency',
+                title: 'Analyst Efficiency',
+                value: '73',
+                unit: '%',
+                trend: 'up',
+                change: '+5%',
+                description: 'Closed incidents per analyst hour',
+                period: '30d',
+                status: 'good'
+            },
+            {
+                id: 'threat-intel-hits',
+                title: 'Threat Intel Hits',
+                value: '156',
+                unit: '',
+                trend: 'up',
+                change: '+12%',
+                description: 'IOC matches from threat intelligence',
+                period: '24h',
+                status: 'warning'
             }
         ];
 
@@ -2464,7 +2602,7 @@
 
         function initializeThreatsPage() {
             populateActiveThreats();
-            populateCriticalThreatAlerts();
+            populateSOCMetrics();
             populateThreatIntelligence();
             populateThreatHunting();
             populateResponseAutomation();
@@ -2482,112 +2620,158 @@
                 generateThreatFeedItem();
             }, 7000);
             setInterval(() => {
-                updateCriticalAlerts();
+                updateSOCMetrics();
             }, 5000);
             setInterval(() => {
                 updateHuntingProgress();
             }, 8000);
         }
 
-        function populateCriticalThreatAlerts() {
-            const list = document.getElementById('criticalAlertsList');
-            list.innerHTML = '';
+        function populateSOCMetrics() {
+            const grid = document.getElementById('socMetricsGrid');
+            grid.innerHTML = '';
 
-            criticalThreatAlerts.forEach(alert => {
-                const item = document.createElement('div');
-                item.className = `critical-alert-item ${alert.severity}`;
-                item.onclick = () => openCriticalAlertDetails(alert.id);
+            socMetricsData.forEach(metric => {
+                const card = document.createElement('div');
+                card.className = `soc-metric-card ${metric.status}`;
+                card.onclick = () => openSOCMetricDetails(metric.id);
                 
-                const timeAgo = getTimeAgo(alert.timestamp);
-                
-                item.innerHTML = `
-                    <div class="critical-alert-header">
-                        <div class="critical-alert-content">
-                            <div class="critical-alert-message">${alert.message}</div>
-                        </div>
-                        <div class="critical-alert-severity ${alert.severity}">${alert.severity}</div>
+                card.innerHTML = `
+                    <div class="soc-metric-header">
+                        <div class="soc-metric-title">${metric.title}</div>
+                        <div class="soc-metric-trend ${metric.trend}">${metric.trend}</div>
                     </div>
-                    <div class="critical-alert-details">
-                        <div class="critical-alert-source">Source: ${alert.source}</div>
-                        <div class="critical-alert-action">Action: ${alert.action}</div>
-                        <div class="critical-alert-time">${timeAgo} • Type: ${alert.type} • Risk: ${alert.geoRisk}/10</div>
+                    <div class="soc-metric-value ${metric.status}">${metric.value}${metric.unit}</div>
+                    <div class="soc-metric-description">${metric.description}</div>
+                    <div class="soc-metric-footer">
+                        <div class="soc-metric-period">${metric.period}</div>
+                        <div class="soc-metric-change ${metric.trend === 'up' ? 'negative' : metric.trend === 'down' ? 'positive' : 'neutral'}">${metric.change}</div>
                     </div>
                 `;
                 
-                list.appendChild(item);
+                grid.appendChild(card);
             });
         }
 
-        function updateCriticalAlerts() {
-            // Occasionally add new critical alerts - REAL-TIME EVENTS (not ongoing threats)
-            if (Math.random() > 0.85) {
-                const newAlerts = [
-                    'Process injection technique blocked',
-                    'Suspicious network beacon detected',
-                    'Unauthorized file encryption started',
-                    'Memory dump attempt intercepted',
-                    'Lateral movement via WMI blocked',
-                    'Shadow copy deletion prevented',
-                    'Keylogger installation blocked',
-                    'Browser hijack attempt stopped',
-                    'Scheduled task created suspiciously',
-                    'Service creation with high privileges'
-                ];
-                
-                const sources = ['WORKSTATION-' + Math.floor(Math.random() * 50), '172.16.' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255), 'USB-DEVICE-' + Math.floor(Math.random() * 20), 'scanner-' + Math.floor(Math.random() * 100) + '.evil.net'];
-                const actions = ['Terminated', 'Blocked', 'Quarantined', 'Monitoring', 'Reverted', 'Isolated'];
-                const severities = ['critical', 'high', 'medium'];
-                const types = ['Process Injection', 'Network Threat', 'Ransomware', 'Data Theft', 'Lateral Movement', 'Persistence', 'Keylogger', 'Browser Attack', 'Scheduled Task', 'Service Abuse'];
-                
-                const newAlert = {
-                    id: 'alert-' + Date.now(),
-                    message: newAlerts[Math.floor(Math.random() * newAlerts.length)],
-                    severity: severities[Math.floor(Math.random() * severities.length)],
-                    source: sources[Math.floor(Math.random() * sources.length)],
-                    action: actions[Math.floor(Math.random() * actions.length)],
-                    timestamp: new Date().toISOString(),
-                    geoRisk: Math.floor(Math.random() * 10) + 1,
-                    behaviorScore: Math.floor(Math.random() * 10) + 1,
-                    type: types[Math.floor(Math.random() * types.length)]
-                };
-                
-                // Add to beginning of array and limit to 10 items
-                criticalThreatAlerts.unshift(newAlert);
-                if (criticalThreatAlerts.length > 10) {
-                    criticalThreatAlerts.pop();
-                }
+        function updateSOCMetrics() {
+            // Occasionally update SOC metrics with realistic changes
+            if (Math.random() > 0.88) {
+                socMetricsData.forEach(metric => {
+                    const currentValue = parseFloat(metric.value);
+                    let change = 0;
+                    
+                    // Realistic metric changes based on type
+                    switch (metric.id) {
+                        case 'mttr':
+                        case 'mttd':
+                            change = (Math.random() - 0.5) * 0.5; // ±0.25 minutes
+                            break;
+                        case 'false-positive-rate':
+                            change = (Math.random() - 0.5) * 0.3; // ±0.15%
+                            break;
+                        case 'incident-volume':
+                            change = Math.floor((Math.random() - 0.5) * 6); // ±3 incidents
+                            break;
+                        case 'escalation-rate':
+                            change = (Math.random() - 0.5) * 0.4; // ±0.2%
+                            break;
+                        case 'coverage-score':
+                            change = (Math.random() - 0.5) * 0.2; // ±0.1%
+                            break;
+                        case 'analyst-efficiency':
+                            change = (Math.random() - 0.5) * 2; // ±1%
+                            break;
+                        case 'threat-intel-hits':
+                            change = Math.floor((Math.random() - 0.5) * 20); // ±10 hits
+                            break;
+                    }
+                    
+                    const newValue = Math.max(0, currentValue + change);
+                    metric.value = metric.id === 'incident-volume' || metric.id === 'threat-intel-hits' 
+                        ? Math.round(newValue).toString() 
+                        : newValue.toFixed(1);
+                    
+                    // Update trend and change percentage
+                    if (change > 0.1) {
+                        metric.trend = ['mttr', 'mttd', 'false-positive-rate', 'escalation-rate'].includes(metric.id) ? 'up' : 'up';
+                        metric.change = '+' + Math.abs(change).toFixed(1) + (metric.unit === '%' ? '%' : metric.unit === '' ? '' : metric.unit);
+                    } else if (change < -0.1) {
+                        metric.trend = 'down';
+                        metric.change = '-' + Math.abs(change).toFixed(1) + (metric.unit === '%' ? '%' : metric.unit === '' ? '' : metric.unit);
+                    } else {
+                        metric.trend = 'stable';
+                        metric.change = '±0%';
+                    }
+                });
                 
                 // Update display
-                populateCriticalThreatAlerts();
-                
-                // Update count
-                const criticalCount = criticalThreatAlerts.filter(alert => alert.severity === 'critical').length;
-                document.getElementById('criticalAlertCount').textContent = criticalCount + ' Critical';
+                populateSOCMetrics();
             }
         }
 
-        function openCriticalAlertDetails(alertId) {
+        function openSOCMetricDetails(metricId) {
             if (sentinelChat && !SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                const alert = criticalThreatAlerts.find(a => a.id === alertId);
-                if (alert) {
-                    sentinelChat?.addMessage(`ThreatScanner Critical Alert: ${alert.message}
-• Severity: ${alert.severity.toUpperCase()} PRIORITY
-• Type: ${alert.type}
-• Source: ${alert.source}
-• Action Taken: ${alert.action}
-• Geographic Risk Score: ${alert.geoRisk}/10
-• Behavioral Score: ${alert.behaviorScore}/10
-• Timestamp: ${alert.timestamp}
-• AI Correlation: Pattern matches known ${alert.type.toLowerCase()} signatures
-• Sub-Agent Coordination: ThreatScanner → ${alert.severity === 'critical' ? 'DefenseOrchestrator → AnalyticsEngine' : 'AnalyticsEngine'}
-• Data Protection: All threat data encrypted with hybrid-resistant algorithms
-• MITRE ATT&CK: Mapped to framework for threat correlation
-• Auto-Response: ${alert.action === 'Auto-blocked' || alert.action === 'Quarantined' ? 'Successfully executed' : 'In progress'}`, false);
+                const metric = socMetricsData.find(m => m.id === metricId);
+                if (metric) {
+                    sentinelChat?.addMessage(`SOC KPI Analysis: ${metric.title}
+• Current Value: ${metric.value}${metric.unit}
+• Trend: ${metric.trend.toUpperCase()} (${metric.change})
+• Period: ${metric.period}
+• Description: ${metric.description}
+• Status: ${metric.status.toUpperCase()}
+• Benchmark: ${getBenchmarkText(metric.id)}
+• Impact: ${getImpactAnalysis(metric.id, metric.value)}
+• Recommendations: ${getRecommendations(metric.id, metric.trend)}
+• Data Sources: ThreatScanner, AnalyticsEngine, DefenseOrchestrator coordination
+• Reporting: Real-time KPI tracking with hybrid-resistant data protection`, false);
                 }
             }, 300);
+        }
+
+        function getBenchmarkText(metricId) {
+            const benchmarks = {
+                'mttr': 'Industry standard: 15-30 minutes',
+                'mttd': 'Industry standard: 6-12 minutes', 
+                'false-positive-rate': 'Target: <5%',
+                'incident-volume': 'Baseline: 40-60 incidents/day',
+                'escalation-rate': 'Target: <10%',
+                'coverage-score': 'Target: >90%',
+                'analyst-efficiency': 'Target: >70%',
+                'threat-intel-hits': 'Baseline: 100-200 hits/day'
+            };
+            return benchmarks[metricId] || 'No benchmark available';
+        }
+
+        function getImpactAnalysis(metricId, value) {
+            const numValue = parseFloat(value);
+            const impacts = {
+                'mttr': numValue < 15 ? 'Excellent response time - threats contained quickly' : 'Consider automation to reduce response time',
+                'mttd': numValue < 6 ? 'Outstanding detection speed' : 'Review detection rules and monitoring coverage',
+                'false-positive-rate': numValue < 3 ? 'Low false positives - good rule tuning' : 'High false positives may cause alert fatigue',
+                'incident-volume': numValue < 50 ? 'Normal incident load' : 'High incident volume - review prevention controls',
+                'escalation-rate': numValue < 8 ? 'Good L1 resolution capability' : 'High escalations - review L1 training and procedures',
+                'coverage-score': numValue > 90 ? 'Excellent MITRE ATT&CK coverage' : 'Consider expanding detection rule coverage',
+                'analyst-efficiency': numValue > 70 ? 'Good analyst productivity' : 'Review workflow optimization opportunities',
+                'threat-intel-hits': numValue > 150 ? 'High threat activity detected' : 'Normal threat intelligence correlation'
+            };
+            return impacts[metricId] || 'Metric within normal range';
+        }
+
+        function getRecommendations(metricId, trend) {
+            const recommendations = {
+                'mttr': trend === 'up' ? 'Implement automated response playbooks' : 'Maintain current response procedures',
+                'mttd': trend === 'up' ? 'Review monitoring coverage and detection rules' : 'Excellent detection performance',
+                'false-positive-rate': trend === 'up' ? 'Tune detection rules and thresholds' : 'Continue current tuning approach',
+                'incident-volume': trend === 'up' ? 'Review preventive controls and threat landscape' : 'Monitor for emerging threats',
+                'escalation-rate': trend === 'up' ? 'Enhance L1 training and documentation' : 'Current escalation procedures effective',
+                'coverage-score': trend === 'down' ? 'Implement additional MITRE ATT&CK techniques' : 'Maintain current coverage levels',
+                'analyst-efficiency': trend === 'down' ? 'Review workflow automation opportunities' : 'Current efficiency levels good',
+                'threat-intel-hits': trend === 'up' ? 'Investigate increased threat activity' : 'Continue threat intelligence integration'
+            };
+            return recommendations[metricId] || 'Continue monitoring this metric';
         }
 
         function populateActiveThreats() {
