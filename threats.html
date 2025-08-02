@@ -1,7 +1,4 @@
-{ msg: '🔍 APT Campaign Hunt: Investigation 80% complete - novel TTPs identified', type: 'warning', agent: 'ThreatScanner → AI Engine' },
-            { msg: '👤 Insider Behavior Hunt: Anomalous access patterns from privileged accounts', type: 'warning', agent: 'ThreatScanner → AnalyticsEngine' },
-            { msg: '🔗 Supply Chain Hunt: Third-party dependency compromise investigation active', type: 'ai-action', agent: 'ThreatScanner → AI Engine' },
-            { msg: '⛏️ Crypto Mining Hunt: Persistent mining activity across 12 endpoints detected', type: 'warning', agent: 'ThreatScanner → NetworkMapper' },<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -1628,6 +1625,14 @@
             .intelligence-grid {
                 grid-template-columns: 1fr;
             }
+
+            .threat-hunting-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .response-automation-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1671,6 +1676,10 @@
             }
 
             .intelligence-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .automation-metrics {
                 grid-template-columns: 1fr;
             }
         }
@@ -1944,7 +1953,7 @@
                 </h2>
                 <div class="section-status">
                     <div class="status-dot active"></div>
-                    <span>3 Active Hunts</span>
+                    <span>4 Active Hunts</span>
                 </div>
             </div>
             <div class="threat-hunting-grid" id="threatHuntingGrid">
