@@ -652,8 +652,8 @@
             gap: 5px;
         }
 
-        /* SOC Performance Metrics */
-        .soc-metrics-list {
+        /* Threat Classification & Analysis */
+        .threat-analysis-list {
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -661,8 +661,8 @@
             overflow-y: auto;
         }
 
-        .soc-metric-item {
-            padding: 20px;
+        .threat-analysis-item {
+            padding: 18px;
             border-radius: 12px;
             border-left: 4px solid;
             display: flex;
@@ -672,11 +672,11 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-height: 80px;
+            min-height: 85px;
             gap: 15px;
         }
 
-        .soc-metric-item::before {
+        .threat-analysis-item::before {
             content: '';
             position: absolute;
             top: 0;
@@ -687,105 +687,107 @@
             transition: left 0.5s ease;
         }
 
-        .soc-metric-item:hover::before {
+        .threat-analysis-item:hover::before {
             left: 100%;
         }
 
-        .soc-metric-item:hover {
+        .threat-analysis-item:hover {
             transform: translateY(-2px);
         }
 
-        .soc-metric-item.excellent {
-            background: rgba(0, 255, 136, 0.1);
-            border-left-color: var(--success);
-        }
-
-        .soc-metric-item.good {
-            background: rgba(0, 204, 255, 0.1);
-            border-left-color: var(--secondary);
-        }
-
-        .soc-metric-item.warning {
-            background: rgba(255, 170, 0, 0.1);
-            border-left-color: var(--warning);
-        }
-
-        .soc-metric-item.critical {
+        .threat-analysis-item.critical {
             background: rgba(255, 0, 68, 0.1);
             border-left-color: var(--danger);
         }
 
-        .soc-metric-content {
+        .threat-analysis-item.high {
+            background: rgba(255, 170, 0, 0.1);
+            border-left-color: var(--warning);
+        }
+
+        .threat-analysis-item.medium {
+            background: rgba(0, 204, 255, 0.1);
+            border-left-color: var(--secondary);
+        }
+
+        .threat-analysis-item.low {
+            background: rgba(0, 255, 136, 0.1);
+            border-left-color: var(--success);
+        }
+
+        .threat-analysis-content {
             flex: 1;
             min-width: 0;
         }
 
-        .soc-metric-title {
+        .threat-analysis-title {
             font-weight: bold;
             color: var(--text-primary);
-            font-size: 15px;
-            margin-bottom: 8px;
+            font-size: 14px;
+            margin-bottom: 6px;
+            line-height: 1.2;
         }
 
-        .soc-metric-details {
+        .threat-analysis-details {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            font-size: 11px;
-            margin-bottom: 5px;
+            gap: 6px;
+            font-size: 10px;
+            margin-bottom: 4px;
         }
 
-        .soc-metric-label {
+        .threat-analysis-label {
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .soc-metric-value {
+        .threat-analysis-value {
             color: var(--text-primary);
             font-family: 'Courier New', monospace;
             font-weight: bold;
         }
 
-        .soc-metric-trend {
+        .threat-analysis-description {
             grid-column: 1 / -1;
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-secondary);
-            line-height: 1.2;
+            line-height: 1.3;
+            margin-top: 2px;
         }
 
-        .soc-metric-score {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 18px;
+        .threat-analysis-score {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
             font-weight: bold;
             text-align: center;
-            min-width: 60px;
+            min-width: 45px;
             flex-shrink: 0;
         }
 
-        .soc-metric-score.excellent {
-            background: rgba(0, 255, 136, 0.2);
-            color: var(--success);
-            border: 2px solid var(--success);
-        }
-
-        .soc-metric-score.good {
-            background: rgba(0, 204, 255, 0.2);
-            color: var(--secondary);
-            border: 2px solid var(--secondary);
-        }
-
-        .soc-metric-score.warning {
-            background: rgba(255, 170, 0, 0.2);
-            color: var(--warning);
-            border: 2px solid var(--warning);
-        }
-
-        .soc-metric-score.critical {
+        .threat-analysis-score.critical {
             background: rgba(255, 0, 68, 0.2);
             color: var(--danger);
-            border: 2px solid var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .threat-analysis-score.high {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .threat-analysis-score.medium {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .threat-analysis-score.low {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
         }
 
         /* Threat Intelligence & Correlation - Fixed grid for 6 cards with proper height */
@@ -793,20 +795,19 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            min-height: 500px;
-            height: 500px;
+            min-height: 600px;
         }
 
         .intelligence-card {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(0, 204, 255, 0.02) 100%);
             border: 1px solid rgba(124, 58, 237, 0.3);
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 200px;
+            min-height: 240px;
             display: flex;
             flex-direction: column;
         }
@@ -1957,20 +1958,20 @@
 
             <!-- Right Column -->
             <div class="right-column">
-                <!-- SOC Performance Metrics -->
+                <!-- Threat Classification & Analysis -->
                 <div class="section-card">
                     <div class="section-header">
                         <h2 class="section-title">
-                            <span>📊</span>
-                            <span>SOC Performance Metrics</span>
+                            <span>🎯</span>
+                            <span>Threat Classification & Analysis</span>
                         </h2>
                         <div class="section-status">
-                            <div class="status-dot active"></div>
-                            <span id="socPerformanceStatus">Real-time KPIs</span>
+                            <div class="status-dot danger"></div>
+                            <span id="threatAnalysisStatus">Live Analysis</span>
                         </div>
                     </div>
-                    <div class="soc-metrics-list" id="socMetricsList">
-                        <!-- SOC metrics will be populated by JavaScript -->
+                    <div class="threat-analysis-list" id="threatAnalysisList">
+                        <!-- Threat analysis will be populated by JavaScript -->
                     </div>
                 </div>
 
@@ -2178,61 +2179,67 @@
             }
         ];
 
-        // SOC Performance Metrics data - Key KPIs for SOC professionals
-        const socMetrics = [
+        // Threat Classification & Analysis data - More specific to threats page
+        const threatAnalysis = [
             {
-                id: 'mttr',
-                title: 'Mean Time to Response (MTTR)',
-                value: '2.3m',
-                target: '< 5m',
-                trend: '↓ 15% improvement vs last week',
-                status: 'excellent',
-                score: '98'
+                id: 'malware-family',
+                title: 'Malware Family Classification',
+                category: 'Ransomware',
+                indicators: '47 samples',
+                confidence: '98%',
+                description: 'Ryuk variants with novel evasion techniques detected',
+                severity: 'critical',
+                score: '9.4'
             },
             {
-                id: 'mttd',
-                title: 'Mean Time to Detection (MTTD)',
-                value: '0.8s',
-                target: '< 2s',
-                trend: '↓ 32% improvement with AI correlation',
-                status: 'excellent',
-                score: '99'
+                id: 'attack-vector',
+                title: 'Primary Attack Vector Analysis',
+                category: 'Email Phishing',
+                indicators: '2,847 emails',
+                confidence: '96%',
+                description: 'Spear-phishing campaign targeting finance departments',
+                severity: 'high',
+                score: '8.7'
             },
             {
-                id: 'false-positive-rate',
-                title: 'False Positive Rate',
-                value: '1.2%',
-                target: '< 3%',
-                trend: '↓ Reduced by 45% with ML tuning',
-                status: 'excellent',
-                score: '96'
+                id: 'persistence-method',
+                title: 'Persistence Method Detection',
+                category: 'Registry Keys',
+                indicators: '156 modifications',
+                confidence: '94%',
+                description: 'Advanced registry persistence mechanisms identified',
+                severity: 'high',
+                score: '8.2'
             },
             {
-                id: 'coverage',
-                title: 'MITRE ATT&CK Coverage',
-                value: '87%',
-                target: '> 85%',
-                trend: '↑ 14 new techniques covered',
-                status: 'good',
-                score: '87'
+                id: 'command-control',
+                title: 'Command & Control Pattern',
+                category: 'DNS Tunneling',
+                indicators: '23 domains',
+                confidence: '92%',
+                description: 'Covert DNS tunneling for data exfiltration detected',
+                severity: 'medium',
+                score: '7.8'
             },
             {
-                id: 'analyst-efficiency',
-                title: 'Analyst Efficiency',
-                value: '94%',
-                target: '> 90%',
-                trend: '↑ AI automation handling 78% of L1',
-                status: 'excellent',
-                score: '94'
+                id: 'lateral-movement',
+                title: 'Lateral Movement Techniques',
+                category: 'WMI/PowerShell',
+                indicators: '89 instances',
+                confidence: '91%',
+                description: 'Living-off-the-land techniques for network traversal',
+                severity: 'medium',
+                score: '7.5'
             },
             {
-                id: 'threat-hunting-success',
-                title: 'Threat Hunting Success Rate',
-                value: '76%',
-                target: '> 70%',
-                trend: '↑ 4 successful hunts this month',
-                status: 'good',
-                score: '76'
+                id: 'data-exfiltration',
+                title: 'Data Exfiltration Methods',
+                category: 'HTTPS Tunneling',
+                indicators: '12 connections',
+                confidence: '89%',
+                description: 'Encrypted channels used for sensitive data theft',
+                severity: 'high',
+                score: '8.9'
             }
         ];
 
@@ -2458,7 +2465,7 @@
 
         function initializeThreatsPage() {
             populateActiveThreats();
-            populateSOCMetrics();
+            populateThreatAnalysis();
             populateThreatIntelligence();
             populateThreatHunting();
             populateResponseAutomation();
@@ -2476,89 +2483,88 @@
                 generateThreatFeedItem();
             }, 7000);
             setInterval(() => {
-                updateSOCMetrics();
-            }, 12000);
+                updateThreatAnalysis();
+            }, 15000);
             setInterval(() => {
                 updateHuntingProgress();
             }, 8000);
         }
 
-        function populateSOCMetrics() {
-            const list = document.getElementById('socMetricsList');
+        function populateThreatAnalysis() {
+            const list = document.getElementById('threatAnalysisList');
             list.innerHTML = '';
 
-            socMetrics.forEach(metric => {
+            threatAnalysis.forEach(analysis => {
                 const item = document.createElement('div');
-                item.className = `soc-metric-item ${metric.status}`;
-                item.onclick = () => openSOCMetricDetails(metric.id);
+                item.className = `threat-analysis-item ${analysis.severity}`;
+                item.onclick = () => openThreatAnalysisDetails(analysis.id);
                 
                 item.innerHTML = `
-                    <div class="soc-metric-content">
-                        <div class="soc-metric-title">${metric.title}</div>
-                        <div class="soc-metric-details">
-                            <div class="soc-metric-label">Current</div>
-                            <div class="soc-metric-value">${metric.value}</div>
-                            <div class="soc-metric-label">Target</div>
-                            <div class="soc-metric-value">${metric.target}</div>
-                            <div class="soc-metric-trend">${metric.trend}</div>
+                    <div class="threat-analysis-content">
+                        <div class="threat-analysis-title">${analysis.title}</div>
+                        <div class="threat-analysis-details">
+                            <div class="threat-analysis-label">Category</div>
+                            <div class="threat-analysis-value">${analysis.category}</div>
+                            <div class="threat-analysis-label">Indicators</div>
+                            <div class="threat-analysis-value">${analysis.indicators}</div>
+                            <div class="threat-analysis-description">${analysis.description} • Confidence: ${analysis.confidence}</div>
                         </div>
                     </div>
-                    <div class="soc-metric-score ${metric.status}">${metric.score}</div>
+                    <div class="threat-analysis-score ${analysis.severity}">${analysis.score}</div>
                 `;
                 
                 list.appendChild(item);
             });
         }
 
-        function updateSOCMetrics() {
-            // Update SOC metrics with realistic improvements
-            if (Math.random() > 0.7) {
-                socMetrics.forEach((metric, index) => {
-                    if (metric.id === 'mttr' && Math.random() > 0.8) {
-                        const currentSeconds = parseFloat(metric.value) * 60;
-                        const newSeconds = Math.max(120, currentSeconds - Math.random() * 10);
-                        metric.value = (newSeconds / 60).toFixed(1) + 'm';
+        function updateThreatAnalysis() {
+            // Update threat analysis with new detections
+            if (Math.random() > 0.8) {
+                threatAnalysis.forEach((analysis, index) => {
+                    if (Math.random() > 0.7) {
+                        // Update indicators count
+                        const currentCount = parseInt(analysis.indicators.split(' ')[0]);
+                        const increment = Math.floor(Math.random() * 5 + 1);
+                        const newCount = currentCount + increment;
+                        analysis.indicators = newCount + ' ' + analysis.indicators.split(' ').slice(1).join(' ');
+                        
+                        // Slight confidence adjustment
+                        const currentConf = parseInt(analysis.confidence);
+                        const newConf = Math.min(99, Math.max(85, currentConf + Math.floor(Math.random() * 3 - 1)));
+                        analysis.confidence = newConf + '%';
                         
                         // Update display
-                        const item = document.querySelectorAll('.soc-metric-item')[index];
+                        const item = document.querySelectorAll('.threat-analysis-item')[index];
                         if (item) {
-                            const valueElement = item.querySelectorAll('.soc-metric-value')[0];
-                            if (valueElement) valueElement.textContent = metric.value;
-                        }
-                    }
-                    
-                    if (metric.id === 'mttd' && Math.random() > 0.9) {
-                        const current = parseFloat(metric.value);
-                        const newValue = Math.max(0.5, current - Math.random() * 0.1);
-                        metric.value = newValue.toFixed(1) + 's';
-                        
-                        // Update display
-                        const item = document.querySelectorAll('.soc-metric-item')[index];
-                        if (item) {
-                            const valueElement = item.querySelectorAll('.soc-metric-value')[0];
-                            if (valueElement) valueElement.textContent = metric.value;
+                            const indicatorsElement = item.querySelectorAll('.threat-analysis-value')[1];
+                            const descElement = item.querySelector('.threat-analysis-description');
+                            if (indicatorsElement) indicatorsElement.textContent = analysis.indicators;
+                            if (descElement) {
+                                descElement.textContent = analysis.description + ' • Confidence: ' + analysis.confidence;
+                            }
                         }
                     }
                 });
             }
         }
 
-        function openSOCMetricDetails(metricId) {
+        function openThreatAnalysisDetails(analysisId) {
             if (sentinelChat && !SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                const metric = socMetrics.find(m => m.id === metricId);
-                if (metric) {
-                    sentinelChat?.addMessage(`SOC Metric Analysis: ${metric.title}
-• Current Performance: ${metric.value}
-• Target Threshold: ${metric.target}
-• Status: ${metric.status.toUpperCase()} (Score: ${metric.score}/100)
-• Trend Analysis: ${metric.trend}
-• AI Enhancement: ThreatScanner V4 integration improving response times
-• Data Protection: All metrics encrypted with hybrid-resistant algorithms
-• Integration: Real-time coordination with DefenseOrchestrator and AnalyticsEngine
-• Benchmark: Industry-leading performance with 99.8% detection accuracy`, false);
+                const analysis = threatAnalysis.find(a => a.id === analysisId);
+                if (analysis) {
+                    sentinelChat?.addMessage(`ThreatScanner Analysis: ${analysis.title}
+• Category: ${analysis.category}
+• Severity: ${analysis.severity.toUpperCase()} (Score: ${analysis.score}/10)
+• Indicators: ${analysis.indicators}
+• Confidence Level: ${analysis.confidence}
+• Analysis: ${analysis.description}
+• AI Classification: Advanced pattern recognition with MITRE ATT&CK mapping
+• Data Protection: All analysis data encrypted with hybrid-resistant algorithms
+• Integration: Real-time correlation with DefenseOrchestrator and AnalyticsEngine
+• Automated Response: Signatures updated and countermeasures deployed`, false);
                 }
             }, 300);
         }
