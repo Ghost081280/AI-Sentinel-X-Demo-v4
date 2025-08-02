@@ -259,6 +259,304 @@ const PackageConfigs = {
     }
 };
 
+// Encryption deployment configurations
+const EncryptionDeploymentConfigs = {
+    modules: [
+        {
+            id: 'tls',
+            name: 'TLS Configuration',
+            status: 'deployed',
+            lastDeployed: '2024-12-19T10:30:00Z',
+            coverage: '247/247 devices',
+            protocols: ['TLS 1.3', 'Hybrid KEX']
+        },
+        {
+            id: 'database',
+            name: 'Database Encryption',
+            status: 'deployed',
+            lastDeployed: '2024-12-19T09:15:00Z',
+            coverage: '12/12 databases',
+            protocols: ['AES-256-GCM', 'Kyber-1024']
+        },
+        {
+            id: 'disk',
+            name: 'Disk Encryption',
+            status: 'pending',
+            lastDeployed: null,
+            coverage: '189/247 devices',
+            protocols: ['LUKS2', 'BitLocker']
+        },
+        {
+            id: 'messaging',
+            name: 'Message Encryption',
+            status: 'deployed',
+            lastDeployed: '2024-12-19T08:45:00Z',
+            coverage: '100% channels',
+            protocols: ['Signal Protocol', 'Dilithium-3']
+        }
+    ]
+};
+
+// Certificate management configurations
+const CertificateConfigs = {
+    certificates: [
+        {
+            id: 'web-primary',
+            name: 'Primary Web Certificate',
+            domain: '*.sentinel-x.com',
+            issuer: 'DigiCert',
+            expires: '2025-06-15T23:59:59Z',
+            status: 'valid',
+            keyAlgorithm: 'RSA-4096 + Dilithium-3'
+        },
+        {
+            id: 'api-cert',
+            name: 'API Gateway Certificate',
+            domain: 'api.sentinel-x.com',
+            issuer: 'Let\'s Encrypt',
+            expires: '2025-01-20T12:00:00Z',
+            status: 'expiring',
+            keyAlgorithm: 'ECDSA P-384 + SPHINCS+'
+        },
+        {
+            id: 'internal-ca',
+            name: 'Internal CA Root',
+            domain: 'Internal CA',
+            issuer: 'Sentinel-X CA',
+            expires: '2027-12-31T23:59:59Z',
+            status: 'valid',
+            keyAlgorithm: 'Hybrid Root CA'
+        },
+        {
+            id: 'client-auth',
+            name: 'Client Authentication',
+            domain: 'client-auth.sentinel-x.com',
+            issuer: 'Sentinel-X CA',
+            expires: '2024-12-25T12:00:00Z',
+            status: 'expiring',
+            keyAlgorithm: 'Ed25519 + Falcon'
+        }
+    ]
+};
+
+// Compliance monitoring configurations
+const ComplianceConfigs = {
+    frameworks: [
+        {
+            id: 'soc2',
+            name: 'SOC 2 Type II',
+            status: 'compliant',
+            lastAudit: '2024-10-15',
+            nextAudit: '2025-10-15',
+            issuesFound: 0,
+            coverage: '100%'
+        },
+        {
+            id: 'iso27001',
+            name: 'ISO 27001:2022',
+            status: 'compliant',
+            lastAudit: '2024-11-01',
+            nextAudit: '2025-11-01',
+            issuesFound: 2,
+            coverage: '98%'
+        },
+        {
+            id: 'nist',
+            name: 'NIST Cybersecurity Framework',
+            status: 'compliant',
+            lastAudit: '2024-12-01',
+            nextAudit: '2025-06-01',
+            issuesFound: 1,
+            coverage: '99%'
+        },
+        {
+            id: 'pci',
+            name: 'PCI DSS 4.0',
+            status: 'pending',
+            lastAudit: '2024-09-15',
+            nextAudit: '2025-03-15',
+            issuesFound: 5,
+            coverage: '85%'
+        }
+    ]
+};
+
+// Encryption playbook configurations for defense page
+const EncryptionPlaybooks = [
+    {
+        id: 'auto-encrypt-devices',
+        name: 'Auto-encrypt New Devices',
+        description: 'Automatically deploy encryption to newly discovered devices',
+        executions: 47,
+        status: 'Active',
+        agent: 'EncryptionDeployer → NetworkMapper'
+    },
+    {
+        id: 'key-rotation',
+        name: 'Quarterly Key Rotation',
+        description: 'Rotate all encryption keys every 90 days',
+        executions: 4,
+        status: 'Active',
+        agent: 'CertificateManager → EncryptionManager'
+    },
+    {
+        id: 'tls-enforcement',
+        name: 'TLS Port Enforcement',
+        description: 'Block unencrypted connections when open ports detected',
+        executions: 23,
+        status: 'Active',
+        agent: 'EncryptionDeployer → DefenseOrchestrator'
+    },
+    {
+        id: 'compliance-scan',
+        name: 'Compliance Gap Scanner',
+        description: 'Scan for encryption compliance gaps across frameworks',
+        executions: 12,
+        status: 'Active',
+        agent: 'ComplianceMonitor → AnalyticsEngine'
+    }
+];
+
+// Scale-specific configurations for network module - V4 with billing
+const ScaleConfigs = {
+    individual: {
+        icon: '🌐',
+        text: 'SINGLE IP',
+        className: 'scale-individual',
+        modalTitle: '🌐 Add Server Range',
+        maxRanges: 1,
+        deviceRange: [5, 25],
+        serviceRange: [3, 12],
+        description: 'Single server monitoring • Essential protection • Hybrid-resistant security',
+        scanDetails: 'Server + External',
+        chatContext: 'single IP deployment with essential security monitoring',
+        licenseFeeMo: 29,
+        endpointCostMo: 0.10
+    },
+    business: {
+        icon: '🏢',
+        text: 'SMALL BUSINESS',
+        className: 'scale-business',
+        modalTitle: '🏢 Add Business Network',
+        maxRanges: 5,
+        deviceRange: [25, 250],
+        serviceRange: [12, 50],
+        description: 'Multi-location scanning • Business-grade security • Advanced monitoring',
+        scanDetails: 'Multi-site + External',
+        chatContext: 'small business with multiple locations and enhanced security requirements',
+        licenseFeeMo: 149,
+        endpointCostMo: 0.08
+    },
+    enterprise: {
+        icon: '🏭',
+        text: 'ENTERPRISE',
+        className: 'scale-enterprise',
+        modalTitle: '🏢 Add Data Center Range',
+        maxRanges: 50,
+        deviceRange: [250, 5000],
+        serviceRange: [50, 200],
+        description: 'Enterprise-scale scanning • Cross-DC correlation • Full data center monitoring',
+        scanDetails: 'Multi-DC + Global',
+        chatContext: 'enterprise data center with distributed infrastructure and advanced threat correlation',
+        licenseFeeMo: 499,
+        endpointCostMo: 0.05
+    }
+};
+
+// Threat simulation data - Restored from V3
+const ThreatSimulationData = {
+    activeThreatTypes: [
+        'Advanced Persistent Threat',
+        'SQL Injection',
+        'Zero-Day Exploit',
+        'Ransomware',
+        'DDoS Attack',
+        'Phishing Campaign',
+        'Insider Threat',
+        'Crypto-jacking',
+        'Data Exfiltration',
+        'Privilege Escalation'
+    ],
+    threatSources: [
+        '185.220.101.42',
+        '194.147.82.111',
+        '91.205.189.23',
+        '103.224.182.245',
+        '45.142.214.188',
+        '128.199.44.24',
+        '167.172.119.162',
+        '159.89.174.31'
+    ],
+    attackVectors: [
+        'Web Application',
+        'Email Attachment',
+        'Network Service',
+        'USB Device',
+        'Social Engineering',
+        'Supply Chain',
+        'Remote Access',
+        'Mobile Device'
+    ]
+};
+
+// Analytics and dashboard data - Restored from V3
+const AnalyticsData = {
+    threatMetrics: {
+        total: 247892,
+        blocked: 247885,
+        analyzed: 247892,
+        falsePositives: 23,
+        avgResponseTime: '0.3ms',
+        threatScore: 78
+    },
+    performanceMetrics: {
+        uptime: '99.98%',
+        throughput: '2.4M events/sec',
+        latency: '0.12ms',
+        cpuUsage: '23%',
+        memoryUsage: '45%',
+        diskUsage: '67%'
+    },
+    encryptionMetrics: {
+        classicalOps: '1.2M/sec',
+        hybridOps: '890K/sec',
+        keyRotations: 247,
+        certRenewals: 12,
+        deployments: 15
+    }
+};
+
+// Defense playbook data - Restored from V3
+const DefensePlaybooks = [
+    {
+        id: 'quarantine-threat',
+        name: 'Immediate Threat Quarantine',
+        description: 'Isolate and contain threats within 0.3 seconds',
+        executions: 247,
+        success: '99.6%',
+        lastTriggered: '2024-12-19T15:23:41Z',
+        agent: 'ThreatScanner → DefenseOrchestrator'
+    },
+    {
+        id: 'ddos-mitigation',
+        name: 'DDoS Traffic Mitigation',
+        description: 'Redirect and filter DDoS traffic automatically',
+        executions: 89,
+        success: '100%',
+        lastTriggered: '2024-12-19T12:15:23Z',
+        agent: 'NetworkMapper → DefenseOrchestrator'
+    },
+    {
+        id: 'phishing-response',
+        name: 'Phishing Email Response',
+        description: 'Block phishing campaigns and educate users',
+        executions: 156,
+        success: '98.7%',
+        lastTriggered: '2024-12-19T14:52:18Z',
+        agent: 'ThreatScanner → LogAgent'
+    }
+];
+
 // Initialize page context
 function initializePageContext() {
     const path = window.location.pathname;
@@ -1022,6 +1320,42 @@ class SentinelUtils {
             currency: 'USD'
         }).format(amount);
     }
+    
+    static formatDateFromISO(isoString) {
+        if (!isoString) return 'Never';
+        const date = new Date(isoString);
+        return date.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+    }
+    
+    static getDaysUntilExpiry(isoString) {
+        if (!isoString) return null;
+        const expiry = new Date(isoString);
+        const now = new Date();
+        const diffTime = expiry - now;
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        return diffDays;
+    }
+    
+    static getStatusClass(status) {
+        const statusMap = {
+            'valid': 'status-secure',
+            'expiring': 'status-warning',
+            'expired': 'status-vulnerable',
+            'revoked': 'status-vulnerable',
+            'deployed': 'status-secure',
+            'pending': 'status-warning',
+            'failed': 'status-vulnerable',
+            'compliant': 'status-secure',
+            'non-compliant': 'status-vulnerable',
+            'active': 'status-secure',
+            'inactive': 'status-warning'
+        };
+        return statusMap[status.toLowerCase()] || 'status-warning';
+    }
 }
 
 // Global instances
@@ -1159,6 +1493,14 @@ window.SentinelState = SentinelState;
 window.PackageConfigs = PackageConfigs;
 window.SubAgentConfigs = SubAgentConfigs;
 window.VPNConfigs = VPNConfigs;
+window.EncryptionDeploymentConfigs = EncryptionDeploymentConfigs;
+window.CertificateConfigs = CertificateConfigs;
+window.ComplianceConfigs = ComplianceConfigs;
+window.EncryptionPlaybooks = EncryptionPlaybooks;
+window.ScaleConfigs = ScaleConfigs;
+window.ThreatSimulationData = ThreatSimulationData;
+window.AnalyticsData = AnalyticsData;
+window.DefensePlaybooks = DefensePlaybooks;
 window.sentinelChat = sentinelChat;
 window.SentinelUtils = SentinelUtils;
 window.SentinelEventHandlers = SentinelEventHandlers;
