@@ -342,100 +342,69 @@
             font-weight: bold;
         }
 
-        /* Enhanced V3-Style System Status Banner */
-        .system-status-banner {
-            background: var(--gradient-banner);
-            border: 2px solid;
-            border-image: var(--gradient-hybrid) 1;
-            border-radius: 15px;
-            padding: 25px 35px;
-            text-align: center;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 16px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(20px);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 0 60px rgba(0, 255, 136, 0.1);
-            position: relative;
-            overflow: hidden;
-            animation: bannerPulse 4s ease-in-out infinite;
+        /* Sub-Agent Status Banner - FIXED with rounded corners like other v4 pages */
+        .sub-agent-status {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.05) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            backdrop-filter: blur(15px);
         }
 
-        @keyframes bannerPulse {
-            0%, 100% { 
-                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), inset 0 0 60px rgba(0, 255, 136, 0.1);
-                transform: scale(1);
-            }
-            50% { 
-                box-shadow: 0 12px 48px rgba(0, 255, 136, 0.3), inset 0 0 80px rgba(124, 58, 237, 0.15);
-                transform: scale(1.01);
-            }
+        .sub-agent-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .system-status-banner::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            animation: bannerScan 3s linear infinite;
-        }
-
-        @keyframes bannerScan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .banner-content {
-            position: relative;
-            z-index: 1;
+        .sub-agent-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-1);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
         }
 
-        .banner-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .sub-agent-details h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .sub-agent-details p {
             font-size: 14px;
+            color: var(--text-secondary);
         }
 
-        .banner-icon {
-            font-size: 18px;
-            filter: drop-shadow(0 0 10px currentColor);
-            animation: iconGlow 2s ease-in-out infinite alternate;
+        .sub-agent-metrics {
+            display: flex;
+            gap: 30px;
         }
 
-        @keyframes iconGlow {
-            0% { filter: drop-shadow(0 0 10px currentColor); }
-            100% { filter: drop-shadow(0 0 20px currentColor); }
+        .metric {
+            text-align: center;
         }
 
-        .banner-text {
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .metric-value {
+            font-size: 24px;
             font-weight: bold;
+            color: var(--primary);
         }
 
-        .banner-separator {
-            color: var(--accent);
-            font-size: 18px;
-            animation: separatorPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes separatorPulse {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.2); }
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
         }
 
         /* Dashboard Grid */
@@ -799,13 +768,12 @@
             font-style: italic;
         }
 
-        /* NEW: Command Center HQ Module */
+        /* Command Center HQ Module - MOVED TO RIGHT COLUMN */
         .command-hq-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 25px;
-            margin-bottom: 30px;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
@@ -864,8 +832,8 @@
 
         .hq-status-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: 1fr;
+            gap: 12px;
             position: relative;
             z-index: 1;
         }
@@ -1309,10 +1277,6 @@
             .sub-agents-grid {
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
-
-            .hq-status-grid {
-                grid-template-columns: 1fr;
-            }
         }
 
         @media (max-width: 768px) {
@@ -1345,17 +1309,14 @@
                 grid-template-columns: 1fr;
             }
 
-            .banner-content {
+            .sub-agent-metrics {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
             }
 
-            .banner-section {
-                font-size: 12px;
-            }
-
-            .hq-status-grid {
-                grid-template-columns: 1fr;
+            .sub-agent-status {
+                flex-direction: column;
+                text-align: center;
             }
         }
 
@@ -1483,22 +1444,31 @@
             </a>
         </nav>
 
-        <!-- Enhanced V3-Style System Status Banner -->
-        <div class="system-status-banner">
-            <div class="banner-content">
-                <div class="banner-section">
-                    <span class="banner-icon">🤖</span>
-                    <span class="banner-text">AI SENTINEL-X HYBRID</span>
+        <!-- Sub-Agent Status Banner - NOW with rounded corners matching other v4 pages -->
+        <div class="sub-agent-status">
+            <div class="sub-agent-info">
+                <div class="sub-agent-icon">🤖</div>
+                <div class="sub-agent-details">
+                    <h3>AI SENTINEL-X HYBRID</h3>
+                    <p>Main Agent coordinating 10 sub-agents • VPN security monitoring • Hybrid-resistant encryption</p>
                 </div>
-                <div class="banner-separator">•</div>
-                <div class="banner-section">
-                    <span class="banner-icon">🔗</span>
-                    <span class="banner-text">10 SUB-AGENTS ONLINE</span>
+            </div>
+            <div class="sub-agent-metrics">
+                <div class="metric">
+                    <div class="metric-value" id="subAgentCount">10</div>
+                    <div class="metric-label">Sub-Agents Online</div>
                 </div>
-                <div class="banner-separator">•</div>
-                <div class="banner-section">
-                    <span class="banner-icon">🛡️</span>
-                    <span class="banner-text">247 DEVICES PROTECTED</span>
+                <div class="metric">
+                    <div class="metric-value" id="deviceCount">247</div>
+                    <div class="metric-label">Devices Protected</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">99.8%</div>
+                    <div class="metric-label">Detection Rate</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="systemUptime">99.98%</div>
+                    <div class="metric-label">System Uptime</div>
                 </div>
             </div>
         </div>
@@ -1523,7 +1493,7 @@
                                 <div class="main-agent-description">Central AI orchestrating all sub-agents and security operations with hybrid-resistant encryption</div>
                                 <div class="main-agent-stats">
                                     <div class="agent-stat">
-                                        <div class="stat-value" id="subAgentCount">10</div>
+                                        <div class="stat-value" id="subAgentCountCard">10</div>
                                         <div class="stat-label">Sub-Agents</div>
                                     </div>
                                     <div class="agent-stat">
@@ -1535,7 +1505,7 @@
                                         <div class="stat-label">Accuracy</div>
                                     </div>
                                     <div class="agent-stat">
-                                        <div class="stat-value" id="systemUptime">99.98%</div>
+                                        <div class="stat-value" id="systemUptimeCard">99.98%</div>
                                         <div class="stat-label">Uptime</div>
                                     </div>
                                 </div>
@@ -1545,7 +1515,7 @@
                     
                     <!-- Sub-Agents Section Header -->
                     <div class="sub-agents-header">
-                        <div class="sub--agents-title">
+                        <div class="sub-agents-title">
                             <span>🔗</span>
                             <span>Sub-Agent Network</span>
                         </div>
@@ -1575,55 +1545,57 @@
                     </div>
                 </div>
 
-                <!-- NEW: Command Center HQ Module -->
+                <!-- Command Center HQ Module - NOW in the right column below Live Security Feed -->
                 <div class="command-hq-module">
-            <div class="hq-header">
-                <h2 class="hq-title">
-                    <span>🛰️</span>
-                    <span>From the Command Center (Sentinel HQ)</span>
-                </h2>
-                <div class="hq-version">HQ Sync Preview – v2</div>
-            </div>
-            <div class="hq-status-grid">
-                <div class="hq-status-item">
-                    <div class="hq-status-icon">🧠</div>
-                    <div class="hq-status-content">
-                        <div class="hq-status-label">Global AI Link</div>
-                        <div class="hq-status-value">Secure uplink active • 847ms latency • Encrypted channel</div>
+                    <div class="hq-header">
+                        <h2 class="hq-title">
+                            <span>🛰️</span>
+                            <span>From the Command Center (Sentinel HQ)</span>
+                        </h2>
+                        <div class="hq-version">HQ Sync Preview – v2</div>
                     </div>
-                    <div class="hq-status-indicator active"></div>
-                </div>
-                <div class="hq-status-item">
-                    <div class="hq-status-icon">🔄</div>
-                    <div class="hq-status-content">
-                        <div class="hq-status-label">Sub-Agent Sync</div>
-                        <div class="hq-status-value">All 10 agents validated with HQ • Last sync: 2m ago</div>
+                    <div class="hq-status-grid">
+                        <div class="hq-status-item">
+                            <div class="hq-status-icon">🧠</div>
+                            <div class="hq-status-content">
+                                <div class="hq-status-label">Global AI Link</div>
+                                <div class="hq-status-value">Secure uplink active • 847ms latency • Encrypted channel</div>
+                            </div>
+                            <div class="hq-status-indicator active"></div>
+                        </div>
+                        <div class="hq-status-item">
+                            <div class="hq-status-icon">🔄</div>
+                            <div class="hq-status-content">
+                                <div class="hq-status-label">Sub-Agent Sync</div>
+                                <div class="hq-status-value">All 10 agents validated with HQ • Last sync: 2m ago</div>
+                            </div>
+                            <div class="hq-status-indicator active"></div>
+                        </div>
+                        <div class="hq-status-item">
+                            <div class="hq-status-icon">🛡️</div>
+                            <div class="hq-status-content">
+                                <div class="hq-status-label">Last Security Directive</div>
+                                <div class="hq-status-value">Auto-rotate encryption keys • Deployed 14:23 UTC</div>
+                            </div>
+                            <div class="hq-status-indicator active"></div>
+                        </div>
+                        <div class="hq-status-item">
+                            <div class="hq-status-icon">🚨</div>
+                            <div class="hq-status-content">
+                                <div class="hq-status-label">Global Threat Feed</div>
+                                <div class="hq-status-value">No critical alerts • 2,847 threats processed globally</div>
+                            </div>
+                            <div class="hq-status-indicator active"></div>
+                        </div>
+                        <div class="hq-status-item">
+                            <div class="hq-status-icon">🔐</div>
+                            <div class="hq-status-content">
+                                <div class="hq-status-label">Fleet Sync Status</div>
+                                <div class="hq-status-value">92% of known nodes in compliance • 247/268 agents</div>
+                            </div>
+                            <div class="hq-status-indicator warning"></div>
+                        </div>
                     </div>
-                    <div class="hq-status-indicator active"></div>
-                </div>
-                <div class="hq-status-item">
-                    <div class="hq-status-icon">🛡️</div>
-                    <div class="hq-status-content">
-                        <div class="hq-status-label">Last Security Directive</div>
-                        <div class="hq-status-value">Auto-rotate encryption keys • Deployed 14:23 UTC</div>
-                    </div>
-                    <div class="hq-status-indicator active"></div>
-                </div>
-                <div class="hq-status-item">
-                    <div class="hq-status-icon">🚨</div>
-                    <div class="hq-status-content">
-                        <div class="hq-status-label">Global Threat Feed</div>
-                        <div class="hq-status-value">No critical alerts • 2,847 threats processed globally</div>
-                    </div>
-                    <div class="hq-status-indicator active"></div>
-                </div>
-                <div class="hq-status-item">
-                    <div class="hq-status-icon">🔐</div>
-                    <div class="hq-status-content">
-                        <div class="hq-status-label">Fleet Sync Status</div>
-                        <div class="hq-status-value">92% of known nodes in compliance • 247/268 agents</div>
-                    </div>
-                    <div class="hq-status-indicator warning"></div>
                 </div>
             </div>
         </div>
@@ -1642,7 +1614,7 @@
             </div>
             <div class="metric-card">
                 <div class="metric-icon">🖥️</div>
-                <div class="metric-value" id="deviceCount">247</div>
+                <div class="metric-value" id="deviceCountMetric">247</div>
                 <div class="metric-label">Protected Devices</div>
                 <div class="metric-detail">89% servers, 11% endpoints • All encrypted</div>
                 <div class="metric-trend trend-up">
@@ -1891,8 +1863,11 @@
             // Update device count
             if (Math.random() > 0.95) {
                 const deviceEl = document.getElementById('deviceCount');
+                const deviceElMetric = document.getElementById('deviceCountMetric');
                 const current = parseInt(deviceEl.textContent);
-                deviceEl.textContent = current + Math.floor(Math.random() * 3);
+                const newCount = current + Math.floor(Math.random() * 3);
+                deviceEl.textContent = newCount;
+                deviceElMetric.textContent = newCount;
             }
             
             // Update blocked count
