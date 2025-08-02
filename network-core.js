@@ -353,11 +353,11 @@ function displayPackageOptions() {
                     `).join('')}
                 </div>
                 <div class="package-pricing">
-                    <div class="package-price">$${config.price}<span class="package-price-period">/month</span></div>
+                    <div class="package-price">${config.price}<span class="package-price-period">/month</span></div>
                 </div>
-                <div class="package-endpoints">+ $${monthlyEndpointCost.toFixed(2)}/mo for ${endpointCount} endpoints</div>
+                <div class="package-endpoints">+ ${monthlyEndpointCost.toFixed(2)}/mo for ${endpointCount} endpoints</div>
                 <div class="package-endpoints" style="font-weight: bold; color: var(--primary);">
-                    Total: $${totalMonthly.toFixed(2)}/month
+                    Total: ${totalMonthly.toFixed(2)}/month
                 </div>
                 <button class="package-select-btn">Select Package</button>
             </div>
@@ -373,7 +373,7 @@ function showPackageInfo(packageKey) {
     
     setTimeout(() => {
         const config = packageConfigs[packageKey];
-        sentinelChat.addMessage(`NetworkMapper: ${config.name} - ${config.description}. Starting at $${config.price}/month + $${config.endpointRate}/endpoint. To get exact pricing for your infrastructure, please run the auto-scan above.`, false);
+        sentinelChat.addMessage(`NetworkMapper: ${config.name} - ${config.description}. Starting at ${config.price}/month + ${config.endpointRate}/endpoint. To get exact pricing for your infrastructure, please run the auto-scan above.`, false);
     }, 300);
 }
 
@@ -393,14 +393,14 @@ function openCheckout() {
     
     // Update checkout summary
     document.getElementById('checkoutPackage').textContent = config.name;
-    document.getElementById('checkoutLicense').textContent = `$${config.price}/month`;
+    document.getElementById('checkoutLicense').textContent = `${config.price}/month`;
     document.getElementById('checkoutEndpoints').textContent = endpointCount;
     
     const endpointCost = endpointCount * config.endpointRate;
-    document.getElementById('checkoutEndpointCost').textContent = `$${endpointCost.toFixed(2)}/month`;
+    document.getElementById('checkoutEndpointCost').textContent = `${endpointCost.toFixed(2)}/month`;
     
     const total = config.price + endpointCost;
-    document.getElementById('checkoutTotal').textContent = `$${total.toFixed(2)}/month`;
+    document.getElementById('checkoutTotal').textContent = `${total.toFixed(2)}/month`;
     
     // Show modal
     modal.style.display = 'flex';
