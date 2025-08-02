@@ -841,6 +841,180 @@
             letter-spacing: 1px;
         }
 
+        /* NEW: Threat Response Automation Module */
+        .response-automation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .response-automation-card {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.02) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .response-automation-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .response-automation-card:hover::before {
+            left: 100%;
+        }
+
+        .response-automation-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
+        }
+
+        .response-automation-card.executing {
+            background: linear-gradient(135deg, rgba(0, 204, 255, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
+            border-color: var(--secondary);
+        }
+
+        .automation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .automation-title {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .automation-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .automation-status.active {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .automation-status.executing {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        .automation-status.standby {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .automation-metrics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .automation-metric {
+            text-align: center;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .automation-metric-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .automation-metric-label {
+            font-size: 9px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .automation-coordination {
+            padding: 12px;
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            border-radius: 8px;
+            margin-top: 12px;
+        }
+
+        .automation-coordination-title {
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .automation-chain {
+            font-size: 10px;
+            color: var(--text-secondary);
+            font-family: 'Courier New', monospace;
+            line-height: 1.3;
+        }
+
+        .automation-progress {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .automation-progress.active {
+            display: block;
+        }
+
+        .automation-progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+
+        .automation-progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
+        }
+
+        .automation-progress-text {
+            font-size: 9px;
+            color: var(--secondary);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         /* Real-time Activity Feed */
         .feed-section {
             background: var(--bg-card);
@@ -1557,6 +1731,23 @@
             </div>
         </div>
 
+        <!-- NEW: Threat Response Automation -->
+        <div class="section-card">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span>🚀</span>
+                    <span>Threat Response Automation</span>
+                </h2>
+                <div class="section-status">
+                    <div class="status-dot active"></div>
+                    <span>Auto-Response Active</span>
+                </div>
+            </div>
+            <div class="response-automation-grid" id="responseAutomationGrid">
+                <!-- Response automation cards will be populated by JavaScript -->
+            </div>
+        </div>
+
         <!-- ThreatScanner Activity Feed -->
         <div class="feed-section">
             <div class="feed-header">
@@ -1761,9 +1952,86 @@
             }
         ];
 
+        // Threat Response Automation data
+        const threatResponseAutomation = [
+            {
+                id: 'sql-injection-block',
+                title: '🛡️ SQL Injection Auto-Block',
+                status: 'active',
+                metrics: {
+                    executions: '247',
+                    success: '100%',
+                    avgTime: '0.2s'
+                },
+                chain: 'ThreatScanner → EncryptionManager → DefenseOrchestrator',
+                description: 'Automatically blocks SQL injection attempts and protects data with encryption'
+            },
+            {
+                id: 'ddos-mitigation',
+                title: '⚡ DDoS Auto-Mitigation',
+                status: 'executing',
+                metrics: {
+                    executions: '12',
+                    success: '98%',
+                    avgTime: '1.4s'
+                },
+                chain: 'ThreatScanner → DefenseOrchestrator → NetworkMapper',
+                description: 'Coordinates automated DDoS response across network infrastructure'
+            },
+            {
+                id: 'insider-threat-response',
+                title: '🎯 Insider Threat Response',
+                status: 'active',
+                metrics: {
+                    executions: '8',
+                    success: '94%',
+                    avgTime: '3.1s'
+                },
+                chain: 'ThreatScanner → AnalyticsEngine → DefenseOrchestrator → LogAgent',
+                description: 'Behavioral analysis triggers automated access restriction and logging'
+            },
+            {
+                id: 'malware-quarantine',
+                title: '🔒 Malware Auto-Quarantine',
+                status: 'active',
+                metrics: {
+                    executions: '156',
+                    success: '99%',
+                    avgTime: '0.8s'
+                },
+                chain: 'ThreatScanner → NetworkMapper → EncryptionManager',
+                description: 'Isolates infected endpoints and secures unaffected systems'
+            },
+            {
+                id: 'zero-day-analysis',
+                title: '🔍 Zero-Day Auto-Analysis',
+                status: 'standby',
+                metrics: {
+                    executions: '3',
+                    success: '100%',
+                    avgTime: '12.5s'
+                },
+                chain: 'ThreatScanner → AI Engine → AnalyticsEngine → DefenseOrchestrator',
+                description: 'AI-powered analysis of novel threats with signature generation'
+            },
+            {
+                id: 'phishing-block',
+                title: '📧 Phishing Auto-Block',
+                status: 'active',
+                metrics: {
+                    executions: '4.8K',
+                    success: '99%',
+                    avgTime: '0.1s'
+                },
+                chain: 'ThreatScanner → AnalyticsEngine → DefenseOrchestrator',
+                description: 'Real-time phishing detection with credential harvesting prevention'
+            }
+        ];
+
         // Enhanced V4 threat management
         let threatAutoExecution = true;
         let autoThreatInterval;
+        let automationExecutionInterval;
 
         // Initialize threats page
         document.addEventListener('DOMContentLoaded', () => {
@@ -1773,10 +2041,12 @@
         function initializeThreatsPage() {
             populateActiveThreats();
             populateThreatIntelligence();
+            populateResponseAutomation();
             initializeThreatFeed();
             
             // Start automated threat simulation
             startThreatSimulation();
+            startAutomationSimulation();
             
             // Start periodic updates
             setInterval(() => {
@@ -1785,6 +2055,156 @@
             setInterval(() => {
                 generateThreatFeedItem();
             }, 7000);
+        }
+
+        function populateResponseAutomation() {
+            const grid = document.getElementById('responseAutomationGrid');
+            grid.innerHTML = '';
+
+            threatResponseAutomation.forEach(automation => {
+                const card = document.createElement('div');
+                card.className = `response-automation-card ${automation.status === 'executing' ? 'executing' : ''}`;
+                card.onclick = () => openAutomationDetails(automation.id);
+                
+                card.innerHTML = `
+                    <div class="automation-header">
+                        <div class="automation-title">${automation.title}</div>
+                        <div class="automation-status ${automation.status}">${automation.status}</div>
+                    </div>
+                    <div class="automation-metrics">
+                        ${Object.entries(automation.metrics).map(([key, value]) => `
+                            <div class="automation-metric">
+                                <div class="automation-metric-value">${value}</div>
+                                <div class="automation-metric-label">${key}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="automation-coordination">
+                        <div class="automation-coordination-title">🤖 Automation Chain</div>
+                        <div class="automation-chain">${automation.chain}</div>
+                    </div>
+                    <div class="automation-progress" id="progress-${automation.id}">
+                        <div class="automation-progress-bar">
+                            <div class="automation-progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="automation-progress-text">Executing Response...</div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function startAutomationSimulation() {
+            if (automationExecutionInterval) clearInterval(automationExecutionInterval);
+            
+            automationExecutionInterval = setInterval(() => {
+                if (threatAutoExecution && SentinelState.agentActive) {
+                    simulateAutomationExecution();
+                }
+            }, 25000); // Execute every 25 seconds
+        }
+
+        function simulateAutomationExecution() {
+            const activeAutomations = threatResponseAutomation.filter(a => a.status === 'active');
+            if (activeAutomations.length === 0) return;
+            
+            const automation = activeAutomations[Math.floor(Math.random() * activeAutomations.length)];
+            executeAutomation(automation.id, automation.title);
+        }
+
+        function executeAutomation(automationId, title) {
+            const card = document.querySelector(`#responseAutomationGrid .response-automation-card:has(#progress-${automationId})`);
+            const progressElement = document.getElementById(`progress-${automationId}`);
+            
+            if (!card || !progressElement) return;
+            
+            // Mark as executing
+            card.classList.add('executing');
+            progressElement.classList.add('active');
+            
+            // Update status badge
+            const statusBadge = card.querySelector('.automation-status');
+            if (statusBadge) {
+                statusBadge.textContent = 'EXECUTING';
+                statusBadge.className = 'automation-status executing';
+            }
+            
+            // Simulate realistic progress
+            let progress = 0;
+            const progressInterval = setInterval(() => {
+                progress += Math.random() * 20 + 10;
+                const progressFill = progressElement.querySelector('.automation-progress-fill');
+                
+                if (progressFill) {
+                    progressFill.style.width = Math.min(progress, 100) + '%';
+                }
+                
+                if (progress >= 100) {
+                    clearInterval(progressInterval);
+                    completeAutomationExecution(automationId, title, card, progressElement, statusBadge);
+                }
+            }, 600);
+        }
+
+        function completeAutomationExecution(automationId, title, card, progressElement, statusBadge) {
+            // Complete execution
+            card.classList.remove('executing');
+            progressElement.classList.remove('active');
+            
+            // Restore status
+            if (statusBadge) {
+                statusBadge.textContent = 'ACTIVE';
+                statusBadge.className = 'automation-status active';
+            }
+            
+            // Reset progress for next execution
+            setTimeout(() => {
+                const progressFill = progressElement.querySelector('.automation-progress-fill');
+                if (progressFill) progressFill.style.width = '0%';
+            }, 2000);
+            
+            // Update execution count
+            const automation = threatResponseAutomation.find(a => a.id === automationId);
+            if (automation) {
+                const currentCount = parseInt(automation.metrics.executions.replace(/[^\d]/g, ''));
+                automation.metrics.executions = (currentCount + 1).toString();
+                
+                // Update display
+                const executionMetric = card.querySelector('.automation-metric .automation-metric-value');
+                if (executionMetric && executionMetric.textContent === automation.metrics.executions.replace(/\+1/, '')) {
+                    executionMetric.textContent = automation.metrics.executions;
+                }
+            }
+            
+            // Add completion notification to feed
+            addThreatFeedItem(`✅ Auto-executed: ${title} completed successfully`, 'ai-action', 'ThreatScanner');
+            
+            // Notify chat if open
+            if (SentinelState.chatOpen && sentinelChat) {
+                sentinelChat.addMessage(`🤖 ThreatScanner: Auto-executed "${title}" successfully. Sub-agent coordination maintained with hybrid encryption.`, false, 'system');
+            }
+        }
+
+        function openAutomationDetails(automationId) {
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                const automation = threatResponseAutomation.find(a => a.id === automationId);
+                if (automation) {
+                    const metricsText = Object.entries(automation.metrics).map(([key, value]) => `${key}: ${value}`).join(', ');
+                    sentinelChat?.addMessage(`ThreatScanner Automation: ${automation.title}
+• Status: ${automation.status.toUpperCase()}
+• Metrics: ${metricsText}
+• Automation Chain: ${automation.chain}
+• Description: ${automation.description}
+• Data Protection: All automation steps use hybrid-resistant encryption
+• Response Speed: Sub-millisecond detection with coordinated response
+• SOC Integration: Fully automated with manual override capability
+• Compliance: All actions logged with Dilithium-3 signatures`, false);
+                }
+            }, 300);
         }
 
         function populateActiveThreats() {
@@ -2081,6 +2501,7 @@
                 // Restart threat simulation
                 threatAutoExecution = true;
                 startThreatSimulation();
+                startAutomationSimulation();
                 addThreatFeedItem('🤖 Main Agent resumed: Threat auto-response enabled', 'ai-action', 'Main Agent');
             } else {
                 agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
@@ -2092,6 +2513,7 @@
                 // Stop threat simulation
                 threatAutoExecution = false;
                 if (autoThreatInterval) clearInterval(autoThreatInterval);
+                if (automationExecutionInterval) clearInterval(automationExecutionInterval);
                 addThreatFeedItem('⚠️ Main Agent paused: Manual threat response only', 'warning', 'Main Agent');
             }
             
