@@ -340,26 +340,81 @@
             font-weight: bold;
         }
 
-        /* Enhanced V3-Style System Status Banner with Rounded Corners */
+        /* Enhanced System Status Banner - IMPROVED DESIGN */
         .system-status-banner {
-            background: var(--gradient-banner);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 204, 255, 0.03) 50%, rgba(124, 58, 237, 0.05) 100%);
             border: 2px solid;
             border-image: var(--gradient-hybrid) 1;
-            border-radius: 12px;
-            padding: 25px 35px;
-            text-align: center;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 16px;
+            border-radius: 15px;
+            padding: 20px 30px;
             margin-bottom: 30px;
             backdrop-filter: blur(20px);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 0 60px rgba(0, 255, 136, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            animation: bannerPulse 4s ease-in-out infinite;
+        }
+
+        .system-status-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            animation: bannerScan 8s linear infinite;
+        }
+
+        @keyframes bannerScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .banner-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .banner-stat {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 25px;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .banner-stat-icon {
+            font-size: 20px;
+            filter: drop-shadow(0 0 6px currentColor);
+        }
+
+        .banner-stat-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .banner-stat-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .banner-stat-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            line-height: 1;
         }
 
         /* Dashboard Grid */
@@ -593,26 +648,6 @@
             color: var(--bg-darker);
         }
 
-        /* New Agent Badge */
-        .new-agent-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--gradient-hybrid);
-            color: var(--bg-darker);
-            font-size: 9px;
-            padding: 3px 6px;
-            border-radius: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            animation: newAgentPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes newAgentPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
         /* Security Feed */
         .security-feed {
             background: var(--bg-card);
@@ -712,7 +747,7 @@
             font-style: italic;
         }
 
-        /* Global Intelligence Module */
+        /* NEW: Global Intelligence Module - Replaced Advanced Operations Center */
         .global-intel-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -722,7 +757,6 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            margin-bottom: 30px;
         }
 
         .global-intel-module::before {
@@ -837,108 +871,6 @@
         .intel-indicator.warning {
             background: var(--warning);
             box-shadow: 0 0 8px var(--warning);
-        }
-
-        /* Advanced Operations Center */
-        .operations-center {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-        }
-
-        .operations-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .operations-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .operations-status {
-            font-size: 12px;
-            color: var(--success);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .operations-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        .operations-item {
-            background: rgba(0, 255, 136, 0.03);
-            border: 1px solid rgba(0, 255, 136, 0.15);
-            border-radius: 10px;
-            padding: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .operations-item:hover {
-            background: rgba(0, 255, 136, 0.05);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.15);
-        }
-
-        .operations-item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .operations-item-name {
-            font-weight: bold;
-            color: var(--text-primary);
-            font-size: 14px;
-        }
-
-        .operations-item-value {
-            color: var(--success);
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .operations-item-details {
-            font-size: 12px;
-            color: var(--text-secondary);
-            line-height: 1.4;
-        }
-
-        .operations-progress {
-            width: 100%;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
-            margin-top: 8px;
-            overflow: hidden;
-        }
-
-        .operations-progress-fill {
-            height: 100%;
-            background: var(--gradient-1);
-            border-radius: 2px;
-            transition: width 0.3s ease;
-            box-shadow: 0 0 8px rgba(0, 255, 136, 0.5);
         }
 
         /* Enhanced System Metrics */
@@ -1354,22 +1286,29 @@
                 grid-template-columns: 1fr;
             }
 
-            .sub-agent-metrics {
-                flex-direction: column;
-                gap: 15px;
-            }
-
-            .sub-agent-status {
-                flex-direction: column;
-                text-align: center;
-            }
-
             .intel-grid {
                 grid-template-columns: 1fr;
             }
 
-            .operations-grid {
-                grid-template-columns: 1fr;
+            .banner-content {
+                gap: 15px;
+            }
+
+            .banner-stat {
+                padding: 6px 12px;
+                gap: 8px;
+            }
+
+            .banner-stat-icon {
+                font-size: 16px;
+            }
+
+            .banner-stat-value {
+                font-size: 14px;
+            }
+
+            .banner-stat-label {
+                font-size: 10px;
             }
         }
 
@@ -1497,22 +1436,43 @@
             </a>
         </nav>
 
-        <!-- Enhanced V3-Style System Status Banner with Rounded Corners -->
+        <!-- IMPROVED System Status Banner -->
         <div class="system-status-banner">
             <div class="banner-content">
-                <div class="banner-section">
-                    <span class="banner-icon">🤖</span>
-                    <span class="banner-text">AI SENTINEL-X</span>
+                <div class="banner-stat">
+                    <div class="banner-stat-icon">🤖</div>
+                    <div class="banner-stat-content">
+                        <div class="banner-stat-value">10 Agents</div>
+                        <div class="banner-stat-label">Sub-Agents Online</div>
+                    </div>
                 </div>
-                <div class="banner-separator">•</div>
-                <div class="banner-section">
-                    <span class="banner-icon">🔗</span>
-                    <span class="banner-text">10 SUB-AGENTS ONLINE</span>
+                <div class="banner-stat">
+                    <div class="banner-stat-icon">🛡️</div>
+                    <div class="banner-stat-content">
+                        <div class="banner-stat-value">247 Devices</div>
+                        <div class="banner-stat-label">Protected</div>
+                    </div>
                 </div>
-                <div class="banner-separator">•</div>
-                <div class="banner-section">
-                    <span class="banner-icon">🛡️</span>
-                    <span class="banner-text">247 DEVICES PROTECTED</span>
+                <div class="banner-stat">
+                    <div class="banner-stat-icon">🔐</div>
+                    <div class="banner-stat-content">
+                        <div class="banner-stat-value">Hybrid Mode</div>
+                        <div class="banner-stat-label">Encryption Active</div>
+                    </div>
+                </div>
+                <div class="banner-stat">
+                    <div class="banner-stat-icon">⚡</div>
+                    <div class="banner-stat-content">
+                        <div class="banner-stat-value">0.3s</div>
+                        <div class="banner-stat-label">Response Time</div>
+                    </div>
+                </div>
+                <div class="banner-stat">
+                    <div class="banner-stat-icon">🔒</div>
+                    <div class="banner-stat-content">
+                        <div class="banner-stat-value">12 VPN</div>
+                        <div class="banner-stat-label">Connections</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1589,113 +1549,65 @@
                     </div>
                 </div>
 
-                <!-- Advanced Operations Center -->
-                <div class="operations-center">
-                    <div class="operations-header">
-                        <h2 class="operations-title">
-                            <span>⚡</span>
-                            <span>Advanced Operations Center</span>
+                <!-- NEW: Global Intelligence Network - REPLACED Advanced Operations Center -->
+                <div class="global-intel-module">
+                    <div class="intel-header">
+                        <h2 class="intel-title">
+                            <span>🛰️</span>
+                            <span>Global Intelligence Network</span>
                         </h2>
-                        <div class="operations-status">
-                            <div class="status-dot active"></div>
-                            <span>All Systems Optimal</span>
+                        <div class="intel-badge">Live Sync Active</div>
+                    </div>
+                    <div class="intel-grid">
+                        <div class="intel-item">
+                            <div class="intel-icon">🧠</div>
+                            <div class="intel-content">
+                                <div class="intel-label">AI Network Sync</div>
+                                <div class="intel-value">Connected to global threat intelligence • Real-time updates</div>
+                            </div>
+                            <div class="intel-indicator active"></div>
+                        </div>
+                        <div class="intel-item">
+                            <div class="intel-icon">🔄</div>
+                            <div class="intel-content">
+                                <div class="intel-label">Sub-Agent Coordination</div>
+                                <div class="intel-value">All 10 agents validated with network • Last sync: 2m ago</div>
+                            </div>
+                            <div class="intel-indicator active"></div>
+                        </div>
+                        <div class="intel-item">
+                            <div class="intel-icon">🛡️</div>
+                            <div class="intel-content">
+                                <div class="intel-label">Security Directive</div>
+                                <div class="intel-value">Auto-rotate encryption keys • Deployed 14:23 UTC</div>
+                            </div>
+                            <div class="intel-indicator active"></div>
+                        </div>
+                        <div class="intel-item">
+                            <div class="intel-icon">📡</div>
+                            <div class="intel-content">
+                                <div class="intel-label">Global Threat Feed</div>
+                                <div class="intel-value">No critical alerts • 2,847 threats processed globally</div>
+                            </div>
+                            <div class="intel-indicator active"></div>
+                        </div>
+                        <div class="intel-item">
+                            <div class="intel-icon">🔐</div>
+                            <div class="intel-content">
+                                <div class="intel-label">Encryption Fleet Status</div>
+                                <div class="intel-value">92% of nodes in compliance • 247/268 agents</div>
+                            </div>
+                            <div class="intel-indicator warning"></div>
+                        </div>
+                        <div class="intel-item">
+                            <div class="intel-icon">🔒</div>
+                            <div class="intel-content">
+                                <div class="intel-label">VPN Security Network</div>
+                                <div class="intel-value">12 active connections monitored • All encrypted</div>
+                            </div>
+                            <div class="intel-indicator active"></div>
                         </div>
                     </div>
-                    <div class="operations-grid">
-                        <div class="operations-item">
-                            <div class="operations-item-header">
-                                <div class="operations-item-name">AI Processing</div>
-                                <div class="operations-item-value" id="aiProcessing">96%</div>
-                            </div>
-                            <div class="operations-item-details">Multi-agent coordination optimized</div>
-                            <div class="operations-progress">
-                                <div class="operations-progress-fill" style="width: 96%"></div>
-                            </div>
-                        </div>
-                        <div class="operations-item">
-                            <div class="operations-item-header">
-                                <div class="operations-item-name">Threat Detection</div>
-                                <div class="operations-item-value" id="threatDetection">147K/s</div>
-                            </div>
-                            <div class="operations-item-details">Real-time event processing active</div>
-                            <div class="operations-progress">
-                                <div class="operations-progress-fill" style="width: 92%"></div>
-                            </div>
-                        </div>
-                        <div class="operations-item">
-                            <div class="operations-item-header">
-                                <div class="operations-item-name">Network Coverage</div>
-                                <div class="operations-item-value" id="networkCoverage">247</div>
-                            </div>
-                            <div class="operations-item-details">Devices under active protection</div>
-                            <div class="operations-progress">
-                                <div class="operations-progress-fill" style="width: 100%"></div>
-                            </div>
-                        </div>
-                        <div class="operations-item">
-                            <div class="operations-item-header">
-                                <div class="operations-item-name">Response Time</div>
-                                <div class="operations-item-value" id="responseTime">0.3s</div>
-                            </div>
-                            <div class="operations-item-details">Autonomous decision-making optimal</div>
-                            <div class="operations-progress">
-                                <div class="operations-progress-fill" style="width: 88%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Global Intelligence Module -->
-        <div class="global-intel-module">
-            <div class="intel-header">
-                <h2 class="intel-title">
-                    <span>🛰️</span>
-                    <span>Global Intelligence Network (HQ)</span>
-                </h2>
-                <div class="intel-badge">Live Sync Active</div>
-            </div>
-            <div class="intel-grid">
-                <div class="intel-item">
-                    <div class="intel-icon">🧠</div>
-                    <div class="intel-content">
-                        <div class="intel-label">Global AI Link</div>
-                        <div class="intel-value">Secure uplink active • 847ms latency • Encrypted channel</div>
-                    </div>
-                    <div class="intel-indicator active"></div>
-                </div>
-                <div class="intel-item">
-                    <div class="intel-icon">🔄</div>
-                    <div class="intel-content">
-                        <div class="intel-label">Sub-Agent Sync</div>
-                        <div class="intel-value">All 10 agents validated with network • Last sync: 2m ago</div>
-                    </div>
-                    <div class="intel-indicator active"></div>
-                </div>
-                <div class="intel-item">
-                    <div class="intel-icon">🛡️</div>
-                    <div class="intel-content">
-                        <div class="intel-label">Last Security Directive</div>
-                        <div class="intel-value">Auto-rotate encryption keys • Deployed 14:23 UTC</div>
-                    </div>
-                    <div class="intel-indicator active"></div>
-                </div>
-                <div class="intel-item">
-                    <div class="intel-icon">🚨</div>
-                    <div class="intel-content">
-                        <div class="intel-label">Global Threat Feed</div>
-                        <div class="intel-value">No critical alerts • 2,847 threats processed globally</div>
-                    </div>
-                    <div class="intel-indicator active"></div>
-                </div>
-                <div class="intel-item">
-                    <div class="intel-icon">🔐</div>
-                    <div class="intel-content">
-                        <div class="intel-label">Fleet Sync Status</div>
-                        <div class="intel-value">92% of known nodes in compliance • 247/268 agents</div>
-                    </div>
-                    <div class="intel-indicator warning"></div>
                 </div>
             </div>
         </div>
@@ -1797,7 +1709,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Global Intelligence Network sync active with 847ms latency.
+                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Global Intelligence Network sync active with real-time threat updates.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1830,8 +1742,8 @@
             // Initialize security feed
             initializeSecurityFeed();
             
-            // Initialize operations center
-            initializeOperationsCenter();
+            // Initialize Global Intelligence Network
+            initializeGlobalIntelligence();
             
             // Start feed auto-generation
             setInterval(() => {
@@ -1843,10 +1755,10 @@
                 updateDashboardMetrics();
             }, 3000);
 
-            // Update operations metrics periodically
+            // Update Global Intelligence status indicators
             setInterval(() => {
-                updateOperationsMetrics();
-            }, 4000);
+                updateIntelStatusIndicators();
+            }, 8000);
 
             // Simulate encryption status changes occasionally
             setInterval(() => {
@@ -1854,11 +1766,6 @@
                     simulateEncryptionStatusChange();
                 }
             }, 10000);
-
-            // Update Global Intelligence status indicators
-            setInterval(() => {
-                updateIntelStatusIndicators();
-            }, 8000);
         }
 
         function populateSubAgents() {
@@ -1914,37 +1821,28 @@
             addFeedItem('🛡️ ThreatScanner detected suspicious activity on port 445', 'warning', 'ThreatScanner');
         }
 
-        function initializeOperationsCenter() {
-            // Initialize operations values
-            updateOperationsValue('aiProcessing', 96, 96);
-            updateOperationsValue('threatDetection', '147K/s', 92);
-            updateOperationsValue('networkCoverage', 247, 100);
-            updateOperationsValue('responseTime', '0.3s', 88);
+        function initializeGlobalIntelligence() {
+            // Initialize Global Intelligence Network with realistic status updates
+            updateIntelStatusIndicators();
+            
+            // Add periodic updates for intelligence items
+            setInterval(() => {
+                updateGlobalIntelligenceItems();
+            }, 15000);
         }
 
-        function updateOperationsValue(elementId, value, progressPercent) {
-            const element = document.getElementById(elementId);
-            const progressBar = element?.closest('.operations-item')?.querySelector('.operations-progress-fill');
-            
-            if (element) {
-                element.textContent = typeof value === 'number' ? value + '%' : value;
+        function updateGlobalIntelligenceItems() {
+            // Update sync times and data in intelligence items
+            const syncItems = document.querySelectorAll('.intel-value');
+            if (syncItems.length >= 2) {
+                const lastSyncMinutes = Math.floor(Math.random() * 5 + 1);
+                syncItems[1].textContent = `All 10 agents validated with network • Last sync: ${lastSyncMinutes}m ago`;
             }
-            if (progressBar && typeof progressPercent === 'number') {
-                progressBar.style.width = progressPercent + '%';
-            }
-        }
-
-        function updateOperationsMetrics() {
-            // Simulate realistic operations metrics
-            const aiProcessing = Math.max(90, Math.min(99, 96 + Math.random() * 4 - 2));
-            const threatDetectionRate = Math.max(140, Math.min(155, 147 + Math.random() * 6 - 3));
-            const networkCoverage = Math.max(245, Math.min(250, 247 + Math.random() * 2 - 1));
-            const responseTime = Math.max(0.2, Math.min(0.5, 0.3 + Math.random() * 0.1 - 0.05));
             
-            updateOperationsValue('aiProcessing', Math.round(aiProcessing), aiProcessing);
-            updateOperationsValue('threatDetection', Math.round(threatDetectionRate) + 'K/s', Math.max(85, Math.min(98, threatDetectionRate * 0.6)));
-            updateOperationsValue('networkCoverage', Math.round(networkCoverage), Math.max(95, 100));
-            updateOperationsValue('responseTime', responseTime.toFixed(1) + 's', Math.max(80, 100 - (responseTime * 100)));
+            if (syncItems.length >= 4) {
+                const threatsProcessed = Math.floor(Math.random() * 500 + 2500);
+                syncItems[3].textContent = `No critical alerts • ${threatsProcessed.toLocaleString()} threats processed globally`;
+            }
         }
 
         function addFeedItem(message, type = '', agent = '') {
@@ -1967,7 +1865,7 @@
             }
         }
 
-        // Enhanced feed messages including VPNMonitor
+        // Enhanced feed messages including VPNMonitor and Global Intelligence
         const feedMessages = [
             { msg: '🛡️ Blocked SQL injection attempt on /api/users', type: 'danger', agent: 'ThreatScanner' },
             { msg: '🌐 New device discovered: 192.168.1.' + Math.floor(Math.random() * 254), type: '', agent: 'NetworkMapper' },
@@ -1975,7 +1873,7 @@
             { msg: '🔧 Encryption deployed to ' + Math.floor(Math.random() * 5 + 1) + ' new devices', type: 'encryption', agent: 'EncryptionDeployer' },
             { msg: '📜 Certificate auto-renewed for *.sentinel-x.com', type: 'encryption', agent: 'CertificateManager' },
             { msg: '✅ Compliance scan completed: ' + Math.floor(Math.random() * 3 + 97) + '% score', type: '', agent: 'ComplianceMonitor' },
-            { msg: '🔒 VPN connection from ' + ['Germany', 'Japan', 'Canada', 'UK'][Math.floor(Math.random() * 4)] + ' authenticated', type: '', agent: 'VPNMonitor' },
+            { msg: '🔒 VPN connection from ' + ['Germany', 'Japan', 'Canada', 'UK', 'Australia'][Math.floor(Math.random() * 5)] + ' authenticated', type: '', agent: 'VPNMonitor' },
             { msg: '🔒 VPN certificate renewal for client ' + Math.floor(Math.random() * 99 + 1), type: 'encryption', agent: 'VPNMonitor' },
             { msg: '🔒 Suspicious VPN login attempt blocked from ' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.*.*', type: 'warning', agent: 'VPNMonitor' },
             { msg: '⚔️ Honeypot triggered by external scanner', type: 'warning', agent: 'DefenseOrchestrator' },
@@ -1984,9 +1882,10 @@
             { msg: '🧠 Neural pattern learned from new attack vector', type: '', agent: 'AI Engine' },
             { msg: '🎯 Predicted attack pattern, preemptive defense deployed', type: 'warning', agent: 'ThreatScanner' },
             { msg: '✅ System health check passed. All agents operational', type: '', agent: 'Main Agent' },
-            { msg: '🛰️ Global Intelligence: Global threat feed updated', type: '', agent: 'Global Network' },
-            { msg: '🔐 Fleet-wide encryption key rotation initiated by network', type: 'encryption', agent: 'Global Network' },
-            { msg: '⚡ Operations Center: All systems performing within optimal parameters', type: '', agent: 'Operations Center' }
+            { msg: '🛰️ Global Intelligence: Threat signature update received', type: '', agent: 'Global Network' },
+            { msg: '🔐 Global Intelligence: Fleet-wide encryption update distributed', type: 'encryption', agent: 'Global Network' },
+            { msg: '📡 Global Intelligence: Network correlation analysis complete', type: '', agent: 'Global Network' },
+            { msg: '🌍 Global Intelligence: Regional threat assessment updated', type: 'warning', agent: 'Global Network' }
         ];
 
         function generateRandomFeedItem() {
@@ -2004,11 +1903,9 @@
             
             // Update device count
             if (Math.random() > 0.95) {
-                const deviceEl = document.getElementById('deviceCount');
                 const deviceElMetric = document.getElementById('deviceCountMetric');
-                const current = parseInt(deviceEl.textContent);
+                const current = parseInt(deviceElMetric.textContent);
                 const newCount = current + Math.floor(Math.random() * 3);
-                deviceEl.textContent = newCount;
                 deviceElMetric.textContent = newCount;
             }
             
@@ -2077,15 +1974,6 @@
                     }, 2000);
                 }
             });
-
-            // Update sync status text occasionally
-            if (Math.random() > 0.9) {
-                const syncItems = document.querySelectorAll('.intel-value');
-                const latency = Math.floor(Math.random() * 200 + 700); // 700-900ms
-                if (syncItems[0]) {
-                    syncItems[0].textContent = `Secure uplink active • ${latency}ms latency • Encrypted channel`;
-                }
-            }
         }
 
         function showMainAgentDetails() {
@@ -2093,7 +1981,7 @@
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Global Intelligence Network sync active with 847ms latency.', false);
+                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Global Intelligence Network sync active with real-time threat intelligence.', false);
             }, 300);
         }
 
