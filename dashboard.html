@@ -340,12 +340,12 @@
             font-weight: bold;
         }
 
-        /* System Status Banner with Rounded Corners */
+        /* System Status Banner - MATCHED SIZE */
         .system-status-banner {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
-            padding: 25px 35px;
+            padding: 20px 25px;
             margin-bottom: 30px;
             backdrop-filter: blur(20px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -375,17 +375,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 40px;
+            gap: 30px;
             flex-wrap: wrap;
         }
 
         .banner-stat {
             display: flex;
             align-items: center;
-            gap: 15px;
-            padding: 12px 20px;
+            gap: 12px;
+            padding: 10px 16px;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 25px;
+            border-radius: 20px;
             border: 1px solid rgba(0, 255, 136, 0.2);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
@@ -397,7 +397,7 @@
         }
 
         .banner-stat-icon {
-            font-size: 24px;
+            font-size: 20px;
             filter: drop-shadow(0 0 6px currentColor);
         }
 
@@ -408,14 +408,14 @@
         }
 
         .banner-stat-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: var(--primary);
             line-height: 1;
         }
 
         .banner-stat-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -654,108 +654,8 @@
             color: var(--bg-darker);
         }
 
-        /* Security Feed */
-        .security-feed {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 25px;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-        }
-
-        .feed-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .feed-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--danger);
-            font-weight: bold;
-        }
-
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--danger);
-            border-radius: 50%;
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .feed-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .feed-item {
-            background: rgba(0, 255, 136, 0.05);
-            border-left: 3px solid var(--primary);
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 0 8px 8px 0;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .feed-item.warning {
-            background: rgba(255, 170, 0, 0.05);
-            border-left-color: var(--warning);
-        }
-
-        .feed-item.danger {
-            background: rgba(255, 0, 68, 0.05);
-            border-left-color: var(--danger);
-        }
-
-        .feed-item.encryption {
-            background: rgba(124, 58, 237, 0.05);
-            border-left-color: var(--accent);
-        }
-
-        .feed-time {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
-        }
-
-        .feed-message {
-            font-size: 14px;
-            line-height: 1.4;
-        }
-
-        .feed-agent {
-            font-size: 11px;
-            color: var(--accent);
-            margin-top: 5px;
-            font-style: italic;
-        }
-
-        /* Global Intelligence Network Module */
-        .global-intel-module {
+        /* Control Hub Module - BALANCED HEIGHT */
+        .control-hub-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -764,9 +664,10 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
+            height: 100%;
         }
 
-        .global-intel-module::before {
+        .control-hub-module::before {
             content: '';
             position: absolute;
             top: 0;
@@ -782,7 +683,7 @@
             100% { left: 100%; }
         }
 
-        .intel-header {
+        .hub-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -793,7 +694,7 @@
             z-index: 1;
         }
 
-        .intel-title {
+        .hub-title {
             font-size: 18px;
             font-weight: bold;
             color: var(--secondary);
@@ -804,26 +705,60 @@
             gap: 10px;
         }
 
-        .intel-badge {
+        .hub-status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 20px;
             font-size: 11px;
-            color: var(--text-secondary);
-            background: rgba(0, 204, 255, 0.1);
-            padding: 4px 8px;
-            border-radius: 12px;
-            border: 1px solid rgba(0, 204, 255, 0.3);
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: all 0.3s ease;
         }
 
-        .intel-grid {
+        .hub-status-indicator.online {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .hub-status-indicator.warning {
+            background: rgba(255, 170, 0, 0.1);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .hub-status-indicator.offline {
+            background: rgba(255, 0, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .hub-status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        .hub-content {
+            position: relative;
+            z-index: 1;
+            height: calc(100% - 80px);
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .hub-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 15px;
-            position: relative;
-            z-index: 1;
         }
 
-        .intel-item {
+        .hub-item {
             background: rgba(0, 204, 255, 0.05);
             border: 1px solid rgba(0, 204, 255, 0.2);
             border-radius: 12px;
@@ -832,37 +767,38 @@
             align-items: center;
             gap: 12px;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .intel-item:hover {
+        .hub-item:hover {
             background: rgba(0, 204, 255, 0.08);
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0, 204, 255, 0.15);
         }
 
-        .intel-icon {
+        .hub-icon {
             font-size: 20px;
             min-width: 24px;
             filter: drop-shadow(0 0 6px currentColor);
         }
 
-        .intel-content {
+        .hub-content-text {
             flex: 1;
         }
 
-        .intel-label {
+        .hub-label {
             font-weight: bold;
             color: var(--secondary);
             font-size: 14px;
             margin-bottom: 3px;
         }
 
-        .intel-value {
+        .hub-value {
             font-size: 12px;
             color: var(--text-secondary);
         }
 
-        .intel-indicator {
+        .hub-indicator {
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -870,25 +806,18 @@
             animation: pulse 3s ease-in-out infinite;
         }
 
-        .intel-indicator.active {
+        .hub-indicator.active {
             background: var(--success);
             box-shadow: 0 0 8px var(--success);
         }
 
-        .intel-indicator.warning {
+        .hub-indicator.warning {
             background: var(--warning);
             box-shadow: 0 0 8px var(--warning);
         }
 
-        /* Performance Modules - VPN-style Layout */
-        .performance-modules {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .performance-module {
+        /* Combined Performance Module - BOTTOM BALANCE */
+        .combined-performance-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -900,7 +829,7 @@
             overflow: hidden;
         }
 
-        .performance-module::before {
+        .combined-performance-module::before {
             content: '';
             position: absolute;
             top: 0;
@@ -912,28 +841,28 @@
             transition: opacity 0.3s ease;
         }
 
-        .performance-module:hover::before {
+        .combined-performance-module:hover::before {
             opacity: 1;
         }
 
-        .performance-module:hover {
+        .combined-performance-module:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
         }
 
-        .module-header {
+        .performance-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border);
             position: relative;
             z-index: 1;
         }
 
-        .module-title {
-            font-size: 18px;
+        .performance-title {
+            font-size: 20px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
@@ -943,72 +872,63 @@
             gap: 10px;
         }
 
-        .module-icon {
+        .performance-icon {
             font-size: 24px;
             filter: drop-shadow(0 0 6px currentColor);
         }
 
-        .module-status {
+        .performance-status {
             font-size: 12px;
-            padding: 4px 12px;
+            padding: 6px 12px;
             border-radius: 15px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: bold;
-        }
-
-        .module-status.optimal {
             background: rgba(0, 255, 136, 0.2);
             color: var(--success);
             border: 1px solid var(--success);
         }
 
-        .module-status.warning {
-            background: rgba(255, 170, 0, 0.2);
-            color: var(--warning);
-            border: 1px solid var(--warning);
-        }
-
-        .module-metrics {
+        .performance-metrics {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
             position: relative;
             z-index: 1;
         }
 
-        .metric-item {
+        .performance-metric-card {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
         }
 
-        .metric-item:hover {
+        .performance-metric-card:hover {
             background: rgba(0, 255, 136, 0.05);
             border-color: rgba(0, 255, 136, 0.3);
         }
 
-        .metric-value {
-            font-size: 24px;
+        .performance-metric-value {
+            font-size: 28px;
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             text-shadow: 0 0 10px currentColor;
         }
 
-        .metric-label {
+        .performance-metric-label {
             font-size: 12px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-bottom: 8px;
         }
 
-        .metric-trend {
+        .performance-metric-trend {
             font-size: 11px;
-            margin-top: 5px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1027,7 +947,7 @@
             color: var(--text-secondary);
         }
 
-        /* AI Chat Widget */
+        /* AI Chat Widget - FIXED HEIGHT */
         .ai-chat-widget {
             position: fixed;
             bottom: 30px;
@@ -1060,7 +980,7 @@
             bottom: 80px;
             right: 0;
             width: 400px;
-            height: 600px;
+            height: 500px; /* REDUCED HEIGHT */
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -1089,6 +1009,7 @@
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .ai-chat-status {
@@ -1162,6 +1083,7 @@
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .ai-chat-input {
@@ -1310,8 +1232,8 @@
                 grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             }
 
-            .performance-modules {
-                grid-template-columns: 1fr;
+            .performance-metrics {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             }
         }
 
@@ -1332,7 +1254,7 @@
             
             .ai-chat-window {
                 width: calc(100vw - 40px);
-                height: calc(100vh - 120px);
+                height: calc(100vh - 140px); /* ADJUSTED FOR MOBILE */
                 right: -20px;
                 bottom: 80px;
             }
@@ -1341,7 +1263,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .intel-grid {
+            .hub-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1350,27 +1272,23 @@
             }
 
             .banner-stat {
-                padding: 8px 16px;
-                gap: 12px;
+                padding: 8px 14px;
+                gap: 10px;
             }
 
             .banner-stat-icon {
-                font-size: 20px;
+                font-size: 18px;
             }
 
             .banner-stat-value {
-                font-size: 16px;
+                font-size: 14px;
             }
 
             .banner-stat-label {
-                font-size: 11px;
+                font-size: 10px;
             }
 
-            .performance-modules {
-                grid-template-columns: 1fr;
-            }
-
-            .module-metrics {
+            .performance-metrics {
                 grid-template-columns: repeat(2, 1fr);
             }
         }
@@ -1499,7 +1417,7 @@
             </a>
         </nav>
 
-        <!-- System Status Banner -->
+        <!-- System Status Banner - MATCHED SIZE -->
         <div class="system-status-banner">
             <div class="banner-content">
                 <div class="banner-stat">
@@ -1531,9 +1449,9 @@
                     </div>
                 </div>
                 <div class="banner-stat">
-                    <div class="banner-stat-icon">🛰️</div>
+                    <div class="banner-stat-icon">🎯</div>
                     <div class="banner-stat-content">
-                        <div class="banner-stat-value">Global Intel</div>
+                        <div class="banner-stat-value">Control Hub</div>
                         <div class="banner-stat-label">Network Sync</div>
                     </div>
                 </div>
@@ -1598,229 +1516,130 @@
 
             <!-- Right Column -->
             <div class="right-column">
-                <!-- Security Feed -->
-                <div class="security-feed">
-                    <div class="feed-header">
-                        <h2 class="feed-title">Live Security Feed</h2>
-                        <div class="live-indicator">
-                            <div class="live-dot"></div>
-                            <span>LIVE</span>
-                        </div>
-                    </div>
-                    <div class="feed-content" id="securityFeed">
-                        <!-- Feed items will be populated by JavaScript -->
-                    </div>
-                </div>
-
-                <!-- Global Intelligence Network Module -->
-                <div class="global-intel-module">
-                    <div class="intel-header">
-                        <h2 class="intel-title">
-                            <span>🛰️</span>
-                            <span>Global Intelligence Network</span>
+                <!-- Admin Control Hub Module - BALANCED HEIGHT -->
+                <div class="control-hub-module">
+                    <div class="hub-header">
+                        <h2 class="hub-title">
+                            <span>🎛️</span>
+                            <span>Admin Control Hub</span>
                         </h2>
-                        <div class="intel-badge">Live Sync Active</div>
+                        <div class="hub-status-indicator online" id="hubStatus">
+                            <div class="hub-status-dot"></div>
+                            <span>HQ LINKED</span>
+                        </div>
                     </div>
-                    <div class="intel-grid">
-                        <div class="intel-item">
-                            <div class="intel-icon">🧠</div>
-                            <div class="intel-content">
-                                <div class="intel-label">AI Network Sync</div>
-                                <div class="intel-value">Connected to global threat intelligence • Real-time updates</div>
+                    <div class="hub-content" id="hubContent">
+                        <div class="hub-grid">
+                            <div class="hub-item">
+                                <div class="hub-icon">🏢</div>
+                                <div class="hub-content-text">
+                                    <div class="hub-label">Fleet Management</div>
+                                    <div class="hub-value">2,847 agents deployed globally • Central oversight active</div>
+                                </div>
+                                <div class="hub-indicator active"></div>
                             </div>
-                            <div class="intel-indicator active"></div>
-                        </div>
-                        <div class="intel-item">
-                            <div class="intel-icon">🔄</div>
-                            <div class="intel-content">
-                                <div class="intel-label">Sub-Agent Coordination</div>
-                                <div class="intel-value">All 10 agents validated with network • Last sync: 2m ago</div>
+                            <div class="hub-item">
+                                <div class="hub-icon">💰</div>
+                                <div class="hub-content-text">
+                                    <div class="hub-label">Revenue Stream</div>
+                                    <div class="hub-value">$487K MRR • 847 active customers • Growth trending +18%</div>
+                                </div>
+                                <div class="hub-indicator active"></div>
                             </div>
-                            <div class="intel-indicator active"></div>
-                        </div>
-                        <div class="intel-item">
-                            <div class="intel-icon">🛡️</div>
-                            <div class="intel-content">
-                                <div class="intel-label">Security Directive</div>
-                                <div class="intel-value">Auto-rotate encryption keys • Deployed 14:23 UTC</div>
+                            <div class="hub-item">
+                                <div class="hub-icon">📊</div>
+                                <div class="hub-content-text">
+                                    <div class="hub-label">Performance Metrics</div>
+                                    <div class="hub-value">System health 99.98% • Global threat intel synchronized</div>
+                                </div>
+                                <div class="hub-indicator active"></div>
                             </div>
-                            <div class="intel-indicator active"></div>
-                        </div>
-                        <div class="intel-item">
-                            <div class="intel-icon">📡</div>
-                            <div class="intel-content">
-                                <div class="intel-label">Global Threat Feed</div>
-                                <div class="intel-value">No critical alerts • 2,847 threats processed globally</div>
+                            <div class="hub-item">
+                                <div class="hub-icon">🚀</div>
+                                <div class="hub-content-text">
+                                    <div class="hub-label">Deployment Pipeline</div>
+                                    <div class="hub-value">Mass updates ready • Rolling deployment scheduled</div>
+                                </div>
+                                <div class="hub-indicator warning"></div>
                             </div>
-                            <div class="intel-indicator active"></div>
-                        </div>
-                        <div class="intel-item">
-                            <div class="intel-icon">🔐</div>
-                            <div class="intel-content">
-                                <div class="intel-label">Encryption Fleet Status</div>
-                                <div class="intel-value">92% of nodes in compliance • 247/268 agents</div>
+                            <div class="hub-item">
+                                <div class="hub-icon">🔒</div>
+                                <div class="hub-content-text">
+                                    <div class="hub-label">Security Operations</div>
+                                    <div class="hub-value">14.2M threats blocked today • Zero breaches recorded</div>
+                                </div>
+                                <div class="hub-indicator active"></div>
                             </div>
-                            <div class="intel-indicator warning"></div>
-                        </div>
-                        <div class="intel-item">
-                            <div class="intel-icon">🔒</div>
-                            <div class="intel-content">
-                                <div class="intel-label">VPN Security Network</div>
-                                <div class="intel-value">12 active connections monitored • All encrypted</div>
+                            <div class="hub-item">
+                                <div class="hub-icon">🎫</div>
+                                <div class="hub-content-text">
+                                    <div class="hub-label">Support Queue</div>
+                                    <div class="hub-value">23 active tickets • Average response time: 4.2 minutes</div>
+                                </div>
+                                <div class="hub-indicator warning"></div>
                             </div>
-                            <div class="intel-indicator active"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Performance Modules -->
-        <div class="performance-modules">
-            <!-- Threat Intelligence Module -->
-            <div class="performance-module">
-                <div class="module-header">
-                    <div class="module-title">
-                        <span class="module-icon">🎯</span>
-                        <span>Threat Intelligence</span>
-                    </div>
-                    <div class="module-status optimal">Optimal</div>
-                </div>
-                <div class="module-metrics">
-                    <div class="metric-item">
-                        <div class="metric-value" id="threatCount">7</div>
-                        <div class="metric-label">Active Threats</div>
-                        <div class="metric-trend trend-down">
-                            <span>↘</span>
-                            <span>-12%</span>
-                        </div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-value" id="blockedCount">12.4K</div>
-                        <div class="metric-label">Attacks Blocked</div>
-                        <div class="metric-trend trend-up">
-                            <span>↗</span>
-                            <span>+15%</span>
-                        </div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-value">99.8%</div>
-                        <div class="metric-label">Detection Rate</div>
-                        <div class="metric-trend trend-stable">
-                            <span>→</span>
-                            <span>Stable</span>
-                        </div>
-                    </div>
-                </div>
+        <!-- Combined Performance Module - BOTTOM BALANCE -->
+        <div class="combined-performance-module">
+            <div class="performance-header">
+                <h2 class="performance-title">
+                    <span class="performance-icon">⚡</span>
+                    <span>Global System Performance</span>
+                </h2>
+                <div class="performance-status">Optimal</div>
             </div>
-
-            <!-- Network Security Module -->
-            <div class="performance-module">
-                <div class="module-header">
-                    <div class="module-title">
-                        <span class="module-icon">🌐</span>
-                        <span>Network Security</span>
-                    </div>
-                    <div class="module-status optimal">Optimal</div>
-                </div>
-                <div class="module-metrics">
-                    <div class="metric-item">
-                        <div class="metric-value" id="deviceCountMetric">247</div>
-                        <div class="metric-label">Protected Devices</div>
-                        <div class="metric-trend trend-up">
-                            <span>↗</span>
-                            <span>+3 today</span>
-                        </div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-value">99.98%</div>
-                        <div class="metric-label">Uptime</div>
-                        <div class="metric-trend trend-stable">
-                            <span>→</span>
-                            <span>847 days</span>
-                        </div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-value">0.3s</div>
-                        <div class="metric-label">Response Time</div>
-                        <div class="metric-trend trend-stable">
-                            <span>→</span>
-                            <span>Optimal</span>
-                        </div>
+            <div class="performance-metrics">
+                <div class="performance-metric-card">
+                    <div class="performance-metric-value" id="threatCount">7</div>
+                    <div class="performance-metric-label">Active Threats</div>
+                    <div class="performance-metric-trend trend-down">
+                        <span>↘</span>
+                        <span>-12%</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Encryption Performance Module -->
-            <div class="performance-module">
-                <div class="module-header">
-                    <div class="module-title">
-                        <span class="module-icon">🔐</span>
-                        <span>Encryption Performance</span>
-                    </div>
-                    <div class="module-status optimal">Optimal</div>
-                </div>
-                <div class="module-metrics">
-                    <div class="metric-item">
-                        <div class="metric-value" id="encryptionOps">2.1M</div>
-                        <div class="metric-label">Crypto Ops/Sec</div>
-                        <div class="metric-trend trend-stable">
-                            <span>→</span>
-                            <span>Optimal</span>
-                        </div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-value" id="deploymentCount">47</div>
-                        <div class="metric-label">Deployments Today</div>
-                        <div class="metric-trend trend-up">
-                            <span>↗</span>
-                            <span>Above avg</span>
-                        </div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-value">100%</div>
-                        <div class="metric-label">Key Rotation</div>
-                        <div class="metric-trend trend-stable">
-                            <span>→</span>
-                            <span>Scheduled</span>
-                        </div>
+                <div class="performance-metric-card">
+                    <div class="performance-metric-value" id="blockedCount">12.4K</div>
+                    <div class="performance-metric-label">Attacks Blocked</div>
+                    <div class="performance-metric-trend trend-up">
+                        <span>↗</span>
+                        <span>+15%</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- AI Processing Module -->
-            <div class="performance-module">
-                <div class="module-header">
-                    <div class="module-title">
-                        <span class="module-icon">🧠</span>
-                        <span>AI Processing</span>
+                <div class="performance-metric-card">
+                    <div class="performance-metric-value">99.8%</div>
+                    <div class="performance-metric-label">Detection Rate</div>
+                    <div class="performance-metric-trend trend-stable">
+                        <span>→</span>
+                        <span>Stable</span>
                     </div>
-                    <div class="module-status optimal">Optimal</div>
                 </div>
-                <div class="module-metrics">
-                    <div class="metric-item">
-                        <div class="metric-value" id="decisionsPerMinCard">2.4K</div>
-                        <div class="metric-label">Decisions/Min</div>
-                        <div class="metric-trend trend-up">
-                            <span>↗</span>
-                            <span>+8%</span>
-                        </div>
+                <div class="performance-metric-card">
+                    <div class="performance-metric-value" id="deviceCountMetric">247</div>
+                    <div class="performance-metric-label">Protected Devices</div>
+                    <div class="performance-metric-trend trend-up">
+                        <span>↗</span>
+                        <span>+3 today</span>
                     </div>
-                    <div class="metric-item">
-                        <div class="metric-value">99.8%</div>
-                        <div class="metric-label">Model Accuracy</div>
-                        <div class="metric-trend trend-stable">
-                            <span>→</span>
-                            <span>Optimal</span>
-                        </div>
+                </div>
+                <div class="performance-metric-card">
+                    <div class="performance-metric-value">99.98%</div>
+                    <div class="performance-metric-label">Uptime</div>
+                    <div class="performance-metric-trend trend-stable">
+                        <span>→</span>
+                        <span>847 days</span>
                     </div>
-                    <div class="metric-item">
-                        <div class="metric-value">10</div>
-                        <div class="metric-label">Agents Online</div>
-                        <div class="metric-trend trend-stable">
-                            <span>→</span>
-                            <span>100%</span>
-                        </div>
+                </div>
+                <div class="performance-metric-card">
+                    <div class="performance-metric-value">0.3s</div>
+                    <div class="performance-metric-label">Response Time</div>
+                    <div class="performance-metric-trend trend-stable">
+                        <span>→</span>
+                        <span>Optimal</span>
                     </div>
                 </div>
             </div>
@@ -1843,7 +1662,7 @@
         </div>
     </div>
 
-    <!-- AI Chat Widget -->
+    <!-- AI Chat Widget - FIXED HEIGHT -->
     <div class="ai-chat-widget">
         <div class="ai-chat-window" id="aiChatWindow">
             <div class="ai-chat-header">
@@ -1859,7 +1678,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Global Intelligence Network sync active with real-time threat updates.
+                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Admin Control Hub sync active with real-time fleet management updates.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1889,31 +1708,23 @@
             // Populate sub-agents from shared.js
             populateSubAgents();
             
-            // Initialize security feed
-            initializeSecurityFeed();
+            // Initialize Admin Control Hub
+            initializeControlHub();
             
-            // Initialize Global Intelligence Network
-            initializeGlobalIntelligence();
-            
-            // Start feed auto-generation
-            setInterval(() => {
-                generateRandomFeedItem();
-            }, 5000);
-            
-            // Update metrics periodically
+            // Start periodic updates
             setInterval(() => {
                 updateDashboardMetrics();
             }, 3000);
 
-            // Update Global Intelligence status indicators
+            // Update Control Hub status indicators
             setInterval(() => {
-                updateIntelStatusIndicators();
+                updateHubStatusIndicators();
             }, 8000);
 
-            // Simulate encryption status changes occasionally
+            // Simulate status changes occasionally
             setInterval(() => {
                 if (Math.random() > 0.97) {
-                    simulateEncryptionStatusChange();
+                    simulateStatusChange();
                 }
             }, 10000);
         }
@@ -1961,86 +1772,30 @@
             }, 300);
         }
 
-        function initializeSecurityFeed() {
-            addFeedItem('🤖 Main Agent initialized. All 10 sub-agents online.', '', 'Main Agent');
-            addFeedItem('🔐 Advanced encryption active: Classical + Post-Quantum', 'encryption', 'EncryptionManager');
-            addFeedItem('🔒 VPNMonitor: 12 active connections monitored', '', 'VPNMonitor');
-            addFeedItem('🔧 EncryptionDeployer: 3/4 modules deployed successfully', 'encryption', 'EncryptionDeployer');
-            addFeedItem('📜 CertificateManager: 2 certificates expiring within 30 days', 'warning', 'CertificateManager');
-            addFeedItem('✅ ComplianceMonitor: SOC2 and ISO27001 compliance verified', '', 'ComplianceMonitor');
-            addFeedItem('🛡️ ThreatScanner detected suspicious activity on port 445', 'warning', 'ThreatScanner');
-        }
-
-        function initializeGlobalIntelligence() {
-            // Initialize Global Intelligence Network with realistic status updates
-            updateIntelStatusIndicators();
+        function initializeControlHub() {
+            updateHubStatusIndicators();
             
-            // Add periodic updates for intelligence items
+            // Add periodic updates for hub items
             setInterval(() => {
-                updateGlobalIntelligenceItems();
+                updateControlHubItems();
             }, 15000);
         }
 
-        function updateGlobalIntelligenceItems() {
-            // Update sync times and data in intelligence items
-            const syncItems = document.querySelectorAll('.intel-value');
-            if (syncItems.length >= 2) {
-                const lastSyncMinutes = Math.floor(Math.random() * 5 + 1);
-                syncItems[1].textContent = `All 10 agents validated with network • Last sync: ${lastSyncMinutes}m ago`;
+        function updateControlHubItems() {
+            // Simulate dynamic updates from admin command center
+            const hubItems = document.querySelectorAll('.hub-value');
+            if (hubItems.length >= 2) {
+                const revenue = Math.floor(Math.random() * 50 + 470);
+                const customers = Math.floor(Math.random() * 20 + 840);
+                const growth = Math.floor(Math.random() * 5 + 15);
+                hubItems[1].textContent = `$${revenue}K MRR • ${customers} active customers • Growth trending +${growth}%`;
             }
             
-            if (syncItems.length >= 4) {
-                const threatsProcessed = Math.floor(Math.random() * 500 + 2500);
-                syncItems[3].textContent = `No critical alerts • ${threatsProcessed.toLocaleString()} threats processed globally`;
+            if (hubItems.length >= 6) {
+                const tickets = Math.floor(Math.random() * 10 + 20);
+                const responseTime = (Math.random() * 2 + 3).toFixed(1);
+                hubItems[5].textContent = `${tickets} active tickets • Average response time: ${responseTime} minutes`;
             }
-        }
-
-        function addFeedItem(message, type = '', agent = '') {
-            const feed = document.getElementById('securityFeed');
-            const item = document.createElement('div');
-            item.className = `feed-item ${type}`;
-            
-            const time = new Date().toLocaleTimeString();
-            item.innerHTML = `
-                <div class="feed-time">${time}</div>
-                <div class="feed-message">${message}</div>
-                ${agent ? `<div class="feed-agent">via ${agent}</div>` : ''}
-            `;
-            
-            feed.insertBefore(item, feed.firstChild);
-            
-            // Keep only last 10 items
-            while (feed.children.length > 10) {
-                feed.removeChild(feed.lastChild);
-            }
-        }
-
-        // Enhanced feed messages including VPNMonitor and Global Intelligence
-        const feedMessages = [
-            { msg: '🛡️ Blocked SQL injection attempt on /api/users', type: 'danger', agent: 'ThreatScanner' },
-            { msg: '🌐 New device discovered: 192.168.1.' + Math.floor(Math.random() * 254), type: '', agent: 'NetworkMapper' },
-            { msg: '🔐 Key rotation completed. Kyber-1024 + AES-256', type: 'encryption', agent: 'EncryptionManager' },
-            { msg: '🔧 Encryption deployed to ' + Math.floor(Math.random() * 5 + 1) + ' new devices', type: 'encryption', agent: 'EncryptionDeployer' },
-            { msg: '📜 Certificate auto-renewed for *.sentinel-x.com', type: 'encryption', agent: 'CertificateManager' },
-            { msg: '✅ Compliance scan completed: ' + Math.floor(Math.random() * 3 + 97) + '% score', type: '', agent: 'ComplianceMonitor' },
-            { msg: '🔒 VPN connection from ' + ['Germany', 'Japan', 'Canada', 'UK', 'Australia'][Math.floor(Math.random() * 5)] + ' authenticated', type: '', agent: 'VPNMonitor' },
-            { msg: '🔒 VPN certificate renewal for client ' + Math.floor(Math.random() * 99 + 1), type: 'encryption', agent: 'VPNMonitor' },
-            { msg: '🔒 Suspicious VPN login attempt blocked from ' + Math.floor(Math.random() * 255) + '.' + Math.floor(Math.random() * 255) + '.*.*', type: 'warning', agent: 'VPNMonitor' },
-            { msg: '⚔️ Honeypot triggered by external scanner', type: 'warning', agent: 'DefenseOrchestrator' },
-            { msg: '📊 AI model accuracy: 99.' + Math.floor(Math.random() * 9) + '%', type: '', agent: 'AnalyticsEngine' },
-            { msg: '📝 Audit log signed with Dilithium-3 signature', type: '', agent: 'LogAgent' },
-            { msg: '🧠 Neural pattern learned from new attack vector', type: '', agent: 'AI Engine' },
-            { msg: '🎯 Predicted attack pattern, preemptive defense deployed', type: 'warning', agent: 'ThreatScanner' },
-            { msg: '✅ System health check passed. All agents operational', type: '', agent: 'Main Agent' },
-            { msg: '🛰️ Global Intelligence: Threat signature update received', type: '', agent: 'Global Network' },
-            { msg: '🔐 Global Intelligence: Fleet-wide encryption update distributed', type: 'encryption', agent: 'Global Network' },
-            { msg: '📡 Global Intelligence: Network correlation analysis complete', type: '', agent: 'Global Network' },
-            { msg: '🌍 Global Intelligence: Regional threat assessment updated', type: 'warning', agent: 'Global Network' }
-        ];
-
-        function generateRandomFeedItem() {
-            const item = feedMessages[Math.floor(Math.random() * feedMessages.length)];
-            addFeedItem(item.msg, item.type, item.agent);
         }
 
         function updateDashboardMetrics() {
@@ -2063,70 +1818,42 @@
             const blockedEl = document.getElementById('blockedCount');
             const blocked = parseFloat(blockedEl.textContent.replace('K', ''));
             blockedEl.textContent = (blocked + 0.1).toFixed(1) + 'K';
-            
-            // Update crypto ops
-            const cryptoEl = document.getElementById('encryptionOps');
-            const ops = 2.0 + Math.random() * 0.3;
-            cryptoEl.textContent = ops.toFixed(1) + 'M';
 
             // Update decisions per minute
             const decisionsEl = document.getElementById('decisionsPerMin');
             const decisions = 2.3 + Math.random() * 0.3;
             decisionsEl.textContent = decisions.toFixed(1) + 'K';
-
-            // Update decisions per minute card
-            const decisionsCardEl = document.getElementById('decisionsPerMinCard');
-            if (decisionsCardEl) {
-                decisionsCardEl.textContent = decisions.toFixed(1) + 'K';
-            }
-
-            // Update deployment count
-            const deploymentEl = document.getElementById('deploymentCount');
-            if (Math.random() > 0.92) {
-                const current = parseInt(deploymentEl.textContent);
-                deploymentEl.textContent = current + 1;
-            }
         }
 
-        function simulateEncryptionStatusChange() {
-            // Rarely simulate an encryption layer going offline
+        function simulateStatusChange() {
+            // Rarely simulate a hub status change
             if (Math.random() > 0.8) {
-                const classicalStatus = document.getElementById('classicalStatus');
-                const quantumStatus = document.getElementById('quantumStatus');
+                const hubStatus = document.getElementById('hubStatus');
+                const statusText = hubStatus.querySelector('span:last-child');
                 
                 if (Math.random() > 0.5) {
-                    // Classical layer issue
-                    classicalStatus.className = 'status-light inactive';
-                    addFeedItem('⚠️ Classical encryption layer temporarily offline - switching to hybrid-only mode', 'warning', 'EncryptionManager');
+                    // Admin connection issue
+                    hubStatus.className = 'hub-status-indicator warning';
+                    statusText.textContent = 'HQ SYNC DELAY';
                     
                     // Restore after 3 seconds
                     setTimeout(() => {
-                        classicalStatus.className = 'status-light active';
-                        addFeedItem('✅ Classical encryption layer restored - hybrid mode active', 'encryption', 'EncryptionManager');
-                    }, 3000);
-                } else {
-                    // Quantum layer issue
-                    quantumStatus.className = 'status-light inactive';
-                    addFeedItem('⚠️ Hybrid encryption layer recalibrating - maintaining classical protection', 'warning', 'EncryptionManager');
-                    
-                    // Restore after 3 seconds
-                    setTimeout(() => {
-                        quantumStatus.className = 'status-light active';
-                        addFeedItem('✅ Hybrid encryption layer online - dual-layer protection restored', 'encryption', 'EncryptionManager');
+                        hubStatus.className = 'hub-status-indicator online';
+                        statusText.textContent = 'HQ LINKED';
                     }, 3000);
                 }
             }
         }
 
-        function updateIntelStatusIndicators() {
-            // Occasionally update Global Intelligence status indicators
-            const indicators = document.querySelectorAll('.intel-indicator');
+        function updateHubStatusIndicators() {
+            // Occasionally update Admin Control Hub status indicators
+            const indicators = document.querySelectorAll('.hub-indicator');
             indicators.forEach(indicator => {
                 if (Math.random() > 0.95) {
                     // Briefly show warning state
-                    indicator.className = 'intel-indicator warning';
+                    indicator.className = 'hub-indicator warning';
                     setTimeout(() => {
-                        indicator.className = 'intel-indicator active';
+                        indicator.className = 'hub-indicator active';
                     }, 2000);
                 }
             });
@@ -2137,7 +1864,7 @@
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Global Intelligence Network sync active with real-time threat intelligence.', false);
+                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Admin Control Hub sync active with real-time fleet management oversight.', false);
             }, 300);
         }
 
@@ -2184,18 +1911,11 @@
             
             if (SentinelState.chatOpen && sentinelChat) {
                 const status = SentinelState.agentActive ? 'resumed autonomous operation' : 'switched to manual control mode';
-                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. CLI mode available if external connections fail. Global Intelligence Network sync ${SentinelState.agentActive ? 'maintained' : 'reduced'}.`, false, 'system');
-            }
-
-            // Update Global Intelligence feed based on agent status
-            if (SentinelState.agentActive) {
-                addFeedItem('🛰️ Global Intelligence: Agent resumed, full network coordination restored', 'encryption', 'Global Network');
-            } else {
-                addFeedItem('⚠️ Global Intelligence: Agent paused, local control mode active', 'warning', 'Global Network');
+                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. CLI mode available if external connections fail. Admin Control Hub sync ${SentinelState.agentActive ? 'maintained' : 'reduced'}.`, false, 'system');
             }
         };
         window.handleLogout = () => {
-            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously with Global Intelligence oversight.')) {
+            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously with Admin Control Hub oversight.')) {
                 localStorage.removeItem('sentinel_auth');
                 localStorage.removeItem('sentinel_scale');
                 window.location.href = 'index.html';
