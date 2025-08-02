@@ -1,5 +1,5 @@
 /**
- * AI Sentinel-X Shared JavaScript Library - Hybrid V2.2 (Optimized)
+ * AI Sentinel-X Shared JavaScript Library - Hybrid V2.2 (Fixed)
  * Enhanced modular architecture with centralized feed management and optimized code reuse
  */
 
@@ -239,7 +239,7 @@ const VPNConfigs = {
     ]
 };
 
-// Centralized Activity Feed System - Optimized
+// Centralized Activity Feed System - Fixed and Optimized
 class ActivityFeedManager {
     constructor() {
         this.feeds = new Map();
@@ -714,6 +714,9 @@ const ScaleConfigs = {
     }
 };
 
+// Initialize the activity feed manager globally
+const activityFeedManager = new ActivityFeedManager();
+
 // Initialize page context
 function initializePageContext() {
     const path = window.location.pathname;
@@ -933,3 +936,109 @@ class SentinelChat {
                 <div class="typing-dot"></div>
             </div>
         `;
+        
+        messagesContainer.appendChild(typingDiv);
+        this.scrollToBottom();
+    }
+    
+    removeTypingIndicator() {
+        const typingIndicator = document.getElementById('typingIndicator');
+        if (typingIndicator) {
+            typingIndicator.remove();
+        }
+    }
+    
+    sendMessage(userMessage) {
+        // Add user message
+        this.addMessage(userMessage, true);
+        
+        // Show typing indicator
+        this.showTypingIndicator();
+        
+        // Simulate agent response delay
+        setTimeout(() => {
+            this.removeTypingIndicator();
+            
+            // Get context-aware response
+            const response = this.generateResponse(userMessage, SentinelState.currentPage);
+            this.addMessage(response, false);
+        }, Math.random() * 1500 + 800);
+    }
+    
+    generateResponse(userMessage, context) {
+        const lowerMessage = userMessage.toLowerCase();
+        
+        // Context-specific responses
+        if (context === 'vpn') {
+            if (lowerMessage.includes('vpn') || lowerMessage.includes('connection')) {
+                return `VPNMonitor: I'm monitoring ${Math.floor(Math.random() * 5 + 10)} active VPN connections with hybrid encryption. OpenVPN, WireGuard, and IPSec services are operational. Current threat level: ${Math.random() > 0.5 ? 'ELEVATED' : 'NORMAL'}. Would you like details on specific connections or security protocols?`;
+            }
+            if (lowerMessage.includes('threat') || lowerMessage.includes('alert')) {
+                return `VPNMonitor: ${Math.floor(Math.random() * 4 + 1)} critical alerts detected. Enhanced monitoring active for suspicious IPs. Geo-blocking and behavioral analysis coordinating with ThreatScanner. Auto-response actions ready for deployment.`;
+            }
+            if (lowerMessage.includes('certificate') || lowerMessage.includes('cert')) {
+                return `VPNMonitor → CertificateManager: Monitoring ${Math.floor(Math.random() * 10 + 15)} certificates. ${Math.floor(Math.random() * 3 + 1)} expiring within 30 days. Auto-renewal scheduled with hybrid signatures. All VPN endpoints using post-quantum certificate chains.`;
+            }
+        }
+        
+        if (context === 'dashboard') {
+            if (lowerMessage.includes('status') || lowerMessage.includes('overview')) {
+                return `Main Agent: Coordinating ${Object.keys(SubAgentConfigs).length} sub-agents. ${Math.floor(Math.random() * 10 + 240)} devices protected, ${Math.floor(Math.random() * 5 + 5)} active threats, ${Math.floor(Math.random() * 5 + 10)} VPN connections secure. Global Network Updates sync active. All encryption modules operational.`;
+            }
+        }
+        
+        // Common command responses
+        if (lowerMessage.includes('help')) {
+            return `Available commands: status, threats, encrypt, vpn, scan, deploy, audit, analyze. I coordinate with ${Object.keys(SubAgentConfigs).length} specialized sub-agents for comprehensive security. What would you like me to investigate?`;
+        }
+        
+        if (lowerMessage.includes('encrypt')) {
+            return `EncryptionManager: Hybrid encryption active across all systems. Classical algorithms: AES-256-GCM, ChaCha20-Poly1305. Post-quantum: Kyber-1024, Dilithium-3, SPHINCS+. ${Math.floor(Math.random() * 20 + 15)} deployments completed today.`;
+        }
+        
+        if (lowerMessage.includes('scan') || lowerMessage.includes('discover')) {
+            return `NetworkMapper: Scanning ${Math.floor(Math.random() * 50 + 200)} devices. ${Math.floor(Math.random() * 3 + 1)} new devices discovered today. ${Math.floor(Math.random() * 100 + 500)} services mapped with security assessment complete.`;
+        }
+        
+        // Default responses
+        const responses = [
+            `Main Agent: Processing your request. Coordinating with relevant sub-agents for optimal response.`,
+            `Acknowledged. Analyzing current security posture and preparing detailed response.`,
+            `Roger that. Cross-referencing with threat intelligence and compliance frameworks.`,
+            `Command received. Initiating secure analysis with hybrid-resistant encryption.`
+        ];
+        
+        return responses[Math.floor(Math.random() * responses.length)];
+    }
+}
+
+// Auto-initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+    // Initialize page context
+    initializePageContext();
+    
+    // Make sure activityFeedManager is available globally
+    if (typeof window !== 'undefined') {
+        window.activityFeedManager = activityFeedManager;
+        window.SentinelState = SentinelState;
+        window.SubAgentConfigs = SubAgentConfigs;
+        window.VPNConfigs = VPNConfigs;
+        window.SentinelChat = SentinelChat;
+        window.initializePageContext = initializePageContext;
+        window.initNeuralBackground = initNeuralBackground;
+    }
+});
+
+// Export for use in other modules
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+        SentinelState,
+        SubAgentConfigs,
+        VPNConfigs,
+        ActivityFeedManager,
+        SentinelChat,
+        activityFeedManager,
+        initializePageContext,
+        initNeuralBackground
+    };
+}
