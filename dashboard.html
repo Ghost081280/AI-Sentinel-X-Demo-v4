@@ -1051,6 +1051,12 @@
             margin-bottom: 12px;
             border-radius: 0 10px 10px 0;
             transition: all 0.3s ease;
+            animation: feedSlide 0.3s ease;
+        }
+
+        @keyframes feedSlide {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .feed-item:hover {
@@ -1809,7 +1815,7 @@
         <button class="ai-chat-toggle" onclick="toggleChat()">🤖</button>
     </div>
 
-    <script src="optimized_shared_js.js"></script>
+    <script src="shared.js"></script>
     <script>
         // Dashboard-specific state and configurations
         let dashboardFeedId = 'dashboard-feed';
@@ -1880,8 +1886,18 @@
         });
 
         function initializeDashboard() {
+            // Initialize neural background first
+            if (typeof initNeuralBackground === 'function') {
+                initNeuralBackground();
+            }
+
+            // Initialize page context
+            if (typeof initializePageContext === 'function') {
+                initializePageContext();
+            }
+
             // Initialize activity feed for dashboard
-            if (activityFeedManager) {
+            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 // Initialize dashboard feed
                 activityFeedManager.initializeFeed(dashboardFeedId, 'dashboard');
                 activityFeedManager.setFeedContainer(dashboardFeedId, 'dashboardActivityFeed');
@@ -1894,6 +1910,11 @@
                 
                 // Start auto-generation every 5 seconds for dashboard
                 activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
+            }
+
+            // Initialize chat system
+            if (typeof SentinelChat !== 'undefined') {
+                window.sentinelChat = new SentinelChat();
             }
 
             // Populate sub-agents from shared.js
@@ -1927,49 +1948,60 @@
 
         function populateSubAgents() {
             const grid = document.getElementById('subAgentsGrid');
+            if (!grid) return;
+            
             grid.innerHTML = '';
 
             // Get all sub-agents from shared.js SubAgentConfigs
-            Object.keys(SubAgentConfigs).forEach(agentKey => {
-                const agent = SubAgentConfigs[agentKey];
-                
-                const card = document.createElement('div');
-                card.className = 'sub-agent-card';
-                card.onclick = () => window.location.href = agent.link;
-                
-                card.innerHTML = `
-                    <div class="sub-agent-manage-btn" onclick="event.stopPropagation(); manageAgent('${agentKey}')">Manage</div>
-                    <div class="sub-agent-card-content">
-                        <div class="sub-agent-card-icon">${agent.icon}</div>
-                        <div class="sub-agent-card-info">
-                            <div class="sub-agent-card-name">${agent.name}</div>
-                            <div class="sub-agent-card-description">${agent.description}</div>
-                            <div class="sub-agent-card-activity">
-                                <span class="activity-dot"></span>
-                                <span>${agent.activity}</span>
+            if (typeof SubAgentConfigs !== 'undefined') {
+                Object.keys(SubAgentConfigs).forEach(agentKey => {
+                    const agent = SubAgentConfigs[agentKey];
+                    
+                    const card = document.createElement('div');
+                    card.className = 'sub-agent-card';
+                    card.onclick = () => window.location.href = agent.link;
+                    
+                    card.innerHTML = `
+                        <div class="sub-agent-manage-btn" onclick="event.stopPropagation(); manageAgent('${agentKey}')">Manage</div>
+                        <div class="sub-agent-card-content">
+                            <div class="sub-agent-card-icon">${agent.icon}</div>
+                            <div class="sub-agent-card-info">
+                                <div class="sub-agent-card-name">${agent.name}</div>
+                                <div class="sub-agent-card-description">${agent.description}</div>
+                                <div class="sub-agent-card-activity">
+                                    <span class="activity-dot"></span>
+                                    <span>${agent.activity}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
-                
-                grid.appendChild(card);
-            });
+                    `;
+                    
+                    grid.appendChild(card);
+                });
 
-            // Update the sub-agent count in main agent card
-            document.getElementById('subAgentCountCard').textContent = Object.keys(SubAgentConfigs).length;
+                // Update the sub-agent count in main agent card
+                const countElement = document.getElementById('subAgentCountCard');
+                if (countElement) {
+                    countElement.textContent = Object.keys(SubAgentConfigs).length;
+                }
+            }
         }
 
         function manageAgent(agentKey) {
-            const agent = SubAgentConfigs[agentKey];
-            if (sentinelChat && !SentinelState.chatOpen) {
-                sentinelChat.toggle();
-            }
-            setTimeout(() => {
-                sentinelChat?.addMessage(`Accessing ${agent.name} management interface...`, false, 'system');
+            if (typeof SubAgentConfigs !== 'undefined') {
+                const agent = SubAgentConfigs[agentKey];
+                if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                    window.sentinelChat.toggle();
+                }
                 setTimeout(() => {
-                    sentinelChat?.addMessage(`${agent.name}: ${agent.description}. Status: ${agent.status}. Use "help" for available commands.`, false);
-                }, 800);
-            }, 300);
+                    if (window.sentinelChat) {
+                        window.sentinelChat.addMessage(`Accessing ${agent.name} management interface...`, false, 'system');
+                        setTimeout(() => {
+                            window.sentinelChat.addMessage(`${agent.name}: ${agent.description}. Status: ${agent.status}. Use "help" for available commands.`, false);
+                        }, 800);
+                    }
+                }, 300);
+            }
         }
 
         function initializeGlobalUpdates() {
@@ -1979,6 +2011,8 @@
 
         function populateGlobalUpdates() {
             const container = document.getElementById('networkUpdates');
+            if (!container) return;
+            
             container.innerHTML = '';
 
             globalUpdates.slice(0, 6).forEach(update => {
@@ -2046,11 +2080,12 @@
         }
 
         function openUpdateDetails(update) {
-            if (sentinelChat && !SentinelState.chatOpen) {
-                sentinelChat.toggle();
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
             }
             setTimeout(() => {
-                sentinelChat?.addMessage(`Global Network Update Details:
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`Global Network Update Details:
 • Title: ${update.title}
 • Source: ${update.source}
 • Priority: ${update.priority.toUpperCase()}
@@ -2058,6 +2093,7 @@
 • Message: ${update.message}
 • Impact: This update affects your agent's security posture and performance
 • Action Required: No manual intervention needed - updates applied automatically`, false);
+                }
             }, 300);
         }
 
@@ -2065,45 +2101,55 @@
             // Occasionally change threat count
             if (Math.random() > 0.9) {
                 const threatEl = document.getElementById('threatCount');
-                const current = parseInt(threatEl.textContent);
-                threatEl.textContent = Math.max(0, current + Math.floor(Math.random() * 3 - 1));
+                if (threatEl) {
+                    const current = parseInt(threatEl.textContent);
+                    threatEl.textContent = Math.max(0, current + Math.floor(Math.random() * 3 - 1));
+                }
             }
             
             // Update device count
             if (Math.random() > 0.95) {
                 const deviceElMetric = document.getElementById('deviceCountMetric');
-                const current = parseInt(deviceElMetric.textContent);
-                const newCount = current + Math.floor(Math.random() * 3);
-                deviceElMetric.textContent = newCount;
+                if (deviceElMetric) {
+                    const current = parseInt(deviceElMetric.textContent);
+                    const newCount = current + Math.floor(Math.random() * 3);
+                    deviceElMetric.textContent = newCount;
+                }
             }
             
             // Update blocked count
             const blockedEl = document.getElementById('blockedCount');
-            const blocked = parseFloat(blockedEl.textContent.replace('K', ''));
-            blockedEl.textContent = (blocked + 0.1).toFixed(1) + 'K';
+            if (blockedEl) {
+                const blocked = parseFloat(blockedEl.textContent.replace('K', ''));
+                blockedEl.textContent = (blocked + 0.1).toFixed(1) + 'K';
+            }
 
             // Update decisions per minute
             const decisionsEl = document.getElementById('decisionsPerMin');
-            const decisions = 2.3 + Math.random() * 0.3;
-            decisionsEl.textContent = decisions.toFixed(1) + 'K';
+            if (decisionsEl) {
+                const decisions = 2.3 + Math.random() * 0.3;
+                decisionsEl.textContent = decisions.toFixed(1) + 'K';
+            }
         }
 
         function simulateNetworkStatusChange() {
             // Rarely simulate a network status change
             if (Math.random() > 0.8) {
                 const networkStatus = document.getElementById('networkStatus');
-                const statusText = networkStatus.querySelector('span:last-child');
-                
-                if (Math.random() > 0.5) {
-                    // Network sync delay
-                    networkStatus.className = 'network-status-indicator warning';
-                    statusText.textContent = 'SYNC DELAY';
+                if (networkStatus) {
+                    const statusText = networkStatus.querySelector('span:last-child');
                     
-                    // Restore after 3 seconds
-                    setTimeout(() => {
-                        networkStatus.className = 'network-status-indicator online';
-                        statusText.textContent = 'LIVE FEED';
-                    }, 3000);
+                    if (Math.random() > 0.5) {
+                        // Network sync delay
+                        networkStatus.className = 'network-status-indicator warning';
+                        if (statusText) statusText.textContent = 'SYNC DELAY';
+                        
+                        // Restore after 3 seconds
+                        setTimeout(() => {
+                            networkStatus.className = 'network-status-indicator online';
+                            if (statusText) statusText.textContent = 'LIVE FEED';
+                        }, 3000);
+                    }
                 }
             }
         }
@@ -2123,77 +2169,114 @@
         }
 
         function showMainAgentDetails() {
-            if (!SentinelState.chatOpen && sentinelChat) {
-                sentinelChat.toggle();
+            if (typeof SentinelState !== 'undefined' && !SentinelState.chatOpen && window.sentinelChat) {
+                window.sentinelChat.toggle();
             }
             setTimeout(() => {
-                sentinelChat?.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Global Network Updates sync active with real-time notifications from AI Sentinel command center.', false);
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Global Network Updates sync active with real-time notifications from AI Sentinel command center.', false);
+                }
             }, 300);
         }
 
         // Cleanup activity feed on page unload
         window.addEventListener('beforeunload', () => {
-            if (activityFeedManager) {
+            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 activityFeedManager.stopAutoGeneration(dashboardFeedId);
             }
         });
 
-        // Global functions for compatibility - leverage shared.js
-        window.toggleChat = () => sentinelChat?.toggle();
+        // Global functions for compatibility
+        window.toggleChat = () => {
+            if (window.sentinelChat) {
+                window.sentinelChat.toggle();
+            }
+        };
+        
         window.sendChatMessage = () => {
             const input = document.getElementById('aiChatInput');
-            if (input && input.value.trim()) {
-                sentinelChat?.sendMessage(input.value.trim());
+            if (input && input.value.trim() && window.sentinelChat) {
+                window.sentinelChat.sendMessage(input.value.trim());
                 input.value = '';
             }
         };
+        
         window.handleChatKeyPress = (e) => {
             if (e.key === 'Enter') {
                 sendChatMessage();
             }
         };
-        window.showAgentShutdownModal = () => document.getElementById('agentShutdownModal').style.display = 'flex';
-        window.closeModal = () => document.getElementById('agentShutdownModal').style.display = 'none';
-        window.closeModalOnOverlay = (e) => {if (e.target.classList.contains('modal-overlay')) closeModal();};
-        window.confirmAgentShutdown = () => {
-            SentinelState.agentActive = !SentinelState.agentActive;
-            
-            // Update UI elements
-            const agentStatus = document.querySelector('.agent-status');
-            const agentTitle = document.querySelector('.agent-title');
-            const agentStatusText = document.querySelector('.agent-status-text');
-            
-            if (SentinelState.agentActive) {
-                agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
-                agentStatus.style.borderColor = '#00ff88';
-                agentTitle.textContent = 'AI Agent Active';
-                agentTitle.style.color = 'var(--primary)';
-                agentStatusText.textContent = 'Autonomous with Manual Override';
-                
-                // Resume activity feed
-                if (activityFeedManager) {
-                    activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
-                }
-            } else {
-                agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
-                agentStatus.style.borderColor = '#ffaa00';
-                agentTitle.textContent = 'AI Agent Paused';
-                agentTitle.style.color = '#ffaa00';
-                agentStatusText.textContent = 'Manual Control Only';
-                
-                // Pause activity feed
-                if (activityFeedManager) {
-                    activityFeedManager.stopAutoGeneration(dashboardFeedId);
-                }
-            }
-            
-            closeModal();
-            
-            if (SentinelState.chatOpen && sentinelChat) {
-                const status = SentinelState.agentActive ? 'resumed autonomous operation' : 'switched to manual control mode';
-                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. CLI mode available if external connections fail. Global Network Updates sync ${SentinelState.agentActive ? 'maintained' : 'reduced'}.`, false, 'system');
+        
+        window.showAgentShutdownModal = () => {
+            const modal = document.getElementById('agentShutdownModal');
+            if (modal) modal.style.display = 'flex';
+        };
+        
+        window.closeModal = () => {
+            const modal = document.getElementById('agentShutdownModal');
+            if (modal) modal.style.display = 'none';
+        };
+        
+        window.closeModalOnOverlay = (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeModal();
             }
         };
+        
+        window.confirmAgentShutdown = () => {
+            if (typeof SentinelState !== 'undefined') {
+                SentinelState.agentActive = !SentinelState.agentActive;
+                
+                // Update UI elements
+                const agentStatus = document.querySelector('.agent-status');
+                const agentTitle = document.querySelector('.agent-title');
+                const agentStatusText = document.querySelector('.agent-status-text');
+                
+                if (SentinelState.agentActive) {
+                    if (agentStatus) {
+                        agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
+                        agentStatus.style.borderColor = '#00ff88';
+                    }
+                    if (agentTitle) {
+                        agentTitle.textContent = 'AI Agent Active';
+                        agentTitle.style.color = 'var(--primary)';
+                    }
+                    if (agentStatusText) {
+                        agentStatusText.textContent = 'Autonomous with Manual Override';
+                    }
+                    
+                    // Resume activity feed
+                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                        activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
+                    }
+                } else {
+                    if (agentStatus) {
+                        agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
+                        agentStatus.style.borderColor = '#ffaa00';
+                    }
+                    if (agentTitle) {
+                        agentTitle.textContent = 'AI Agent Paused';
+                        agentTitle.style.color = '#ffaa00';
+                    }
+                    if (agentStatusText) {
+                        agentStatusText.textContent = 'Manual Control Only';
+                    }
+                    
+                    // Pause activity feed
+                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                        activityFeedManager.stopAutoGeneration(dashboardFeedId);
+                    }
+                }
+                
+                closeModal();
+                
+                if (SentinelState.chatOpen && window.sentinelChat) {
+                    const status = SentinelState.agentActive ? 'resumed autonomous operation' : 'switched to manual control mode';
+                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. CLI mode available if external connections fail. Global Network Updates sync ${SentinelState.agentActive ? 'maintained' : 'reduced'}.`, false, 'system');
+                }
+            }
+        };
+        
         window.handleLogout = () => {
             if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously with Global Network Updates oversight.')) {
                 localStorage.removeItem('sentinel_auth');
