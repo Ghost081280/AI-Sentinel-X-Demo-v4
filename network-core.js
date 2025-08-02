@@ -79,8 +79,82 @@ const packageConfigs = {
 function initializeNetworkDiscovery() {
     console.log('Initializing V4 Network Discovery...');
     
+    // Initialize neural network background
+    initNeuralBackground();
+    
     // Update sub-agent metrics periodically
     setInterval(updateSubAgentMetrics, 5000);
+}
+
+// Initialize neural network background
+function initNeuralBackground() {
+    const canvas = document.getElementById('neuralCanvas');
+    if (!canvas) return;
+    
+    const ctx = canvas.getContext('2d');
+    
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    const nodes = [];
+    const nodeCount = 80;
+    
+    for (let i = 0; i < nodeCount; i++) {
+        nodes.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            radius: Math.random() * 2 + 1
+        });
+    }
+    
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        // Update nodes
+        nodes.forEach(node => {
+            node.x += node.vx;
+            node.y += node.vy;
+            
+            if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+            if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+        });
+        
+        // Draw connections
+        ctx.strokeStyle = 'rgba(0, 255, 136, 0.1)';
+        ctx.lineWidth = 0.5;
+        
+        nodes.forEach((node1, i) => {
+            nodes.slice(i + 1).forEach(node2 => {
+                const dist = Math.hypot(node1.x - node2.x, node1.y - node2.y);
+                if (dist < 100) {
+                    ctx.globalAlpha = 1 - dist / 100;
+                    ctx.beginPath();
+                    ctx.moveTo(node1.x, node1.y);
+                    ctx.lineTo(node2.x, node2.y);
+                    ctx.stroke();
+                }
+            });
+        });
+        
+        // Draw nodes
+        ctx.globalAlpha = 1;
+        nodes.forEach(node => {
+            const gradient = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, node.radius * 2);
+            gradient.addColorStop(0, 'rgba(0, 255, 136, 0.8)');
+            gradient.addColorStop(1, 'rgba(0, 255, 136, 0)');
+            
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, node.radius * 2, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        
+        requestAnimationFrame(animate);
+    }
+    
+    animate();
 }
 
 // Start network scan
@@ -190,9 +264,9 @@ function generateScanResults() {
     ];
     
     // Select scenario randomly for demo variety
-    scanResults = scenarios[Math.floor(Math.random() * scenarios.length)];
-    endpointCount = scanResults.endpoints;
-    encryptionGaps = scanResults.encryptionGaps;
+    window.scanResults = scenarios[Math.floor(Math.random() * scenarios.length)];
+    endpointCount = window.scanResults.endpoints;
+    encryptionGaps = window.scanResults.encryptionGaps;
     
     // Display results
     displayScanResults();
@@ -377,7 +451,7 @@ function activateProtection() {
     initializeDataForPackage();
     populateAllContent();
     
-    // Show encryption gaps if any
+    // Show encryption gaps if any (ONLY after scan and activation)
     if (encryptionGaps > 0) {
         document.getElementById('encryptionGapAlert').style.display = 'flex';
         document.getElementById('gapDescription').textContent = `${encryptionGaps} devices lack proper encryption and require immediate attention.`;
@@ -400,12 +474,12 @@ function initializeDataForPackage() {
             id: 'server-main',
             name: 'Production Server',
             range: '203.0.113.42/32',
-            location: scanResults.locations[0],
+            location: window.scanResults.locations[0],
             organization: 'DigitalOcean',
             status: 'Active',
             devices: endpointCount,
-            services: scanResults.services,
-            vulnerabilities: scanResults.vulnerabilities,
+            services: window.scanResults.services,
+            vulnerabilities: window.scanResults.vulnerabilities,
             bandwidth: '1Gbps'
         }];
         
@@ -422,7 +496,7 @@ function initializeDataForPackage() {
                 encryption: 'AES-256-GCM',
                 aiStatus: 'Monitored',
                 os: 'Ubuntu 22.04 LTS',
-                location: scanResults.locations[0]
+                location: window.scanResults.locations[0]
             }
         ];
         
@@ -444,7 +518,7 @@ function initializeDataForPackage() {
         }
     } else if (currentPackage === 'multi') {
         // Multi-site business data
-        const locations = scanResults.locations;
+        const locations = window.scanResults.locations;
         const devicesPerLocation = Math.floor(endpointCount / locations.length);
         
         ipRanges = locations.map((location, i) => ({
@@ -455,8 +529,8 @@ function initializeDataForPackage() {
             organization: 'Business Fiber',
             status: 'Active',
             devices: devicesPerLocation + (i === 0 ? endpointCount % locations.length : 0),
-            services: Math.floor(scanResults.services / locations.length),
-            vulnerabilities: Math.floor(scanResults.vulnerabilities / locations.length),
+            services: Math.floor(window.scanResults.services / locations.length),
+            vulnerabilities: Math.floor(window.scanResults.vulnerabilities / locations.length),
             bandwidth: i === 0 ? '1Gbps' : '500Mbps'
         }));
 
@@ -495,7 +569,7 @@ function initializeDataForPackage() {
         });
     } else { // global
         // Enterprise data with multiple data centers
-        const locations = scanResults.locations;
+        const locations = window.scanResults.locations;
         const devicesPerDC = Math.floor(endpointCount / locations.length);
         
         ipRanges = locations.map((location, i) => ({
@@ -506,8 +580,8 @@ function initializeDataForPackage() {
             organization: `AS6451${i}`,
             status: 'Active',
             devices: devicesPerDC + (i === 0 ? endpointCount % locations.length : 0),
-            services: Math.floor(scanResults.services / locations.length),
-            vulnerabilities: Math.floor(scanResults.vulnerabilities / locations.length),
+            services: Math.floor(window.scanResults.services / locations.length),
+            vulnerabilities: Math.floor(window.scanResults.vulnerabilities / locations.length),
             bandwidth: `${10 + Math.floor(Math.random() * 10)}GB/s`
         }));
 
@@ -689,7 +763,7 @@ function getOverviewData() {
             { icon: '⚠️', value: totalVulnerabilities.toString(), label: 'Critical', type: 'critical' },
             { icon: '📊', value: '99.9%', label: 'SLA', type: 'sla' },
             { icon: '🔄', value: '24/7', label: 'Monitoring', type: 'monitoring' },
-            { icon: '🌍', value: scanResults.locations.length.toString(), label: 'Regions', type: 'regions' }
+            { icon: '🌍', value: window.scanResults.locations.length.toString(), label: 'Regions', type: 'regions' }
         ];
     }
 }
@@ -699,9 +773,10 @@ function populateScanningGrid() {
     // External scan content
     const externalContent = document.getElementById('externalScanContent');
     if (externalContent) {
-        externalContent.innerHTML = `
-            <div class="scan-results">
-                ${scanResults.externalPorts.map(port => `
+        const scanList = externalContent.querySelector('.scan-results-list');
+        if (scanList) {
+            scanList.innerHTML = `
+                ${window.scanResults.externalPorts.map(port => `
                     <div class="scan-results-item">
                         <span class="scan-results-label">Port ${port}</span>
                         <span class="scan-results-value">${getServiceName(port)}</span>
@@ -715,29 +790,28 @@ function populateScanningGrid() {
                     <span class="scan-results-label">Reputation</span>
                     <span class="scan-results-value">Clean</span>
                 </div>
-            </div>
-        `;
+            `;
+        }
     }
 
     // Internal scan content
     const internalContent = document.getElementById('internalScanContent');
     if (internalContent) {
         const services = getInternalServices();
+        const serviceList = internalContent.querySelector('.service-list');
         
-        internalContent.innerHTML = `
-            <div class="service-list">
-                ${services.map(service => `
-                    <div class="service-item" onclick="showServiceDetails('${service.name}')">
-                        <div class="service-info">
-                            <div class="service-name">${service.name}</div>
-                            <div class="service-details">${service.details}</div>
-                            <div class="service-encryption">${service.encryption}</div>
-                        </div>
-                        <div class="service-status ${service.statusClass}">${service.status}</div>
+        if (serviceList) {
+            serviceList.innerHTML = services.map(service => `
+                <div class="service-item" onclick="showServiceDetails('${service.name}')">
+                    <div class="service-info">
+                        <div class="service-name">${service.name}</div>
+                        <div class="service-details">${service.details}</div>
+                        <div class="service-encryption">${service.encryption}</div>
                     </div>
-                `).join('')}
-            </div>
-        `;
+                    <div class="service-status ${service.statusClass}">${service.status}</div>
+                </div>
+            `).join('');
+        }
     }
 }
 
@@ -1023,10 +1097,10 @@ function updateSubAgentMetrics(fromScan = false) {
     const openServices = document.getElementById('openServices');
     const newDevices = document.getElementById('newDevices');
     
-    if (fromScan && scanResults) {
-        if (totalNetworks) totalNetworks.textContent = scanResults.publicIPs;
-        if (discoveredDevices) discoveredDevices.textContent = scanResults.endpoints;
-        if (openServices) openServices.textContent = scanResults.services;
+    if (fromScan && window.scanResults) {
+        if (totalNetworks) totalNetworks.textContent = window.scanResults.publicIPs;
+        if (discoveredDevices) discoveredDevices.textContent = window.scanResults.endpoints;
+        if (openServices) openServices.textContent = window.scanResults.services;
         if (newDevices) newDevices.textContent = Math.floor(Math.random() * 5 + 1);
     } else if (discoveryActive) {
         // Animate numbers during scanning
@@ -1120,6 +1194,15 @@ function handleLogout() {
     }
 }
 
+// Handle window resize
+window.addEventListener('resize', () => {
+    const canvas = document.getElementById('neuralCanvas');
+    if (canvas) {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+});
+
 // Initialize on DOM ready
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Network V4 module loaded');
@@ -1142,7 +1225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const selectedScenario = scenarios[savedPackage === 'essential' ? 0 : savedPackage === 'multi' ? 1 : 2];
         
-        scanResults = {
+        window.scanResults = {
             publicIPs: savedPackage === 'essential' ? 1 : savedPackage === 'multi' ? 4 : 12,
             endpoints: selectedScenario.endpoints,
             services: selectedScenario.services,
