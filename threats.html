@@ -413,12 +413,13 @@
             text-transform: uppercase;
         }
 
-        /* Main Content Grid */
+        /* Main Content Grid - Equal height columns */
         .main-content {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 25px;
             margin-bottom: 30px;
+            align-items: start;
         }
 
         .left-column {
@@ -428,20 +429,10 @@
         }
 
         .right-column {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-rows: 1fr 1fr;
             gap: 25px;
             height: fit-content;
-        }
-
-        .right-column .section-card {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .right-column .section-card:last-child {
-            flex: 1;
         }
 
         /* Section Cards */
@@ -801,13 +792,12 @@
             border: 1px solid var(--success);
         }
 
-        /* Threat Intelligence & Correlation - FIXED to match exact height */
+        /* Threat Intelligence & Correlation - Proper spacing */
         .intelligence-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            height: 100%;
-            min-height: 100%;
+            min-height: 400px;
         }
 
         .intelligence-card {
@@ -819,9 +809,9 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            min-height: 180px;
             display: flex;
             flex-direction: column;
-            height: 100%;
         }
 
         .intelligence-card::before {
@@ -935,12 +925,12 @@
             letter-spacing: 1px;
         }
 
-        /* Threat Hunting & Investigation - Set consistent height */
+        /* Threat Hunting & Investigation - Consistent with intelligence */
         .threat-hunting-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
-            height: 100%;
+            min-height: 400px;
         }
 
         .threat-hunting-card {
