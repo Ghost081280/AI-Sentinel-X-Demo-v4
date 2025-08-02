@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NetworkMapper | AI Sentinel-X</title>
+    <title>Network Discovery | AI Sentinel-X</title>
     <style>
         * {
             margin: 0;
@@ -27,6 +27,12 @@
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
             --gradient-shield: linear-gradient(135deg, #1a4d2e 0%, #00ff88 50%, #00ccff 100%);
+            --gradient-network: linear-gradient(135deg, #00ccff 0%, #0066ff 100%);
+            --gradient-external: linear-gradient(135deg, #ff0044 0%, #ff6644 100%);
+            --gradient-internal: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
+            --gradient-datacenter: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            --gradient-business: linear-gradient(135deg, #9333ea 0%, #c084fc 100%);
+            --gradient-hybrid: linear-gradient(135deg, #00ff88 0%, #7c3aed 50%, #00ccff 100%);
         }
 
         body {
@@ -62,7 +68,7 @@
         .header {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 15px 15px 20px 20px;
+            border-radius: 15px;
             padding: 25px 35px;
             margin-bottom: 30px;
             backdrop-filter: blur(15px);
@@ -98,7 +104,7 @@
             background: var(--gradient-shield);
             clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
             position: relative;
-            animation: shieldPulse 4s ease-in-out infinite;
+            animation: shieldPulse 3s ease-in-out infinite;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -106,7 +112,7 @@
 
         @keyframes shieldPulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.03); }
+            50% { transform: scale(1.05); }
         }
 
         .logo-eye {
@@ -125,14 +131,14 @@
             height: 20px;
             background: var(--gradient-1);
             border-radius: 50%;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.8);
         }
 
         .rotating-dots {
             position: absolute;
             width: 100%;
             height: 100%;
-            animation: rotate 12s linear infinite;
+            animation: rotate 10s linear infinite;
         }
 
         @keyframes rotate {
@@ -146,7 +152,7 @@
             height: 4px;
             background: var(--primary);
             border-radius: 50%;
-            box-shadow: 0 0 4px var(--primary);
+            box-shadow: 0 0 6px var(--primary);
         }
 
         .dot:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
@@ -181,6 +187,41 @@
             align-items: center;
         }
 
+        /* Scale Detection Indicator */
+        .scale-indicator {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .scale-individual {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .scale-business {
+            background: rgba(147, 51, 234, 0.1);
+            border-color: #9333ea;
+            color: #9333ea;
+        }
+
+        .scale-enterprise {
+            background: rgba(255, 107, 53, 0.1);
+            border-color: #ff6b35;
+            color: #ff6b35;
+        }
+
+        /* Encryption Status Badges */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -200,7 +241,6 @@
             border: 2px solid;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
-            cursor: pointer;
         }
 
         .encryption-badge.classical {
@@ -215,26 +255,21 @@
             color: var(--accent);
         }
 
-        .encryption-badge:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 3s ease-in-out infinite;
+            animation: statusPulse 2s ease-in-out infinite;
         }
 
         .status-light.active {
             background: var(--success);
-            box-shadow: 0 0 8px var(--success);
+            box-shadow: 0 0 10px var(--success);
         }
 
         @keyframes statusPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
         }
 
         .agent-status {
@@ -250,9 +285,9 @@
         }
 
         .agent-status:hover {
-            background: rgba(0, 255, 136, 0.15);
+            background: rgba(0, 255, 136, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
         }
 
         .agent-icon {
@@ -336,14 +371,14 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner - Only shown on inner pages */
+        /* Sub-Agent Status - NetworkMapper */
         .sub-agent-status {
             background: linear-gradient(135deg, rgba(0, 204, 255, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
             border: 1px solid rgba(0, 204, 255, 0.3);
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 25px;
-            display: none;
+            display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
@@ -401,462 +436,7 @@
             text-transform: uppercase;
         }
 
-        /* Discovery Section - Landing Page */
-        .discovery-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .discovery-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
-            animation: discoveryScan 8s linear infinite;
-        }
-
-        @keyframes discoveryScan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .discovery-title {
-            font-size: 32px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .discovery-subtitle {
-            color: var(--text-secondary);
-            font-size: 18px;
-            line-height: 1.6;
-            margin-bottom: 40px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* Auto-Scan CTA */
-        .auto-scan-cta {
-            position: relative;
-            z-index: 1;
-            margin-bottom: 50px;
-        }
-
-        .scan-btn-primary {
-            background: var(--gradient-1);
-            border: none;
-            border-radius: 30px;
-            padding: 25px 50px;
-            color: var(--bg-darker);
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 20px;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scan-btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .scan-btn-primary:hover::before {
-            left: 100%;
-        }
-
-        .scan-btn-primary:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.5);
-        }
-
-        .scan-btn-primary:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .scan-icon {
-            font-size: 36px;
-        }
-
-        .scan-text {
-            font-size: 22px;
-            font-weight: bold;
-        }
-
-        .scan-subtitle {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        /* Scan Progress */
-        .scan-progress {
-            margin-top: 30px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        .progress-bar {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            height: 12px;
-            overflow: hidden;
-            margin-bottom: 15px;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .progress-fill {
-            background: var(--gradient-1);
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s ease;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
-        }
-
-        .progress-text {
-            color: var(--text-secondary);
-            font-size: 16px;
-            font-style: italic;
-        }
-
-        /* Package Preview Cards */
-        .packages-preview {
-            position: relative;
-            z-index: 1;
-            margin-top: 60px;
-        }
-
-        .packages-preview-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .packages-preview-subtitle {
-            color: var(--text-secondary);
-            text-align: center;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-
-        .packages-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .package-preview-card {
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .package-preview-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-1);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .package-preview-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
-            border-color: var(--primary);
-        }
-
-        .package-preview-card:hover::before {
-            opacity: 1;
-        }
-
-        .package-icon {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-
-        .package-name {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: var(--text-primary);
-        }
-
-        .package-description {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            line-height: 1.5;
-        }
-
-        .package-price {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .package-coverage {
-            font-size: 12px;
-            color: var(--text-secondary);
-        }
-
-        /* Scan Results */
-        .scan-results {
-            margin-top: 40px;
-            display: none;
-            animation: fadeIn 0.5s ease;
-            position: relative;
-            z-index: 1;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .results-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .result-card {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-        }
-
-        .result-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 255, 136, 0.2);
-        }
-
-        .result-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .result-value {
-            font-size: 28px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .result-label {
-            font-size: 14px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Package Selection */
-        .package-selection {
-            margin-top: 40px;
-            display: none;
-            position: relative;
-            z-index: 1;
-        }
-
-        .package-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .package-card {
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            margin-bottom: 20px;
-        }
-
-        .package-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--gradient-1);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .package-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.3);
-            border-color: var(--primary);
-        }
-
-        .package-card:hover::before {
-            opacity: 1;
-        }
-
-        .package-card.recommended {
-            border-color: var(--secondary);
-            box-shadow: 0 0 30px rgba(0, 204, 255, 0.3);
-        }
-
-        .package-badge {
-            background: var(--gradient-2);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 12px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            animation: pulseBadge 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseBadge {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .package-features {
-            text-align: left;
-            margin-bottom: 25px;
-        }
-
-        .package-feature {
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .package-feature::before {
-            content: '✓';
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        .package-pricing {
-            margin-bottom: 20px;
-        }
-
-        .package-price {
-            font-size: 36px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .package-price-period {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
-
-        .package-endpoints {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .package-select-btn {
-            background: var(--gradient-1);
-            border: none;
-            border-radius: 25px;
-            padding: 15px 30px;
-            color: var(--bg-darker);
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
-        }
-
-        .package-select-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.4);
-        }
-
-        /* Main Content - Inner Pages */
-        .main-content {
-            display: none;
-        }
-
-        /* Encryption Gap Alert - Only shown after scan */
+        /* NEW: Encryption Gap Alert */
         .encryption-gap-alert {
             background: linear-gradient(135deg, rgba(255, 170, 0, 0.15) 0%, rgba(255, 68, 68, 0.1) 100%);
             border: 2px solid var(--warning);
@@ -867,13 +447,11 @@
             justify-content: space-between;
             align-items: center;
             animation: alertPulse 3s ease-in-out infinite;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
         }
 
-        .encryption-gap-alert:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(255, 170, 0, 0.4);
+        .encryption-gap-alert.active {
+            display: flex;
         }
 
         @keyframes alertPulse {
@@ -915,76 +493,503 @@
             box-shadow: 0 5px 15px rgba(0, 255, 136, 0.4);
         }
 
-        /* Network Overview Section */
-        .network-overview {
+        /* Enhanced Environment Detection */
+        .environment-detection {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
             backdrop-filter: blur(15px);
+            text-align: center;
         }
 
-        .overview-header {
+        .detection-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detection-description {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Auto-Scan Section */
+        .auto-scan-section {
+            margin-bottom: 40px;
+        }
+
+        .auto-scan-btn {
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 20px;
+            padding: 20px 40px;
+            color: var(--bg-darker);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto;
+            min-width: 280px;
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3);
+        }
+
+        .auto-scan-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 255, 136, 0.4);
+        }
+
+        .auto-scan-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .scan-icon {
+            font-size: 24px;
+        }
+
+        .scan-text {
+            font-size: 18px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scan-subtitle {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Scan Progress */
+        .scan-progress {
+            margin-top: 20px;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 8px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            background: var(--gradient-1);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .progress-text {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* Solution Divider */
+        .solution-divider {
+            margin: 40px 0 30px 0;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .solution-divider::before,
+        .solution-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .solution-divider::before {
+            left: 0;
+        }
+
+        .solution-divider::after {
+            right: 0;
+        }
+
+        /* Enhanced Scale Options */
+        .scale-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .scale-option {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scale-option::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .scale-option:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
+        }
+
+        .scale-option:hover::before {
+            opacity: 1;
+        }
+
+        .scale-option.selected {
+            border-color: var(--primary);
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateY(-5px);
+        }
+
+        .scale-option.selected::before {
+            opacity: 1;
+        }
+
+        .scale-option.business:hover,
+        .scale-option.business.selected {
+            border-color: #9333ea;
+            box-shadow: 0 15px 40px rgba(147, 51, 234, 0.2);
+        }
+
+        .scale-option.business::before {
+            background: linear-gradient(90deg, transparent, #9333ea, transparent);
+        }
+
+        .scale-option.enterprise:hover,
+        .scale-option.enterprise.selected {
+            border-color: #ff6b35;
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.2);
+        }
+
+        .scale-option.enterprise::before {
+            background: linear-gradient(90deg, transparent, #ff6b35, transparent);
+        }
+
+        /* Scale Option Header */
+        .scale-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
+            position: relative;
         }
 
-        .overview-title {
-            font-size: 20px;
+        .scale-icon {
+            font-size: 48px;
+        }
+
+        .scale-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scale-badge.starter {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+
+        .scale-badge.professional {
+            background: rgba(147, 51, 234, 0.2);
+            color: #9333ea;
+            border: 1px solid #9333ea;
+        }
+
+        .scale-badge.enterprise {
+            background: rgba(255, 107, 53, 0.2);
+            color: #ff6b35;
+            border: 1px solid #ff6b35;
+        }
+
+        .scale-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .scale-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Scale Features */
+        .scale-features {
+            margin-bottom: 20px;
+        }
+
+        .feature {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            line-height: 1.5;
+        }
+
+        .feature::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .business .feature::before {
+            background: #9333ea;
+        }
+
+        .enterprise .feature::before {
+            background: #ff6b35;
+        }
+
+        /* Updated Pricing - Now License-based */
+        .scale-pricing {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary);
+            text-align: center;
+            padding: 12px;
+            background: rgba(0, 255, 136, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            margin-bottom: 15px;
+        }
+
+        .business .scale-pricing {
+            color: #9333ea;
+            background: rgba(147, 51, 234, 0.1);
+            border-color: rgba(147, 51, 234, 0.3);
+        }
+
+        .enterprise .scale-pricing {
+            color: #ff6b35;
+            background: rgba(255, 107, 53, 0.1);
+            border-color: rgba(255, 107, 53, 0.3);
+        }
+
+        .scale-coverage {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* Solution Footer */
+        .solution-footer {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .solution-footer p {
+            margin-bottom: 10px;
+        }
+
+        .solution-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .solution-footer a:hover {
+            color: var(--secondary);
+            text-decoration: underline;
+        }
+
+        /* IP Range Manager */
+        .ip-range-manager {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            display: none;
+        }
+
+        .ip-range-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .ip-range-title {
+            font-size: 24px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .overview-metrics {
+        .ip-range-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .add-range-btn {
+            background: var(--gradient-datacenter);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 12px;
+        }
+
+        .add-range-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .add-range-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .reset-config-btn {
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.1) 0%, rgba(0, 204, 255, 0.05) 100%);
+            border: 2px solid rgba(255, 170, 0, 0.4);
+            border-radius: 20px;
+            padding: 10px 20px;
+            color: var(--warning);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .reset-config-btn:hover {
+            background: linear-gradient(135deg, rgba(255, 170, 0, 0.2) 0%, rgba(0, 204, 255, 0.1) 100%);
+            border-color: var(--warning);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(255, 170, 0, 0.3);
+        }
+
+        .reset-config-btn .icon {
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .reset-config-btn:hover .icon {
+            transform: rotate(180deg);
+        }
+
+        /* IP Ranges Grid */
+        .ip-ranges-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 20px;
         }
 
-        .overview-metric {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        /* Interactive Dashboard */
+        .dashboard-interactive {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            display: none;
         }
 
-        .overview-metric:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.1);
+        .interactive-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
-        .metric-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
-
-        .metric-number {
-            font-size: 28px;
+        .interactive-title {
+            font-size: 24px;
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .metric-description {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
+        .auto-scan-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
 
         /* Scanning Grid */
         .scanning-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 25px;
             margin-bottom: 30px;
         }
@@ -995,24 +1000,12 @@
             border-radius: 15px;
             padding: 25px;
             backdrop-filter: blur(15px);
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
         }
 
-        .scan-panel::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 3px;
-            background: var(--gradient-1);
-            animation: scanLine 3s linear infinite;
-        }
-
-        @keyframes scanLine {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        .scan-panel:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
         }
 
         .panel-header {
@@ -1028,26 +1021,29 @@
             font-size: 18px;
             font-weight: bold;
             color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         .scan-status {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 12px;
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .scan-status.active {
+            background: rgba(0, 255, 136, 0.2);
             color: var(--success);
+            border: 1px solid var(--success);
         }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             background: currentColor;
             animation: pulse 2s ease-in-out infinite;
@@ -1055,52 +1051,36 @@
 
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.5); }
+            50% { opacity: 0.7; transform: scale(1.2); }
         }
 
-        /* External Scan Module */
-        .external-scan {
-            background: linear-gradient(135deg, rgba(255, 0, 68, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%);
-            border-color: rgba(255, 0, 68, 0.3);
+        .scan-results {
+            margin-bottom: 20px;
         }
 
-        .external-scan .panel-title {
-            color: var(--danger);
-        }
-
-        /* Internal Scan Module */
-        .internal-scan {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%);
-            border-color: rgba(0, 255, 136, 0.3);
-        }
-
-        /* Scan Results List */
-        .scan-results-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .scan-results-item {
+        .result-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 8px;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
-        .scan-results-label {
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-size: 13px;
             color: var(--text-secondary);
-            font-size: 14px;
         }
 
-        .scan-results-value {
-            color: var(--primary);
+        .result-value {
+            font-size: 13px;
             font-weight: bold;
-            font-size: 14px;
+            color: var(--text-primary);
         }
 
-        /* Service List */
         .service-list {
             display: flex;
             flex-direction: column;
@@ -1108,19 +1088,20 @@
         }
 
         .service-item {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
             padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
         }
 
         .service-item:hover {
             background: rgba(0, 255, 136, 0.05);
+            border-color: var(--primary);
             transform: translateX(5px);
         }
 
@@ -1129,43 +1110,110 @@
         }
 
         .service-name {
+            font-size: 14px;
             font-weight: bold;
-            color: var(--primary);
+            color: var(--text-primary);
             margin-bottom: 4px;
         }
 
         .service-details {
             font-size: 12px;
             color: var(--text-secondary);
+            margin-bottom: 4px;
         }
 
         .service-encryption {
             font-size: 11px;
-            color: var(--accent);
-            margin-top: 4px;
+            color: var(--primary);
         }
 
         .service-status {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .service-status.status-secure {
+        .status-secure {
             background: rgba(0, 255, 136, 0.2);
             color: var(--success);
         }
 
-        .service-status.status-warning {
+        .status-update {
             background: rgba(255, 170, 0, 0.2);
             color: var(--warning);
         }
 
-        .service-status.status-vulnerable {
-            background: rgba(255, 0, 68, 0.2);
-            color: var(--danger);
+        /* Network Overview */
+        .network-overview {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            display: none;
+        }
+
+        .overview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .overview-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .overview-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .overview-card:hover {
+            background: rgba(0, 255, 136, 0.05);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+        }
+
+        .overview-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .overview-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .overview-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Device Discovery */
@@ -1173,22 +1221,23 @@
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            backdrop-filter: blur(15px);
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            display: none;
         }
 
         .discovery-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
         }
 
-        .device-grid-title {
-            font-size: 20px;
+        .discovery-title {
+            font-size: 24px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
@@ -1197,113 +1246,103 @@
 
         .device-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
 
         .device-card {
-            background: rgba(0, 204, 255, 0.05);
-            border: 1px solid rgba(0, 204, 255, 0.2);
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 20px;
-            transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: deviceSlideIn 0.5s ease;
         }
 
         .device-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 204, 255, 0.2);
-            background: rgba(0, 204, 255, 0.08);
+            background: rgba(0, 255, 136, 0.05);
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
         }
 
         .device-card.new-device {
-            border-color: var(--warning);
-            background: rgba(255, 170, 0, 0.05);
+            border-color: var(--secondary);
+            animation: newDeviceGlow 2s ease-in-out;
         }
 
-        .device-card.new-device::after {
-            content: 'NEW';
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--warning);
-            color: var(--bg-darker);
-            font-size: 10px;
-            font-weight: bold;
-            padding: 2px 8px;
-            border-radius: 10px;
+        @keyframes deviceSlideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes newDeviceGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 204, 255, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(0, 204, 255, 0.6); }
         }
 
         .device-header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            justify-content: center;
             margin-bottom: 15px;
         }
 
         .device-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 204, 255, 0.1);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
+            font-size: 32px;
         }
 
         .device-name {
+            font-size: 14px;
             font-weight: bold;
-            color: var(--secondary);
-            margin-bottom: 8px;
-            font-size: 16px;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+            text-align: center;
         }
 
         .device-ip {
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-family: 'Courier New', monospace;
-            margin-bottom: 8px;
-        }
-
-        .device-details {
             font-size: 12px;
-            color: var(--text-secondary);
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
+            color: var(--secondary);
+            margin-bottom: 10px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
         }
 
         .device-services {
-            color: var(--accent);
-            font-size: 12px;
-            margin-top: 8px;
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .device-ai-status {
+            font-size: 11px;
+            color: var(--primary);
+            margin-bottom: 8px;
         }
 
         .device-encryption {
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--primary);
-            border-radius: 6px;
-            padding: 4px 8px;
-            font-size: 11px;
-            text-align: center;
-            margin-top: 10px;
-            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 10px;
+            color: var(--text-secondary);
         }
 
-        /* Sub-Agent Activity Feed */
+        /* Real-time Feed Section - NEW */
         .feed-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 25px;
-            height: 500px;
-            display: flex;
+            height: 450px;
+            display: none;
             flex-direction: column;
             backdrop-filter: blur(15px);
             margin-bottom: 30px;
+        }
+
+        .feed-section.active {
+            display: flex;
         }
 
         .feed-header {
@@ -1353,18 +1392,12 @@
         }
 
         .feed-item {
-            background: rgba(0, 204, 255, 0.05);
+            background: rgba(0, 0, 0, 0.4);
             border-left: 3px solid var(--secondary);
             padding: 15px 20px;
             margin-bottom: 15px;
             border-radius: 0 10px 10px 0;
             animation: feedSlide 0.3s ease;
-            transition: all 0.3s ease;
-        }
-
-        .feed-item:hover {
-            background: rgba(0, 204, 255, 0.1);
-            transform: translateX(5px);
         }
 
         @keyframes feedSlide {
@@ -1373,18 +1406,15 @@
         }
 
         .feed-item.ai-action {
-            background: rgba(124, 58, 237, 0.05);
             border-left-color: var(--accent);
         }
 
         .feed-item.encryption {
-            background: rgba(0, 255, 136, 0.05);
             border-left-color: var(--primary);
         }
 
-        .feed-item.warning {
-            background: rgba(255, 170, 0, 0.05);
-            border-left-color: var(--warning);
+        .feed-item.discovery {
+            border-left-color: var(--secondary);
         }
 
         .feed-time {
@@ -1407,33 +1437,33 @@
             font-style: italic;
         }
 
-        /* Checkout Modal */
-        .checkout-modal {
+        /* Modal Styles */
+        .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             align-items: center;
             justify-content: center;
             z-index: 10000;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
         }
 
-        .checkout-content {
+        .modal {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
             padding: 40px;
             max-width: 600px;
             width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
             backdrop-filter: blur(20px);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
             animation: modalSlideIn 0.3s ease;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         @keyframes modalSlideIn {
@@ -1441,79 +1471,58 @@
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .checkout-header {
+        .modal-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
 
-        .checkout-title {
-            font-size: 28px;
+        .modal-title {
+            font-size: 24px;
             font-weight: bold;
-            color: var(--primary);
             margin-bottom: 10px;
         }
 
-        .checkout-subtitle {
+        .modal-content {
             color: var(--text-secondary);
-            font-size: 16px;
-        }
-
-        .checkout-summary {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 25px;
+            line-height: 1.6;
             margin-bottom: 30px;
         }
 
-        .summary-item {
+        .modal-actions {
             display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 15px;
+            justify-content: center;
         }
 
-        .summary-item:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-        }
-
-        .summary-label {
-            color: var(--text-secondary);
-            font-size: 14px;
-        }
-
-        .summary-value {
+        .modal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
             font-weight: bold;
-            color: var(--text-primary);
-            font-size: 14px;
-        }
-
-        .summary-total {
-            font-size: 18px;
-            color: var(--primary);
-        }
-
-        .checkout-form {
-            margin-bottom: 30px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-label {
-            display: block;
-            color: var(--text-secondary);
-            font-size: 13px;
-            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 8px;
         }
 
-        .form-input {
+        .modal-btn-primary {
+            background: var(--gradient-1);
+            color: var(--bg-darker);
+        }
+
+        .modal-btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Modal Input Styles */
+        .modal-input {
             width: 100%;
             padding: 12px 15px;
             background: rgba(255, 255, 255, 0.05);
@@ -1521,75 +1530,131 @@
             border-radius: 8px;
             color: var(--text-primary);
             font-size: 14px;
-            transition: all 0.3s ease;
+            margin-top: 8px;
         }
 
-        .form-input:focus {
+        .modal-input:focus {
             outline: none;
             border-color: var(--primary);
             background: rgba(0, 255, 136, 0.05);
         }
 
-        .checkout-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .checkout-btn {
-            padding: 15px 40px;
-            border: none;
-            border-radius: 25px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-size: 16px;
-        }
-
-        .checkout-btn-primary {
-            background: var(--gradient-1);
-            color: var(--bg-darker);
-            flex: 1;
-        }
-
-        .checkout-btn-secondary {
-            background: transparent;
-            border: 2px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        .checkout-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Success State */
-        .success-message {
-            text-align: center;
-            padding: 40px;
-            display: none;
-        }
-
-        .success-icon {
-            font-size: 64px;
-            color: var(--success);
+        .input-group {
             margin-bottom: 20px;
         }
 
-        .success-title {
-            font-size: 24px;
+        .input-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* IP Range Card Styling */
+        .ip-range-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+        }
+
+        .ip-range-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
+        }
+
+        .range-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .range-name {
+            font-size: 18px;
             font-weight: bold;
             color: var(--primary);
+        }
+
+        .range-status {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-warning {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .status-vulnerable {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .range-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
             margin-bottom: 15px;
         }
 
-        .success-text {
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 12px;
             color: var(--text-secondary);
-            font-size: 16px;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .range-metrics {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+        }
+
+        .range-metric {
+            text-align: center;
+            flex: 1;
+        }
+
+        .range-metric-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .range-metric-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* AI Chat Widget */
@@ -1613,7 +1678,6 @@
             transition: all 0.3s ease;
             font-size: 28px;
             border: none;
-            color: var(--bg-darker);
         }
 
         .ai-chat-toggle:hover {
@@ -1625,7 +1689,7 @@
             bottom: 80px;
             right: 0;
             width: 400px;
-            height: 500px;
+            height: 600px;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -1654,7 +1718,6 @@
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
-            flex-shrink: 0;
         }
 
         .ai-chat-status {
@@ -1678,6 +1741,22 @@
             background: none;
             border: none;
             color: var(--bg-darker);
+        }
+
+        .cli-mode-indicator {
+            background: rgba(255, 170, 0, 0.1);
+            border: 1px solid var(--warning);
+            border-radius: 8px;
+            padding: 10px;
+            margin: 0 20px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--warning);
+            display: none;
+        }
+
+        .cli-mode-indicator.active {
+            display: block;
         }
 
         .ai-chat-messages {
@@ -1722,30 +1801,12 @@
             margin-top: 5px;
         }
 
-        .cli-mode-indicator {
-            background: rgba(255, 170, 0, 0.1);
-            border: 1px solid var(--warning);
-            border-radius: 8px;
-            padding: 10px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-size: 12px;
-            color: var(--warning);
-            display: none;
-            flex-shrink: 0;
-        }
-
-        .cli-mode-indicator.active {
-            display: block;
-        }
-
         .ai-chat-input-container {
             padding: 20px;
             border-top: 1px solid var(--border);
             display: flex;
             gap: 15px;
             align-items: center;
-            flex-shrink: 0;
         }
 
         .ai-chat-input {
@@ -1756,16 +1817,11 @@
             padding: 12px 15px;
             color: var(--text-primary);
             font-size: 14px;
-            font-family: inherit;
         }
 
         .ai-chat-input:focus {
             outline: none;
             border-color: var(--primary);
-        }
-
-        .ai-chat-input::placeholder {
-            color: var(--text-secondary);
         }
 
         .ai-chat-send {
@@ -1780,49 +1836,20 @@
         }
 
         /* Mobile Responsive */
-        @media (max-width: 1200px) {
-            .packages-grid {
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            
+            .scale-options {
                 grid-template-columns: 1fr;
             }
             
             .scanning-grid {
                 grid-template-columns: 1fr;
             }
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-            }
             
-            .encryption-badges {
-                order: -1;
-                justify-content: center;
-            }
-            
-            .nav-tabs {
-                overflow-x: scroll;
-                -webkit-overflow-scrolling: touch;
-            }
-            
-            .sub-agent-metrics {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .sub-agent-status {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .ai-chat-window {
-                width: calc(100vw - 40px);
-                height: calc(100vh - 140px);
-                right: -20px;
-                bottom: 80px;
-            }
-            
-            .results-grid {
+            .overview-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
             
@@ -1830,14 +1857,48 @@
                 grid-template-columns: 1fr;
             }
             
+            .ai-chat-window {
+                width: calc(100vw - 40px);
+                height: calc(100vh - 120px);
+                right: -20px;
+                bottom: 80px;
+            }
+            
+            .ip-range-controls {
+                flex-direction: column;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .reset-config-btn,
+            .add-range-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .range-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .range-metrics {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .sub-agent-metrics {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .sub-agent-status {
+                flex-direction: column;
+                text-align: center;
+            }
+
             .encryption-gap-alert {
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
-            }
-            
-            .overview-metrics {
-                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -1852,12 +1913,12 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: var(--primary);
+            background: var(--secondary);
             border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: var(--secondary);
+            background: var(--primary);
         }
     </style>
 </head>
@@ -1903,23 +1964,32 @@
                     </div>
                 </div>
                 <div class="header-right">
+                    <!-- Adaptive Scale Indicator -->
+                    <div class="scale-indicator scale-individual" id="scaleIndicator">
+                        <span id="scaleIcon">🔍</span>
+                        <span id="scaleText">DETECTING</span>
+                    </div>
+                    
+                    <!-- Encryption Badges -->
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
+                        <div class="encryption-badge classical">
                             <div class="status-light active" id="classicalStatus"></div>
                             <span>CLASSICAL</span>
                         </div>
-                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
+                        <div class="encryption-badge quantum">
                             <div class="status-light active" id="quantumStatus"></div>
                             <span>HYBRID</span>
                         </div>
                     </div>
+                    
                     <div class="agent-status" onclick="showAgentShutdownModal()">
                         <span class="agent-icon">🤖</span>
                         <div class="agent-info">
                             <span class="agent-title">AI Agent Active</span>
-                            <span class="agent-status-text" id="agentModeText">Autonomous with Manual Override</span>
+                            <span class="agent-status-text" id="agentModeText">Adaptive Configuration</span>
                         </div>
                     </div>
+                    
                     <button class="logout-btn" onclick="handleLogout()">Logout</button>
                 </div>
             </div>
@@ -1955,33 +2025,29 @@
                 <span>📊</span>
                 <span>Analytics</span>
             </a>
-            <a href="vpn.html" class="nav-tab">
-                <span>🔒</span>
-                <span>VPNMonitor</span>
-            </a>
             <a href="settings.html" class="nav-tab">
                 <span>⚙️</span>
                 <span>Settings</span>
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner - Only shown on inner pages -->
+        <!-- Sub-Agent Status Banner - VISIBLE ON LANDING -->
         <div class="sub-agent-status" id="subAgentStatus">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">🌐</div>
                 <div class="sub-agent-details">
-                    <h3>NetworkMapper Sub-Agent</h3>
-                    <p id="subAgentDescription">Enhanced V4 network discovery • Endpoint detection • Reports to Main Agent</p>
+                    <h3 id="subAgentTitle">NetworkMapper Sub-Agent</h3>
+                    <p id="subAgentDescription">Adaptive network discovery • Scale detection • Reports to Main Agent</p>
                 </div>
             </div>
             <div class="sub-agent-metrics">
                 <div class="metric">
                     <div class="metric-value" id="totalNetworks">-</div>
-                    <div class="metric-label">Networks</div>
+                    <div class="metric-label" id="networksLabel">Scanning</div>
                 </div>
                 <div class="metric">
                     <div class="metric-value" id="discoveredDevices">-</div>
-                    <div class="metric-label">Devices</div>
+                    <div class="metric-label">Detecting</div>
                 </div>
                 <div class="metric">
                     <div class="metric-value" id="openServices">-</div>
@@ -1989,254 +2055,592 @@
                 </div>
                 <div class="metric">
                     <div class="metric-value" id="newDevices">-</div>
-                    <div class="metric-label">New Today</div>
+                    <div class="metric-label">New (24h)</div>
                 </div>
             </div>
         </div>
 
-        <!-- Discovery Section - Landing Page -->
-        <div class="discovery-section" id="discoverySection">
-            <h1 class="discovery-title">🎯 Intelligent Network Discovery</h1>
-            <p class="discovery-subtitle">
-                AI Sentinel-X will automatically discover your network infrastructure, detect all endpoints, and configure optimal security monitoring with hybrid-resistant encryption.
-            </p>
+        <!-- NEW: Encryption Gap Alert -->
+        <div class="encryption-gap-alert" id="encryptionGapAlert">
+            <div class="alert-content">
+                <div class="alert-title">⚠️ Encryption Gaps Detected</div>
+                <div class="alert-description" id="gapDescription">3 devices are not encrypted and require immediate attention.</div>
+            </div>
+            <button class="alert-button" onclick="remediateEncryptionGaps()">Remediate Now</button>
+        </div>
+
+        <!-- Environment Detection with Auto-Scan -->
+        <div class="environment-detection" id="environmentDetection">
+            <div class="detection-title">🎯 Intelligent Network Discovery</div>
+            <div class="detection-description">
+                AI Sentinel-X will automatically discover and analyze your network infrastructure to configure optimal security monitoring. Enhanced with encryption gap detection to ensure all devices are properly protected with hybrid-resistant algorithms.
+            </div>
             
-            <div class="auto-scan-cta">
-                <button class="scan-btn-primary" onclick="startNetworkScan()" id="scanBtn">
+            <div class="auto-scan-section">
+                <button class="auto-scan-btn" onclick="startAutoScan()" id="autoScanBtn">
                     <span class="scan-icon">🔍</span>
                     <span class="scan-text">Auto-Scan My Network</span>
-                    <span class="scan-subtitle">Discover endpoints & configure protection</span>
+                    <span class="scan-subtitle">Detect infrastructure & configure monitoring</span>
                 </button>
-            </div>
-            
-            <div class="scan-progress" id="scanProgress" style="display: none;">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
+                <div class="scan-progress" id="scanProgress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">Scanning network infrastructure...</div>
                 </div>
-                <div class="progress-text" id="progressText">Initializing network scan...</div>
             </div>
             
-            <div class="scan-results" id="scanResults">
-                <div class="results-title">📊 Network Scan Results</div>
-                <div class="results-grid" id="resultsGrid"></div>
+            <div class="solution-divider">
+                <span>Or manually configure your deployment:</span>
+            </div>
+            
+            <div class="scale-options">
+                <div class="scale-option individual" onclick="selectScale('individual')">
+                    <div class="scale-header">
+                        <div class="scale-icon">🌐</div>
+                        <div class="scale-badge starter">ESSENTIAL</div>
+                    </div>
+                    <div class="scale-title">Single Server Protection</div>
+                    <div class="scale-subtitle">Individual Server • VPS • Cloud Instance</div>
+                    <div class="scale-features">
+                        <div class="feature">✓ Real-time threat monitoring</div>
+                        <div class="feature">✓ Hybrid-resistant encryption</div>
+                        <div class="feature">✓ Automated incident response</div>
+                        <div class="feature">✓ Basic network discovery</div>
+                        <div class="feature">✓ Encryption gap detection</div>
+                    </div>
+                    <div class="scale-pricing">$29/month License Fee</div>
+                    <div class="scale-coverage">+ $0.10/endpoint/month for internal assets discovered</div>
+                </div>
                 
-                <div class="package-selection" id="packageSelection">
-                    <h2 class="package-title">Select Your Protection Package</h2>
-                    <div class="packages-grid" id="packagesGrid"></div>
-                </div>
-            </div>
-
-            <!-- Package Preview on Landing -->
-            <div class="packages-preview">
-                <h2 class="packages-preview-title">Choose Your Security Level</h2>
-                <p class="packages-preview-subtitle">Start with our auto-scan above to get personalized recommendations, or explore our packages below</p>
-                <div class="packages-grid">
-                    <div class="package-preview-card" onclick="showPackageInfo('essential')">
-                        <div class="package-icon">🌐</div>
-                        <h3 class="package-name">Single Server Protection</h3>
-                        <p class="package-description">Perfect for individual servers, VPS, or cloud instances</p>
-                        <div class="package-price">$29<span style="font-size: 16px; color: var(--text-secondary);">/month</span></div>
-                        <div class="package-coverage">+ $0.10/endpoint discovered</div>
+                <div class="scale-option business" onclick="selectScale('business')">
+                    <div class="scale-header">
+                        <div class="scale-icon">🏢</div>
+                        <div class="scale-badge professional">BUSINESS</div>
                     </div>
+                    <div class="scale-title">Multi-Site Security</div>
+                    <div class="scale-subtitle">Small-Medium Business • Multi-Location</div>
+                    <div class="scale-features">
+                        <div class="feature">✓ Everything in Essential</div>
+                        <div class="feature">✓ Cross-location correlation</div>
+                        <div class="feature">✓ Advanced threat intelligence</div>
+                        <div class="feature">✓ Business compliance reports</div>
+                        <div class="feature">✓ Extended monitoring range</div>
+                        <div class="feature">✓ Advanced encryption gap remediation</div>
+                    </div>
+                    <div class="scale-pricing">$149/month License Fee</div>
+                    <div class="scale-coverage">+ $0.08/endpoint/month for internal assets discovered</div>
+                </div>
+                
+                <div class="scale-option enterprise" onclick="selectScale('enterprise')">
+                    <div class="scale-header">
+                        <div class="scale-icon">🏭</div>
+                        <div class="scale-badge enterprise">ENTERPRISE</div>
+                    </div>
+                    <div class="scale-title">Global Infrastructure Defense</div>
+                    <div class="scale-subtitle">Data Centers • Global Infrastructure</div>
+                    <div class="scale-features">
+                        <div class="feature">✓ Everything in Business</div>
+                        <div class="feature">✓ Global threat correlation</div>
+                        <div class="feature">✓ Custom threat modeling</div>
+                        <div class="feature">✓ SOC integration & APIs</div>
+                        <div class="feature">✓ Unlimited monitoring scope</div>
+                        <div class="feature">✓ Enterprise encryption orchestration</div>
+                   </div>
+                   <div class="scale-pricing">$499/month License Fee</div>
+                   <div class="scale-coverage">+ $0.05/endpoint/month for internal assets discovered</div>
+               </div>
+           </div>
+           
+           <div class="solution-footer">
+               <p>🛡️ Your license includes the AI agent, threat detection, and basic monitoring infrastructure. Additional charges apply only for internal endpoints discovered during network scanning.</p>
+               <p>🔐 Enhanced V3 features include automatic encryption gap detection and remediation through EncryptionDeployer integration.</p>
+               <p>📊 You control what gets monitored - install the agent only where needed to optimize costs.</p>
+               <p>💰 Annual subscriptions available with 20% discount on license fees.</p>
+           </div>
+       </div>
+
+       <!-- IP Range Manager -->
+       <div class="ip-range-manager" id="ipRangeManager" style="display: none;">
+           <div class="ip-range-header">
+               <h2 class="ip-range-title" id="ipRangeTitle">Network Range Management</h2>
+               <div class="ip-range-controls">
+                   <button class="add-range-btn" onclick="showAddRangeModal()" id="addRangeBtn">Add IP Range</button>
+                   <button class="reset-config-btn" onclick="showRescanModal()" title="Reset network discovery and reconfigure environment">
+                       <span class="icon">🔄</span>
+                       <span>Reset Configuration</span>
+                   </button>
+               </div>
+           </div>
+           
+           <div class="ip-ranges-grid" id="ipRangesGrid">
+               <!-- IP ranges will be populated here -->
+           </div>
+       </div>
+
+       <!-- Interactive Dashboard Section -->
+       <div class="dashboard-interactive" id="dashboardInteractive" style="display: none;">
+           <div class="interactive-header">
+               <h2 class="interactive-title" id="interactiveTitle">Network Discovery Dashboard</h2>
+               <div class="auto-scan-controls">
+                   <span style="color: var(--text-secondary); font-size: 14px;" id="scanDetails">Continuous Monitoring Active</span>
+                   <button class="reset-config-btn" onclick="showRescanModal()" title="Reset network discovery and reconfigure environment">
+                       <span class="icon">🔄</span>
+                       <span>Reset Configuration</span>
+                   </button>
+               </div>
+           </div>
+           <p style="color: var(--text-secondary); text-align: center; font-size: 14px; line-height: 1.6;" id="dashboardDescription">
+               🤖 <strong>Autonomous scanning active</strong> • Hybrid-resistant encryption • No manual intervention required
+           </p>
+       </div>
+
+       <!-- Scanning Grid -->
+       <div class="scanning-grid" id="scanningGrid" style="display: none;">
+           <!-- Scan panels will be populated here by JavaScript -->
+       </div>
+
+       <!-- Network Overview -->
+       <div class="network-overview" id="networkOverview" style="display: none;">
+           <div class="overview-header">
+               <h2 class="overview-title" id="overviewTitle">Network Overview</h2>
+           </div>
+           <div class="overview-grid" id="overviewGrid">
+               <!-- Overview cards will be populated here -->
+           </div>
+       </div>
+
+       <!-- Device Discovery -->
+       <div class="device-discovery" id="deviceDiscovery" style="display: none;">
+           <div class="discovery-header">
+               <h2 class="discovery-title" id="discoveryTitle">Device Discovery</h2>
+           </div>
+           <div class="device-grid" id="deviceGrid">
+               <!-- Device cards will be populated here -->
+           </div>
+       </div>
+
+       <!-- Sub-Agent Activity Feed - ONLY SHOWS AFTER SCALE SELECTION -->
+       <div class="feed-section" id="networkFeed" style="display: none;">
+           <div class="feed-header">
+               <h2 class="feed-title">Sub-Agent Activity Feed</h2>
+               <div class="live-indicator">
+                   <div class="live-dot"></div>
+                   <span>LIVE</span>
+               </div>
+           </div>
+           <div class="feed-content" id="networkFeedContent">
+               <!-- Feed items will be populated here -->
+           </div>
+       </div>
+
+   </div>
+
+   <!-- Add Range Modal -->
+   <div class="modal-overlay" id="addRangeModal" onclick="closeModalOnOverlay(event)">
+       <div class="modal">
+           <div class="modal-header">
+               <h2 class="modal-title" id="addRangeModalTitle">🌐 Add IP Range</h2>
+           </div>
+           <div class="modal-content">
+               <div class="input-group">
+                   <label for="rangeName">Range Name:</label>
+                   <input type="text" id="rangeName" placeholder="e.g., Main Office" class="modal-input">
+               </div>
+               <div class="input-group">
+                   <label for="ipRange">IP Range (CIDR):</label>
+                   <input type="text" id="ipRange" placeholder="e.g., 192.168.1.0/24" class="modal-input">
+               </div>
+               <div class="input-group">
+                   <label for="location">Location:</label>
+                   <input type="text" id="location" placeholder="e.g., New York, US" class="modal-input">
+               </div>
+               <div class="input-group">
+                   <label for="organization">Organization:</label>
+                   <input type="text" id="organization" placeholder="e.g., Company ISP" class="modal-input">
+               </div>
+           </div>
+           <div class="modal-actions">
+               <button class="modal-btn modal-btn-primary" onclick="addIPRange()">Add Range</button>
+               <button class="modal-btn modal-btn-secondary" onclick="closeAddRangeModal()">Cancel</button>
+           </div>
+       </div>
+   </div>
+
+   <!-- Rescan Modal -->
+   <div class="modal-overlay" id="rescanModal" onclick="closeModalOnOverlay(event)">
+       <div class="modal">
+           <div class="modal-header">
+               <h2 class="modal-title">🔄 Reset Network Discovery</h2>
+           </div>
+           <div class="modal-content">
+               <p>This will reset the network discovery configuration and return you to the environment detection screen. All current network data will be cleared.</p>
+               <p><strong>Warning:</strong> This action cannot be undone. The AI agent will need to reconfigure your environment from scratch.</p>
+           </div>
+           <div class="modal-actions">
+               <button class="modal-btn modal-btn-primary" onclick="confirmRescan()">Reset Configuration</button>
+               <button class="modal-btn modal-btn-secondary" onclick="closeRescanModal()">Cancel</button>
+           </div>
+       </div>
+   </div>
+
+   <!-- Agent Shutdown Modal -->
+   <div class="modal-overlay" id="agentShutdownModal" onclick="closeModalOnOverlay(event)">
+       <div class="modal">
+           <div class="modal-header">
+               <h2 class="modal-title">🤖 AI Agent Control</h2>
+           </div>
+           <div class="modal-content">
+               <p>The AI Agent is currently operating autonomously with manual override capabilities. You can:</p>
+               <ul>
+                   <li><strong>Keep Autonomous:</strong> Agent continues automatic threat response</li>
+                   <li><strong>Manual Control:</strong> Switch to manual-only mode with CLI fallback</li>
+               </ul>
+               <p>Note: Network protection continues regardless of mode selection.</p>
+           </div>
+           <div class="modal-actions">
+               <button class="modal-btn modal-btn-primary" onclick="confirmAgentShutdown()">Toggle Mode</button>
+               <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+           </div>
+       </div>
+   </div>
+
+   <!-- AI Chat Widget -->
+   <div class="ai-chat-widget">
+       <div class="ai-chat-window" id="aiChatWindow">
+           <div class="ai-chat-header">
+               <div class="ai-chat-status">
+                   <span class="chat-status-dot"></span>
+                   <span>NETWORKMAPPER ONLINE</span>
+               </div>
+               <button class="ai-chat-close" onclick="toggleChat()">×</button>
+           </div>
+           <div class="cli-mode-indicator" id="cliModeIndicator">
+               ⚠️ CLI MODE - NetworkMapper Offline
+           </div>
+           <div class="ai-chat-messages" id="aiChatMessages">
+               <div class="ai-message">
+                   <div class="ai-message-bubble">
+                       Welcome to AI Sentinel-X V3 Network Discovery. I'm NetworkMapper with enhanced encryption gap detection. I'll analyze your environment and coordinate with EncryptionDeployer to ensure all devices are properly protected.
+                   </div>
+                   <div class="ai-message-time">Just now</div>
+               </div>
+           </div>
+           <div class="ai-chat-input-container">
+               <input 
+                   type="text" 
+                   class="ai-chat-input" 
+                   id="aiChatInput" 
+                   placeholder="Ask about network configuration, encryption gaps, or scaling..."
+                   onkeypress="handleChatKeyPress(event)"
+               >
+               <button class="ai-chat-send" id="aiChatSend" onclick="sendChatMessage()">SEND</button>
+           </div>
+       </div>
+       <button class="ai-chat-toggle" onclick="toggleChat()">🤖</button>
+   </div>
+
+   <script src="shared.js"></script>
+   <script src="network-core.js"></script>
+   <script>
+        // V3 Enhancement: Encryption Gap Detection
+        let encryptionGapDetected = false;
+        let gapDeviceCount = 0;
+        let feedInterval = null;
+
+        // Network feed messages for V3
+        const networkFeedMessages = {
+            individual: [
+                { msg: '🌐 NetworkMapper: Scanning single server environment', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🔍 External IP scan initiated for server perimeter', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '✅ Server hardening check: SSH secured on port 22', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🔐 EncryptionDeployer: TLS 1.3 active on web services', agent: 'EncryptionDeployer', type: 'encryption' },
+                { msg: '📊 Single server baseline established', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '⚡ Firewall rules optimized for minimal exposure', agent: 'DefenseOrchestrator', type: 'ai-action' },
+                { msg: '🛡️ Essential monitoring active: CPU, RAM, Network', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '📝 LogAgent: Server logs encrypted with Dilithium-3', agent: 'LogAgent', type: 'ai-action' }
+            ],
+            business: [
+                { msg: '🏢 NetworkMapper: Discovering multi-site topology', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🌍 Cross-location correlation engine activated', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🔍 Site A: 47 devices discovered, 3 subnets mapped', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🔍 Site B: 31 devices discovered, 2 subnets mapped', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🔐 EncryptionDeployer: Inter-site VPN secured with Kyber-1024', agent: 'EncryptionDeployer', type: 'encryption' },
+                { msg: '✅ ComplianceMonitor: Business continuity verified', agent: 'ComplianceMonitor', type: 'ai-action' },
+                { msg: '📊 Advanced threat correlation active across sites', agent: 'AnalyticsEngine', type: 'ai-action' },
+                { msg: '🛡️ Unified security policy deployed to all locations', agent: 'DefenseOrchestrator', type: 'ai-action' }
+            ],
+            enterprise: [
+                { msg: '🏭 NetworkMapper: Enterprise infrastructure scan initiated', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🌐 Data Center 1: 1,247 servers discovered', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🌐 Data Center 2: 892 servers discovered', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🔍 Global network topology: 15 locations, 47 subnets', agent: 'NetworkMapper', type: 'discovery' },
+                { msg: '🔐 Enterprise PKI deployed with hybrid certificates', agent: 'CertificateManager', type: 'encryption' },
+                { msg: '📊 Cross-DC threat correlation matrix established', agent: 'AnalyticsEngine', type: 'ai-action' },
+                { msg: '✅ SOC integration verified, APIs operational', agent: 'ComplianceMonitor', type: 'ai-action' },
+                { msg: '🛡️ Global defense orchestration active', agent: 'DefenseOrchestrator', type: 'ai-action' }
+            ]
+        };
+
+        // Common feed messages that apply to all scales
+        const commonFeedMessages = [
+            { msg: '🔐 Encryption gap detected: 3 devices need protection', agent: 'NetworkMapper', type: 'discovery' },
+            { msg: '🔧 EncryptionDeployer: Remediating encryption gaps', agent: 'EncryptionDeployer', type: 'encryption' },
+            { msg: '✅ All devices now protected with hybrid encryption', agent: 'EncryptionDeployer', type: 'encryption' },
+            { msg: '📜 CertificateManager: All certificates valid', agent: 'CertificateManager', type: 'encryption' },
+            { msg: '🛡️ Real-time threat monitoring active', agent: 'ThreatScanner', type: 'ai-action' },
+            { msg: '📝 Audit trail secured with Dilithium-3 signatures', agent: 'LogAgent', type: 'ai-action' }
+        ];
+
+        // Override the initialization to include V3 features
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Network V3 module loaded');
+            initializeNetworkV3();
+        });
+
+        function initializeNetworkV3() {
+            // Call original initialization
+            if (typeof initializeEnvironmentDetection === 'function') {
+                initializeEnvironmentDetection();
+            }
+
+            // Initialize V3 encryption gap detection
+            initializeEncryptionGapDetection();
+            
+            // Auto-update metrics periodically
+            setInterval(() => {
+                if (window.currentScale) {
+                    updateMetrics();
+                    checkEncryptionGaps();
+                }
+            }, 8000);
+        }
+
+        function initializeEncryptionGapDetection() {
+            // Simulate initial encryption gap detection
+            setTimeout(() => {
+                if (Math.random() > 0.7) {
+                    simulateEncryptionGaps();
+                }
+            }, 3000);
+        }
+
+        function simulateEncryptionGaps() {
+            gapDeviceCount = Math.floor(Math.random() * 5) + 1;
+            encryptionGapDetected = true;
+            showEncryptionGapAlert(gapDeviceCount);
+        }
+
+        function checkEncryptionGaps() {
+            // Periodically check for new encryption gaps
+            if (window.currentScale && Math.random() > 0.95) {
+                if (!encryptionGapDetected) {
+                    simulateEncryptionGaps();
+                }
+            }
+        }
+
+        function showEncryptionGapAlert(deviceCount) {
+            const alert = document.getElementById('encryptionGapAlert');
+            const description = document.getElementById('gapDescription');
+            
+            if (alert && description) {
+                description.textContent = `${deviceCount} devices are not encrypted and require immediate attention.`;
+                alert.classList.add('active');
+                
+                // Add to chat if open
+                if (window.sentinelChat && SentinelState.chatOpen) {
+                    sentinelChat.addMessage(`⚠️ NetworkMapper: Encryption gap detected! ${deviceCount} devices lack proper encryption. EncryptionDeployer standing by for remediation.`, false, 'system');
+                }
+            }
+        }
+
+        function hideEncryptionGapAlert() {
+            const alert = document.getElementById('encryptionGapAlert');
+            if (alert) {
+                alert.classList.remove('active');
+            }
+        }
+
+        function remediateEncryptionGaps() {
+            if (!window.sentinelChat) {
+                console.error('Chat system not available');
+                return;
+            }
+
+            // Open chat if not already open
+            if (!SentinelState.chatOpen) {
+                sentinelChat.toggle();
+            }
+
+            setTimeout(() => {
+                sentinelChat.addMessage('remediate encryption gaps', true);
+                
+                setTimeout(() => {
+                    sentinelChat.addMessage('NetworkMapper: Initiating encryption gap remediation. Coordinating with EncryptionDeployer...', false, 'system');
+                }, 500);
+                
+                setTimeout(() => {
+                    sentinelChat.addMessage(`EncryptionDeployer: Analyzing ${gapDeviceCount} unencrypted devices. Deploying hybrid-resistant encryption modules. Estimated completion: 3-5 minutes.`, false);
+                }, 1200);
+                
+                setTimeout(() => {
+                    sentinelChat.addMessage('EncryptionDeployer: Deployment in progress. Using TLS 1.3 + Kyber-1024 for network traffic, AES-256-GCM + Dilithium-3 for data at rest.', false);
+                }, 2500);
+                
+                // Simulate completion
+                setTimeout(() => {
+                    sentinelChat.addMessage(`✅ EncryptionDeployer: Remediation complete! ${gapDeviceCount} devices now protected with hybrid-resistant encryption. No gaps detected.`, false);
                     
-                    <div class="package-preview-card" onclick="showPackageInfo('multi')">
-                        <div class="package-icon">🏢</div>
-                        <h3 class="package-name">Multi-Site Security</h3>
-                        <p class="package-description">Ideal for businesses with multiple locations</p>
-                        <div class="package-price">$149<span style="font-size: 16px; color: var(--text-secondary);">/month</span></div>
-                        <div class="package-coverage">+ $0.08/endpoint discovered</div>
-                    </div>
+                    // Hide the alert
+                    encryptionGapDetected = false;
+                    hideEncryptionGapAlert();
+                }, 4000);
+                
+            }, 300);
+        }
+
+        // Network feed functions
+        function initializeNetworkFeed() {
+            const feed = document.getElementById('networkFeed');
+            const feedContent = document.getElementById('networkFeedContent');
+            
+            if (feed && feedContent && window.currentScale) {
+                // Show the feed
+                feed.style.display = 'flex';
+                feed.classList.add('active');
+                
+                // Clear existing content
+                feedContent.innerHTML = '';
+                
+                // Add initial messages based on scale
+                const scaleMessages = networkFeedMessages[window.currentScale] || [];
+                
+                addNetworkFeedItem('🤖 NetworkMapper V3: Enhanced with encryption gap detection', 'Main Agent', 'ai-action');
+                addNetworkFeedItem('🔐 All network data encrypted with hybrid-resistant algorithms', 'EncryptionManager', 'encryption');
+                
+                // Add scale-specific initial message
+                if (window.currentScale === 'individual') {
+                    addNetworkFeedItem('🌐 Starting single server protection scan', 'NetworkMapper', 'discovery');
+                } else if (window.currentScale === 'business') {
+                    addNetworkFeedItem('🏢 Initiating multi-site security configuration', 'NetworkMapper', 'discovery');
+                } else if (window.currentScale === 'enterprise') {
+                    addNetworkFeedItem('🏭 Beginning enterprise infrastructure defense setup', 'NetworkMapper', 'discovery');
+                }
+                
+                // Start auto-generating feed items
+                if (feedInterval) clearInterval(feedInterval);
+                
+                let messageIndex = 0;
+                feedInterval = setInterval(() => {
+                    // Alternate between scale-specific and common messages
+                    if (Math.random() > 0.7) {
+                        // Use common message
+                        const item = commonFeedMessages[Math.floor(Math.random() * commonFeedMessages.length)];
+                        addNetworkFeedItem(item.msg, item.agent, item.type);
+                    } else {
+                        // Use scale-specific message
+                        const item = scaleMessages[messageIndex % scaleMessages.length];
+                        let message = item.msg;
+                        
+                        // Add random IP for discovery messages
+                        if (message.includes('192.168.1.')) {
+                            message += Math.floor(Math.random() * 254 + 1);
+                        }
+                        
+                        addNetworkFeedItem(message, item.agent, item.type);
+                        messageIndex++;
+                    }
+                }, 4000);
+            }
+        }
+
+        function addNetworkFeedItem(message, agent, type = 'discovery') {
+            const feedContent = document.getElementById('networkFeedContent');
+            if (!feedContent) return;
+            
+            const item = document.createElement('div');
+            item.className = `feed-item ${type}`;
+            
+            const time = new Date().toLocaleTimeString();
+            item.innerHTML = `
+                <div class="feed-time">${time}</div>
+                <div class="feed-message">${message}</div>
+                <div class="feed-agent">via ${agent}</div>
+            `;
+            
+            feedContent.insertBefore(item, feedContent.firstChild);
+            
+            // Keep only last 20 items
+            while (feedContent.children.length > 20) {
+                feedContent.removeChild(feedContent.lastChild);
+            }
+        }
+
+        // Enhanced chat initialization message for V3
+        function initializeNetworkChat() {
+            if (window.sentinelChat && SentinelState.chatOpen) {
+                sentinelChat.addMessage('🌐 NetworkMapper V3: Enhanced with encryption gap detection. I now coordinate with EncryptionDeployer to ensure all discovered devices are properly protected.', false);
+            }
+        }
+
+        // Override selectScale to include V3 enhancements and show feed
+        const originalSelectScale = window.selectScale;
+        if (originalSelectScale) {
+            window.selectScale = function(scale, userSelected = true) {
+                // Call original function
+                originalSelectScale(scale, userSelected);
+                
+                // Show the network feed when scale is selected
+                setTimeout(() => {
+                    initializeNetworkFeed();
+                }, 500);
+                
+                // Add V3 specific initialization
+                setTimeout(() => {
+                    initializeNetworkChat();
                     
-                    <div class="package-preview-card" onclick="showPackageInfo('global')">
-                        <div class="package-icon">🏭</div>
-                        <h3 class="package-name">Global Infrastructure Defense</h3>
-                        <p class="package-description">Enterprise-grade protection for large infrastructures</p>
-                        <div class="package-price">$499<span style="font-size: 16px; color: var(--text-secondary);">/month</span></div>
-                        <div class="package-coverage">+ $0.05/endpoint discovered</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    // Simulate finding encryption gaps after configuration
+                    if (userSelected && Math.random() > 0.6) {
+                        setTimeout(() => {
+                            simulateEncryptionGaps();
+                        }, 2000);
+                    }
+                }, 1000);
+            };
+        }
 
-        <!-- Main Content (Hidden until package selected) -->
-        <div class="main-content" id="mainContent">
-            <!-- Encryption Gap Alert - Only shown after scan -->
-            <div class="encryption-gap-alert" id="encryptionGapAlert">
-                <div class="alert-content">
-                    <div class="alert-title">⚠️ Encryption Gaps Detected</div>
-                    <div class="alert-description" id="gapDescription">3 devices lack proper encryption and require immediate attention.</div>
-                </div>
-                <button class="alert-button" onclick="remediateEncryptionGaps()">Deploy Encryption</button>
-            </div>
+        // Enhanced network discovery with encryption awareness
+        const originalStartAutoScan = window.startAutoScan;
+        if (originalStartAutoScan) {
+            window.startAutoScan = function() {
+                // Call original function
+                originalStartAutoScan();
+                
+                // Show the network feed when auto-scan completes and shows inner page
+                // This will be triggered when the auto-scan selects a scale
+                // The feed will appear through the selectScale override
+                
+                // Add encryption gap detection to auto-scan process
+                setTimeout(() => {
+                    if (window.sentinelChat && SentinelState.chatOpen) {
+                        sentinelChat.addMessage('🔐 NetworkMapper: Scanning for encryption gaps across discovered infrastructure...', false, 'system');
+                    }
+                }, 3000);
+            };
+        }
 
-            <!-- Network Overview -->
-            <div class="network-overview" id="networkOverview">
-                <div class="overview-header">
-                    <h3 class="overview-title" id="overviewTitle">Network Overview</h3>
-                </div>
-                <div class="overview-metrics" id="overviewGrid">
-                    <!-- Metrics will be populated by JavaScript -->
-                </div>
-            </div>
+        // Clean up feed interval when leaving page
+        window.addEventListener('beforeunload', () => {
+            if (feedInterval) {
+                clearInterval(feedInterval);
+            }
+        });
 
-            <!-- Scanning Grid - External and Internal Scans -->
-            <div class="scanning-grid" id="scanningGrid">
-                <!-- External Scan Panel -->
-                <div class="scan-panel external-scan">
-                    <div class="panel-header">
-                        <h3 class="panel-title">🌍 External Network Scan</h3>
-                        <div class="scan-status active">
-                            <div class="status-dot"></div>
-                            <span>POWERED BY SHODAN</span>
-                        </div>
-                    </div>
-                    <div id="externalScanContent">
-                        <div class="scan-results-list">
-                            <!-- Content will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Internal Scan Panel -->
-                <div class="scan-panel internal-scan">
-                    <div class="panel-header">
-                        <h3 class="panel-title">🔍 Internal Network Scan</h3>
-                        <div class="scan-status active">
-                            <div class="status-dot"></div>
-                            <span>AI AGENT DISCOVERY</span>
-                        </div>
-                    </div>
-                    <div id="internalScanContent">
-                        <div class="service-list">
-                            <!-- Content will be populated by JavaScript -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Device Discovery -->
-            <div class="device-discovery" id="deviceDiscovery">
-                <div class="discovery-header">
-                    <h3 class="device-grid-title" id="discoveryTitle">Device Discovery</h3>
-                </div>
-                <div class="device-grid" id="deviceGrid">
-                    <!-- Devices will be populated by JavaScript -->
-                </div>
-            </div>
-
-            <!-- Sub-Agent Activity Feed - Only shown on inner pages -->
-            <div class="feed-section">
-                <div class="feed-header">
-                    <h2 class="feed-title">NetworkMapper Activity Feed</h2>
-                    <div class="live-indicator">
-                        <div class="live-dot"></div>
-                        <span>LIVE</span>
-                    </div>
-                </div>
-                <div class="feed-content" id="networkFeed">
-                    <!-- Feed items will be populated by JavaScript -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Checkout Modal -->
-    <div class="checkout-modal" id="checkoutModal" onclick="closeModalOnOverlay(event)">
-        <div class="checkout-content" onclick="event.stopPropagation()">
-            <div class="checkout-header">
-                <h2 class="checkout-title">🚀 Activate AI Sentinel-X</h2>
-                <p class="checkout-subtitle">Complete your purchase to enable full protection</p>
-            </div>
-            
-            <div class="checkout-summary">
-                <div class="summary-item">
-                    <span class="summary-label">Package</span>
-                    <span class="summary-value" id="checkoutPackage">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">License Fee</span>
-                    <span class="summary-value" id="checkoutLicense">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Discovered Endpoints</span>
-                    <span class="summary-value" id="checkoutEndpoints">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label">Endpoint Cost</span>
-                    <span class="summary-value" id="checkoutEndpointCost">-</span>
-                </div>
-                <div class="summary-item">
-                    <span class="summary-label summary-total">Total Monthly</span>
-                    <span class="summary-value summary-total" id="checkoutTotal">-</span>
-                </div>
-            </div>
-            
-            <div class="checkout-form" id="checkoutForm">
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <input type="email" class="form-input" id="checkoutEmail" placeholder="your@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Payment Method</label>
-                    <input type="text" class="form-input" placeholder="Card ending in ****" value="•••• •••• •••• 4242" readonly>
-                </div>
-            </div>
-            
-            <div class="checkout-actions">
-                <button class="checkout-btn checkout-btn-primary" onclick="processPayment()">
-                    Activate Protection
-                </button>
-                <button class="checkout-btn checkout-btn-secondary" onclick="closeCheckout()">
-                    Cancel
-                </button>
-            </div>
-            
-            <div class="success-message" id="successMessage">
-                <div class="success-icon">✅</div>
-                <h3 class="success-title">Payment Successful!</h3>
-                <p class="success-text">
-                    Your AI Sentinel-X protection is now active. Your API key has been generated and will be automatically configured. You'll be redirected to complete the setup...
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- AI Chat Widget -->
-    <div class="ai-chat-widget">
-        <div class="ai-chat-window" id="aiChatWindow">
-            <div class="ai-chat-header">
-                <div class="ai-chat-status">
-                    <span class="chat-status-dot"></span>
-                    <span>MAIN AGENT ONLINE</span>
-                </div>
-                <button class="ai-chat-close" onclick="toggleChat()">×</button>
-            </div>
-            <div class="cli-mode-indicator" id="cliModeIndicator">
-                ⚠️ CLI MODE - Main Agent Offline
-            </div>
-            <div class="ai-chat-messages" id="aiChatMessages">
-                <div class="ai-message">
-                    <div class="ai-message-bubble">
-                        NetworkMapper V4 online. Ready to discover your network infrastructure and configure optimal protection. I coordinate with all sub-agents including ThreatScanner, EncryptionDeployer, and others for comprehensive security.
-                    </div>
-                    <div class="ai-message-time">Just now</div>
-                </div>
-            </div>
-            <div class="ai-chat-input-container">
-                <input 
-                    type="text" 
-                    class="ai-chat-input" 
-                    id="aiChatInput" 
-                    placeholder="Command the Main Agent"
-                    onkeypress="handleChatKeyPress(event)"
-                >
-                <button class="ai-chat-send" id="aiChatSend" onclick="sendChatMessage()">SEND</button>
-            </div>
-        </div>
-        <button class="ai-chat-toggle" onclick="toggleChat()">🤖</button>
-    </div>
-
-    <script src="shared.js"></script>
-    <script src="network-core.js"></script>
+        // Global function for encryption gap remediation
+        window.remediateEncryptionGaps = remediateEncryptionGaps;
+        window.showEncryptionGapAlert = showEncryptionGapAlert;
+        window.hideEncryptionGapAlert = hideEncryptionGapAlert;
+   </script>
 </body>
 </html>
