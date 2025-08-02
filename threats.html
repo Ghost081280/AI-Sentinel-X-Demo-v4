@@ -667,13 +667,13 @@
             border-left: 4px solid;
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
+            align-items: stretch;
             cursor: pointer;
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-height: 100px;
-            gap: 15px;
+            min-height: 110px;
+            gap: 20px;
         }
 
         .critical-alert-item::before {
@@ -715,49 +715,57 @@
             position: relative;
             z-index: 1;
             min-width: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
         .critical-alert-message {
             font-weight: bold;
             color: var(--text-primary);
             margin-bottom: 12px;
-            font-size: 15px;
+            font-size: 14px;
             line-height: 1.4;
             word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .critical-alert-details {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: 12px;
-            font-size: 13px;
+            gap: 6px;
+            margin-bottom: 8px;
+            font-size: 12px;
         }
 
         .critical-alert-source {
             color: var(--secondary);
             font-family: 'Courier New', monospace;
-            font-size: 12px;
+            font-size: 11px;
+            word-break: break-all;
         }
 
         .critical-alert-action {
             color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
         }
 
         .critical-alert-time {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-secondary);
             line-height: 1.3;
+            word-wrap: break-word;
         }
 
         .critical-alert-severity {
-            padding: 8px 16px;
+            padding: 8px 12px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -765,9 +773,10 @@
             z-index: 1;
             white-space: nowrap;
             flex-shrink: 0;
-            min-width: 80px;
+            width: 85px;
             text-align: center;
             height: fit-content;
+            align-self: flex-start;
         }
 
         .critical-alert-severity.critical {
@@ -788,11 +797,12 @@
             border: 1px solid var(--secondary);
         }
 
-        /* Threat Intelligence & Correlation */
+        /* Threat Intelligence & Correlation - Fixed grid for 6 cards */
         .intelligence-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
+            min-height: 500px;
         }
 
         .intelligence-card {
@@ -804,6 +814,9 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
         }
 
         .intelligence-card::before {
@@ -888,7 +901,7 @@
             background: rgba(124, 58, 237, 0.05);
             border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 8px;
-            margin-top: 12px;
+            margin-top: auto;
         }
 
         .coordination-title {
@@ -2220,7 +2233,7 @@
             }
         ];
 
-        // Threat Intelligence correlation data
+        // Threat Intelligence correlation data - Extended with 6 total cards
         const threatIntelligence = [
             {
                 id: 'correlation-engine',
@@ -2265,6 +2278,28 @@
                     sources: '12'
                 },
                 agents: ['ThreatScanner', 'DefenseOrchestrator', 'VPNMonitor']
+            },
+            {
+                id: 'threat-attribution',
+                title: '🔍 Threat Attribution',
+                status: 'ACTIVE',
+                metrics: {
+                    actors: '127',
+                    campaigns: '34',
+                    confidence: '91%'
+                },
+                agents: ['ThreatScanner', 'AnalyticsEngine', 'AI Engine']
+            },
+            {
+                id: 'ioc-enrichment',
+                title: '📡 IOC Enrichment',
+                status: 'ACTIVE',
+                metrics: {
+                    feeds: '23',
+                    indicators: '890K',
+                    quality: '98%'
+                },
+                agents: ['ThreatScanner', 'LogAgent', 'AnalyticsEngine']
             }
         ];
 
