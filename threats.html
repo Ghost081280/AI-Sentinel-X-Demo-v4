@@ -652,70 +652,131 @@
             gap: 5px;
         }
 
-        /* Threat Statistics */
-        .threat-stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
+        /* Critical Threat Alerts - Real-time Feed */
+        .critical-alerts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 400px;
+            overflow-y: auto;
         }
 
-        .stat-card {
-            background: rgba(255, 0, 68, 0.05);
-            border: 1px solid rgba(255, 0, 68, 0.2);
+        .critical-alert-item {
+            padding: 18px 20px;
             border-radius: 12px;
-            padding: 18px;
-            text-align: center;
-            transition: all 0.3s ease;
+            border-left: 4px solid;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .stat-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 0, 68, 0.2);
+        .critical-alert-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s ease;
         }
 
-        .stat-value {
-            font-size: 24px;
+        .critical-alert-item:hover::before {
+            left: 100%;
+        }
+
+        .critical-alert-item:hover {
+            transform: translateX(8px);
+        }
+
+        .critical-alert-item.critical {
+            background: rgba(255, 0, 68, 0.1);
+            border-left-color: var(--danger);
+        }
+
+        .critical-alert-item.high {
+            background: rgba(255, 170, 0, 0.1);
+            border-left-color: var(--warning);
+        }
+
+        .critical-alert-item.medium {
+            background: rgba(0, 204, 255, 0.1);
+            border-left-color: var(--secondary);
+        }
+
+        .critical-alert-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .critical-alert-message {
             font-weight: bold;
-            color: var(--danger);
+            color: var(--text-primary);
             margin-bottom: 8px;
-            text-shadow: 0 0 15px currentColor;
+            font-size: 14px;
         }
 
-        .stat-label {
-            font-size: 11px;
-            color: var(--text-secondary);
+        .critical-alert-details {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 8px;
+            font-size: 12px;
+        }
+
+        .critical-alert-source {
+            color: var(--secondary);
+            font-family: 'Courier New', monospace;
+        }
+
+        .critical-alert-action {
+            color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 1px;
-            line-height: 1.2;
         }
 
-        .stat-trend {
-            font-size: 9px;
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-        }
-
-        .trend-up {
-            color: var(--danger);
-        }
-
-        .trend-down {
-            color: var(--success);
-        }
-
-        .trend-stable {
+        .critical-alert-time {
+            font-size: 11px;
             color: var(--text-secondary);
         }
 
-        /* NEW: Threat Intelligence & Correlation Module */
+        .critical-alert-severity {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .critical-alert-severity.critical {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .critical-alert-severity.high {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .critical-alert-severity.medium {
+            background: rgba(0, 204, 255, 0.2);
+            color: var(--secondary);
+            border: 1px solid var(--secondary);
+        }
+
+        /* Threat Intelligence & Correlation */
         .intelligence-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
 
@@ -781,45 +842,45 @@
         .intelligence-metrics {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            gap: 12px;
             margin-bottom: 15px;
         }
 
         .intelligence-metric {
             text-align: center;
-            padding: 10px;
+            padding: 8px;
             background: rgba(255, 255, 255, 0.02);
-            border-radius: 8px;
+            border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .intelligence-metric-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: var(--accent);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .intelligence-metric-label {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .intelligence-coordination {
-            padding: 15px;
+            padding: 12px;
             background: rgba(124, 58, 237, 0.05);
             border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 8px;
-            margin-top: 15px;
+            margin-top: 12px;
         }
 
         .coordination-title {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: bold;
             color: var(--accent);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -827,21 +888,21 @@
         .coordination-agents {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
 
         .coordination-agent {
-            padding: 4px 8px;
+            padding: 3px 8px;
             background: rgba(0, 255, 136, 0.1);
             border: 1px solid rgba(0, 255, 136, 0.3);
             border-radius: 8px;
-            font-size: 10px;
+            font-size: 9px;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* NEW: Threat Hunting & Investigation Module */
+        /* Threat Hunting & Investigation */
         .threat-hunting-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -1042,7 +1103,7 @@
             letter-spacing: 1px;
         }
 
-        /* NEW: Threat Response Automation Module */
+        /* Threat Response Automation */
         .response-automation-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -1671,10 +1732,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .threat-stats {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
             .intelligence-metrics {
                 grid-template-columns: 1fr;
             }
@@ -1857,75 +1914,8 @@
                         <!-- Threats will be populated by JavaScript -->
                     </div>
                 </div>
-            </div>
 
-            <!-- Right Column -->
-            <div class="right-column">
-                <!-- Threat Statistics -->
-                <div class="section-card">
-                    <div class="section-header">
-                        <h2 class="section-title">
-                            <span>📊</span>
-                            <span>Threat Statistics</span>
-                        </h2>
-                        <div class="section-status">
-                            <div class="status-dot active"></div>
-                            <span>Real-time</span>
-                        </div>
-                    </div>
-                    <div class="threat-stats">
-                        <div class="stat-card">
-                            <div class="stat-value" id="totalThreats">7</div>
-                            <div class="stat-label">Active Threats</div>
-                            <div class="stat-trend trend-up">
-                                <span>↗</span>
-                                <span>+2 Today</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="blockedTodayStats">2,847</div>
-                            <div class="stat-label">Blocked Today</div>
-                            <div class="stat-trend trend-up">
-                                <span>↗</span>
-                                <span>+12%</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">99.8%</div>
-                            <div class="stat-label">Detection Rate</div>
-                            <div class="stat-trend trend-stable">
-                                <span>→</span>
-                                <span>Stable</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value" id="correlationScore">97%</div>
-                            <div class="stat-label">AI Correlation</div>
-                            <div class="stat-trend trend-up">
-                                <span>↗</span>
-                                <span>+3%</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">12.4K</div>
-                            <div class="stat-label">Events/Min</div>
-                            <div class="stat-trend trend-stable">
-                                <span>→</span>
-                                <span>Normal</span>
-                            </div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-value">0.3s</div>
-                            <div class="stat-label">Response Time</div>
-                            <div class="stat-trend trend-down">
-                                <span>↘</span>
-                                <span>-20ms</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- NEW: Threat Intelligence & Correlation -->
+                <!-- Threat Intelligence & Correlation -->
                 <div class="section-card">
                     <div class="section-header">
                         <h2 class="section-title">
@@ -1942,26 +1932,46 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- NEW: Threat Hunting & Investigation -->
-        <div class="section-card">
-            <div class="section-header">
-                <h2 class="section-title">
-                    <span>🔍</span>
-                    <span>Threat Hunting & Investigation</span>
-                </h2>
-                <div class="section-status">
-                    <div class="status-dot active"></div>
-                    <span>4 Active Hunts</span>
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Critical Threat Alerts - Real-time Feed -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span>⚠️</span>
+                            <span>Critical Threat Alerts</span>
+                        </h2>
+                        <div class="section-status">
+                            <div class="status-dot danger"></div>
+                            <span id="criticalAlertCount">5 Critical</span>
+                        </div>
+                    </div>
+                    <div class="critical-alerts-list" id="criticalAlertsList">
+                        <!-- Critical alerts will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Threat Hunting & Investigation -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <span>🔍</span>
+                            <span>Threat Hunting & Investigation</span>
+                        </h2>
+                        <div class="section-status">
+                            <div class="status-dot active"></div>
+                            <span>4 Active Hunts</span>
+                        </div>
+                    </div>
+                    <div class="threat-hunting-grid" id="threatHuntingGrid">
+                        <!-- Threat hunting cards will be populated by JavaScript -->
+                    </div>
                 </div>
             </div>
-            <div class="threat-hunting-grid" id="threatHuntingGrid">
-                <!-- Threat hunting cards will be populated by JavaScript -->
-            </div>
         </div>
 
-        <!-- NEW: Threat Response Automation -->
+        <!-- Threat Response Automation -->
         <div class="section-card">
             <div class="section-header">
                 <h2 class="section-title">
@@ -2134,6 +2144,60 @@
             }
         ];
 
+        // Critical threat alerts data for real-time feed
+        const criticalThreatAlerts = [
+            {
+                id: 'alert-001',
+                message: 'APT-29 signature detected in network traffic',
+                severity: 'critical',
+                source: '45.12.78.92',
+                action: 'Auto-blocked',
+                timestamp: new Date(Date.now() - 5 * 60 * 1000).toISOString(),
+                geoRisk: 9,
+                behaviorScore: 8
+            },
+            {
+                id: 'alert-002',
+                message: 'Ransomware deployment attempt blocked',
+                severity: 'critical',
+                source: '192.168.1.234',
+                action: 'Quarantined',
+                timestamp: new Date(Date.now() - 12 * 60 * 1000).toISOString(),
+                geoRisk: 6,
+                behaviorScore: 9
+            },
+            {
+                id: 'alert-003',
+                message: 'Lateral movement detected on internal network',
+                severity: 'high',
+                source: '10.0.1.87',
+                action: 'Investigating',
+                timestamp: new Date(Date.now() - 18 * 60 * 1000).toISOString(),
+                geoRisk: 3,
+                behaviorScore: 7
+            },
+            {
+                id: 'alert-004',
+                message: 'Zero-day exploit targeting web application',
+                severity: 'critical',
+                source: 'Unknown',
+                action: 'Analyzing',
+                timestamp: new Date(Date.now() - 25 * 60 * 1000).toISOString(),
+                geoRisk: 8,
+                behaviorScore: 10
+            },
+            {
+                id: 'alert-005',
+                message: 'Credential stuffing attack on login portal',
+                severity: 'high',
+                source: '203.45.67.89',
+                action: 'Rate-limited',
+                timestamp: new Date(Date.now() - 35 * 60 * 1000).toISOString(),
+                geoRisk: 7,
+                behaviorScore: 6
+            }
+        ];
+
         // Threat Intelligence correlation data
         const threatIntelligence = [
             {
@@ -2289,36 +2353,6 @@
                     'MITRE:T1078'
                 ],
                 agents: ['ThreatScanner', 'AnalyticsEngine', 'NetworkMapper', 'LogAgent']
-            },
-            {
-                id: 'supply-chain-hunt',
-                title: '🔗 Supply Chain Hunt',
-                priority: 'high',
-                status: 'active',
-                progress: 23,
-                description: 'Investigating potential compromise of third-party software dependencies and update mechanisms',
-                iocs: [
-                    'update-server.lib',
-                    'MD5:9a8b7c6d...',
-                    'signed-malware',
-                    'MITRE:T1195'
-                ],
-                agents: ['ThreatScanner', 'AI Engine', 'EncryptionManager', 'ComplianceMonitor']
-            },
-            {
-                id: 'crypto-mining-hunt',
-                title: '⛏️ Crypto Mining Hunt',
-                priority: 'medium',
-                status: 'active',
-                progress: 89,
-                description: 'Persistent cryptocurrency mining activity across multiple endpoints with evasion techniques',
-                iocs: [
-                    'pool.monero.com',
-                    'xmrig.exe',
-                    'CPU-spike-pattern',
-                    'MITRE:T1496'
-                ],
-                agents: ['ThreatScanner', 'NetworkMapper', 'AnalyticsEngine']
             }
         ];
 
@@ -2334,6 +2368,7 @@
 
         function initializeThreatsPage() {
             populateActiveThreats();
+            populateCriticalThreatAlerts();
             populateThreatIntelligence();
             populateThreatHunting();
             populateResponseAutomation();
@@ -2351,8 +2386,187 @@
                 generateThreatFeedItem();
             }, 7000);
             setInterval(() => {
+                updateCriticalAlerts();
+            }, 5000);
+            setInterval(() => {
                 updateHuntingProgress();
             }, 8000);
+        }
+
+        function populateCriticalThreatAlerts() {
+            const list = document.getElementById('criticalAlertsList');
+            list.innerHTML = '';
+
+            criticalThreatAlerts.forEach(alert => {
+                const item = document.createElement('div');
+                item.className = `critical-alert-item ${alert.severity}`;
+                item.onclick = () => openCriticalAlertDetails(alert.id);
+                
+                const timeAgo = getTimeAgo(alert.timestamp);
+                
+                item.innerHTML = `
+                    <div class="critical-alert-content">
+                        <div class="critical-alert-message">${alert.message}</div>
+                        <div class="critical-alert-details">
+                            <span class="critical-alert-source">Source: ${alert.source}</span>
+                            <span class="critical-alert-action">Action: ${alert.action}</span>
+                        </div>
+                        <div class="critical-alert-time">${timeAgo} • Geo Risk: ${alert.geoRisk}/10 • Behavior: ${alert.behaviorScore}/10</div>
+                    </div>
+                    <div class="critical-alert-severity ${alert.severity}">${alert.severity}</div>
+                `;
+                
+                list.appendChild(item);
+            });
+        }
+
+        function updateCriticalAlerts() {
+            // Occasionally add new critical alerts
+            if (Math.random() > 0.85) {
+                const newAlerts = [
+                    'Data exfiltration attempt blocked',
+                    'Command & control communication detected',
+                    'Privilege escalation via service account',
+                    'Suspicious PowerShell execution detected',
+                    'Living-off-the-land binary abuse detected',
+                    'DNS tunneling attempt identified',
+                    'Registry modification by malware blocked'
+                ];
+                
+                const sources = ['203.45.67.89', '45.12.78.92', '192.168.1.105', '10.0.1.87', 'Unknown'];
+                const actions = ['Auto-blocked', 'Quarantined', 'Investigating', 'Rate-limited', 'Analyzing'];
+                const severities = ['critical', 'high', 'medium'];
+                
+                const newAlert = {
+                    id: 'alert-' + Date.now(),
+                    message: newAlerts[Math.floor(Math.random() * newAlerts.length)],
+                    severity: severities[Math.floor(Math.random() * severities.length)],
+                    source: sources[Math.floor(Math.random() * sources.length)],
+                    action: actions[Math.floor(Math.random() * actions.length)],
+                    timestamp: new Date().toISOString(),
+                    geoRisk: Math.floor(Math.random() * 10) + 1,
+                    behaviorScore: Math.floor(Math.random() * 10) + 1
+                };
+                
+                // Add to beginning of array and limit to 10 items
+                criticalThreatAlerts.unshift(newAlert);
+                if (criticalThreatAlerts.length > 10) {
+                    criticalThreatAlerts.pop();
+                }
+                
+                // Update display
+                populateCriticalThreatAlerts();
+                
+                // Update count
+                const criticalCount = criticalThreatAlerts.filter(alert => alert.severity === 'critical').length;
+                document.getElementById('criticalAlertCount').textContent = criticalCount + ' Critical';
+            }
+        }
+
+        function openCriticalAlertDetails(alertId) {
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                const alert = criticalThreatAlerts.find(a => a.id === alertId);
+                if (alert) {
+                    sentinelChat?.addMessage(`ThreatScanner Critical Alert: ${alert.message}
+• Severity: ${alert.severity.toUpperCase()} PRIORITY
+• Source: ${alert.source}
+• Action Taken: ${alert.action}
+• Geographic Risk Score: ${alert.geoRisk}/10
+• Behavioral Score: ${alert.behaviorScore}/10
+• Timestamp: ${alert.timestamp}
+• AI Correlation: Pattern matches known threat signatures
+• Sub-Agent Coordination: ThreatScanner → ${alert.severity === 'critical' ? 'DefenseOrchestrator → AnalyticsEngine' : 'AnalyticsEngine'}
+• Data Protection: All threat data encrypted with hybrid-resistant algorithms
+• Auto-Response: ${alert.action === 'Auto-blocked' || alert.action === 'Quarantined' ? 'Successfully executed' : 'In progress'}`, false);
+                }
+            }, 300);
+        }
+
+        function populateActiveThreats() {
+            const grid = document.getElementById('threatsGrid');
+            grid.innerHTML = '';
+
+            threats.forEach(threat => {
+                const card = document.createElement('div');
+                card.className = `threat-card ${threat.severity}`;
+                card.onclick = () => openThreatDetails(threat.id);
+                
+                card.innerHTML = `
+                    <div class="threat-header">
+                        <div>
+                            <div class="threat-title">${threat.name}</div>
+                            <div class="threat-type">${threat.type}</div>
+                        </div>
+                        <div class="threat-severity ${threat.severity}">${threat.severity.toUpperCase()}</div>
+                    </div>
+                    <div class="threat-details">
+                        <div class="threat-detail">
+                            <span class="threat-detail-label">Source</span>
+                            <span class="threat-detail-value">${threat.source}</span>
+                        </div>
+                        <div class="threat-detail">
+                            <span class="threat-detail-label">Target</span>
+                            <span class="threat-detail-value">${threat.target}</span>
+                        </div>
+                        <div class="threat-detail">
+                            <span class="threat-detail-label">Attempts</span>
+                            <span class="threat-detail-value">${threat.attempts}</span>
+                        </div>
+                        <div class="threat-detail">
+                            <span class="threat-detail-label">Status</span>
+                            <span class="threat-detail-value" style="color: var(--primary);">${threat.status}</span>
+                        </div>
+                    </div>
+                    <div class="threat-ai-status">
+                        <div class="ai-analysis">${threat.aiAnalysis}</div>
+                        <div class="sub-agent-coord">
+                            <span>🤖</span>
+                            <span>Coordination: ${threat.subAgent}</span>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function populateThreatIntelligence() {
+            const grid = document.getElementById('intelligenceGrid');
+            grid.innerHTML = '';
+
+            threatIntelligence.forEach(intel => {
+                const card = document.createElement('div');
+                card.className = 'intelligence-card';
+                card.onclick = () => openIntelligenceDetails(intel.id);
+                
+                card.innerHTML = `
+                    <div class="intelligence-header">
+                        <div class="intelligence-title">${intel.title}</div>
+                        <div class="intelligence-status">${intel.status}</div>
+                    </div>
+                    <div class="intelligence-metrics">
+                        ${Object.entries(intel.metrics).map(([key, value]) => `
+                            <div class="intelligence-metric">
+                                <div class="intelligence-metric-value">${value}</div>
+                                <div class="intelligence-metric-label">${key}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="intelligence-coordination">
+                        <div class="coordination-title">🤖 Sub-Agent Coordination</div>
+                        <div class="coordination-agents">
+                            ${intel.agents.map(agent => `
+                                <span class="coordination-agent">${agent}</span>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
         }
 
         function populateThreatHunting() {
@@ -2595,90 +2809,6 @@
             }, 300);
         }
 
-        function populateActiveThreats() {
-            const grid = document.getElementById('threatsGrid');
-            grid.innerHTML = '';
-
-            threats.forEach(threat => {
-                const card = document.createElement('div');
-                card.className = `threat-card ${threat.severity}`;
-                card.onclick = () => openThreatDetails(threat.id);
-                
-                card.innerHTML = `
-                    <div class="threat-header">
-                        <div>
-                            <div class="threat-title">${threat.name}</div>
-                            <div class="threat-type">${threat.type}</div>
-                        </div>
-                        <div class="threat-severity ${threat.severity}">${threat.severity.toUpperCase()}</div>
-                    </div>
-                    <div class="threat-details">
-                        <div class="threat-detail">
-                            <span class="threat-detail-label">Source</span>
-                            <span class="threat-detail-value">${threat.source}</span>
-                        </div>
-                        <div class="threat-detail">
-                            <span class="threat-detail-label">Target</span>
-                            <span class="threat-detail-value">${threat.target}</span>
-                        </div>
-                        <div class="threat-detail">
-                            <span class="threat-detail-label">Attempts</span>
-                            <span class="threat-detail-value">${threat.attempts}</span>
-                        </div>
-                        <div class="threat-detail">
-                            <span class="threat-detail-label">Status</span>
-                            <span class="threat-detail-value" style="color: var(--primary);">${threat.status}</span>
-                        </div>
-                    </div>
-                    <div class="threat-ai-status">
-                        <div class="ai-analysis">${threat.aiAnalysis}</div>
-                        <div class="sub-agent-coord">
-                            <span>🤖</span>
-                            <span>Coordination: ${threat.subAgent}</span>
-                        </div>
-                    </div>
-                `;
-                
-                grid.appendChild(card);
-            });
-        }
-
-        function populateThreatIntelligence() {
-            const grid = document.getElementById('intelligenceGrid');
-            grid.innerHTML = '';
-
-            threatIntelligence.forEach(intel => {
-                const card = document.createElement('div');
-                card.className = 'intelligence-card';
-                card.onclick = () => openIntelligenceDetails(intel.id);
-                
-                card.innerHTML = `
-                    <div class="intelligence-header">
-                        <div class="intelligence-title">${intel.title}</div>
-                        <div class="intelligence-status">${intel.status}</div>
-                    </div>
-                    <div class="intelligence-metrics">
-                        ${Object.entries(intel.metrics).map(([key, value]) => `
-                            <div class="intelligence-metric">
-                                <div class="intelligence-metric-value">${value}</div>
-                                <div class="intelligence-metric-label">${key}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                    <div class="intelligence-coordination">
-                        <div class="coordination-title">🤖 Sub-Agent Coordination</div>
-                        <div class="coordination-agents">
-                            ${intel.agents.map(agent => `
-                                <span class="coordination-agent">${agent}</span>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-                
-                grid.appendChild(card);
-            });
-        }
-
         function initializeThreatFeed() {
             addThreatFeedItem('🛡️ ThreatScanner V4 enhanced with AI correlation engine active', '', 'ThreatScanner');
             addThreatFeedItem('🔐 All threat data encrypted with hybrid-resistant algorithms', 'encryption', 'EncryptionManager');
@@ -2734,23 +2864,19 @@
         function updateThreatMetrics() {
             // Update blocked count in both banner and stats
             const blocked = document.getElementById('blockedToday');
-            const blockedStats = document.getElementById('blockedTodayStats');
             const current = parseInt(blocked.textContent.replace(',', ''));
             const newCount = current + Math.floor(Math.random() * 15 + 5);
             const formatted = newCount.toLocaleString();
             
             blocked.textContent = formatted;
-            blockedStats.textContent = formatted;
             
             // Occasionally change threat count
             if (Math.random() > 0.85) {
-                const threats = document.getElementById('totalThreats');
-                const threatsActive = document.getElementById('activeThreats');
+                const threats = document.getElementById('activeThreats');
                 const currentThreats = parseInt(threats.textContent);
                 const newThreats = Math.max(5, currentThreats + Math.floor(Math.random() * 3 - 1));
                 
                 threats.textContent = newThreats;
-                threatsActive.textContent = newThreats;
                 
                 // Update status text
                 document.getElementById('threatStatus').textContent = `${newThreats} Critical Threats`;
@@ -2758,13 +2884,8 @@
             
             // Update correlation metrics
             if (Math.random() > 0.9) {
-                const correlation = document.getElementById('correlationScore');
                 const correlatedThreats = document.getElementById('correlatedThreats');
-                const currentCorr = parseInt(correlation.textContent.replace('%', ''));
-                const newCorr = Math.min(99, Math.max(90, currentCorr + Math.floor(Math.random() * 3 - 1)));
                 const newCorrelated = Math.floor(Math.random() * 20 + 10);
-                
-                correlation.textContent = newCorr + '%';
                 correlatedThreats.textContent = newCorrelated;
             }
         }
@@ -2852,6 +2973,21 @@
                     sentinelChat?.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all threat intelligence. ThreatScanner reports all data hybrid-resistant.`, false);
                 }
             }, 300);
+        }
+
+        // Helper function for time formatting
+        function getTimeAgo(timestamp) {
+            const now = new Date();
+            const time = new Date(timestamp);
+            const diffMs = now - time;
+            const diffMins = Math.floor(diffMs / (1000 * 60));
+            
+            if (diffMins < 60) {
+                return diffMins + ' minutes ago';
+            } else {
+                const diffHours = Math.floor(diffMins / 60);
+                return diffHours + ' hours ago';
+            }
         }
 
         // Global functions for compatibility
