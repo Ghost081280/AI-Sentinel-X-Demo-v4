@@ -787,25 +787,17 @@
             display: none;
         }
 
-        /* Grid layouts for post-scan content */
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        /* Section Cards */
-        .section-card {
+        /* Network Overview Section */
+        .network-overview {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 20px;
+            border-radius: 15px;
             padding: 25px;
+            margin-bottom: 25px;
             backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
         }
 
-        .section-header {
+        .overview-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -814,47 +806,510 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .section-title {
+        .overview-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .overview-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .overview-metric {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .overview-metric:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.1);
+        }
+
+        .metric-icon {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .metric-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .metric-description {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* Dashboard Interactive Module - From V3 */
+        .dashboard-interactive {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+            text-align: center;
+        }
+
+        .interactive-title {
+            font-size: 24px;
+            font-weight: bold;
+            background: var(--gradient-network);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .interactive-description {
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        /* Scanning Grid - Enhanced from V3 */
+        .scanning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .scan-panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scan-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-1);
+            animation: scanLine 3s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-title {
             font-size: 18px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
-        .section-status {
-            font-size: 12px;
-            color: var(--text-secondary);
+        .scan-status {
             display: flex;
             align-items: center;
             gap: 8px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scan-status.active {
+            color: var(--success);
+        }
+
+        .scan-status.paused {
+            color: var(--warning);
         }
 
         .status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
+            background: currentColor;
             animation: pulse 2s ease-in-out infinite;
-        }
-
-        .status-dot.active {
-            background: var(--success);
-        }
-
-        .status-dot.warning {
-            background: var(--warning);
-        }
-
-        .status-dot.danger {
-            background: var(--danger);
         }
 
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
             50% { opacity: 0.5; transform: scale(1.5); }
+        }
+
+        /* Device Grid - Enhanced from V3 */
+        .device-discovery {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+        }
+
+        .discovery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .discovery-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .device-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .device-card {
+            background: rgba(0, 204, 255, 0.05);
+            border: 1px solid rgba(0, 204, 255, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .device-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 204, 255, 0.2);
+            background: rgba(0, 204, 255, 0.08);
+        }
+
+        .device-card.new-device {
+            border-color: var(--warning);
+            background: rgba(255, 170, 0, 0.05);
+        }
+
+        .device-card.new-device::after {
+            content: 'NEW';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--warning);
+            color: var(--bg-darker);
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .device-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .device-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 204, 255, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .device-name {
+            font-weight: bold;
+            color: var(--secondary);
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .device-ip {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 8px;
+        }
+
+        .device-details {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .device-services {
+            color: var(--accent);
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .device-encryption {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 6px;
+            padding: 4px 8px;
+            font-size: 11px;
+            text-align: center;
+            margin-top: 10px;
+            color: var(--primary);
+        }
+
+        /* IP Range Management - From V3 */
+        .ip-range-manager {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+        }
+
+        .range-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .range-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .add-range-btn {
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            color: var(--bg-darker);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .add-range-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3);
+        }
+
+        .ip-ranges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .ip-range-card {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .ip-range-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.1);
+        }
+
+        .range-name {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .range-info {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+
+        .info-label {
+            color: var(--text-secondary);
+        }
+
+        .info-value {
+            color: var(--text-primary);
+            font-family: 'Courier New', monospace;
+        }
+
+        .range-metrics {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .range-metric {
+            text-align: center;
+        }
+
+        .range-metric-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+
+        .range-metric-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        /* Service List - From V3 */
+        .service-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .service-item {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+            transform: translateX(5px);
+        }
+
+        .service-info {
+            flex: 1;
+        }
+
+        .service-name {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .service-details {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .service-encryption {
+            font-size: 11px;
+            color: var(--accent);
+            margin-top: 4px;
+        }
+
+        .service-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .service-status.status-secure {
+            background: rgba(0, 255, 136, 0.2);
+            color: var(--success);
+        }
+
+        .service-status.status-warning {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+        }
+
+        .service-status.status-vulnerable {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
+        }
+
+        /* Scan Results - From V3 */
+        .scan-results-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .scan-results-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        .scan-results-value {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* External Scan Module */
+        .external-scan {
+            background: linear-gradient(135deg, rgba(255, 0, 68, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%);
+            border-color: rgba(255, 0, 68, 0.3);
+        }
+
+        .external-scan .panel-title {
+            color: var(--danger);
+        }
+
+        /* Internal Scan Module */
+        .internal-scan {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.05) 0%, rgba(0, 0, 0, 0.4) 100%);
+            border-color: rgba(0, 255, 136, 0.3);
         }
 
         /* Encryption Gap Alert */
@@ -1099,121 +1554,6 @@
             font-size: 16px;
             line-height: 1.6;
             margin-bottom: 30px;
-        }
-
-        /* Real-time Feed */
-        .feed-section {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 25px;
-            height: 500px;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(15px);
-            margin-bottom: 30px;
-        }
-
-        .feed-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .feed-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--danger);
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .live-dot {
-            width: 10px;
-            height: 10px;
-            background: var(--danger);
-            border-radius: 50%;
-            animation: livePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes livePulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 0.5; }
-        }
-
-        .feed-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .feed-item {
-            background: rgba(0, 204, 255, 0.05);
-            border-left: 3px solid var(--secondary);
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            border-radius: 0 10px 10px 0;
-            animation: feedSlide 0.3s ease;
-            transition: all 0.3s ease;
-        }
-
-        .feed-item:hover {
-            background: rgba(0, 204, 255, 0.1);
-            transform: translateX(5px);
-        }
-
-        @keyframes feedSlide {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .feed-item.ai-action {
-            border-left-color: var(--accent);
-        }
-
-        .feed-item.encryption {
-            border-left-color: var(--primary);
-        }
-
-        .feed-item.warning {
-            border-left-color: var(--warning);
-        }
-
-        .feed-item.danger {
-            border-left-color: var(--danger);
-        }
-
-        .feed-time {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .feed-message {
-            font-size: 14px;
-            line-height: 1.5;
-        }
-
-        .feed-agent {
-            font-size: 12px;
-            color: var(--accent);
-            margin-top: 5px;
-            font-style: italic;
         }
 
         /* Agent Shutdown Modal */
@@ -1486,6 +1826,14 @@
             .packages-grid {
                 grid-template-columns: 1fr;
             }
+            
+            .scanning-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ip-ranges-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1524,7 +1872,7 @@
                 grid-template-columns: repeat(2, 1fr);
             }
             
-            .content-grid {
+            .device-grid {
                 grid-template-columns: 1fr;
             }
             
@@ -1532,6 +1880,10 @@
                 flex-direction: column;
                 gap: 15px;
                 text-align: center;
+            }
+            
+            .overview-metrics {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
 
@@ -1665,7 +2017,7 @@
                 <div class="sub-agent-icon">🌐</div>
                 <div class="sub-agent-details">
                     <h3>NetworkMapper Sub-Agent</h3>
-                    <p id="subAgentDescription">Adaptive network discovery • Endpoint detection • Reports to Main Agent</p>
+                    <p id="subAgentDescription">Advanced network discovery • Endpoint detection • Reports to Main Agent</p>
                 </div>
             </div>
             <div class="sub-agent-metrics">
@@ -1720,33 +2072,90 @@
             </div>
         </div>
 
-        <!-- Encryption Gap Alert (Hidden until scan completes) -->
-        <div class="encryption-gap-alert" id="encryptionGapAlert">
-            <div class="alert-content">
-                <div class="alert-title">⚠️ Encryption Gaps Detected</div>
-                <div class="alert-description" id="gapDescription">Multiple devices lack proper encryption and require immediate attention.</div>
-            </div>
-            <button class="alert-button" onclick="remediateEncryptionGaps()">Deploy Encryption</button>
-        </div>
-
         <!-- Main Content (Hidden until package selected) -->
         <div class="main-content" id="mainContent">
-            <!-- Network Overview Grid -->
-            <div class="content-grid" id="contentGrid">
-                <!-- Content will be dynamically populated -->
+            <!-- IP Range Management Module -->
+            <div class="ip-range-manager" id="ipRangeManager">
+                <div class="range-header">
+                    <h3 class="range-title" id="ipRangeTitle">Network Range Management</h3>
+                    <button class="add-range-btn" id="addRangeBtn" onclick="showAddRangeModal()">Add IP Range</button>
+                </div>
+                <div class="ip-ranges-grid" id="ipRangesGrid">
+                    <!-- IP ranges will be populated by JavaScript -->
+                </div>
             </div>
-            
-            <!-- Real-time Activity Feed -->
-            <div class="feed-section">
-                <div class="feed-header">
-                    <h2 class="feed-title">NetworkMapper Activity Feed</h2>
-                    <div class="live-indicator">
-                        <div class="live-dot"></div>
-                        <span>LIVE</span>
+
+            <!-- Dashboard Interactive Module -->
+            <div class="dashboard-interactive" id="dashboardInteractive">
+                <h2 class="interactive-title" id="interactiveTitle">Network Discovery Dashboard</h2>
+                <p class="interactive-description" id="dashboardDescription">
+                    🤖 <strong>AI-powered network monitoring active</strong> • Hybrid-resistant encryption • Automatic threat detection
+                </p>
+                <div class="interactive-grid">
+                    <div class="scan-details">
+                        <p id="scanDetails">Continuous Monitoring Active</p>
                     </div>
                 </div>
-                <div class="feed-content" id="networkFeed">
-                    <!-- Feed items will be populated by JavaScript -->
+            </div>
+
+            <!-- Network Overview -->
+            <div class="network-overview" id="networkOverview">
+                <div class="overview-header">
+                    <h3 class="overview-title" id="overviewTitle">Network Overview</h3>
+                </div>
+                <div class="overview-metrics" id="overviewGrid">
+                    <!-- Metrics will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Encryption Gap Alert (Only shown after scan) -->
+            <div class="encryption-gap-alert" id="encryptionGapAlert">
+                <div class="alert-content">
+                    <div class="alert-title">⚠️ Encryption Gaps Detected</div>
+                    <div class="alert-description" id="gapDescription">Multiple devices lack proper encryption and require immediate attention.</div>
+                </div>
+                <button class="alert-button" onclick="remediateEncryptionGaps()">Deploy Encryption</button>
+            </div>
+
+            <!-- Scanning Grid -->
+            <div class="scanning-grid" id="scanningGrid">
+                <!-- External Scan Panel -->
+                <div class="scan-panel external-scan">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🌍 External Network Scan</h3>
+                        <div class="scan-status active">
+                            <div class="status-dot"></div>
+                            <span>POWERED BY SHODAN</span>
+                        </div>
+                    </div>
+                    <div id="externalScanContent">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Internal Scan Panel -->
+                <div class="scan-panel internal-scan">
+                    <div class="panel-header">
+                        <h3 class="panel-title">🔍 Internal Network Scan</h3>
+                        <div class="scan-status active">
+                            <div class="status-dot"></div>
+                            <span>AI AGENT DISCOVERY</span>
+                        </div>
+                    </div>
+                    <div id="internalScanContent">
+                        <!-- Content will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Device Discovery -->
+            <div class="device-discovery" id="deviceDiscovery">
+                <div class="discovery-header">
+                    <h3 class="discovery-title" id="discoveryTitle">Device Discovery</h3>
+                    <div class="scan-toggle" id="scanToggle" onclick="toggleScanning()">Auto-Scan Active</div>
+                </div>
+                <div class="device-grid" id="deviceGrid">
+                    <!-- Devices will be populated by JavaScript -->
                 </div>
             </div>
         </div>
@@ -1845,7 +2254,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        NetworkMapper V4 online. Ready to discover your network infrastructure and configure optimal protection. I coordinate with VPNMonitor for external scanning and EncryptionDeployer for gap remediation.
+                        NetworkMapper V4 online. Ready to discover your network infrastructure and configure optimal protection. I coordinate with all sub-agents including ThreatScanner, EncryptionDeployer, and others for comprehensive security.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
