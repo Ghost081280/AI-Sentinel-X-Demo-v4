@@ -346,43 +346,19 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner */
+        /* Sub-Agent Status Banner - Fixed to match defense page */
         .sub-agent-status {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 170, 102, 0.05) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.3);
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px;
             margin-bottom: 25px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sub-agent-status::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
-            animation: bannerScan 8s linear infinite;
-        }
-
-        @keyframes bannerScan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .sub-agent-content {
-            position: relative;
-            z-index: 1;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
+            backdrop-filter: blur(15px);
         }
 
         .sub-agent-info {
@@ -591,6 +567,7 @@
             backdrop-filter: blur(15px);
             grid-column: 1 / -1;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
         }
 
         .manager-header {
@@ -1466,7 +1443,7 @@
                 gap: 15px;
             }
 
-            .sub-agent-content {
+            .sub-agent-status {
                 flex-direction: column;
                 text-align: center;
             }
@@ -1610,33 +1587,31 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner -->
+        <!-- Sub-Agent Status Banner - Fixed to match defense page -->
         <div class="sub-agent-status">
-            <div class="sub-agent-content">
-                <div class="sub-agent-info">
-                    <div class="sub-agent-icon">🔐</div>
-                    <div class="sub-agent-details">
-                        <h3>EncryptionManager Sub-Agent</h3>
-                        <p>Hybrid-resistant encryption • Classical + Post-quantum • Coordinating with sub-agents • Reports to Main Agent</p>
-                    </div>
+            <div class="sub-agent-info">
+                <div class="sub-agent-icon">🔐</div>
+                <div class="sub-agent-details">
+                    <h3>EncryptionManager Sub-Agent</h3>
+                    <p>Hybrid-resistant encryption • Classical + Post-quantum • Coordinating with sub-agents • Reports to Main Agent</p>
                 </div>
-                <div class="sub-agent-metrics">
-                    <div class="metric" onclick="showMetricDetails('cryptoOps')">
-                        <div class="metric-value" id="cryptoOps">2.1M</div>
-                        <div class="metric-label">Crypto Ops/Sec</div>
-                    </div>
-                    <div class="metric" onclick="showMetricDetails('deployments')">
-                        <div class="metric-value" id="deploymentsActive">3/4</div>
-                        <div class="metric-label">Deployments</div>
-                    </div>
-                    <div class="metric" onclick="showMetricDetails('certificates')">
-                        <div class="metric-value" id="certificatesValid">12</div>
-                        <div class="metric-label">Certificates</div>
-                    </div>
-                    <div class="metric" onclick="showMetricDetails('rotations')">
-                        <div class="metric-value" id="keyRotations">47</div>
-                        <div class="metric-label">Rotations/Day</div>
-                    </div>
+            </div>
+            <div class="sub-agent-metrics">
+                <div class="metric" onclick="showMetricDetails('cryptoOps')">
+                    <div class="metric-value" id="cryptoOps">2.1M</div>
+                    <div class="metric-label">Crypto Ops/Sec</div>
+                </div>
+                <div class="metric" onclick="showMetricDetails('deployments')">
+                    <div class="metric-value" id="deploymentsActive">3/4</div>
+                    <div class="metric-label">Deployments</div>
+                </div>
+                <div class="metric" onclick="showMetricDetails('certificates')">
+                    <div class="metric-value" id="certificatesValid">12</div>
+                    <div class="metric-label">Certificates</div>
+                </div>
+                <div class="metric" onclick="showMetricDetails('rotations')">
+                    <div class="metric-value" id="keyRotations">47</div>
+                    <div class="metric-label">Rotations/Day</div>
                 </div>
             </div>
         </div>
