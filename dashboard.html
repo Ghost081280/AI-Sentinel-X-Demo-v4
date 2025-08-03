@@ -1852,11 +1852,9 @@
     <script>
         // Dashboard-specific state and configurations
         let dashboardFeedId = 'dashboard-feed';
-        let globalUpdateIndex = 0;
 
-        // Dashboard page initialization
+        // Dashboard page initialization with STAGGERED LOADING
         document.addEventListener('DOMContentLoaded', () => {
-            // Wait for shared.js to load first
             setTimeout(() => {
                 initializeDashboard();
             }, 100);
@@ -1873,33 +1871,33 @@
                 initializePageContext();
             }
 
-            // Initialize activity feed for dashboard with STAGGERED LOADING
+            // Initialize activity feed for dashboard with STAGGERED LOADING - FIX THE SIMULTANEOUS LOADING ISSUE
             if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 // Initialize dashboard feed
                 activityFeedManager.initializeFeed(dashboardFeedId, 'dashboard');
                 activityFeedManager.setFeedContainer(dashboardFeedId, 'dashboardActivityFeed');
                 
-                // Add initial messages ONE AT A TIME with delays - show system is working
+                // Add initial messages ONE AT A TIME with proper delays - NO MORE SIMULTANEOUS LOADING
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🤖 Main Agent initialized with 10 sub-agents including VPNMonitor', '', 'Main Agent');
-                }, 500);
+                }, 800);
                 
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🌐 NetworkMapper: 247 devices discovered and protected', '', 'NetworkMapper');
-                }, 1200);
+                }, 1800);
                 
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🔒 VPNMonitor: 12 active connections with hybrid encryption', '', 'VPNMonitor');
-                }, 2000);
+                }, 2800);
                 
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🛡️ ThreatScanner: 7 active threats under monitoring', 'warning', 'ThreatScanner');
-                }, 2800);
+                }, 3800);
                 
-                // Start auto-generation AFTER initial messages are loaded
+                // Start auto-generation AFTER initial messages are loaded - MUCH LATER
                 setTimeout(() => {
-                    activityFeedManager.startAutoGeneration(dashboardFeedId, 6000);
-                }, 3500);
+                    activityFeedManager.startAutoGeneration(dashboardFeedId, 7000);
+                }, 5000);
             } else {
                 console.log('ActivityFeedManager not available yet, retrying...');
                 setTimeout(initializeDashboard, 200);
@@ -1937,13 +1935,6 @@
             setInterval(() => {
                 updateSOCIntelligence();
             }, 7000);
-
-            // Simulate status changes occasionally
-            setInterval(() => {
-                if (Math.random() > 0.97) {
-                    simulateNetworkStatusChange();
-                }
-            }, 10000);
         }
 
         function populateSubAgents() {
@@ -1988,17 +1979,12 @@
         }
 
         function initializeGlobalUpdates() {
-            populateGlobalUpdates();
-            updateNetworkStatusIndicators();
-        }
-
-        function populateGlobalUpdates() {
             const container = document.getElementById('networkUpdates');
             if (!container) return;
             
             container.innerHTML = '';
 
-            // Load fewer updates initially for proper module sizing
+            // Load updates with STAGGERED timing - fix simultaneous loading
             const updates = [
                 {
                     type: 'system',
@@ -2026,7 +2012,7 @@
                 }
             ];
 
-            // Load updates ONE AT A TIME with staggered timing
+            // Load updates ONE AT A TIME with proper staggered timing
             updates.forEach((update, index) => {
                 setTimeout(() => {
                     const updateItem = document.createElement('div');
@@ -2047,7 +2033,7 @@
                     `;
                     
                     container.appendChild(updateItem);
-                }, 1000 + (index * 800)); // Start after 1 second, then 800ms intervals
+                }, 1200 + (index * 1000)); // Start after 1.2 seconds, then 1 second intervals
             });
         }
 
@@ -2055,7 +2041,7 @@
             const grid = document.getElementById('socIntelligenceGrid');
             if (!grid) return;
 
-            // Perfect number of metrics to fill the module exactly
+            // Metrics that PERFECTLY fill the 287px module height
             const socMetrics = [
                 {
                     icon: '🎯',
@@ -2093,7 +2079,7 @@
                         <div class="soc-metric-label">${metric.label}</div>
                     `;
                     grid.appendChild(metricDiv);
-                }, 1500 + (index * 400)); // Start after 1.5 seconds, then 400ms intervals
+                }, 1800 + (index * 500)); // Start after 1.8 seconds, then 500ms intervals
             });
         }
 
@@ -2165,15 +2151,6 @@
                     threatElement.textContent = newValue;
                 }
             }
-
-            if (Math.random() > 0.9) {
-                const priorityElement = document.getElementById('soc-3');
-                if (priorityElement) {
-                    const current = parseInt(priorityElement.textContent);
-                    const newValue = Math.max(0, current + Math.floor(Math.random() * 2 - 1));
-                    priorityElement.textContent = newValue;
-                }
-            }
         }
 
         function updateDashboardMetrics() {
@@ -2183,16 +2160,6 @@
                 if (threatEl) {
                     const current = parseInt(threatEl.textContent);
                     threatEl.textContent = Math.max(0, current + Math.floor(Math.random() * 3 - 1));
-                }
-            }
-            
-            // Update device count
-            if (Math.random() > 0.95) {
-                const deviceElMetric = document.getElementById('deviceCountMetric');
-                if (deviceElMetric) {
-                    const current = parseInt(deviceElMetric.textContent);
-                    const newCount = current + Math.floor(Math.random() * 3);
-                    deviceElMetric.textContent = newCount;
                 }
             }
             
@@ -2208,28 +2175,6 @@
             if (decisionsEl) {
                 const decisions = 2.3 + Math.random() * 0.3;
                 decisionsEl.textContent = decisions.toFixed(1) + 'K';
-            }
-        }
-
-        function simulateNetworkStatusChange() {
-            // Rarely simulate a network status change
-            if (Math.random() > 0.8) {
-                const networkStatus = document.getElementById('networkStatus');
-                if (networkStatus) {
-                    const statusText = networkStatus.querySelector('span:last-child');
-                    
-                    if (Math.random() > 0.5) {
-                        // Network sync delay
-                        networkStatus.className = 'module-status-indicator warning';
-                        if (statusText) statusText.textContent = 'SYNC DELAY';
-                        
-                        // Restore after 3 seconds
-                        setTimeout(() => {
-                            networkStatus.className = 'module-status-indicator online';
-                            if (statusText) statusText.textContent = 'LIVE FEED';
-                        }, 3000);
-                    }
-                }
             }
         }
 
@@ -2418,7 +2363,7 @@
                     
                     // Resume activity feed
                     if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
+                        activityFeedManager.startAutoGeneration(dashboardFeedId, 7000);
                     }
                 } else {
                     if (agentStatus) {
