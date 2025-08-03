@@ -342,7 +342,7 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner - Matching threats page exactly */
+        /* Sub-Agent Status Banner - EXACTLY matching threats page */
         .sub-agent-status {
             background: linear-gradient(135deg, rgba(0, 204, 255, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
             border: 1px solid rgba(0, 204, 255, 0.3);
@@ -759,7 +759,7 @@
             padding: 25px;
             backdrop-filter: blur(15px);
             grid-column: 1 / -1;
-            margin-top: 30px;
+            margin-bottom: 30px;
         }
 
         .compliance-header {
@@ -979,6 +979,7 @@
             flex-direction: column;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            margin-top: 30px;
         }
 
         .feed-header {
@@ -1546,13 +1547,13 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner - Matching threats page exactly -->
+        <!-- Sub-Agent Status Banner - EXACTLY matching threats page -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">📊</div>
                 <div class="sub-agent-details">
                     <h3>AnalyticsEngine Sub-Agent</h3>
-                    <p>Enhanced V4 analytics processing • AI correlation engine • Sub-agent coordination • Reports to Main Agent</p>
+                    <p>Processing 2.4M metrics/hour • Predictive analysis • Compliance monitoring • Reports to Main Agent</p>
                 </div>
             </div>
             <div class="sub-agent-metrics">
@@ -1752,7 +1753,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        AnalyticsEngine V4: Enhanced analytics processing with AI correlation engine active. Processing 2.4M metrics with 99.8% accuracy. ComplianceMonitor shows 3/4 frameworks compliant. LogAgent securing all audit trails with hybrid-resistant signatures.
+                        AnalyticsEngine: Processing 2.4M metrics with 99.8% accuracy. ComplianceMonitor shows 3/4 frameworks compliant. LogAgent securing all audit trails with hybrid-resistant signatures.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1776,7 +1777,7 @@
         // Analytics page-specific configurations using shared.js infrastructure
         let analyticsFeedId = 'analytics-feed';
 
-        // Enhanced analytics data with more log entries
+        // Mock data for demonstration - uses shared.js ComplianceConfigs
         const AnalyticsData = {
             metrics: [
                 { label: 'Events Processed', value: '2.4M', change: '+12%', positive: true, unit: '/hour' },
@@ -1807,7 +1808,17 @@
                 { timestamp: new Date(Date.now() - 510000), message: 'Machine learning model retrained with latest security datasets', type: '' },
                 { timestamp: new Date(Date.now() - 540000), message: 'Network traffic analysis flagged 5 suspicious connections', type: 'warning' },
                 { timestamp: new Date(Date.now() - 570000), message: 'Compliance framework synchronization completed successfully', type: '' },
-                { timestamp: new Date(Date.now() - 600000), message: 'LogAgent: Tamper-proof signatures applied to 15,000 new entries', type: '' }
+                { timestamp: new Date(Date.now() - 600000), message: 'LogAgent: Tamper-proof signatures applied to 15,000 new entries', type: '' },
+                { timestamp: new Date(Date.now() - 630000), message: 'Real-time anomaly detection threshold adjusted for optimal performance', type: '' },
+                { timestamp: new Date(Date.now() - 660000), message: 'Security metrics dashboard updated with real-time KPIs', type: '' },
+                { timestamp: new Date(Date.now() - 690000), message: 'Automated report generation: Weekly security summary completed', type: '' },
+                { timestamp: new Date(Date.now() - 720000), message: 'Data retention policy enforcement executed successfully', type: '' },
+                { timestamp: new Date(Date.now() - 750000), message: 'Log integrity check: All signatures verified as tamper-proof', type: '' },
+                { timestamp: new Date(Date.now() - 780000), message: 'Performance optimization reduced query response time by 12%', type: '' },
+                { timestamp: new Date(Date.now() - 810000), message: 'Compliance audit trail verification: 100% integrity maintained', type: '' },
+                { timestamp: new Date(Date.now() - 840000), message: 'Analytics pipeline processed 500GB of security data', type: '' },
+                { timestamp: new Date(Date.now() - 870000), message: 'Predictive threat model updated with new attack patterns', type: '' },
+                { timestamp: new Date(Date.now() - 900000), message: 'LogAgent: Automated log rotation and archival completed', type: '' }
             ]
         };
 
@@ -1836,7 +1847,7 @@
                 activityFeedManager.setFeedContainer(analyticsFeedId, 'analyticsActivityFeed');
                 
                 // Add initial analytics-specific messages
-                activityFeedManager.addMessage(analyticsFeedId, '📊 AnalyticsEngine V4: Enhanced processing with AI correlation engine active', '', 'AnalyticsEngine');
+                activityFeedManager.addMessage(analyticsFeedId, '📊 AnalyticsEngine: Processing 2.4M metrics with 99.8% ML accuracy', '', 'AnalyticsEngine');
                 activityFeedManager.addMessage(analyticsFeedId, '✅ ComplianceMonitor: 3/4 frameworks compliant, automated scanning active', '', 'ComplianceMonitor');
                 activityFeedManager.addMessage(analyticsFeedId, '📝 LogAgent: All audit trails secured with Dilithium-3 signatures', 'encryption', 'LogAgent');
                 activityFeedManager.addMessage(analyticsFeedId, '🧠 Predictive models: Threat forecasting 2.3s ahead with 99.8% accuracy', '', 'AnalyticsEngine');
