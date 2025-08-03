@@ -182,7 +182,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badges */
+        /* Encryption Status Badge - Only Hybrid */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -202,18 +202,18 @@
             border: 2px solid;
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .encryption-badge.classical {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .encryption-badge.quantum {
+        .encryption-badge.hybrid {
             background: rgba(124, 58, 237, 0.1);
             border-color: var(--accent);
             color: var(--accent);
+        }
+
+        .encryption-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3);
         }
 
         .status-light {
@@ -226,11 +226,6 @@
         .status-light.active {
             background: var(--success);
             box-shadow: 0 0 8px var(--success);
-        }
-
-        .status-light.inactive {
-            background: var(--danger);
-            box-shadow: 0 0 8px var(--danger);
         }
 
         @keyframes statusPulse {
@@ -337,13 +332,18 @@
             font-weight: bold;
         }
 
-        /* System Status Banner - FIXED */
+        /* System Status Banner - FIXED SIZE TO MATCH DEFENSE */
         .system-status-banner {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 25px;
+            padding: 20px 25px;
             margin-bottom: 25px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
@@ -366,62 +366,45 @@
             100% { left: 100%; }
         }
 
-        .banner-content {
+        .banner-stat {
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 10px 16px;
+            border-radius: 10px;
             position: relative;
             z-index: 1;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            align-items: center;
-        }
-
-        .banner-stat {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px 20px;
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.05) 100%);
-            border-radius: 12px;
             border: 1px solid rgba(0, 255, 136, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
         }
 
         .banner-stat:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
-            border-color: rgba(0, 255, 136, 0.4);
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .banner-stat-icon {
-            font-size: 28px;
-            filter: drop-shadow(0 0 8px currentColor);
+            font-size: 32px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 6px currentColor);
             color: var(--primary);
-            min-width: 32px;
-            text-align: center;
-        }
-
-        .banner-stat-content {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
         }
 
         .banner-stat-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: var(--primary);
-            line-height: 1.2;
-            margin-bottom: 2px;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px currentColor;
         }
 
         .banner-stat-label {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            line-height: 1;
         }
 
         /* Dashboard Grid */
@@ -664,7 +647,7 @@
             color: var(--bg-darker);
         }
 
-        /* Right Column Modules */
+        /* Right Column Modules - EXTENDED HEIGHT FOR BALANCE */
         .right-column-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -674,7 +657,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            height: 285px;
+            height: 360px; /* Extended from 285px to 360px for better balance */
             display: flex;
             flex-direction: column;
         }
@@ -1236,11 +1219,6 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.5); }
-        }
-
         .ai-chat-close {
             cursor: pointer;
             font-size: 24px;
@@ -1477,9 +1455,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .banner-content {
-                grid-template-columns: 1fr;
-                gap: 15px;
+            .system-status-banner {
+                flex-direction: column;
             }
 
             .performance-metrics {
@@ -1554,12 +1531,8 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum">
-                            <div class="status-light active" id="quantumStatus"></div>
+                        <div class="encryption-badge hybrid" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light active" id="hybridStatus"></div>
                             <span>HYBRID</span>
                         </div>
                     </div>
@@ -1615,44 +1588,32 @@
             </a>
         </nav>
 
-        <!-- System Status Banner -->
+        <!-- System Status Banner - FIXED SIZE -->
         <div class="system-status-banner">
-            <div class="banner-content">
-                <div class="banner-stat">
-                    <div class="banner-stat-icon">🛡️</div>
-                    <div class="banner-stat-content">
-                        <div class="banner-stat-value">247 Devices</div>
-                        <div class="banner-stat-label">Protected</div>
-                    </div>
-                </div>
-                <div class="banner-stat">
-                    <div class="banner-stat-icon">🔐</div>
-                    <div class="banner-stat-content">
-                        <div class="banner-stat-value">Hybrid Mode</div>
-                        <div class="banner-stat-label">Encryption Active</div>
-                    </div>
-                </div>
-                <div class="banner-stat">
-                    <div class="banner-stat-icon">⚡</div>
-                    <div class="banner-stat-content">
-                        <div class="banner-stat-value">0.3s</div>
-                        <div class="banner-stat-label">Response Time</div>
-                    </div>
-                </div>
-                <div class="banner-stat">
-                    <div class="banner-stat-icon">🔒</div>
-                    <div class="banner-stat-content">
-                        <div class="banner-stat-value">12 VPN</div>
-                        <div class="banner-stat-label">Connections</div>
-                    </div>
-                </div>
-                <div class="banner-stat">
-                    <div class="banner-stat-icon">📡</div>
-                    <div class="banner-stat-content">
-                        <div class="banner-stat-value">Global Net</div>
-                        <div class="banner-stat-label">Updates Sync</div>
-                    </div>
-                </div>
+            <div class="banner-stat" onclick="showStatusDetails('devices')">
+                <div class="banner-stat-icon">🛡️</div>
+                <div class="banner-stat-value">247 Devices</div>
+                <div class="banner-stat-label">Protected</div>
+            </div>
+            <div class="banner-stat" onclick="showStatusDetails('encryption')">
+                <div class="banner-stat-icon">🔐</div>
+                <div class="banner-stat-value">Hybrid Mode</div>
+                <div class="banner-stat-label">Encryption Active</div>
+            </div>
+            <div class="banner-stat" onclick="showStatusDetails('response')">
+                <div class="banner-stat-icon">⚡</div>
+                <div class="banner-stat-value">0.3s</div>
+                <div class="banner-stat-label">Response Time</div>
+            </div>
+            <div class="banner-stat" onclick="showStatusDetails('vpn')">
+                <div class="banner-stat-icon">🔒</div>
+                <div class="banner-stat-value">12 VPN</div>
+                <div class="banner-stat-label">Connections</div>
+            </div>
+            <div class="banner-stat" onclick="showStatusDetails('updates')">
+                <div class="banner-stat-icon">📡</div>
+                <div class="banner-stat-value">Global Net</div>
+                <div class="banner-stat-label">Updates Sync</div>
             </div>
         </div>
 
@@ -1733,7 +1694,7 @@
 
             <!-- Right Column -->
             <div class="right-column">
-                <!-- Global Network Updates Module -->
+                <!-- Global Network Updates Module - EXTENDED HEIGHT -->
                 <div class="right-column-module">
                     <div class="module-header">
                         <h2 class="module-title">
@@ -1747,12 +1708,12 @@
                     </div>
                     <div class="module-content" id="networkContent">
                         <div class="network-updates" id="networkUpdates">
-                            <!-- Updates will be populated by JavaScript -->
+                            <!-- Updates will be populated by JavaScript with more content to fill space -->
                         </div>
                     </div>
                 </div>
 
-                <!-- SOC Intelligence Overview Module -->
+                <!-- SOC Intelligence Overview Module - EXTENDED HEIGHT -->
                 <div class="right-column-module">
                     <div class="module-header">
                         <h2 class="module-title">
@@ -1766,7 +1727,7 @@
                     </div>
                     <div class="module-content">
                         <div class="soc-intelligence-grid" id="socIntelligenceGrid">
-                            <!-- SOC metrics will be populated by JavaScript -->
+                            <!-- SOC metrics will be populated by JavaScript with more content -->
                         </div>
                     </div>
                 </div>
@@ -1940,7 +1901,7 @@
             // Populate sub-agents from shared.js
             populateSubAgents();
             
-            // Initialize Global Network Updates and SOC Intelligence
+            // Initialize Global Network Updates and SOC Intelligence with extended content
             initializeGlobalUpdates();
             initializeSOCIntelligence();
             
@@ -2024,7 +1985,7 @@
             
             container.innerHTML = '';
 
-            // Get updates from shared.js or use fallback
+            // Get updates from shared.js and add more content for extended height
             const updates = typeof SharedGlobalUpdates !== 'undefined' ? SharedGlobalUpdates : [
                 {
                     type: 'system',
@@ -2057,11 +2018,27 @@
                     timestamp: '1h ago',
                     source: 'Regional Control',
                     priority: 'high'
+                },
+                {
+                    type: 'system',
+                    title: 'Certificate Renewal Complete',
+                    message: 'Global certificate renewal for 2,847 agents completed successfully.',
+                    timestamp: '2h ago',
+                    source: 'Certificate Authority',
+                    priority: 'medium'
+                },
+                {
+                    type: 'info',
+                    title: 'ML Model Enhancement',
+                    message: 'Behavioral analysis models updated with 99.8% accuracy improvement.',
+                    timestamp: '3h ago',
+                    source: 'AI Research',
+                    priority: 'low'
                 }
             ];
 
-            // Show only first 4 updates with staggered animation
-            updates.slice(0, 4).forEach((update, index) => {
+            // Show more updates to fill the extended height (6 instead of 4)
+            updates.slice(0, 6).forEach((update, index) => {
                 setTimeout(() => {
                     const updateItem = document.createElement('div');
                     updateItem.className = `network-update-item ${update.type}`;
@@ -2081,7 +2058,7 @@
                     `;
                     
                     container.appendChild(updateItem);
-                }, index * 200); // Stagger by 200ms
+                }, index * 150); // Reduced stagger for faster population
             });
         }
 
@@ -2089,6 +2066,7 @@
             const grid = document.getElementById('socIntelligenceGrid');
             if (!grid) return;
 
+            // Extended SOC metrics to fill more space
             const socMetrics = [
                 {
                     icon: '🎯',
@@ -2119,6 +2097,26 @@
                     icon: '📊',
                     value: '89%',
                     label: 'Coverage Score'
+                },
+                {
+                    icon: '🔐',
+                    value: '247',
+                    label: 'Encrypted Assets'
+                },
+                {
+                    icon: '🌐',
+                    value: '12',
+                    label: 'VPN Tunnels'
+                },
+                {
+                    icon: '✅',
+                    value: '96%',
+                    label: 'Compliance Rate'
+                },
+                {
+                    icon: '🚫',
+                    value: '124',
+                    label: 'Blocked Today'
                 }
             ];
 
@@ -2135,7 +2133,7 @@
                         <div class="soc-metric-label">${metric.label}</div>
                     `;
                     grid.appendChild(metricDiv);
-                }, index * 150); // Stagger by 150ms
+                }, index * 100); // Faster stagger for better performance
             });
         }
 
@@ -2170,8 +2168,8 @@
             const container = document.getElementById('networkUpdates');
             if (!container) return;
 
-            // Remove oldest update if we have 4 or more
-            if (container.children.length >= 4) {
+            // Remove oldest update if we have 6 or more
+            if (container.children.length >= 6) {
                 container.removeChild(container.lastChild);
             }
 
@@ -2336,7 +2334,11 @@
                         'Active Incidents': 'SOC Intelligence: 7 incidents currently under investigation. All contained with no business impact. Response teams engaged.',
                         'Events/Hour': 'SOC Intelligence: Processing 2.4M security events per hour. Advanced correlation reduces false positives by 94%.',
                         'High Priority': 'SOC Intelligence: 3 high-priority alerts require immediate attention. All escalated to senior analysts with full context.',
-                        'Coverage Score': 'SOC Intelligence: 89% security coverage across infrastructure. Continuous monitoring of critical assets and attack vectors.'
+                        'Coverage Score': 'SOC Intelligence: 89% security coverage across infrastructure. Continuous monitoring of critical assets and attack vectors.',
+                        'Encrypted Assets': 'SOC Intelligence: 247 devices protected with hybrid encryption. All assets using post-quantum algorithms.',
+                        'VPN Tunnels': 'SOC Intelligence: 12 active VPN connections monitored by VPNMonitor sub-agent. All tunnels secured with hybrid key exchange.',
+                        'Compliance Rate': 'SOC Intelligence: 96% compliance across SOC2, ISO27001, and NIST frameworks. 4% improvement this quarter.',
+                        'Blocked Today': 'SOC Intelligence: 124 attacks blocked automatically today. DefenseOrchestrator coordination at 99.8% effectiveness.'
                     };
                     window.sentinelChat.addMessage(details[metric] || `SOC Intelligence: Detailed metrics for ${metric} available through analytics dashboard.`, false);
                 }
@@ -2349,7 +2351,47 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with advanced encryption. Global Network Updates sync active with real-time notifications from AI Sentinel command center.', false);
+                    window.sentinelChat.addMessage('Main Agent: Central AI orchestrating 10 sub-agents including VPNMonitor and encryption specialists. Currently coordinating ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications protected with hybrid encryption. Global Network Updates sync active with real-time notifications from AI Sentinel command center.', false);
+                }
+            }, 300);
+        }
+
+        function showStatusDetails(type) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                let message = '';
+                switch(type) {
+                    case 'devices':
+                        message = 'Main Agent: 247 devices protected with comprehensive monitoring. NetworkMapper coordinates device discovery and security assessment.';
+                        break;
+                    case 'encryption':
+                        message = 'EncryptionManager: Hybrid encryption mode active combining classical (AES-256, ChaCha20) and post-quantum (Kyber-1024, Dilithium-3) algorithms.';
+                        break;
+                    case 'response':
+                        message = 'DefenseOrchestrator: Average 0.3 second response time including threat detection, analysis, and automated mitigation deployment.';
+                        break;
+                    case 'vpn':
+                        message = 'VPNMonitor: 12 active VPN connections secured with hybrid key exchange. OpenVPN, WireGuard, and IPSec protocols monitored.';
+                        break;
+                    case 'updates':
+                        message = 'Main Agent: Global Network Updates synchronization active. Real-time threat intelligence and system updates from AI Sentinel command center.';
+                        break;
+                }
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(message, false);
+                }
+            }, 300);
+        }
+
+        function showEncryptionStatus(type) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Advanced post-quantum algorithms (Kyber-1024, Dilithium-3, SPHINCS+) combined with proven classical encryption (AES-256-GCM, ChaCha20-Poly1305). All 10 sub-agents coordinating with quantum-resistant protection across 247 devices and 12 VPN connections.`, false);
                 }
             }, 300);
         }
