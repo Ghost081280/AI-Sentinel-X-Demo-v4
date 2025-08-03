@@ -342,7 +342,7 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner */
+        /* Sub-Agent Status Banner - Matching threats page exactly */
         .sub-agent-status {
             background: linear-gradient(135deg, rgba(0, 204, 255, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
             border: 1px solid rgba(0, 204, 255, 0.3);
@@ -355,29 +355,9 @@
             flex-wrap: wrap;
             gap: 20px;
             backdrop-filter: blur(15px);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .sub-agent-status::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 204, 255, 0.1), transparent);
-            animation: bannerScan 8s linear infinite;
-        }
-
-        @keyframes bannerScan {
-            0% { left: -100%; }
-            100% { left: 100%; }
         }
 
         .sub-agent-info {
-            position: relative;
-            z-index: 1;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -407,8 +387,6 @@
         }
 
         .sub-agent-metrics {
-            position: relative;
-            z-index: 1;
             display: flex;
             gap: 30px;
         }
@@ -800,22 +778,6 @@
             font-size: 24px;
             font-weight: bold;
             color: var(--accent);
-        }
-
-        .new-badge {
-            background: var(--gradient-hybrid);
-            color: var(--bg-darker);
-            font-size: 10px;
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            animation: newBadgePulse 3s ease-in-out infinite;
-        }
-
-        @keyframes newBadgePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
         }
 
         .compliance-actions {
@@ -1584,13 +1546,13 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner -->
+        <!-- Sub-Agent Status Banner - Matching threats page exactly -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">📊</div>
                 <div class="sub-agent-details">
                     <h3>AnalyticsEngine Sub-Agent</h3>
-                    <p>Processing 2.4M metrics/hour • Predictive analysis • Compliance monitoring • Reports to Main Agent</p>
+                    <p>Enhanced V4 analytics processing • AI correlation engine • Sub-agent coordination • Reports to Main Agent</p>
                 </div>
             </div>
             <div class="sub-agent-metrics">
@@ -1722,7 +1684,6 @@
                 <div class="compliance-title">
                     <span>✅</span>
                     <span>ComplianceMonitor</span>
-                    <span class="new-badge">NEW</span>
                 </div>
                 <div class="compliance-actions">
                     <button class="compliance-btn" onclick="generateComplianceReport()">Generate Report</button>
@@ -1791,7 +1752,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        AnalyticsEngine: Processing 2.4M metrics with 99.8% accuracy. ComplianceMonitor shows 3/4 frameworks compliant. LogAgent securing all audit trails with hybrid-resistant signatures.
+                        AnalyticsEngine V4: Enhanced analytics processing with AI correlation engine active. Processing 2.4M metrics with 99.8% accuracy. ComplianceMonitor shows 3/4 frameworks compliant. LogAgent securing all audit trails with hybrid-resistant signatures.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1815,7 +1776,7 @@
         // Analytics page-specific configurations using shared.js infrastructure
         let analyticsFeedId = 'analytics-feed';
 
-        // Mock data for demonstration - uses shared.js ComplianceConfigs
+        // Enhanced analytics data with more log entries
         const AnalyticsData = {
             metrics: [
                 { label: 'Events Processed', value: '2.4M', change: '+12%', positive: true, unit: '/hour' },
@@ -1827,13 +1788,26 @@
             ],
             logs: [
                 { timestamp: new Date(), message: 'System audit log initialized with Dilithium-3 signature', type: '' },
-                { timestamp: new Date(Date.now() - 60000), message: 'SOC2 compliance verification completed successfully', type: '' },
-                { timestamp: new Date(Date.now() - 120000), message: 'Certificate expiration warning: API Gateway cert expires in 6 days', type: 'warning' },
-                { timestamp: new Date(Date.now() - 180000), message: 'Failed login attempt detected and logged from IP 185.*.*.* ', type: 'warning' },
-                { timestamp: new Date(Date.now() - 240000), message: 'Encryption key rotation completed for all systems', type: '' },
-                { timestamp: new Date(Date.now() - 300000), message: 'ISO27001 audit scheduled for next quarter', type: '' },
-                { timestamp: new Date(Date.now() - 360000), message: 'Database backup completed and encrypted with hybrid algorithms', type: '' },
-                { timestamp: new Date(Date.now() - 420000), message: 'Critical security event: Unauthorized access attempt blocked', type: 'error' }
+                { timestamp: new Date(Date.now() - 30000), message: 'SOC2 compliance verification completed successfully', type: '' },
+                { timestamp: new Date(Date.now() - 60000), message: 'Analytics engine model updated with new threat patterns', type: '' },
+                { timestamp: new Date(Date.now() - 90000), message: 'Certificate expiration warning: API Gateway cert expires in 6 days', type: 'warning' },
+                { timestamp: new Date(Date.now() - 120000), message: 'Failed login attempt detected and logged from IP 185.*.*.* ', type: 'warning' },
+                { timestamp: new Date(Date.now() - 150000), message: 'Predictive model accuracy improved to 99.8% with ML training', type: '' },
+                { timestamp: new Date(Date.now() - 180000), message: 'Encryption key rotation completed for all analytics systems', type: '' },
+                { timestamp: new Date(Date.now() - 210000), message: 'Behavioral analysis detected 3 anomalous patterns in user data', type: 'warning' },
+                { timestamp: new Date(Date.now() - 240000), message: 'ISO27001 audit scheduled for next quarter', type: '' },
+                { timestamp: new Date(Date.now() - 270000), message: 'ComplianceMonitor: PCI DSS scanning initiated across payment systems', type: '' },
+                { timestamp: new Date(Date.now() - 300000), message: 'Database backup completed and encrypted with hybrid algorithms', type: '' },
+                { timestamp: new Date(Date.now() - 330000), message: 'Performance metrics showing 15% improvement in response times', type: '' },
+                { timestamp: new Date(Date.now() - 360000), message: 'Critical security event: Unauthorized access attempt blocked', type: 'error' },
+                { timestamp: new Date(Date.now() - 390000), message: 'Threat intelligence updated with 247 new indicators', type: '' },
+                { timestamp: new Date(Date.now() - 420000), message: 'Analytics correlation engine processed 1.2M events successfully', type: '' },
+                { timestamp: new Date(Date.now() - 450000), message: 'Sub-agent coordination check: All analytics modules responding', type: '' },
+                { timestamp: new Date(Date.now() - 480000), message: 'Data integrity verification completed with 100% success rate', type: '' },
+                { timestamp: new Date(Date.now() - 510000), message: 'Machine learning model retrained with latest security datasets', type: '' },
+                { timestamp: new Date(Date.now() - 540000), message: 'Network traffic analysis flagged 5 suspicious connections', type: 'warning' },
+                { timestamp: new Date(Date.now() - 570000), message: 'Compliance framework synchronization completed successfully', type: '' },
+                { timestamp: new Date(Date.now() - 600000), message: 'LogAgent: Tamper-proof signatures applied to 15,000 new entries', type: '' }
             ]
         };
 
@@ -1862,7 +1836,7 @@
                 activityFeedManager.setFeedContainer(analyticsFeedId, 'analyticsActivityFeed');
                 
                 // Add initial analytics-specific messages
-                activityFeedManager.addMessage(analyticsFeedId, '📊 AnalyticsEngine: Processing 2.4M metrics with 99.8% ML accuracy', '', 'AnalyticsEngine');
+                activityFeedManager.addMessage(analyticsFeedId, '📊 AnalyticsEngine V4: Enhanced processing with AI correlation engine active', '', 'AnalyticsEngine');
                 activityFeedManager.addMessage(analyticsFeedId, '✅ ComplianceMonitor: 3/4 frameworks compliant, automated scanning active', '', 'ComplianceMonitor');
                 activityFeedManager.addMessage(analyticsFeedId, '📝 LogAgent: All audit trails secured with Dilithium-3 signatures', 'encryption', 'LogAgent');
                 activityFeedManager.addMessage(analyticsFeedId, '🧠 Predictive models: Threat forecasting 2.3s ahead with 99.8% accuracy', '', 'AnalyticsEngine');
@@ -2087,7 +2061,14 @@
                 { msg: 'Certificate renewal reminder: 2 certificates expire within 30 days', type: 'warning' },
                 { msg: 'AI model retrained with latest threat intelligence data', type: '' },
                 { msg: 'System performance metrics within normal parameters', type: '' },
-                { msg: 'Failed authentication attempt logged and analyzed', type: 'error' }
+                { msg: 'Failed authentication attempt logged and analyzed', type: 'error' },
+                { msg: 'Analytics correlation engine processed 50K new events', type: '' },
+                { msg: 'ComplianceMonitor: SOC2 controls verification completed', type: '' },
+                { msg: 'Behavioral analysis detected unusual access patterns', type: 'warning' },
+                { msg: 'Data retention policy enforcement executed successfully', type: '' },
+                { msg: 'Log integrity check: All signatures verified as tamper-proof', type: '' },
+                { msg: 'Performance optimization reduced query response time by 12%', type: '' },
+                { msg: 'Security metrics dashboard updated with real-time KPIs', type: '' }
             ];
 
             if (Math.random() > 0.7) {
