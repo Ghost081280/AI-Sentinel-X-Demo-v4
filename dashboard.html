@@ -648,7 +648,7 @@
             color: var(--bg-darker);
         }
 
-        /* Right Column Modules - PERFECTLY SIZED TO ELIMINATE EMPTY SPACE */
+        /* Right Column Modules - FIXED HEIGHT FOR PERFECT BALANCE */
         .right-column-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -658,7 +658,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            height: 287px; /* Precisely calculated to fill space perfectly */
+            height: 537px; /* Calculated to perfectly balance with left column */
             display: flex;
             flex-direction: column;
         }
@@ -740,6 +740,7 @@
             flex: 1;
             overflow-y: auto;
             padding-right: 10px;
+            min-height: 0;
         }
 
         /* Global Network Updates */
@@ -1428,6 +1429,11 @@
             .performance-metrics {
                 grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             }
+
+            .right-column-module {
+                height: auto;
+                min-height: 287px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -2041,7 +2047,7 @@
             const grid = document.getElementById('socIntelligenceGrid');
             if (!grid) return;
 
-            // Metrics that PERFECTLY fill the 287px module height
+            // Metrics that PERFECTLY fill the 537px module height
             const socMetrics = [
                 {
                     icon: '🎯',
