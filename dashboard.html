@@ -348,8 +348,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            height: auto;
-            min-height: 80px; /* Exact match to defense page */
+            min-height: 90px;
         }
 
         .system-status-banner::before {
@@ -649,7 +648,7 @@
             color: var(--bg-darker);
         }
 
-        /* Right Column Modules - PROPERLY SIZED TO ELIMINATE EMPTY SPACE */
+        /* Right Column Modules - PERFECTLY SIZED TO ELIMINATE EMPTY SPACE */
         .right-column-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -659,7 +658,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            height: 290px; /* Precisely calculated to fill space without gaps */
+            height: 287px; /* Precisely calculated to fill space perfectly */
             display: flex;
             flex-direction: column;
         }
@@ -1590,7 +1589,7 @@
             </a>
         </nav>
 
-        <!-- System Status Banner - FIXED SIZE -->
+        <!-- System Status Banner - EXACT DEFENSE PAGE SIZE -->
         <div class="system-status-banner">
             <div class="banner-stat" onclick="showStatusDetails('devices')">
                 <div class="banner-stat-icon">🛡️</div>
@@ -1696,7 +1695,7 @@
 
             <!-- Right Column -->
             <div class="right-column">
-                <!-- Global Network Updates Module - EXTENDED HEIGHT -->
+                <!-- Global Network Updates Module - PERFECTLY SIZED -->
                 <div class="right-column-module">
                     <div class="module-header">
                         <h2 class="module-title">
@@ -1710,12 +1709,12 @@
                     </div>
                     <div class="module-content" id="networkContent">
                         <div class="network-updates" id="networkUpdates">
-                            <!-- Updates will be populated by JavaScript with more content to fill space -->
+                            <!-- Updates will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
 
-                <!-- SOC Intelligence Overview Module - EXTENDED HEIGHT -->
+                <!-- SOC Intelligence Overview Module - PERFECTLY SIZED -->
                 <div class="right-column-module">
                     <div class="module-header">
                         <h2 class="module-title">
@@ -1729,7 +1728,7 @@
                     </div>
                     <div class="module-content">
                         <div class="soc-intelligence-grid" id="socIntelligenceGrid">
-                            <!-- SOC metrics will be populated by JavaScript with more content -->
+                            <!-- SOC metrics will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -1874,27 +1873,33 @@
                 initializePageContext();
             }
 
-            // Initialize activity feed for dashboard with proper staggered loading
+            // Initialize activity feed for dashboard with STAGGERED LOADING
             if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 // Initialize dashboard feed
                 activityFeedManager.initializeFeed(dashboardFeedId, 'dashboard');
                 activityFeedManager.setFeedContainer(dashboardFeedId, 'dashboardActivityFeed');
                 
-                // Start with just one initial message, then add more gradually
+                // Add initial messages ONE AT A TIME with delays - show system is working
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🤖 Main Agent initialized with 10 sub-agents including VPNMonitor', '', 'Main Agent');
-                }, 800);
+                }, 500);
                 
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🌐 NetworkMapper: 247 devices discovered and protected', '', 'NetworkMapper');
-                }, 2000);
+                }, 1200);
                 
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🔒 VPNMonitor: 12 active connections with hybrid encryption', '', 'VPNMonitor');
-                }, 3500);
+                }, 2000);
                 
-                // Start auto-generation with single message timing
-                activityFeedManager.startAutoGeneration(dashboardFeedId, 6000);
+                setTimeout(() => {
+                    activityFeedManager.addMessage(dashboardFeedId, '🛡️ ThreatScanner: 7 active threats under monitoring', 'warning', 'ThreatScanner');
+                }, 2800);
+                
+                // Start auto-generation AFTER initial messages are loaded
+                setTimeout(() => {
+                    activityFeedManager.startAutoGeneration(dashboardFeedId, 6000);
+                }, 3500);
             } else {
                 console.log('ActivityFeedManager not available yet, retrying...');
                 setTimeout(initializeDashboard, 200);
@@ -1909,7 +1914,7 @@
             // Populate sub-agents from shared.js
             populateSubAgents();
             
-            // Initialize Global Network Updates and SOC Intelligence with extended content
+            // Initialize Global Network Updates and SOC Intelligence with STAGGERED loading
             initializeGlobalUpdates();
             initializeSOCIntelligence();
             
@@ -1993,7 +1998,7 @@
             
             container.innerHTML = '';
 
-            // Fewer updates for proper module sizing
+            // Load fewer updates initially for proper module sizing
             const updates = [
                 {
                     type: 'system',
@@ -2021,7 +2026,7 @@
                 }
             ];
 
-            // Load updates one at a time with staggered timing
+            // Load updates ONE AT A TIME with staggered timing
             updates.forEach((update, index) => {
                 setTimeout(() => {
                     const updateItem = document.createElement('div');
@@ -2050,7 +2055,7 @@
             const grid = document.getElementById('socIntelligenceGrid');
             if (!grid) return;
 
-            // Proper number of metrics to fill the balanced module without overflow
+            // Perfect number of metrics to fill the module exactly
             const socMetrics = [
                 {
                     icon: '🎯',
@@ -2076,7 +2081,7 @@
 
             grid.innerHTML = '';
             
-            // Load metrics one at a time with staggered timing
+            // Load metrics ONE AT A TIME with staggered timing
             socMetrics.forEach((metric, index) => {
                 setTimeout(() => {
                     const metricDiv = document.createElement('div');
@@ -2162,7 +2167,7 @@
             }
 
             if (Math.random() > 0.9) {
-                const priorityElement = document.getElementById('soc-4');
+                const priorityElement = document.getElementById('soc-3');
                 if (priorityElement) {
                     const current = parseInt(priorityElement.textContent);
                     const newValue = Math.max(0, current + Math.floor(Math.random() * 2 - 1));
@@ -2285,15 +2290,9 @@
                 if (window.sentinelChat) {
                     const details = {
                         'Threat Detection': 'SOC Intelligence: 99.7% threat detection rate across all monitored assets. ML models continuously learning from global threat intelligence feeds.',
-                        'Mean Time to Detect': 'SOC Intelligence: Average 0.31 seconds from initial event to threat identification. Sub-second detection enables rapid response.',
+                        'Response Time': 'SOC Intelligence: Average 0.31 seconds from initial event to threat identification. Sub-second detection enables rapid response.',
                         'Active Incidents': 'SOC Intelligence: 7 incidents currently under investigation. All contained with no business impact. Response teams engaged.',
                         'Events/Hour': 'SOC Intelligence: Processing 2.4M security events per hour. Advanced correlation reduces false positives by 94%.',
-                        'High Priority': 'SOC Intelligence: 3 high-priority alerts require immediate attention. All escalated to senior analysts with full context.',
-                        'Coverage Score': 'SOC Intelligence: 89% security coverage across infrastructure. Continuous monitoring of critical assets and attack vectors.',
-                        'Encrypted Assets': 'SOC Intelligence: 247 devices protected with hybrid encryption. All assets using post-quantum algorithms.',
-                        'VPN Tunnels': 'SOC Intelligence: 12 active VPN connections monitored by VPNMonitor sub-agent. All tunnels secured with hybrid key exchange.',
-                        'Compliance Rate': 'SOC Intelligence: 96% compliance across SOC2, ISO27001, and NIST frameworks. 4% improvement this quarter.',
-                        'Blocked Today': 'SOC Intelligence: 124 attacks blocked automatically today. DefenseOrchestrator coordination at 99.8% effectiveness.'
                     };
                     window.sentinelChat.addMessage(details[metric] || `SOC Intelligence: Detailed metrics for ${metric} available through analytics dashboard.`, false);
                 }
