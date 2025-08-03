@@ -348,8 +348,8 @@
 
         /* Sub-Agent Status Banner - Fixed to match defense page */
         .sub-agent-status {
-            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 170, 102, 0.05) 100%);
-            border: 1px solid rgba(0, 255, 136, 0.3);
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 170, 102, 0.05) 100%) !important;
+            border: 1px solid rgba(0, 255, 136, 0.3) !important;
             border-radius: 12px;
             padding: 20px;
             margin-bottom: 25px;
@@ -359,6 +359,8 @@
             flex-wrap: wrap;
             gap: 20px;
             backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
         }
 
         .sub-agent-info {
