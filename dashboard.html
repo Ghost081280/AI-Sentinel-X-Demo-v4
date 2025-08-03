@@ -332,13 +332,13 @@
             font-weight: bold;
         }
 
-        /* System Status Banner - EXACT DEFENSE PAGE MATCH */
+        /* System Status Banner - FIXED TO MATCH DEFENSE PAGE EXACTLY */
         .system-status-banner {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 20px 25px;
-            margin-bottom: 25px;
+            padding: 20px 25px !important; /* Force exact defense page padding */
+            margin-bottom: 25px !important; /* Force exact defense page margin */
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
@@ -348,7 +348,8 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            min-height: 90px;
+            min-height: 90px !important; /* Force exact defense page height */
+            max-height: 90px !important; /* Prevent expansion */
         }
 
         .system-status-banner::before {
@@ -371,7 +372,7 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            padding: 10px 16px;
+            padding: 10px 16px !important; /* Force exact defense page padding */
             border-radius: 10px;
             position: relative;
             z-index: 1;
@@ -387,14 +388,14 @@
         }
 
         .banner-stat-icon {
-            font-size: 32px;
+            font-size: 32px !important; /* Force exact defense page size */
             margin-bottom: 10px;
             filter: drop-shadow(0 0 6px currentColor);
             color: var(--primary);
         }
 
         .banner-stat-value {
-            font-size: 16px;
+            font-size: 16px !important; /* Force exact defense page size */
             font-weight: bold;
             color: var(--primary);
             margin-bottom: 5px;
@@ -402,7 +403,7 @@
         }
 
         .banner-stat-label {
-            font-size: 11px;
+            font-size: 11px !important; /* Force exact defense page size */
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -658,7 +659,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            height: 537px; /* Calculated to perfectly balance with left column */
+            height: 287px !important; /* FORCE exact height to balance with left column */
             display: flex;
             flex-direction: column;
         }
@@ -1431,7 +1432,7 @@
             }
 
             .right-column-module {
-                height: auto;
+                height: auto !important;
                 min-height: 287px;
             }
         }
@@ -1464,6 +1465,8 @@
 
             .system-status-banner {
                 flex-direction: column;
+                min-height: auto !important;
+                max-height: none !important;
             }
 
             .performance-metrics {
@@ -1861,10 +1864,32 @@
 
         // Dashboard page initialization with STAGGERED LOADING
         document.addEventListener('DOMContentLoaded', () => {
+            // FORCE IMMEDIATE MODULE BALANCING BEFORE OTHER INIT
+            forceModuleBalance();
+            
             setTimeout(() => {
                 initializeDashboard();
             }, 100);
         });
+
+        // CRITICAL FIX: Force module heights immediately
+        function forceModuleBalance() {
+            // Force right column module heights
+            const rightModules = document.querySelectorAll('.right-column-module');
+            rightModules.forEach(module => {
+                module.style.height = '287px !important';
+                module.style.maxHeight = '287px !important';
+                module.style.minHeight = '287px !important';
+            });
+            
+            // Force banner sizing
+            const banner = document.querySelector('.system-status-banner');
+            if (banner) {
+                banner.style.padding = '20px 25px !important';
+                banner.style.minHeight = '90px !important';
+                banner.style.maxHeight = '90px !important';
+            }
+        }
 
         function initializeDashboard() {
             // Initialize neural background first
@@ -1876,6 +1901,9 @@
             if (typeof initializePageContext === 'function') {
                 initializePageContext();
             }
+
+            // Force module balance again after page context
+            forceModuleBalance();
 
             // Initialize activity feed for dashboard with STAGGERED LOADING - FIX THE SIMULTANEOUS LOADING ISSUE
             if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
@@ -1941,6 +1969,11 @@
             setInterval(() => {
                 updateSOCIntelligence();
             }, 7000);
+
+            // Reapply module balance periodically to ensure it sticks
+            setInterval(() => {
+                forceModuleBalance();
+            }, 5000);
         }
 
         function populateSubAgents() {
@@ -2047,7 +2080,7 @@
             const grid = document.getElementById('socIntelligenceGrid');
             if (!grid) return;
 
-            // Metrics that PERFECTLY fill the 537px module height
+            // Metrics that PERFECTLY fill the 287px module height
             const socMetrics = [
                 {
                     icon: '🎯',
