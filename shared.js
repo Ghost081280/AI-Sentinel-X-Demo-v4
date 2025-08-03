@@ -1,10 +1,10 @@
 /**
- * AI Sentinel-X Shared JavaScript Library - Fixed V3.0
- * Complete activity feed system with perfect visual balance and SOC intelligence
+ * AI Sentinel-X Shared JavaScript Library - V3.1 Updated
+ * Enhanced module balance system and standardized banner sizing
  */
 
 // Version and configuration
-const SENTINEL_VERSION = '3.0-fixed';
+const SENTINEL_VERSION = '3.1-updated';
 const API_VERSION = 'v3';
 
 // Global state management
@@ -115,7 +115,7 @@ const SubAgentConfigs = {
     }
 };
 
-// Shared Global Network Updates - Optimized for all pages
+// Shared Global Network Updates - Expanded for better module filling
 const SharedGlobalUpdates = [
     {
         type: 'system',
@@ -172,6 +172,14 @@ const SharedGlobalUpdates = [
         timestamp: '4h ago',
         source: 'Emergency Response',
         priority: 'high'
+    },
+    {
+        type: 'system',
+        title: 'Network Infrastructure Upgrade',
+        message: 'Global command center infrastructure upgraded. Reduced latency by 25ms and improved throughput by 40%.',
+        timestamp: '5h ago',
+        source: 'Infrastructure Team',
+        priority: 'medium'
     }
 ];
 
@@ -299,7 +307,7 @@ const VPNConfigs = {
     ]
 };
 
-// Complete Activity Feed System - FIXED
+// Complete Activity Feed System - Enhanced with Better Balance
 class ActivityFeedManager {
     constructor() {
         this.feeds = new Map();
@@ -424,7 +432,7 @@ class ActivityFeedManager {
             this.feeds.set(feedId, {
                 type: feedType,
                 messages: [],
-                maxMessages: 15, // Reduced for better performance
+                maxMessages: 15, // Optimized for performance
                 autoGenerate: true,
                 container: null,
                 autoInterval: null
@@ -883,7 +891,7 @@ function initNeuralBackground() {
     };
 }
 
-// Enhanced Chat System with V3.0 optimizations
+// Enhanced Chat System with V3.1 optimizations
 class SentinelChat {
     constructor() {
         this.messageHistory = [];
@@ -1065,28 +1073,67 @@ class SentinelChat {
     }
 }
 
-// Shared Module Height Balance Manager - FIXED
+// Enhanced Module Balance Manager - FIXED V3.1
 class ModuleBalanceManager {
     static balanceRightColumnModules() {
         const rightColumnModules = document.querySelectorAll('.right-column-module');
         if (rightColumnModules.length < 2) return;
 
-        // Set consistent height for right column modules
-        const targetHeight = '285px';
+        // Set consistent height for right column modules - matching defense page standards
+        const targetHeight = '360px'; // Increased from 285px for better balance
         rightColumnModules.forEach(module => {
             module.style.height = targetHeight;
+            module.style.display = 'flex';
+            module.style.flexDirection = 'column';
+        });
+    }
+
+    static balanceSystemStatusBanner() {
+        const banners = document.querySelectorAll('.system-status-banner, .defense-status-bar');
+        
+        banners.forEach(banner => {
+            // Standardize banner sizing across all pages to match defense page
+            banner.style.padding = '20px 25px';
+            banner.style.marginBottom = '25px';
+            
+            // Ensure consistent stat item sizing
+            const statItems = banner.querySelectorAll('.banner-stat, .status-item');
+            statItems.forEach(item => {
+                item.style.padding = '10px 16px';
+                item.style.borderRadius = '10px';
+            });
+        });
+    }
+
+    static balanceAllModules() {
+        // Balance right column modules
+        this.balanceRightColumnModules();
+        
+        // Standardize banner sizing
+        this.balanceSystemStatusBanner();
+        
+        // Balance other module types if they exist
+        const generalModules = document.querySelectorAll('.section-card, .module-card');
+        generalModules.forEach(module => {
+            // Ensure consistent padding and structure
+            if (!module.querySelector('.feed-content')) { // Don't modify feed containers
+                module.style.display = 'flex';
+                module.style.flexDirection = 'column';
+            }
         });
     }
 
     static initializeBalancedModules() {
         // Wait for DOM to be ready, then balance modules
         setTimeout(() => {
-            this.balanceRightColumnModules();
+            this.balanceAllModules();
         }, 100);
 
         // Rebalance on window resize
         window.addEventListener('resize', () => {
-            this.balanceRightColumnModules();
+            setTimeout(() => {
+                this.balanceAllModules();
+            }, 100);
         });
     }
 }
@@ -1096,7 +1143,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize page context
     initializePageContext();
     
-    // Initialize module balance manager
+    // Initialize enhanced module balance manager
     ModuleBalanceManager.initializeBalancedModules();
     
     // Make sure all globals are available
