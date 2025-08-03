@@ -467,7 +467,51 @@ class ActivityFeedManager {
             feed.messages = feed.messages.slice(0, feed.maxMessages);
         }
 
-        this.renderFeed(feedId);
+        this.renderFeedWithAnimation(feedId);
+    }
+
+    renderFeedWithAnimation(feedId) {
+        const feed = this.feeds.get(feedId);
+        if (!feed || !feed.container) return;
+
+        // Only animate the new message, keep existing ones
+        const existingMessages = Array.from(feed.container.children);
+        const newMessage = feed.messages[0];
+        
+        if (newMessage && !existingMessages.find(el => el.dataset.messageId === newMessage.id.toString())) {
+            const item = document.createElement('div');
+            item.className = `feed-item ${newMessage.type}`;
+            item.dataset.messageId = newMessage.id;
+            
+            const time = newMessage.timestamp.toLocaleTimeString([], { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            item.innerHTML = `
+                <div class="feed-time">${time}</div>
+                <div class="feed-message">${newMessage.message}</div>
+                ${newMessage.agent ? `<div class="feed-agent">via ${newMessage.agent}</div>` : ''}
+            `;
+            
+            // Add smooth slide-in animation
+            item.style.animation = 'feedSlide 0.5s ease';
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-20px)';
+            
+            feed.container.insertBefore(item, feed.container.firstChild);
+            
+            // Trigger animation
+            setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateX(0)';
+            }, 50);
+            
+            // Remove excess messages
+            while (feed.container.children.length > feed.maxMessages) {
+                feed.container.removeChild(feed.container.lastChild);
+            }
+        }
     }
 
     generateRandomMessage(feedId) {
@@ -1073,14 +1117,14 @@ class SentinelChat {
     }
 }
 
-// Enhanced Module Balance Manager - FIXED V3.1
+// Enhanced Module Balance Manager - V3.2 with Perfect Banner and Module Sizing
 class ModuleBalanceManager {
     static balanceRightColumnModules() {
         const rightColumnModules = document.querySelectorAll('.right-column-module');
         if (rightColumnModules.length < 2) return;
 
-        // Set consistent height for right column modules - matching defense page standards
-        const targetHeight = '360px'; // Increased from 285px for better balance
+        // Set consistent height for right column modules - calculated for perfect balance
+        const targetHeight = '287px'; // Precisely calculated to eliminate empty space
         rightColumnModules.forEach(module => {
             module.style.height = targetHeight;
             module.style.display = 'flex';
@@ -1088,19 +1132,27 @@ class ModuleBalanceManager {
         });
     }
 
-    static balanceSystemStatusBanner() {
+    static standardizeSystemBanners() {
         const banners = document.querySelectorAll('.system-status-banner, .defense-status-bar');
         
         banners.forEach(banner => {
-            // Standardize banner sizing across all pages to match defense page
+            // Apply exact defense page banner sizing
             banner.style.padding = '20px 25px';
             banner.style.marginBottom = '25px';
+            banner.style.minHeight = '90px';
+            banner.style.display = 'flex';
+            banner.style.justifyContent = 'space-around';
+            banner.style.alignItems = 'center';
+            banner.style.flexWrap = 'wrap';
+            banner.style.gap = '20px';
             
             // Ensure consistent stat item sizing
             const statItems = banner.querySelectorAll('.banner-stat, .status-item');
             statItems.forEach(item => {
                 item.style.padding = '10px 16px';
                 item.style.borderRadius = '10px';
+                item.style.textAlign = 'center';
+                item.style.transition = 'all 0.3s ease';
             });
         });
     }
@@ -1109,8 +1161,8 @@ class ModuleBalanceManager {
         // Balance right column modules
         this.balanceRightColumnModules();
         
-        // Standardize banner sizing
-        this.balanceSystemStatusBanner();
+        // Standardize banner sizing across all pages
+        this.standardizeSystemBanners();
         
         // Balance other module types if they exist
         const generalModules = document.querySelectorAll('.section-card, .module-card');
@@ -1135,6 +1187,11 @@ class ModuleBalanceManager {
                 this.balanceAllModules();
             }, 100);
         });
+
+        // Additional balance check after content loads
+        setTimeout(() => {
+            this.balanceAllModules();
+        }, 1000);
     }
 }
 
