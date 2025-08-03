@@ -332,23 +332,24 @@
             font-weight: bold;
         }
 
-        /* System Status Banner - EXACT DEFENSE PAGE SIZE */
+        /* System Status Banner - EXACT DEFENSE PAGE MATCH */
         .system-status-banner {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 20px 25px;
             margin-bottom: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
             display: flex;
             justify-content: space-around;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-            min-height: 90px; /* Match defense page exactly */
+            height: auto;
+            min-height: 80px; /* Exact match to defense page */
         }
 
         .system-status-banner::before {
@@ -648,7 +649,7 @@
             color: var(--bg-darker);
         }
 
-        /* Right Column Modules - BALANCED TO ELIMINATE EMPTY SPACE */
+        /* Right Column Modules - PROPERLY SIZED TO ELIMINATE EMPTY SPACE */
         .right-column-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -658,7 +659,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            height: 287px; /* Calculated to perfectly fill space with proper gaps */
+            height: 290px; /* Precisely calculated to fill space without gaps */
             display: flex;
             flex-direction: column;
         }
@@ -1873,35 +1874,27 @@
                 initializePageContext();
             }
 
-            // Initialize activity feed for dashboard with staggered loading
+            // Initialize activity feed for dashboard with proper staggered loading
             if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 // Initialize dashboard feed
                 activityFeedManager.initializeFeed(dashboardFeedId, 'dashboard');
                 activityFeedManager.setFeedContainer(dashboardFeedId, 'dashboardActivityFeed');
                 
-                // Add initial messages with staggered timing (one at a time)
+                // Start with just one initial message, then add more gradually
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🤖 Main Agent initialized with 10 sub-agents including VPNMonitor', '', 'Main Agent');
-                }, 500);
-                
-                setTimeout(() => {
-                    activityFeedManager.addMessage(dashboardFeedId, '🔒 VPNMonitor: 12 active connections with hybrid encryption', '', 'VPNMonitor');
-                }, 1200);
-                
-                setTimeout(() => {
-                    activityFeedManager.addMessage(dashboardFeedId, '🛡️ ThreatScanner: 7 active threats detected and contained', 'warning', 'ThreatScanner');
-                }, 1900);
+                }, 800);
                 
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🌐 NetworkMapper: 247 devices discovered and protected', '', 'NetworkMapper');
-                }, 2600);
+                }, 2000);
                 
                 setTimeout(() => {
-                    activityFeedManager.addMessage(dashboardFeedId, '🔐 EncryptionManager: Hybrid mode active across all systems', 'encryption', 'EncryptionManager');
-                }, 3300);
+                    activityFeedManager.addMessage(dashboardFeedId, '🔒 VPNMonitor: 12 active connections with hybrid encryption', '', 'VPNMonitor');
+                }, 3500);
                 
-                // Start auto-generation every 5 seconds for dashboard with single message timing
-                activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
+                // Start auto-generation with single message timing
+                activityFeedManager.startAutoGeneration(dashboardFeedId, 6000);
             } else {
                 console.log('ActivityFeedManager not available yet, retrying...');
                 setTimeout(initializeDashboard, 200);
@@ -2000,12 +1993,12 @@
             
             container.innerHTML = '';
 
-            // Get updates from shared.js with better content for balanced height
-            const updates = typeof SharedGlobalUpdates !== 'undefined' ? SharedGlobalUpdates : [
+            // Fewer updates for proper module sizing
+            const updates = [
                 {
                     type: 'system',
                     title: 'Global Fleet Update v2.3.1',
-                    message: 'Enhanced VPN monitoring and certificate auto-renewal deployed across all regions.',
+                    message: 'Enhanced VPN monitoring deployed across all regions.',
                     timestamp: '2 min ago',
                     source: 'AI Sentinel HQ',
                     priority: 'high'
@@ -2013,31 +2006,23 @@
                 {
                     type: 'security',
                     title: 'New Threat Signatures',
-                    message: 'Command center pushed 47 new threat signatures to global network.',
+                    message: 'Command center pushed 47 new signatures to global network.',
                     timestamp: '15 min ago',
                     source: 'Threat Intelligence',
                     priority: 'medium'
                 },
                 {
-                    type: 'info',
-                    title: 'Performance Optimization',
-                    message: 'Hybrid encryption performance improved by 12% after global optimization.',
-                    timestamp: '45 min ago',
-                    source: 'Performance Team',
-                    priority: 'low'
-                },
-                {
                     type: 'warning',
                     title: 'Regional Alert - EMEA',
-                    message: 'Elevated threat activity in European region. Enhanced monitoring activated.',
+                    message: 'Elevated threat activity detected. Enhanced monitoring active.',
                     timestamp: '1h ago',
                     source: 'Regional Control',
                     priority: 'high'
                 }
             ];
 
-            // Show 4 updates with staggered loading to fill balanced space
-            updates.slice(0, 4).forEach((update, index) => {
+            // Load updates one at a time with staggered timing
+            updates.forEach((update, index) => {
                 setTimeout(() => {
                     const updateItem = document.createElement('div');
                     updateItem.className = `network-update-item ${update.type}`;
@@ -2057,7 +2042,7 @@
                     `;
                     
                     container.appendChild(updateItem);
-                }, index * 300); // Stagger by 300ms for smooth loading
+                }, 1000 + (index * 800)); // Start after 1 second, then 800ms intervals
             });
         }
 
@@ -2065,7 +2050,7 @@
             const grid = document.getElementById('socIntelligenceGrid');
             if (!grid) return;
 
-            // Balanced SOC metrics to perfectly fill the balanced module space
+            // Proper number of metrics to fill the balanced module without overflow
             const socMetrics = [
                 {
                     icon: '🎯',
@@ -2075,7 +2060,7 @@
                 {
                     icon: '⚡',
                     value: '0.31s',
-                    label: 'Mean Time to Detect'
+                    label: 'Response Time'
                 },
                 {
                     icon: '🛡️',
@@ -2086,21 +2071,12 @@
                     icon: '🔍',
                     value: '2.4M',
                     label: 'Events/Hour'
-                },
-                {
-                    icon: '⚠️',
-                    value: '3',
-                    label: 'High Priority'
-                },
-                {
-                    icon: '📊',
-                    value: '89%',
-                    label: 'Coverage Score'
                 }
             ];
 
             grid.innerHTML = '';
             
+            // Load metrics one at a time with staggered timing
             socMetrics.forEach((metric, index) => {
                 setTimeout(() => {
                     const metricDiv = document.createElement('div');
@@ -2112,7 +2088,7 @@
                         <div class="soc-metric-label">${metric.label}</div>
                     `;
                     grid.appendChild(metricDiv);
-                }, index * 200); // Stagger by 200ms for smooth loading
+                }, 1500 + (index * 400)); // Start after 1.5 seconds, then 400ms intervals
             });
         }
 
@@ -2147,8 +2123,8 @@
             const container = document.getElementById('networkUpdates');
             if (!container) return;
 
-            // Remove oldest update if we have 4 or more
-            if (container.children.length >= 4) {
+            // Remove oldest update if we have 3 or more
+            if (container.children.length >= 3) {
                 container.removeChild(container.lastChild);
             }
 
