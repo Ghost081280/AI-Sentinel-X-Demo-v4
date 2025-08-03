@@ -332,7 +332,7 @@
             font-weight: bold;
         }
 
-        /* System Status Banner - FIXED SIZE TO MATCH DEFENSE */
+        /* System Status Banner - EXACT DEFENSE PAGE SIZE */
         .system-status-banner {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -348,6 +348,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
+            min-height: 90px; /* Match defense page exactly */
         }
 
         .system-status-banner::before {
@@ -647,7 +648,7 @@
             color: var(--bg-darker);
         }
 
-        /* Right Column Modules - EXTENDED HEIGHT FOR BALANCE */
+        /* Right Column Modules - BALANCED TO ELIMINATE EMPTY SPACE */
         .right-column-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -657,7 +658,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            height: 360px; /* Extended from 285px to 360px for better balance */
+            height: 287px; /* Calculated to perfectly fill space with proper gaps */
             display: flex;
             flex-direction: column;
         }
@@ -1872,20 +1873,34 @@
                 initializePageContext();
             }
 
-            // Initialize activity feed for dashboard
+            // Initialize activity feed for dashboard with staggered loading
             if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 // Initialize dashboard feed
                 activityFeedManager.initializeFeed(dashboardFeedId, 'dashboard');
                 activityFeedManager.setFeedContainer(dashboardFeedId, 'dashboardActivityFeed');
                 
-                // Add some initial messages immediately
-                activityFeedManager.addMessage(dashboardFeedId, '🤖 Main Agent initialized with 10 sub-agents including VPNMonitor', '', 'Main Agent');
-                activityFeedManager.addMessage(dashboardFeedId, '🔒 VPNMonitor: 12 active connections with hybrid encryption', '', 'VPNMonitor');
-                activityFeedManager.addMessage(dashboardFeedId, '🛡️ ThreatScanner: 7 active threats detected and contained', 'warning', 'ThreatScanner');
-                activityFeedManager.addMessage(dashboardFeedId, '🌐 NetworkMapper: 247 devices discovered and protected', '', 'NetworkMapper');
-                activityFeedManager.addMessage(dashboardFeedId, '🔐 EncryptionManager: Hybrid mode active across all systems', 'encryption', 'EncryptionManager');
+                // Add initial messages with staggered timing (one at a time)
+                setTimeout(() => {
+                    activityFeedManager.addMessage(dashboardFeedId, '🤖 Main Agent initialized with 10 sub-agents including VPNMonitor', '', 'Main Agent');
+                }, 500);
                 
-                // Start auto-generation every 5 seconds for dashboard
+                setTimeout(() => {
+                    activityFeedManager.addMessage(dashboardFeedId, '🔒 VPNMonitor: 12 active connections with hybrid encryption', '', 'VPNMonitor');
+                }, 1200);
+                
+                setTimeout(() => {
+                    activityFeedManager.addMessage(dashboardFeedId, '🛡️ ThreatScanner: 7 active threats detected and contained', 'warning', 'ThreatScanner');
+                }, 1900);
+                
+                setTimeout(() => {
+                    activityFeedManager.addMessage(dashboardFeedId, '🌐 NetworkMapper: 247 devices discovered and protected', '', 'NetworkMapper');
+                }, 2600);
+                
+                setTimeout(() => {
+                    activityFeedManager.addMessage(dashboardFeedId, '🔐 EncryptionManager: Hybrid mode active across all systems', 'encryption', 'EncryptionManager');
+                }, 3300);
+                
+                // Start auto-generation every 5 seconds for dashboard with single message timing
                 activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
             } else {
                 console.log('ActivityFeedManager not available yet, retrying...');
@@ -1985,7 +2000,7 @@
             
             container.innerHTML = '';
 
-            // Get updates from shared.js and add more content for extended height
+            // Get updates from shared.js with better content for balanced height
             const updates = typeof SharedGlobalUpdates !== 'undefined' ? SharedGlobalUpdates : [
                 {
                     type: 'system',
@@ -2018,27 +2033,11 @@
                     timestamp: '1h ago',
                     source: 'Regional Control',
                     priority: 'high'
-                },
-                {
-                    type: 'system',
-                    title: 'Certificate Renewal Complete',
-                    message: 'Global certificate renewal for 2,847 agents completed successfully.',
-                    timestamp: '2h ago',
-                    source: 'Certificate Authority',
-                    priority: 'medium'
-                },
-                {
-                    type: 'info',
-                    title: 'ML Model Enhancement',
-                    message: 'Behavioral analysis models updated with 99.8% accuracy improvement.',
-                    timestamp: '3h ago',
-                    source: 'AI Research',
-                    priority: 'low'
                 }
             ];
 
-            // Show more updates to fill the extended height (6 instead of 4)
-            updates.slice(0, 6).forEach((update, index) => {
+            // Show 4 updates with staggered loading to fill balanced space
+            updates.slice(0, 4).forEach((update, index) => {
                 setTimeout(() => {
                     const updateItem = document.createElement('div');
                     updateItem.className = `network-update-item ${update.type}`;
@@ -2058,7 +2057,7 @@
                     `;
                     
                     container.appendChild(updateItem);
-                }, index * 150); // Reduced stagger for faster population
+                }, index * 300); // Stagger by 300ms for smooth loading
             });
         }
 
@@ -2066,7 +2065,7 @@
             const grid = document.getElementById('socIntelligenceGrid');
             if (!grid) return;
 
-            // Extended SOC metrics to fill more space
+            // Balanced SOC metrics to perfectly fill the balanced module space
             const socMetrics = [
                 {
                     icon: '🎯',
@@ -2097,26 +2096,6 @@
                     icon: '📊',
                     value: '89%',
                     label: 'Coverage Score'
-                },
-                {
-                    icon: '🔐',
-                    value: '247',
-                    label: 'Encrypted Assets'
-                },
-                {
-                    icon: '🌐',
-                    value: '12',
-                    label: 'VPN Tunnels'
-                },
-                {
-                    icon: '✅',
-                    value: '96%',
-                    label: 'Compliance Rate'
-                },
-                {
-                    icon: '🚫',
-                    value: '124',
-                    label: 'Blocked Today'
                 }
             ];
 
@@ -2133,7 +2112,7 @@
                         <div class="soc-metric-label">${metric.label}</div>
                     `;
                     grid.appendChild(metricDiv);
-                }, index * 100); // Faster stagger for better performance
+                }, index * 200); // Stagger by 200ms for smooth loading
             });
         }
 
@@ -2168,8 +2147,8 @@
             const container = document.getElementById('networkUpdates');
             if (!container) return;
 
-            // Remove oldest update if we have 6 or more
-            if (container.children.length >= 6) {
+            // Remove oldest update if we have 4 or more
+            if (container.children.length >= 4) {
                 container.removeChild(container.lastChild);
             }
 
