@@ -61,11 +61,11 @@
             padding: 20px;
         }
 
-        /* Header with rounded bottom corners */
+        /* Header */
         .header {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 15px 15px 20px 20px;
+            border-radius: 15px;
             padding: 25px 35px;
             margin-bottom: 30px;
             backdrop-filter: blur(15px);
@@ -397,7 +397,6 @@
 
         .metric {
             text-align: center;
-            cursor: pointer;
         }
 
         .metric-value {
@@ -1583,19 +1582,19 @@
                 </div>
             </div>
             <div class="sub-agent-metrics">
-                <div class="metric" onclick="showMetricDetails('cryptoOps')">
+                <div class="metric">
                     <div class="metric-value" id="cryptoOps">2.1M</div>
                     <div class="metric-label">Crypto Ops/Sec</div>
                 </div>
-                <div class="metric" onclick="showMetricDetails('deployments')">
+                <div class="metric">
                     <div class="metric-value" id="deploymentsActive">3/4</div>
                     <div class="metric-label">Deployments</div>
                 </div>
-                <div class="metric" onclick="showMetricDetails('certificates')">
+                <div class="metric">
                     <div class="metric-value" id="certificatesValid">12</div>
                     <div class="metric-label">Certificates</div>
                 </div>
-                <div class="metric" onclick="showMetricDetails('rotations')">
+                <div class="metric">
                     <div class="metric-value" id="keyRotations">47</div>
                     <div class="metric-label">Rotations/Day</div>
                 </div>
