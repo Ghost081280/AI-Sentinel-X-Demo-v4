@@ -58,7 +58,7 @@
             padding: 20px;
         }
 
-        /* Header with rounded bottom corners */
+        /* Header */
         .header {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -337,12 +337,12 @@
             font-weight: bold;
         }
 
-        /* System Status Banner */
+        /* System Status Banner - FIXED */
         .system-status-banner {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 20px 25px;
+            padding: 25px;
             margin-bottom: 25px;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
@@ -369,33 +369,37 @@
         .banner-content {
             position: relative;
             z-index: 1;
-            display: flex;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
             align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
         }
 
         .banner-stat {
             display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 10px 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
+            gap: 15px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 255, 136, 0.05) 100%);
+            border-radius: 12px;
             border: 1px solid rgba(0, 255, 136, 0.2);
             backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .banner-stat:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+            border-color: rgba(0, 255, 136, 0.4);
         }
 
         .banner-stat-icon {
-            font-size: 20px;
-            filter: drop-shadow(0 0 6px currentColor);
+            font-size: 28px;
+            filter: drop-shadow(0 0 8px currentColor);
+            color: var(--primary);
+            min-width: 32px;
+            text-align: center;
         }
 
         .banner-stat-content {
@@ -405,14 +409,15 @@
         }
 
         .banner-stat-value {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: bold;
             color: var(--primary);
-            line-height: 1;
+            line-height: 1.2;
+            margin-bottom: 2px;
         }
 
         .banner-stat-label {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -535,7 +540,7 @@
             text-transform: uppercase;
         }
 
-        /* Sub-Agents Section Header */
+        /* Sub-Agents Section */
         .sub-agents-header {
             margin: 25px 0 15px 0;
             padding-bottom: 15px;
@@ -560,7 +565,6 @@
             font-style: italic;
         }
 
-        /* Sub-Agents Grid */
         .sub-agents-container {
             flex: 1;
             overflow-y: auto;
@@ -754,7 +758,7 @@
             padding-right: 10px;
         }
 
-        /* Global Network Updates specific styling */
+        /* Global Network Updates */
         .network-updates {
             display: flex;
             flex-direction: column;
@@ -860,45 +864,48 @@
             color: var(--secondary);
         }
 
-        /* Security Overview Module */
-        .security-overview-grid {
+        /* SOC Intelligence Overview */
+        .soc-intelligence-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
 
-        .security-metric {
+        .soc-metric {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
             padding: 15px;
             text-align: center;
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
-        .security-metric:hover {
+        .soc-metric:hover {
             background: rgba(0, 255, 136, 0.05);
             border-color: rgba(0, 255, 136, 0.3);
+            transform: translateY(-2px);
         }
 
-        .security-metric-icon {
+        .soc-metric-icon {
             font-size: 24px;
             margin-bottom: 8px;
             filter: drop-shadow(0 0 5px currentColor);
         }
 
-        .security-metric-value {
-            font-size: 20px;
+        .soc-metric-value {
+            font-size: 18px;
             font-weight: bold;
             color: var(--primary);
             margin-bottom: 5px;
         }
 
-        .security-metric-label {
-            font-size: 11px;
+        .soc-metric-label {
+            font-size: 10px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
+            line-height: 1.2;
         }
 
         /* Activity Feed */
@@ -1471,31 +1478,15 @@
             }
 
             .banner-content {
-                gap: 20px;
-            }
-
-            .banner-stat {
-                padding: 8px 14px;
-                gap: 10px;
-            }
-
-            .banner-stat-icon {
-                font-size: 18px;
-            }
-
-            .banner-stat-value {
-                font-size: 14px;
-            }
-
-            .banner-stat-label {
-                font-size: 10px;
+                grid-template-columns: 1fr;
+                gap: 15px;
             }
 
             .performance-metrics {
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .security-overview-grid {
+            .soc-intelligence-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -1761,21 +1752,21 @@
                     </div>
                 </div>
 
-                <!-- Security Overview Module -->
+                <!-- SOC Intelligence Overview Module -->
                 <div class="right-column-module">
                     <div class="module-header">
                         <h2 class="module-title">
-                            <span>🔒</span>
-                            <span>Security Overview</span>
+                            <span>🎯</span>
+                            <span>SOC Intelligence Overview</span>
                         </h2>
                         <div class="module-status-indicator online">
                             <div class="module-status-dot"></div>
-                            <span>SECURE</span>
+                            <span>ACTIVE</span>
                         </div>
                     </div>
                     <div class="module-content">
-                        <div class="security-overview-grid" id="securityOverviewGrid">
-                            <!-- Security metrics will be populated by JavaScript -->
+                        <div class="soc-intelligence-grid" id="socIntelligenceGrid">
+                            <!-- SOC metrics will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -1875,6 +1866,9 @@
             </div>
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
+                    <div class="ai-message-bubble">
+                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Global Network Updates sync active with real-time notifications from command center.
+                    </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
             </div>
@@ -1892,7 +1886,7 @@
         <button class="ai-chat-toggle" onclick="toggleChat()">🤖</button>
     </div>
 
-    <script src="shared.js"></script></script>
+    <script src="shared.js"></script>
     <script>
         // Dashboard-specific state and configurations
         let dashboardFeedId = 'dashboard-feed';
@@ -1923,11 +1917,12 @@
                 activityFeedManager.initializeFeed(dashboardFeedId, 'dashboard');
                 activityFeedManager.setFeedContainer(dashboardFeedId, 'dashboardActivityFeed');
                 
-                // Add some initial messages
+                // Add some initial messages immediately
                 activityFeedManager.addMessage(dashboardFeedId, '🤖 Main Agent initialized with 10 sub-agents including VPNMonitor', '', 'Main Agent');
                 activityFeedManager.addMessage(dashboardFeedId, '🔒 VPNMonitor: 12 active connections with hybrid encryption', '', 'VPNMonitor');
                 activityFeedManager.addMessage(dashboardFeedId, '🛡️ ThreatScanner: 7 active threats detected and contained', 'warning', 'ThreatScanner');
                 activityFeedManager.addMessage(dashboardFeedId, '🌐 NetworkMapper: 247 devices discovered and protected', '', 'NetworkMapper');
+                activityFeedManager.addMessage(dashboardFeedId, '🔐 EncryptionManager: Hybrid mode active across all systems', 'encryption', 'EncryptionManager');
                 
                 // Start auto-generation every 5 seconds for dashboard
                 activityFeedManager.startAutoGeneration(dashboardFeedId, 5000);
@@ -1945,9 +1940,9 @@
             // Populate sub-agents from shared.js
             populateSubAgents();
             
-            // Initialize Global Network Updates and Security Overview
+            // Initialize Global Network Updates and SOC Intelligence
             initializeGlobalUpdates();
-            initializeSecurityOverview();
+            initializeSOCIntelligence();
             
             // Start periodic updates
             setInterval(() => {
@@ -1964,9 +1959,9 @@
                 addRandomGlobalUpdate();
             }, 25000);
 
-            // Update security overview periodically
+            // Update SOC intelligence periodically
             setInterval(() => {
-                updateSecurityOverview();
+                updateSOCIntelligence();
             }, 7000);
 
             // Simulate status changes occasionally
@@ -2019,10 +2014,7 @@
         }
 
         function initializeGlobalUpdates() {
-            // Use shared global updates from shared.js
-            if (typeof SharedGlobalUpdates !== 'undefined') {
-                populateGlobalUpdates();
-            }
+            populateGlobalUpdates();
             updateNetworkStatusIndicators();
         }
 
@@ -2093,43 +2085,54 @@
             });
         }
 
-        function initializeSecurityOverview() {
-            const grid = document.getElementById('securityOverviewGrid');
+        function initializeSOCIntelligence() {
+            const grid = document.getElementById('socIntelligenceGrid');
             if (!grid) return;
 
-            const securityMetrics = [
+            const socMetrics = [
                 {
-                    icon: '🛡️',
-                    value: '99.8%',
-                    label: 'Protection Rate'
-                },
-                {
-                    icon: '🔐',
-                    value: '100%',
-                    label: 'Encrypted'
+                    icon: '🎯',
+                    value: '99.7%',
+                    label: 'Threat Detection'
                 },
                 {
                     icon: '⚡',
-                    value: '0.3s',
-                    label: 'Response Time'
+                    value: '0.31s',
+                    label: 'Mean Time to Detect'
                 },
                 {
-                    icon: '🎯',
+                    icon: '🛡️',
                     value: '7',
-                    label: 'Active Threats'
+                    label: 'Active Incidents'
+                },
+                {
+                    icon: '🔍',
+                    value: '2.4M',
+                    label: 'Events/Hour'
+                },
+                {
+                    icon: '⚠️',
+                    value: '3',
+                    label: 'High Priority'
+                },
+                {
+                    icon: '📊',
+                    value: '89%',
+                    label: 'Coverage Score'
                 }
             ];
 
             grid.innerHTML = '';
             
-            securityMetrics.forEach((metric, index) => {
+            socMetrics.forEach((metric, index) => {
                 setTimeout(() => {
                     const metricDiv = document.createElement('div');
-                    metricDiv.className = 'security-metric';
+                    metricDiv.className = 'soc-metric';
+                    metricDiv.onclick = () => showSOCMetricDetails(metric.label);
                     metricDiv.innerHTML = `
-                        <div class="security-metric-icon">${metric.icon}</div>
-                        <div class="security-metric-value" id="security-${index}">${metric.value}</div>
-                        <div class="security-metric-label">${metric.label}</div>
+                        <div class="soc-metric-icon">${metric.icon}</div>
+                        <div class="soc-metric-value" id="soc-${index}">${metric.value}</div>
+                        <div class="soc-metric-label">${metric.label}</div>
                     `;
                     grid.appendChild(metricDiv);
                 }, index * 150); // Stagger by 150ms
@@ -2194,14 +2197,23 @@
             container.insertBefore(updateItem, container.firstChild);
         }
 
-        function updateSecurityOverview() {
-            // Occasionally update security metrics
+        function updateSOCIntelligence() {
+            // Occasionally update SOC metrics
             if (Math.random() > 0.85) {
-                const threatElement = document.getElementById('security-3');
+                const threatElement = document.getElementById('soc-2');
                 if (threatElement) {
                     const current = parseInt(threatElement.textContent);
                     const newValue = Math.max(0, current + Math.floor(Math.random() * 3 - 1));
                     threatElement.textContent = newValue;
+                }
+            }
+
+            if (Math.random() > 0.9) {
+                const priorityElement = document.getElementById('soc-4');
+                if (priorityElement) {
+                    const current = parseInt(priorityElement.textContent);
+                    const newValue = Math.max(0, current + Math.floor(Math.random() * 2 - 1));
+                    priorityElement.textContent = newValue;
                 }
             }
         }
@@ -2308,6 +2320,25 @@
 • Message: ${update.message}
 • Impact: This update affects your agent's security posture and performance
 • Action Required: No manual intervention needed - updates applied automatically`, false);
+                }
+            }, 300);
+        }
+
+        function showSOCMetricDetails(metric) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    const details = {
+                        'Threat Detection': 'SOC Intelligence: 99.7% threat detection rate across all monitored assets. ML models continuously learning from global threat intelligence feeds.',
+                        'Mean Time to Detect': 'SOC Intelligence: Average 0.31 seconds from initial event to threat identification. Sub-second detection enables rapid response.',
+                        'Active Incidents': 'SOC Intelligence: 7 incidents currently under investigation. All contained with no business impact. Response teams engaged.',
+                        'Events/Hour': 'SOC Intelligence: Processing 2.4M security events per hour. Advanced correlation reduces false positives by 94%.',
+                        'High Priority': 'SOC Intelligence: 3 high-priority alerts require immediate attention. All escalated to senior analysts with full context.',
+                        'Coverage Score': 'SOC Intelligence: 89% security coverage across infrastructure. Continuous monitoring of critical assets and attack vectors.'
+                    };
+                    window.sentinelChat.addMessage(details[metric] || `SOC Intelligence: Detailed metrics for ${metric} available through analytics dashboard.`, false);
                 }
             }, 300);
         }
@@ -2430,7 +2461,4 @@
         };
     </script>
 </body>
-</html>bubble">
-                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Global Network Updates sync active with real-time notifications from command center.
-                    </div>
-                    <div class="ai-message-
+</html>
