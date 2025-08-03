@@ -27,9 +27,6 @@
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
             --gradient-shield: linear-gradient(135deg, #1a4d2e 0%, #00ff88 50%, #00ccff 100%);
-            --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
-            --gradient-quantum: linear-gradient(135deg, #7c3aed 0%, #ff00ff 50%, #00ccff 100%);
-            --gradient-hybrid: linear-gradient(135deg, #00ff88 0%, #7c3aed 50%, #00ccff 100%);
         }
 
         body {
@@ -450,6 +447,9 @@
             padding: 25px;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            height: 600px;
+            display: flex;
+            flex-direction: column;
         }
 
         .command-center-header {
@@ -561,6 +561,12 @@
         }
 
         /* Sub-Agents Grid */
+        .sub-agents-container {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
         .sub-agents-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -654,8 +660,8 @@
             color: var(--bg-darker);
         }
 
-        /* Global Network Updates Module */
-        .global-network-module {
+        /* Right Column Modules */
+        .right-column-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -664,10 +670,12 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            height: 100%;
+            height: 285px;
+            display: flex;
+            flex-direction: column;
         }
 
-        .global-network-module::before {
+        .right-column-module::before {
             content: '';
             position: absolute;
             top: 0;
@@ -683,7 +691,7 @@
             100% { left: 100%; }
         }
 
-        .network-header {
+        .module-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -694,7 +702,7 @@
             z-index: 1;
         }
 
-        .network-title {
+        .module-title {
             font-size: 18px;
             font-weight: bold;
             color: var(--secondary);
@@ -705,7 +713,7 @@
             gap: 10px;
         }
 
-        .network-status-indicator {
+        .module-status-indicator {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -718,25 +726,19 @@
             transition: all 0.3s ease;
         }
 
-        .network-status-indicator.online {
+        .module-status-indicator.online {
             background: rgba(0, 255, 136, 0.1);
             color: var(--success);
             border: 1px solid var(--success);
         }
 
-        .network-status-indicator.warning {
+        .module-status-indicator.warning {
             background: rgba(255, 170, 0, 0.1);
             color: var(--warning);
             border: 1px solid var(--warning);
         }
 
-        .network-status-indicator.offline {
-            background: rgba(255, 0, 68, 0.1);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-        }
-
-        .network-status-dot {
+        .module-status-dot {
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -744,14 +746,15 @@
             animation: statusPulse 2s ease-in-out infinite;
         }
 
-        .network-content {
+        .module-content {
             position: relative;
             z-index: 1;
-            height: calc(100% - 80px);
+            flex: 1;
             overflow-y: auto;
             padding-right: 10px;
         }
 
+        /* Global Network Updates specific styling */
         .network-updates {
             display: flex;
             flex-direction: column;
@@ -766,6 +769,12 @@
             transition: all 0.3s ease;
             cursor: pointer;
             border-left: 4px solid;
+            animation: updateSlideIn 0.5s ease;
+        }
+
+        @keyframes updateSlideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
         }
 
         .network-update-item:hover {
@@ -849,6 +858,164 @@
         .update-priority.low {
             background: rgba(0, 204, 255, 0.2);
             color: var(--secondary);
+        }
+
+        /* Security Overview Module */
+        .security-overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .security-metric {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .security-metric:hover {
+            background: rgba(0, 255, 136, 0.05);
+            border-color: rgba(0, 255, 136, 0.3);
+        }
+
+        .security-metric-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 0 5px currentColor);
+        }
+
+        .security-metric-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .security-metric-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .feed-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .feed-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--danger);
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: livePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes livePulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+
+        .feed-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .feed-item {
+            background: rgba(0, 255, 136, 0.05);
+            border-left: 3px solid var(--primary);
+            padding: 15px 20px;
+            margin-bottom: 12px;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+            animation: feedSlide 0.3s ease;
+        }
+
+        @keyframes feedSlide {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .feed-item:hover {
+            background: rgba(0, 255, 136, 0.1);
+            transform: translateX(5px);
+        }
+
+        .feed-item.warning {
+            background: rgba(255, 170, 0, 0.05);
+            border-left-color: var(--warning);
+        }
+
+        .feed-item.danger {
+            background: rgba(255, 0, 68, 0.05);
+            border-left-color: var(--danger);
+        }
+
+        .feed-item.encryption {
+            background: rgba(124, 58, 237, 0.05);
+            border-left-color: var(--accent);
+        }
+
+        .feed-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .feed-message {
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 5px;
+        }
+
+        .feed-agent {
+            font-size: 11px;
+            color: var(--accent);
+            font-style: italic;
         }
 
         /* Combined Performance Module */
@@ -982,123 +1149,6 @@
             color: var(--text-secondary);
         }
 
-        /* Activity Feed - Shared styling */
-        .activity-feed {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 25px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            height: 500px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .feed-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .feed-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--danger);
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--danger);
-            border-radius: 50%;
-            animation: livePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes livePulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 0.5; }
-        }
-
-        .feed-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .feed-item {
-            background: rgba(0, 255, 136, 0.05);
-            border-left: 3px solid var(--primary);
-            padding: 15px 20px;
-            margin-bottom: 12px;
-            border-radius: 0 10px 10px 0;
-            transition: all 0.3s ease;
-            animation: feedSlide 0.3s ease;
-        }
-
-        @keyframes feedSlide {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .feed-item:hover {
-            background: rgba(0, 255, 136, 0.1);
-            transform: translateX(5px);
-        }
-
-        .feed-item.warning {
-            background: rgba(255, 170, 0, 0.05);
-            border-left-color: var(--warning);
-        }
-
-        .feed-item.danger {
-            background: rgba(255, 0, 68, 0.05);
-            border-left-color: var(--danger);
-        }
-
-        .feed-item.encryption {
-            background: rgba(124, 58, 237, 0.05);
-            border-left-color: var(--accent);
-        }
-
-        .feed-time {
-            font-size: 11px;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .feed-message {
-            font-size: 13px;
-            line-height: 1.4;
-            margin-bottom: 5px;
-        }
-
-        .feed-agent {
-            font-size: 11px;
-            color: var(--accent);
-            font-style: italic;
-        }
-
         /* AI Chat Widget */
         .ai-chat-widget {
             position: fixed;
@@ -1177,6 +1227,11 @@
             background: var(--bg-darker);
             border-radius: 50%;
             animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
         }
 
         .ai-chat-close {
@@ -1439,6 +1494,10 @@
             .performance-metrics {
                 grid-template-columns: repeat(2, 1fr);
             }
+
+            .security-overview-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         /* Custom Scrollbar */
@@ -1655,9 +1714,11 @@
                         <div class="sub-agents-subtitle">Specialized AI modules coordinated by Main Agent • VPNMonitor and encryption specialists active</div>
                     </div>
                     
-                    <!-- Sub-Agents Grid -->
-                    <div class="sub-agents-grid" id="subAgentsGrid">
-                        <!-- Sub-agents will be populated by JavaScript from shared.js -->
+                    <!-- Sub-Agents Grid with Scrollable Container -->
+                    <div class="sub-agents-container">
+                        <div class="sub-agents-grid" id="subAgentsGrid">
+                            <!-- Sub-agents will be populated by JavaScript from shared.js -->
+                        </div>
                     </div>
                 </div>
 
@@ -1682,20 +1743,39 @@
             <!-- Right Column -->
             <div class="right-column">
                 <!-- Global Network Updates Module -->
-                <div class="global-network-module">
-                    <div class="network-header">
-                        <h2 class="network-title">
+                <div class="right-column-module">
+                    <div class="module-header">
+                        <h2 class="module-title">
                             <span>📡</span>
                             <span>Global Network Updates</span>
                         </h2>
-                        <div class="network-status-indicator online" id="networkStatus">
-                            <div class="network-status-dot"></div>
+                        <div class="module-status-indicator online" id="networkStatus">
+                            <div class="module-status-dot"></div>
                             <span>LIVE FEED</span>
                         </div>
                     </div>
-                    <div class="network-content" id="networkContent">
+                    <div class="module-content" id="networkContent">
                         <div class="network-updates" id="networkUpdates">
                             <!-- Updates will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Overview Module -->
+                <div class="right-column-module">
+                    <div class="module-header">
+                        <h2 class="module-title">
+                            <span>🔒</span>
+                            <span>Security Overview</span>
+                        </h2>
+                        <div class="module-status-indicator online">
+                            <div class="module-status-dot"></div>
+                            <span>SECURE</span>
+                        </div>
+                    </div>
+                    <div class="module-content">
+                        <div class="security-overview-grid" id="securityOverviewGrid">
+                            <!-- Security metrics will be populated by JavaScript -->
                         </div>
                     </div>
                 </div>
@@ -1795,9 +1875,6 @@
             </div>
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
-                    <div class="ai-message-bubble">
-                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Global Network Updates sync active with real-time notifications from command center.
-                    </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
             </div>
@@ -1815,70 +1892,11 @@
         <button class="ai-chat-toggle" onclick="toggleChat()">🤖</button>
     </div>
 
-    <script src="shared.js"></script>
+    <script src="shared.js"></script></script>
     <script>
         // Dashboard-specific state and configurations
         let dashboardFeedId = 'dashboard-feed';
-
-        // Global Network Updates - Customer-facing data from command center
-        const globalUpdates = [
-            {
-                type: 'system',
-                title: 'Global Fleet Update v2.3.1',
-                message: 'Enhanced VPN monitoring and certificate auto-renewal deployed across all regions. Improved threat correlation algorithms active.',
-                timestamp: '2 min ago',
-                source: 'AI Sentinel HQ',
-                priority: 'high'
-            },
-            {
-                type: 'security',
-                title: 'New Threat Signatures',
-                message: 'Command center pushed 47 new threat signatures to global network. Your agent has been updated automatically.',
-                timestamp: '15 min ago',
-                source: 'Threat Intelligence',
-                priority: 'medium'
-            },
-            {
-                type: 'info',
-                title: 'Performance Optimization',
-                message: 'Hybrid encryption performance improved by 12% after global optimization. All agents benefit from enhanced algorithms.',
-                timestamp: '45 min ago',
-                source: 'Performance Team',
-                priority: 'low'
-            },
-            {
-                type: 'warning',
-                title: 'Regional Alert - EMEA',
-                message: 'Elevated threat activity in European region. Enhanced monitoring protocols activated for all EMEA customers.',
-                timestamp: '1h ago',
-                source: 'Regional Control',
-                priority: 'high'
-            },
-            {
-                type: 'system',
-                title: 'Certificate Renewal Notice',
-                message: 'Global certificate renewal completed for 2,847 agents. Your agent certificates updated with hybrid signatures.',
-                timestamp: '2h ago',
-                source: 'Certificate Authority',
-                priority: 'medium'
-            },
-            {
-                type: 'info',
-                title: 'ML Model Enhancement',
-                message: 'Command center deployed improved behavioral analysis models. Detection accuracy increased to 99.8% across all agents.',
-                timestamp: '3h ago',
-                source: 'AI Research',
-                priority: 'low'
-            },
-            {
-                type: 'security',
-                title: 'Zero-Day Protection',
-                message: 'Emergency patch distributed for CVE-2025-0147. All agents automatically protected against new vulnerability.',
-                timestamp: '4h ago',
-                source: 'Emergency Response',
-                priority: 'high'
-            }
-        ];
+        let globalUpdateIndex = 0;
 
         // Dashboard page initialization
         document.addEventListener('DOMContentLoaded', () => {
@@ -1927,8 +1945,9 @@
             // Populate sub-agents from shared.js
             populateSubAgents();
             
-            // Initialize Global Network Updates
+            // Initialize Global Network Updates and Security Overview
             initializeGlobalUpdates();
+            initializeSecurityOverview();
             
             // Start periodic updates
             setInterval(() => {
@@ -1940,10 +1959,15 @@
                 updateNetworkStatusIndicators();
             }, 8000);
 
-            // Add new global updates periodically
+            // Add new global updates periodically (staggered)
             setInterval(() => {
                 addRandomGlobalUpdate();
-            }, 30000);
+            }, 25000);
+
+            // Update security overview periodically
+            setInterval(() => {
+                updateSecurityOverview();
+            }, 7000);
 
             // Simulate status changes occasionally
             setInterval(() => {
@@ -1994,25 +2018,11 @@
             }
         }
 
-        function manageAgent(agentKey) {
-            if (typeof SubAgentConfigs !== 'undefined') {
-                const agent = SubAgentConfigs[agentKey];
-                if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                    window.sentinelChat.toggle();
-                }
-                setTimeout(() => {
-                    if (window.sentinelChat) {
-                        window.sentinelChat.addMessage(`Accessing ${agent.name} management interface...`, false, 'system');
-                        setTimeout(() => {
-                            window.sentinelChat.addMessage(`${agent.name}: ${agent.description}. Status: ${agent.status}. Use "help" for available commands.`, false);
-                        }, 800);
-                    }
-                }, 300);
-            }
-        }
-
         function initializeGlobalUpdates() {
-            populateGlobalUpdates();
+            // Use shared global updates from shared.js
+            if (typeof SharedGlobalUpdates !== 'undefined') {
+                populateGlobalUpdates();
+            }
             updateNetworkStatusIndicators();
         }
 
@@ -2022,25 +2032,107 @@
             
             container.innerHTML = '';
 
-            globalUpdates.slice(0, 6).forEach(update => {
-                const updateItem = document.createElement('div');
-                updateItem.className = `network-update-item ${update.type}`;
-                updateItem.onclick = () => openUpdateDetails(update);
-                
-                updateItem.innerHTML = `
-                    <div class="update-header">
-                        <div class="update-title">${update.title}</div>
-                        <div class="update-timestamp">${update.timestamp}</div>
-                    </div>
-                    <div class="update-message">${update.message}</div>
-                    <div class="update-source">
-                        <span>📡</span>
-                        <span>${update.source}</span>
-                        <div class="update-priority ${update.priority}">${update.priority}</div>
-                    </div>
-                `;
-                
-                container.appendChild(updateItem);
+            // Get updates from shared.js or use fallback
+            const updates = typeof SharedGlobalUpdates !== 'undefined' ? SharedGlobalUpdates : [
+                {
+                    type: 'system',
+                    title: 'Global Fleet Update v2.3.1',
+                    message: 'Enhanced VPN monitoring and certificate auto-renewal deployed across all regions.',
+                    timestamp: '2 min ago',
+                    source: 'AI Sentinel HQ',
+                    priority: 'high'
+                },
+                {
+                    type: 'security',
+                    title: 'New Threat Signatures',
+                    message: 'Command center pushed 47 new threat signatures to global network.',
+                    timestamp: '15 min ago',
+                    source: 'Threat Intelligence',
+                    priority: 'medium'
+                },
+                {
+                    type: 'info',
+                    title: 'Performance Optimization',
+                    message: 'Hybrid encryption performance improved by 12% after global optimization.',
+                    timestamp: '45 min ago',
+                    source: 'Performance Team',
+                    priority: 'low'
+                },
+                {
+                    type: 'warning',
+                    title: 'Regional Alert - EMEA',
+                    message: 'Elevated threat activity in European region. Enhanced monitoring activated.',
+                    timestamp: '1h ago',
+                    source: 'Regional Control',
+                    priority: 'high'
+                }
+            ];
+
+            // Show only first 4 updates with staggered animation
+            updates.slice(0, 4).forEach((update, index) => {
+                setTimeout(() => {
+                    const updateItem = document.createElement('div');
+                    updateItem.className = `network-update-item ${update.type}`;
+                    updateItem.onclick = () => openUpdateDetails(update);
+                    
+                    updateItem.innerHTML = `
+                        <div class="update-header">
+                            <div class="update-title">${update.title}</div>
+                            <div class="update-timestamp">${update.timestamp}</div>
+                        </div>
+                        <div class="update-message">${update.message}</div>
+                        <div class="update-source">
+                            <span>📡</span>
+                            <span>${update.source}</span>
+                            <div class="update-priority ${update.priority}">${update.priority}</div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(updateItem);
+                }, index * 200); // Stagger by 200ms
+            });
+        }
+
+        function initializeSecurityOverview() {
+            const grid = document.getElementById('securityOverviewGrid');
+            if (!grid) return;
+
+            const securityMetrics = [
+                {
+                    icon: '🛡️',
+                    value: '99.8%',
+                    label: 'Protection Rate'
+                },
+                {
+                    icon: '🔐',
+                    value: '100%',
+                    label: 'Encrypted'
+                },
+                {
+                    icon: '⚡',
+                    value: '0.3s',
+                    label: 'Response Time'
+                },
+                {
+                    icon: '🎯',
+                    value: '7',
+                    label: 'Active Threats'
+                }
+            ];
+
+            grid.innerHTML = '';
+            
+            securityMetrics.forEach((metric, index) => {
+                setTimeout(() => {
+                    const metricDiv = document.createElement('div');
+                    metricDiv.className = 'security-metric';
+                    metricDiv.innerHTML = `
+                        <div class="security-metric-icon">${metric.icon}</div>
+                        <div class="security-metric-value" id="security-${index}">${metric.value}</div>
+                        <div class="security-metric-label">${metric.label}</div>
+                    `;
+                    grid.appendChild(metricDiv);
+                }, index * 150); // Stagger by 150ms
             });
         }
 
@@ -2049,7 +2141,7 @@
                 {
                     type: 'system',
                     title: 'Agent Health Check Complete',
-                    message: 'Global fleet health scan completed. 99.98% of agents reporting optimal status. Maintenance scheduled for 3 agents.',
+                    message: 'Global fleet health scan completed. 99.98% of agents reporting optimal status.',
                     timestamp: 'Just now',
                     source: 'Fleet Management',
                     priority: 'low'
@@ -2057,7 +2149,7 @@
                 {
                     type: 'security',
                     title: 'Threat Pattern Analysis',
-                    message: 'Command center identified new attack vector targeting VPN infrastructure. All agents updated with enhanced detection.',
+                    message: 'Command center identified new attack vector targeting VPN infrastructure.',
                     timestamp: 'Just now',
                     source: 'Threat Research',
                     priority: 'high'
@@ -2065,43 +2157,53 @@
                 {
                     type: 'info',
                     title: 'Network Latency Optimization',
-                    message: 'Global routing optimization deployed. Average response time improved by 15ms across all regions.',
+                    message: 'Global routing optimization deployed. Average response time improved by 15ms.',
                     timestamp: 'Just now',
                     source: 'Network Operations',
                     priority: 'low'
-                },
-                {
-                    type: 'warning',
-                    title: 'High Traffic Alert',
-                    message: 'Unusual traffic spike detected in Asia-Pacific region. Enhanced monitoring activated for next 4 hours.',
-                    timestamp: 'Just now',
-                    source: 'Traffic Analysis',
-                    priority: 'medium'
                 }
             ];
 
+            const container = document.getElementById('networkUpdates');
+            if (!container) return;
+
+            // Remove oldest update if we have 4 or more
+            if (container.children.length >= 4) {
+                container.removeChild(container.lastChild);
+            }
+
+            // Add new update at the top
             const randomUpdate = newUpdates[Math.floor(Math.random() * newUpdates.length)];
-            globalUpdates.unshift(randomUpdate);
-            globalUpdates.pop(); // Keep only latest updates
-            populateGlobalUpdates();
+            const updateItem = document.createElement('div');
+            updateItem.className = `network-update-item ${randomUpdate.type}`;
+            updateItem.onclick = () => openUpdateDetails(randomUpdate);
+            
+            updateItem.innerHTML = `
+                <div class="update-header">
+                    <div class="update-title">${randomUpdate.title}</div>
+                    <div class="update-timestamp">${randomUpdate.timestamp}</div>
+                </div>
+                <div class="update-message">${randomUpdate.message}</div>
+                <div class="update-source">
+                    <span>📡</span>
+                    <span>${randomUpdate.source}</span>
+                    <div class="update-priority ${randomUpdate.priority}">${randomUpdate.priority}</div>
+                </div>
+            `;
+            
+            container.insertBefore(updateItem, container.firstChild);
         }
 
-        function openUpdateDetails(update) {
-            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                window.sentinelChat.toggle();
-            }
-            setTimeout(() => {
-                if (window.sentinelChat) {
-                    window.sentinelChat.addMessage(`Global Network Update Details:
-• Title: ${update.title}
-• Source: ${update.source}
-• Priority: ${update.priority.toUpperCase()}
-• Time: ${update.timestamp}
-• Message: ${update.message}
-• Impact: This update affects your agent's security posture and performance
-• Action Required: No manual intervention needed - updates applied automatically`, false);
+        function updateSecurityOverview() {
+            // Occasionally update security metrics
+            if (Math.random() > 0.85) {
+                const threatElement = document.getElementById('security-3');
+                if (threatElement) {
+                    const current = parseInt(threatElement.textContent);
+                    const newValue = Math.max(0, current + Math.floor(Math.random() * 3 - 1));
+                    threatElement.textContent = newValue;
                 }
-            }, 300);
+            }
         }
 
         function updateDashboardMetrics() {
@@ -2148,12 +2250,12 @@
                     
                     if (Math.random() > 0.5) {
                         // Network sync delay
-                        networkStatus.className = 'network-status-indicator warning';
+                        networkStatus.className = 'module-status-indicator warning';
                         if (statusText) statusText.textContent = 'SYNC DELAY';
                         
                         // Restore after 3 seconds
                         setTimeout(() => {
-                            networkStatus.className = 'network-status-indicator online';
+                            networkStatus.className = 'module-status-indicator online';
                             if (statusText) statusText.textContent = 'LIVE FEED';
                         }, 3000);
                     }
@@ -2163,7 +2265,7 @@
 
         function updateNetworkStatusIndicators() {
             // Occasionally update Global Network status indicators
-            const indicators = document.querySelectorAll('.network-status-dot');
+            const indicators = document.querySelectorAll('.module-status-dot');
             indicators.forEach(indicator => {
                 if (Math.random() > 0.95) {
                     // Briefly show warning state
@@ -2173,6 +2275,41 @@
                     }, 2000);
                 }
             });
+        }
+
+        function manageAgent(agentKey) {
+            if (typeof SubAgentConfigs !== 'undefined') {
+                const agent = SubAgentConfigs[agentKey];
+                if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                    window.sentinelChat.toggle();
+                }
+                setTimeout(() => {
+                    if (window.sentinelChat) {
+                        window.sentinelChat.addMessage(`Accessing ${agent.name} management interface...`, false, 'system');
+                        setTimeout(() => {
+                            window.sentinelChat.addMessage(`${agent.name}: ${agent.description}. Status: ${agent.status}. Use "help" for available commands.`, false);
+                        }, 800);
+                    }
+                }, 300);
+            }
+        }
+
+        function openUpdateDetails(update) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`Global Network Update Details:
+• Title: ${update.title}
+• Source: ${update.source}
+• Priority: ${update.priority.toUpperCase()}
+• Time: ${update.timestamp}
+• Message: ${update.message}
+• Impact: This update affects your agent's security posture and performance
+• Action Required: No manual intervention needed - updates applied automatically`, false);
+                }
+            }, 300);
         }
 
         function showMainAgentDetails() {
@@ -2293,4 +2430,7 @@
         };
     </script>
 </body>
-</html>
+</html>bubble">
+                        Welcome to AI Sentinel-X. I'm the Main Agent coordinating 10 sub-agents including VPNMonitor and encryption specialists. Global Network Updates sync active with real-time notifications from command center.
+                    </div>
+                    <div class="ai-message-
