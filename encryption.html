@@ -351,20 +351,22 @@
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 170, 102, 0.05) 100%);
             border: 1px solid rgba(0, 255, 136, 0.3);
             border-radius: 12px;
-            padding: 20px;
+            padding: 15px 20px;
             margin-bottom: 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 20px;
             backdrop-filter: blur(15px);
+            min-height: 90px;
+            max-height: 90px;
         }
 
         .sub-agent-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         .sub-agent-icon {
@@ -377,17 +379,21 @@
             justify-content: center;
             font-size: 24px;
             box-shadow: 0 4px 20px rgba(0, 255, 136, 0.3);
+            flex-shrink: 0;
         }
 
         .sub-agent-details h3 {
-            font-size: 18px;
+            font-size: 16px;
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
+            font-weight: 600;
         }
 
         .sub-agent-details p {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.4;
         }
 
         .sub-agent-metrics {
@@ -1572,7 +1578,7 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner - Fixed to match reference pages exactly -->
+        <!-- Sub-Agent Status Banner -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">🔐</div>
@@ -1583,19 +1589,19 @@
             </div>
             <div class="sub-agent-metrics">
                 <div class="metric">
-                    <div class="metric-value" id="cryptoOps">2.1M</div>
+                    <div class="metric-value">2.1M</div>
                     <div class="metric-label">Crypto Ops/Sec</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value" id="deploymentsActive">3/4</div>
+                    <div class="metric-value">3/4</div>
                     <div class="metric-label">Deployments</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value" id="certificatesValid">12</div>
+                    <div class="metric-value">12</div>
                     <div class="metric-label">Certificates</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value" id="keyRotations">47</div>
+                    <div class="metric-value">47</div>
                     <div class="metric-label">Rotations/Day</div>
                 </div>
             </div>
