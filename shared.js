@@ -1164,28 +1164,38 @@ class ModuleBalanceManager {
             // Fix the icon sizes inside banner stats
             const statItems = banner.querySelectorAll('.banner-stat, .status-item');
             statItems.forEach(item => {
-                item.style.padding = '10px 16px !important';
-                item.style.borderRadius = '10px';
+                item.style.padding = '5px 12px !important';
+                item.style.borderRadius = '8px';
                 item.style.textAlign = 'center';
                 item.style.transition = 'all 0.3s ease';
+                item.style.height = '60px !important';
+                item.style.display = 'flex';
+                item.style.flexDirection = 'column';
+                item.style.justifyContent = 'center';
+                item.style.alignItems = 'center';
                 
                 // Fix icon sizes
                 const icon = item.querySelector('.banner-stat-icon, .status-icon');
                 if (icon) {
-                    icon.style.fontSize = '24px !important'; // Reduced from 32px
-                    icon.style.marginBottom = '5px !important';
+                    icon.style.fontSize = '18px !important';
+                    icon.style.marginBottom = '2px !important';
+                    icon.style.lineHeight = '1';
                 }
                 
                 // Fix value sizes
                 const value = item.querySelector('.banner-stat-value, .status-value');
                 if (value) {
-                    value.style.fontSize = '14px !important'; // Reduced from 16px
+                    value.style.fontSize = '12px !important';
+                    value.style.marginBottom = '1px !important';
+                    value.style.lineHeight = '1.2';
                 }
                 
                 // Fix label sizes
                 const label = item.querySelector('.banner-stat-label, .status-label');
                 if (label) {
-                    label.style.fontSize = '10px !important'; // Reduced from 11px
+                    label.style.fontSize = '9px !important';
+                    label.style.lineHeight = '1';
+                    label.style.letterSpacing = '0.5px';
                 }
             });
         });
