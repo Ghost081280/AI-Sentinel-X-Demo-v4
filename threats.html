@@ -27,11 +27,7 @@
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
             --gradient-shield: linear-gradient(135deg, #1a4d2e 0%, #00ff88 50%, #00ccff 100%);
-            --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
-            --gradient-quantum: linear-gradient(135deg, #7c3aed 0%, #ff00ff 50%, #00ccff 100%);
-            --gradient-hybrid: linear-gradient(135deg, #00ff88 0%, #7c3aed 50%, #00ccff 100%);
             --gradient-danger: linear-gradient(135deg, #ff0044 0%, #ff6644 100%);
-            --gradient-threat: linear-gradient(135deg, rgba(255, 0, 68, 0.15) 0%, rgba(255, 170, 0, 0.1) 50%, rgba(255, 68, 68, 0.15) 100%);
         }
 
         body {
@@ -187,7 +183,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badges */
+        /* Encryption Status Badge - Matching dashboard style */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -199,54 +195,34 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .encryption-badge.classical {
             background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .encryption-badge.quantum {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .encryption-badge:hover {
+            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 2s ease-in-out infinite;
-        }
-
-        .status-light.active {
             background: var(--success);
-            box-shadow: 0 0 10px var(--success);
-        }
-
-        .status-light.inactive {
-            background: var(--danger);
-            box-shadow: 0 0 10px var(--danger);
+            box-shadow: 0 0 8px var(--success);
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         @keyframes statusPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.2); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
         .agent-status {
@@ -262,9 +238,9 @@
         }
 
         .agent-status:hover {
-            background: rgba(0, 255, 136, 0.2);
+            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .agent-icon {
@@ -348,25 +324,48 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner */
+        /* Sub-Agent Status Banner - STANDARDIZED 90px HEIGHT */
         .sub-agent-status {
-            background: linear-gradient(135deg, rgba(255, 0, 68, 0.1) 0%, rgba(255, 170, 0, 0.05) 100%);
+            background: var(--bg-card);
             border: 1px solid rgba(255, 0, 68, 0.3);
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 20px 25px !important;
+            margin-bottom: 25px !important;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            backdrop-filter: blur(15px);
+            min-height: 90px !important;
+            max-height: 90px !important;
+        }
+
+        .sub-agent-status::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 68, 0.1), transparent);
+            animation: bannerScan 8s linear infinite;
+        }
+
+        @keyframes bannerScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
         }
 
         .sub-agent-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            position: relative;
+            z-index: 1;
         }
 
         .sub-agent-icon {
@@ -395,22 +394,47 @@
         .sub-agent-metrics {
             display: flex;
             gap: 30px;
+            position: relative;
+            z-index: 1;
         }
 
         .metric {
             text-align: center;
+            padding: 5px 12px !important;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 0, 68, 0.2);
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            height: 60px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .metric:hover {
+            background: rgba(255, 0, 68, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 0, 68, 0.2);
         }
 
         .metric-value {
-            font-size: 24px;
+            font-size: 18px !important;
             font-weight: bold;
             color: var(--danger);
+            margin-bottom: 2px !important;
+            line-height: 1;
+            text-shadow: 0 0 8px currentColor;
         }
 
         .metric-label {
-            font-size: 12px;
+            font-size: 9px !important;
             color: var(--text-secondary);
             text-transform: uppercase;
+            letter-spacing: 0.5px;
+            line-height: 1;
         }
 
         /* Main Content Grid */
@@ -446,11 +470,11 @@
             flex-direction: column;
         }
 
-        /* Make the intelligence section fill available height */
-        .section-card.intelligence-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+        /* Make the right column cards fill available height (552px each) */
+        .right-column .section-card {
+            height: 552px !important;
+            min-height: 552px !important;
+            max-height: 552px !important;
         }
 
         .section-header {
@@ -662,13 +686,17 @@
             gap: 5px;
         }
 
-        /* Threat Classification & Analysis */
+        /* Threat Classification & Analysis - Scrollable */
+        .threat-analysis-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
         .threat-analysis-list {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            max-height: 400px;
-            overflow-y: auto;
         }
 
         .threat-analysis-item {
@@ -725,7 +753,7 @@
             border-left-color: var(--success);
         }
 
-        .threat-analysis-content {
+        .threat-analysis-content-inner {
             flex: 1;
             min-width: 0;
         }
@@ -800,12 +828,23 @@
             border: 1px solid var(--success);
         }
 
-        /* Threat Intelligence & Correlation - Fixed grid for 6 cards */
+        /* Threat Intelligence & Correlation - Balanced height with scrollable content */
+        .intelligence-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .intelligence-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
         .intelligence-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
-            flex: 1;
         }
 
         .intelligence-card {
@@ -933,12 +972,17 @@
             letter-spacing: 1px;
         }
 
-        /* Threat Hunting & Investigation - Extended height */
+        /* Threat Hunting & Investigation - Scrollable content */
+        .threat-hunting-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
         .threat-hunting-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 20px;
-            min-height: 500px;
         }
 
         .threat-hunting-card {
@@ -1731,6 +1775,12 @@
             .response-automation-grid {
                 grid-template-columns: 1fr;
             }
+
+            .right-column .section-card {
+                height: auto !important;
+                min-height: 300px !important;
+                max-height: none !important;
+            }
         }
 
         @media (max-width: 768px) {
@@ -1751,6 +1801,8 @@
             .sub-agent-status {
                 flex-direction: column;
                 text-align: center;
+                min-height: auto !important;
+                max-height: none !important;
             }
             
             .sub-agent-metrics {
@@ -1841,20 +1893,16 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
-                            <div class="status-light active" id="quantumStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
                         <span class="agent-icon">🤖</span>
                         <div class="agent-info">
                             <span class="agent-title">AI Agent Active</span>
-                            <span class="agent-status-text">Autonomous with Manual Override</span>
+                            <span class="agent-status-text" id="agentModeText">Autonomous with Manual Override</span>
                         </div>
                     </div>
                     <button class="logout-btn" onclick="handleLogout()">Logout</button>
@@ -1902,7 +1950,7 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner -->
+        <!-- Sub-Agent Status Banner - STANDARDIZED 90px HEIGHT -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">🛡️</div>
@@ -1912,19 +1960,19 @@
                 </div>
             </div>
             <div class="sub-agent-metrics">
-                <div class="metric">
+                <div class="metric" onclick="showMetricDetails('threats')">
                     <div class="metric-value" id="activeThreats">8</div>
                     <div class="metric-label">Active Threats</div>
                 </div>
-                <div class="metric">
+                <div class="metric" onclick="showMetricDetails('blocked')">
                     <div class="metric-value" id="blockedToday">3,247</div>
                     <div class="metric-label">Blocked Today</div>
                 </div>
-                <div class="metric">
+                <div class="metric" onclick="showMetricDetails('detection')">
                     <div class="metric-value">99.8%</div>
                     <div class="metric-label">Detection Rate</div>
                 </div>
-                <div class="metric">
+                <div class="metric" onclick="showMetricDetails('correlated')">
                     <div class="metric-value" id="correlatedThreats">16</div>
                     <div class="metric-label">Correlated</div>
                 </div>
@@ -1964,8 +2012,10 @@
                             <span>AI Enhanced</span>
                         </div>
                     </div>
-                    <div class="intelligence-grid" id="intelligenceGrid">
-                        <!-- Intelligence cards will be populated by JavaScript -->
+                    <div class="intelligence-content">
+                        <div class="intelligence-grid" id="intelligenceGrid">
+                            <!-- Intelligence cards will be populated by JavaScript -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1984,8 +2034,10 @@
                             <span id="threatAnalysisStatus">Live Analysis</span>
                         </div>
                     </div>
-                    <div class="threat-analysis-list" id="threatAnalysisList">
-                        <!-- Threat analysis will be populated by JavaScript -->
+                    <div class="threat-analysis-content">
+                        <div class="threat-analysis-list" id="threatAnalysisList">
+                            <!-- Threat analysis will be populated by JavaScript -->
+                        </div>
                     </div>
                 </div>
 
@@ -2001,8 +2053,10 @@
                             <span>4 Active Hunts</span>
                         </div>
                     </div>
-                    <div class="threat-hunting-grid" id="threatHuntingGrid">
-                        <!-- Threat hunting cards will be populated by JavaScript -->
+                    <div class="threat-hunting-content">
+                        <div class="threat-hunting-grid" id="threatHuntingGrid">
+                            <!-- Threat hunting cards will be populated by JavaScript -->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2102,7 +2156,7 @@
         let automationExecutionInterval;
         let threatFeedId = 'threats-feed';
 
-        // Enhanced V4 threat data - streamlined and moved to component data structures
+        // Enhanced V4 threat data - leveraging shared.js for sub-agent coordination
         const ThreatData = {
             activeThreats: [
                 {
@@ -2179,15 +2233,15 @@
                 },
                 {
                     id: 7,
-                    name: 'Privilege Escalation',
-                    type: 'System Compromise',
+                    name: 'VPN Anomaly Detection',
+                    type: 'Network Communications',
                     severity: 'medium',
-                    source: 'Compromised Account',
-                    target: 'Domain Controller',
-                    attempts: '23',
-                    status: 'Contained',
-                    aiAnalysis: 'Local privilege escalation attempt blocked. DefenseOrchestrator deployed countermeasures.',
-                    subAgent: 'ThreatScanner → DefenseOrchestrator'
+                    source: 'Multiple Locations',
+                    target: 'VPN Endpoints',
+                    attempts: '89',
+                    status: 'Monitoring',
+                    aiAnalysis: 'Geographic anomaly detected in VPN connections. VPNMonitor enhanced analysis active.',
+                    subAgent: 'ThreatScanner → VPNMonitor'
                 },
                 {
                     id: 8,
@@ -2456,16 +2510,16 @@
                     description: 'AI-powered analysis of novel threats with signature generation'
                 },
                 {
-                    id: 'phishing-block',
-                    title: '📧 Phishing Auto-Block',
+                    id: 'vpn-anomaly-response',
+                    title: '🔒 VPN Anomaly Response',
                     status: 'active',
                     metrics: {
-                        executions: '4.8K',
-                        success: '99%',
-                        avgTime: '0.1s'
+                        executions: '23',
+                        success: '97%',
+                        avgTime: '2.1s'
                     },
-                    chain: 'ThreatScanner → AnalyticsEngine → DefenseOrchestrator',
-                    description: 'Real-time phishing detection with credential harvesting prevention'
+                    chain: 'ThreatScanner → VPNMonitor → DefenseOrchestrator',
+                    description: 'Geographic and behavioral VPN anomaly detection with auto-response'
                 }
             ]
         };
@@ -2483,9 +2537,14 @@
                 initNeuralBackground();
             }
 
-            // Initialize page context
+            // Initialize page context for shared.js
             if (typeof initializePageContext === 'function') {
                 initializePageContext();
+            }
+
+            // Initialize enhanced module balance manager from shared.js
+            if (typeof ModuleBalanceManager !== 'undefined') {
+                ModuleBalanceManager.initializeBalancedModules();
             }
 
             // Initialize threats activity feed using shared.js ActivityFeedManager
@@ -2494,21 +2553,34 @@
                 activityFeedManager.initializeFeed(threatFeedId, 'threats');
                 activityFeedManager.setFeedContainer(threatFeedId, 'threatActivityFeed');
                 
-                // Add initial messages
-                activityFeedManager.addMessage(threatFeedId, '🛡️ ThreatScanner V4 enhanced with AI correlation engine active', '', 'ThreatScanner');
-                activityFeedManager.addMessage(threatFeedId, '🔐 All threat data encrypted with hybrid-resistant algorithms', 'encryption', 'EncryptionManager');
-                activityFeedManager.addMessage(threatFeedId, '🧠 AI correlation identified multi-stage attack campaign', '', 'AI Engine → ThreatScanner');
-                activityFeedManager.addMessage(threatFeedId, '⚡ DefenseOrchestrator deployed honeypot targeting ransomware group', '', 'DefenseOrchestrator');
+                // Add initial messages with staggered loading
+                setTimeout(() => {
+                    activityFeedManager.addMessage(threatFeedId, '🛡️ ThreatScanner V4 enhanced with AI correlation engine active', '', 'ThreatScanner');
+                }, 800);
                 
-                // Start auto-generation every 7 seconds for threats feed
-                activityFeedManager.startAutoGeneration(threatFeedId, 7000);
+                setTimeout(() => {
+                    activityFeedManager.addMessage(threatFeedId, '🔐 All threat data encrypted with hybrid-resistant algorithms', 'encryption', 'EncryptionManager');
+                }, 1800);
+                
+                setTimeout(() => {
+                    activityFeedManager.addMessage(threatFeedId, '🧠 AI correlation identified multi-stage attack campaign', '', 'AI Engine → ThreatScanner');
+                }, 2800);
+                
+                setTimeout(() => {
+                    activityFeedManager.addMessage(threatFeedId, '⚡ DefenseOrchestrator deployed honeypot targeting ransomware group', '', 'DefenseOrchestrator');
+                }, 3800);
+                
+                // Start auto-generation after initial messages are loaded
+                setTimeout(() => {
+                    activityFeedManager.startAutoGeneration(threatFeedId, 7000);
+                }, 5000);
             } else {
                 console.log('ActivityFeedManager not available yet, retrying...');
                 setTimeout(initializeThreatsPage, 200);
                 return;
             }
 
-            // Initialize chat system
+            // Initialize chat system from shared.js
             if (typeof SentinelChat !== 'undefined') {
                 window.sentinelChat = new SentinelChat();
             }
@@ -2600,7 +2672,7 @@
                 item.onclick = () => openThreatAnalysisDetails(analysis.id);
                 
                 item.innerHTML = `
-                    <div class="threat-analysis-content">
+                    <div class="threat-analysis-content-inner">
                         <div class="threat-analysis-title">${analysis.title}</div>
                         <div class="threat-analysis-details">
                             <div class="threat-analysis-label">Category</div>
@@ -2769,7 +2841,7 @@
                 'Zero-day signature updated via AI Engine',
                 'Behavioral anomaly detected and contained',
                 'Phishing campaign blocked automatically',
-                'Privilege escalation attempt neutralized'
+                'VPN anomaly investigation by VPNMonitor completed'
             ];
             
             const action = responseActions[Math.floor(Math.random() * responseActions.length)];
@@ -2791,8 +2863,17 @@
         }
 
         function executeAutomation(automationId, title) {
-            const card = document.querySelector(`#responseAutomationGrid .response-automation-card:has(#progress-${automationId})`);
-            const progressElement = document.getElementById(`progress-${automationId}`);
+            const cards = document.querySelectorAll('.response-automation-card');
+            let card = null;
+            let progressElement = null;
+            
+            cards.forEach(c => {
+                const progress = c.querySelector(`#progress-${automationId}`);
+                if (progress) {
+                    card = c;
+                    progressElement = progress;
+                }
+            });
             
             if (!card || !progressElement) return;
             
@@ -2964,7 +3045,7 @@
 • Severity: ${threat.severity.toUpperCase()}
 • Source: ${threat.source}
 • Target: ${threat.target}
-• Attempts: ${threat.attempts}
+• Attempts: ${threat.attempts}  
 • Status: ${threat.status}
 • AI Analysis: ${threat.aiAnalysis}
 • Sub-Agent Coordination: ${threat.subAgent}
@@ -3059,17 +3140,39 @@
             }, 300);
         }
 
+        function showMetricDetails(type) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                let message = '';
+                switch(type) {
+                    case 'threats':
+                        message = 'ThreatScanner: 8 active threats currently under analysis and response. AI correlation engine coordinating with DefenseOrchestrator and AnalyticsEngine.';
+                        break;
+                    case 'blocked':
+                        message = 'ThreatScanner: 3,247 threats blocked today through automated response chains. Success rate: 99.8% with sub-second response times.';
+                        break;
+                    case 'detection':
+                        message = 'ThreatScanner: 99.8% detection rate maintained through AI correlation engine and behavioral analysis. Processing 147K events/sec.';
+                        break;
+                    case 'correlated':
+                        message = 'ThreatScanner: 16 threats correlated with known attack patterns. MITRE ATT&CK framework integration active with threat attribution.';
+                        break;
+                }
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(message, false);
+                }
+            }, 300);
+        }
+
         function showEncryptionStatus(type) {
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
                 window.sentinelChat.toggle();
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    if (type === 'classical') {
-                        window.sentinelChat.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all threat detection systems. Performance: 2.1M ops/sec. Integration with ThreatScanner: Real-time threat data encryption.`, false);
-                    } else {
-                        window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all threat intelligence. ThreatScanner reports all data hybrid-resistant.`, false);
-                    }
+                    window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all threat intelligence. ThreatScanner reports all data hybrid-resistant with coordination across all ${Object.keys(SubAgentConfigs || {}).length} sub-agents.`, false);
                 }
             }, 300);
         }
