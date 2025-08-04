@@ -1,10 +1,10 @@
 /**
- * AI Sentinel-X Shared JavaScript Library - V3.1 Updated
- * Enhanced module balance system and standardized banner sizing
+ * AI Sentinel-X Shared JavaScript Library - V3.3 Fixed
+ * Enhanced module balance system with proper banner sizing and module heights
  */
 
 // Version and configuration
-const SENTINEL_VERSION = '3.1-updated';
+const SENTINEL_VERSION = '3.3-fixed';
 const API_VERSION = 'v3';
 
 // Global state management
@@ -1117,52 +1117,99 @@ class SentinelChat {
     }
 }
 
-// Enhanced Module Balance Manager - V3.2 with Perfect Banner and Module Sizing
+// Enhanced Module Balance Manager - V3.3 FIXED with Proper Banner and Module Sizing
 class ModuleBalanceManager {
     static balanceRightColumnModules() {
         const rightColumnModules = document.querySelectorAll('.right-column-module');
         if (rightColumnModules.length < 2) return;
 
-        // Set consistent height for right column modules - calculated for perfect balance
-        const targetHeight = '287px'; // Precisely calculated to eliminate empty space
+        // Calculate the exact height needed to match the left column
+        // AI Agent Command Center (600px) + Activity Feed (500px) + margins = 1130px total
+        // Subtract margins between modules (25px) = 1105px
+        // Divide by 2 modules = 552.5px each
+        const targetHeight = '552px'; // Increased to properly fill the space
+        
         rightColumnModules.forEach(module => {
-            module.style.height = targetHeight;
+            module.style.height = targetHeight + ' !important';
+            module.style.maxHeight = targetHeight + ' !important';
+            module.style.minHeight = targetHeight + ' !important';
             module.style.display = 'flex';
             module.style.flexDirection = 'column';
+            
+            // Ensure the content area can scroll if needed
+            const moduleContent = module.querySelector('.module-content');
+            if (moduleContent) {
+                moduleContent.style.flex = '1';
+                moduleContent.style.minHeight = '0';
+                moduleContent.style.overflowY = 'auto';
+            }
         });
     }
 
     static standardizeSystemBanners() {
-        const banners = document.querySelectorAll('.system-status-banner, .defense-status-bar');
+        const banners = document.querySelectorAll('.system-status-banner, .defense-status-bar, .sub-agent-status');
         
         banners.forEach(banner => {
             // Apply exact defense page banner sizing
-            banner.style.padding = '20px 25px';
-            banner.style.marginBottom = '25px';
-            banner.style.minHeight = '90px';
+            banner.style.padding = '20px 25px !important';
+            banner.style.marginBottom = '25px !important';
+            banner.style.minHeight = '90px !important';
+            banner.style.maxHeight = '90px !important';
             banner.style.display = 'flex';
             banner.style.justifyContent = 'space-around';
             banner.style.alignItems = 'center';
             banner.style.flexWrap = 'wrap';
             banner.style.gap = '20px';
             
-            // Ensure consistent stat item sizing
+            // Fix the icon sizes inside banner stats
             const statItems = banner.querySelectorAll('.banner-stat, .status-item');
             statItems.forEach(item => {
-                item.style.padding = '10px 16px';
+                item.style.padding = '10px 16px !important';
                 item.style.borderRadius = '10px';
                 item.style.textAlign = 'center';
                 item.style.transition = 'all 0.3s ease';
+                
+                // Fix icon sizes
+                const icon = item.querySelector('.banner-stat-icon, .status-icon');
+                if (icon) {
+                    icon.style.fontSize = '24px !important'; // Reduced from 32px
+                    icon.style.marginBottom = '5px !important';
+                }
+                
+                // Fix value sizes
+                const value = item.querySelector('.banner-stat-value, .status-value');
+                if (value) {
+                    value.style.fontSize = '14px !important'; // Reduced from 16px
+                }
+                
+                // Fix label sizes
+                const label = item.querySelector('.banner-stat-label, .status-label');
+                if (label) {
+                    label.style.fontSize = '10px !important'; // Reduced from 11px
+                }
             });
         });
     }
 
+    static balanceStatusIndicators() {
+        // Standardize all status indicator buttons across modules
+        const indicators = document.querySelectorAll('.module-status-indicator');
+        indicators.forEach(indicator => {
+            indicator.style.fontSize = '11px !important';
+            indicator.style.padding = '6px 12px !important';
+            indicator.style.borderRadius = '20px !important';
+        });
+    }
+
     static balanceAllModules() {
-        // Balance right column modules
+        // Balance right column modules with proper height
         this.balanceRightColumnModules();
         
         // Standardize banner sizing across all pages
         this.standardizeSystemBanners();
+        
+        // Balance status indicators
+        this.balanceStatusIndicators();
         
         // Balance other module types if they exist
         const generalModules = document.querySelectorAll('.section-card, .module-card');
@@ -1192,6 +1239,11 @@ class ModuleBalanceManager {
         setTimeout(() => {
             this.balanceAllModules();
         }, 1000);
+
+        // Force rebalance periodically to ensure it sticks
+        setInterval(() => {
+            this.balanceAllModules();
+        }, 5000);
     }
 }
 
