@@ -741,13 +741,12 @@
             border: 1px solid var(--danger);
         }
 
-        /* Security Overview - Calculated to match Live Connections */
+        /* Security Overview - Fixed to match Live Connections bottom alignment */
         .security-overview-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
-            height: 180px;
         }
 
         .overview-card {
@@ -802,12 +801,12 @@
             color: var(--text-secondary);
         }
 
-        /* Protocols List - Calculated to match remaining space */
+        /* Protocols List - Increased height to match Live Connections bottom */
         .protocols-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            height: 220px;
+            height: 300px;
             overflow-y: auto;
         }
 
