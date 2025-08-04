@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1142,6 +1141,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
+            margin-bottom: 30px; /* ADDED SPACING HERE - THIS FIXES THE ISSUE */
         }
 
         .response-automation-card {
@@ -1604,6 +1604,35 @@
             font-weight: bold;
             cursor: pointer;
             text-transform: uppercase;
+        }
+
+        /* AI Typing Indicator */
+        .ai-typing {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 0;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+            animation: typingBounce 1.4s ease-in-out infinite both;
+        }
+
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+
+        @keyframes typingBounce {
+            0%, 80%, 100% { transform: scale(0); }
+            40% { transform: scale(1); }
         }
 
         /* CLI Mode Indicator */
@@ -2090,6 +2119,9 @@
 
     <script src="shared.js"></script>
     <script>
+        // Initialize the chat system from shared.js
+        let sentinelChat;
+        
         // Enhanced V4 threat data - ACTIVE ONGOING THREATS (8 total for full grid)
         const threats = [
             {
@@ -2475,6 +2507,16 @@
         });
 
         function initializeThreatsPage() {
+            // Initialize chat system from shared.js
+            if (window.SentinelChat) {
+                sentinelChat = new window.SentinelChat();
+            }
+            
+            // Initialize neural background
+            if (window.initNeuralBackground) {
+                window.initNeuralBackground();
+            }
+
             populateActiveThreats();
             populateThreatAnalysis();
             populateThreatIntelligence();
@@ -2560,13 +2602,13 @@
         }
 
         function openThreatAnalysisDetails(analysisId) {
-            if (sentinelChat && !SentinelState.chatOpen) {
+            if (sentinelChat && !window.SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
                 const analysis = threatAnalysis.find(a => a.id === analysisId);
-                if (analysis) {
-                    sentinelChat?.addMessage(`ThreatScanner Analysis: ${analysis.title}
+                if (analysis && sentinelChat) {
+                    sentinelChat.addMessage(`ThreatScanner Analysis: ${analysis.title}
 • Category: ${analysis.category}
 • Severity: ${analysis.severity.toUpperCase()} (Score: ${analysis.score}/10)
 • Indicators: ${analysis.indicators}
@@ -2733,13 +2775,13 @@
         }
 
         function openHuntDetails(huntId) {
-            if (sentinelChat && !SentinelState.chatOpen) {
+            if (sentinelChat && !window.SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
                 const hunt = threatHunting.find(h => h.id === huntId);
-                if (hunt) {
-                    sentinelChat?.addMessage(`ThreatScanner Hunt: ${hunt.title}
+                if (hunt && sentinelChat) {
+                    sentinelChat.addMessage(`ThreatScanner Hunt: ${hunt.title}
 • Priority: ${hunt.priority.toUpperCase()}
 • Status: ${hunt.status.toUpperCase()}
 • Progress: ${hunt.progress}% complete
@@ -2796,7 +2838,7 @@
             if (automationExecutionInterval) clearInterval(automationExecutionInterval);
             
             automationExecutionInterval = setInterval(() => {
-                if (threatAutoExecution && SentinelState.agentActive) {
+                if (threatAutoExecution && window.SentinelState.agentActive) {
                     simulateAutomationExecution();
                 }
             }, 25000); // Execute every 25 seconds
@@ -2878,20 +2920,20 @@
             addThreatFeedItem(`✅ Auto-executed: ${title} completed successfully`, 'ai-action', 'ThreatScanner');
             
             // Notify chat if open
-            if (SentinelState.chatOpen && sentinelChat) {
+            if (window.SentinelState.chatOpen && sentinelChat) {
                 sentinelChat.addMessage(`🤖 ThreatScanner: Auto-executed "${title}" successfully. Sub-agent coordination maintained with hybrid encryption.`, false, 'system');
             }
         }
 
         function openAutomationDetails(automationId) {
-            if (sentinelChat && !SentinelState.chatOpen) {
+            if (sentinelChat && !window.SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
                 const automation = threatResponseAutomation.find(a => a.id === automationId);
-                if (automation) {
+                if (automation && sentinelChat) {
                     const metricsText = Object.entries(automation.metrics).map(([key, value]) => `${key}: ${value}`).join(', ');
-                    sentinelChat?.addMessage(`ThreatScanner Automation: ${automation.title}
+                    sentinelChat.addMessage(`ThreatScanner Automation: ${automation.title}
 • Status: ${automation.status.toUpperCase()}
 • Metrics: ${metricsText}
 • Automation Chain: ${automation.chain}
@@ -2989,7 +3031,7 @@
             if (autoThreatInterval) clearInterval(autoThreatInterval);
             
             autoThreatInterval = setInterval(() => {
-                if (threatAutoExecution && SentinelState.agentActive) {
+                if (threatAutoExecution && window.SentinelState.agentActive) {
                     simulateThreatResponse();
                 }
             }, 20000); // Execute every 20 seconds
@@ -3009,19 +3051,19 @@
             const action = responseActions[Math.floor(Math.random() * responseActions.length)];
             addThreatFeedItem(`🤖 Auto-executed: ${action}`, 'ai-action', 'ThreatScanner');
             
-            if (SentinelState.chatOpen && sentinelChat) {
+            if (window.SentinelState.chatOpen && sentinelChat) {
                 sentinelChat.addMessage(`ThreatScanner: Auto-executed "${action}" successfully. All sub-agent coordination maintained with hybrid encryption.`, false, 'system');
             }
         }
 
         function openThreatDetails(threatId) {
-            if (sentinelChat && !SentinelState.chatOpen) {
+            if (sentinelChat && !window.SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
                 const threat = threats.find(t => t.id === threatId);
-                if (threat) {
-                    sentinelChat?.addMessage(`ThreatScanner V4: ${threat.name} Analysis
+                if (threat && sentinelChat) {
+                    sentinelChat.addMessage(`ThreatScanner V4: ${threat.name} Analysis
 • Type: ${threat.type}
 • Severity: ${threat.severity.toUpperCase()}
 • Source: ${threat.source}
@@ -3038,14 +3080,14 @@
         }
 
         function openIntelligenceDetails(intelId) {
-            if (sentinelChat && !SentinelState.chatOpen) {
+            if (sentinelChat && !window.SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
                 const intel = threatIntelligence.find(i => i.id === intelId);
-                if (intel) {
+                if (intel && sentinelChat) {
                     const metricsText = Object.entries(intel.metrics).map(([key, value]) => `${key}: ${value}`).join(', ');
-                    sentinelChat?.addMessage(`ThreatScanner Intelligence: ${intel.title}
+                    sentinelChat.addMessage(`ThreatScanner Intelligence: ${intel.title}
 • Status: ${intel.status}
 • Metrics: ${metricsText}
 • Coordinating Sub-Agents: ${intel.agents.join(', ')}
@@ -3058,14 +3100,16 @@
         }
 
         function showEncryptionStatus(type) {
-            if (sentinelChat && !SentinelState.chatOpen) {
+            if (sentinelChat && !window.SentinelState.chatOpen) {
                 sentinelChat.toggle();
             }
             setTimeout(() => {
-                if (type === 'classical') {
-                    sentinelChat?.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all threat detection systems. Performance: 2.1M ops/sec. Integration with ThreatScanner: Real-time threat data encryption.`, false);
-                } else {
-                    sentinelChat?.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all threat intelligence. ThreatScanner reports all data hybrid-resistant.`, false);
+                if (sentinelChat) {
+                    if (type === 'classical') {
+                        sentinelChat.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all threat detection systems. Performance: 2.1M ops/sec. Integration with ThreatScanner: Real-time threat data encryption.`, false);
+                    } else {
+                        sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all threat intelligence. ThreatScanner reports all data hybrid-resistant.`, false);
+                    }
                 }
             }, 300);
         }
@@ -3086,31 +3130,39 @@
         }
 
         // Global functions for compatibility
-        window.toggleChat = () => sentinelChat?.toggle();
+        window.toggleChat = () => {
+            if (sentinelChat) {
+                sentinelChat.toggle();
+            }
+        };
+        
         window.sendChatMessage = () => {
             const input = document.getElementById('aiChatInput');
-            if (input && input.value.trim()) {
-                sentinelChat?.sendMessage(input.value.trim());
+            if (input && input.value.trim() && sentinelChat) {
+                sentinelChat.sendMessage(input.value.trim());
                 input.value = '';
             }
         };
+        
         window.handleChatKeyPress = (e) => {
             if (e.key === 'Enter') {
                 sendChatMessage();
             }
         };
+        
         window.showAgentShutdownModal = () => document.getElementById('agentShutdownModal').style.display = 'flex';
         window.closeModal = () => document.getElementById('agentShutdownModal').style.display = 'none';
         window.closeModalOnOverlay = (e) => {if (e.target.classList.contains('modal-overlay')) closeModal();};
+        
         window.confirmAgentShutdown = () => {
-            SentinelState.agentActive = !SentinelState.agentActive;
+            window.SentinelState.agentActive = !window.SentinelState.agentActive;
             
             // Update UI elements
             const agentStatus = document.querySelector('.agent-status');
             const agentTitle = document.querySelector('.agent-title');
             const agentStatusText = document.querySelector('.agent-status-text');
             
-            if (SentinelState.agentActive) {
+            if (window.SentinelState.agentActive) {
                 agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
                 agentStatus.style.borderColor = '#00ff88';
                 agentTitle.textContent = 'AI Agent Active';
@@ -3138,11 +3190,12 @@
             
             closeModal();
             
-            if (SentinelState.chatOpen && sentinelChat) {
-                const status = SentinelState.agentActive ? 'resumed autonomous operation with threat auto-response' : 'switched to manual control mode';
-                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. ThreatScanner coordination ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
+            if (window.SentinelState.chatOpen && sentinelChat) {
+                const status = window.SentinelState.agentActive ? 'resumed autonomous operation with threat auto-response' : 'switched to manual control mode';
+                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. ThreatScanner coordination ${window.SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
             }
         };
+        
         window.handleLogout = () => {
             if (confirm('Are you sure you want to logout? The AI agent will continue protecting against threats autonomously.')) {
                 localStorage.removeItem('sentinel_auth');
