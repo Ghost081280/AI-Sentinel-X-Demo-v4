@@ -187,7 +187,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badges */
+        /* Encryption Status Badge - Updated to match analytics page */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -199,57 +199,38 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .encryption-badge.classical {
             background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .encryption-badge.quantum {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .encryption-badge:hover {
+            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 2s ease-in-out infinite;
-        }
-
-        .status-light.active {
             background: var(--success);
-            box-shadow: 0 0 10px var(--success);
-        }
-
-        .status-light.inactive {
-            background: var(--danger);
-            box-shadow: 0 0 10px var(--danger);
+            box-shadow: 0 0 8px var(--success);
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         @keyframes statusPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.2); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
         .agent-status {
+            position: relative;
             display: flex;
             align-items: center;
             gap: 15px;
@@ -348,37 +329,40 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner */
+        /* Sub-Agent Status Banner - Standardized from shared.js */
         .sub-agent-status {
-            background: linear-gradient(135deg, rgba(0, 204, 255, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(0, 204, 255, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
             border: 1px solid rgba(0, 204, 255, 0.3);
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 15px 20px !important;
+            margin-bottom: 25px !important;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 20px;
             backdrop-filter: blur(15px);
+            min-height: 90px !important;
+            max-height: 90px !important;
         }
 
         .sub-agent-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         .sub-agent-icon {
             width: 50px;
             height: 50px;
-            background: var(--gradient-1);
+            background: var(--gradient-2);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
             box-shadow: 0 4px 20px rgba(0, 204, 255, 0.3);
+            flex-shrink: 0;
         }
 
         .sub-agent-details h3 {
@@ -395,6 +379,7 @@
         .sub-agent-metrics {
             display: flex;
             gap: 30px;
+            flex-shrink: 0;
         }
 
         .metric {
@@ -402,13 +387,14 @@
         }
 
         .metric-value {
-            font-size: 24px;
+            font-size: 24px !important;
             font-weight: bold;
             color: var(--secondary);
+            margin-bottom: 3px;
         }
 
         .metric-label {
-            font-size: 12px;
+            font-size: 12px !important;
             color: var(--text-secondary);
             text-transform: uppercase;
         }
@@ -621,12 +607,12 @@
             font-family: 'Courier New', monospace;
         }
 
-        /* Live Connections */
+        /* Live Connections - Fixed height to match Security Overview */
         .connections-list {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            max-height: 500px;
+            max-height: 440px;
             overflow-y: auto;
         }
 
@@ -755,7 +741,7 @@
             border: 1px solid var(--danger);
         }
 
-        /* Security Overview */
+        /* Security Overview - Fixed height to match Live Connections */
         .security-overview-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -815,11 +801,13 @@
             color: var(--text-secondary);
         }
 
-        /* Protocols List */
+        /* Protocols List - Fixed height to balance with grid above */
         .protocols-list {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            max-height: 280px;
+            overflow-y: auto;
         }
 
         .protocol-item {
@@ -1146,6 +1134,7 @@
             height: 500px;
             display: flex;
             flex-direction: column;
+            margin-top: 30px; /* Added spacing between modules */
         }
 
         .feed-header {
@@ -1341,7 +1330,7 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
-        /* AI Chat Widget */
+        /* AI Chat Widget - Fixed positioning and height */
         .ai-chat-widget {
             position: fixed;
             bottom: 30px;
@@ -1374,7 +1363,7 @@
             bottom: 80px;
             right: 0;
             width: 400px;
-            height: 600px;
+            height: 500px; /* Fixed height like analytics page */
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -1403,6 +1392,7 @@
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .ai-chat-status {
@@ -1476,6 +1466,7 @@
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .ai-chat-input {
@@ -1486,6 +1477,7 @@
             padding: 12px 15px;
             color: var(--text-primary);
             font-size: 14px;
+            font-family: inherit;
         }
 
         .ai-chat-input:focus {
@@ -1519,6 +1511,7 @@
             font-size: 12px;
             color: var(--warning);
             display: none;
+            flex-shrink: 0;
         }
 
         .cli-mode-indicator.active {
@@ -1579,6 +1572,8 @@
             .sub-agent-status {
                 flex-direction: column;
                 text-align: center;
+                min-height: auto !important;
+                max-height: none !important;
             }
         }
 
@@ -1645,20 +1640,16 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
-                            <div class="status-light active" id="quantumStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
                         <span class="agent-icon">🤖</span>
                         <div class="agent-info">
                             <span class="agent-title">AI Agent Active</span>
-                            <span class="agent-status-text">Autonomous with Manual Override</span>
+                            <span class="agent-status-text" id="agentModeText">Autonomous with Manual Override</span>
                         </div>
                     </div>
                     <button class="logout-btn" onclick="handleLogout()">Logout</button>
@@ -1919,17 +1910,17 @@
             <div class="ai-chat-header">
                 <div class="ai-chat-status">
                     <span class="chat-status-dot"></span>
-                    <span>MAIN AGENT ONLINE</span>
+                    <span>VPN AGENTS ONLINE</span>
                 </div>
                 <button class="ai-chat-close" onclick="toggleChat()">×</button>
             </div>
             <div class="cli-mode-indicator" id="cliModeIndicator">
-                ⚠️ CLI MODE - Main Agent Offline
+                ⚠️ CLI MODE - VPN Agents Offline
             </div>
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        VPNMonitor online. Monitoring 12 active VPN connections with hybrid-resistant encryption. OpenVPN, WireGuard, and IPSec services operational. Elevated threat level detected - 3 critical alerts require immediate SOC attention.
+                        VPNMonitor: Monitoring 12 VPN connections with comprehensive cyber defense. Coordinating with EncryptionManager, ThreatScanner, and CertificateManager sub-agents. All tunnels secured with hybrid-resistant encryption and behavioral anomaly detection active.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1939,7 +1930,7 @@
                     type="text" 
                     class="ai-chat-input" 
                     id="aiChatInput" 
-                    placeholder="Command the Main Agent"
+                    placeholder="Enter VPN command..."
                     onkeypress="handleChatKeyPress(event)"
                 >
                 <button class="ai-chat-send" id="aiChatSend" onclick="sendChatMessage()">SEND</button>
@@ -1980,11 +1971,11 @@
                 activityFeedManager.initializeFeed(vpnFeedId, 'vpn');
                 activityFeedManager.setFeedContainer(vpnFeedId, 'vpnActivityFeed');
                 
-                // Add initial messages
-                activityFeedManager.addMessage(vpnFeedId, '🔒 VPNMonitor V4 initialized. Enhanced SOC integration active.', '', 'VPNMonitor');
-                activityFeedManager.addMessage(vpnFeedId, '🌐 OpenVPN service: 8 active connections verified', '', 'VPNMonitor');
-                activityFeedManager.addMessage(vpnFeedId, '⚡ WireGuard mobile gateway: 4 connections stable', '', 'VPNMonitor');
-                activityFeedManager.addMessage(vpnFeedId, '🔐 IPSec site-to-site tunnel established with PQC keys', 'encryption', 'VPNMonitor');
+                // Add initial messages reflecting comprehensive cyber defense architecture
+                activityFeedManager.addMessage(vpnFeedId, '🔒 VPNMonitor: Coordinating with EncryptionManager, ThreatScanner, and CertificateManager sub-agents', '', 'VPNMonitor');
+                activityFeedManager.addMessage(vpnFeedId, '🌐 OpenVPN service: 8 connections verified by ThreatScanner behavioral analysis', '', 'VPNMonitor → ThreatScanner');
+                activityFeedManager.addMessage(vpnFeedId, '⚡ WireGuard: 4 mobile connections secured with EncryptionManager hybrid algorithms', 'encryption', 'VPNMonitor → EncryptionManager');
+                activityFeedManager.addMessage(vpnFeedId, '🔐 IPSec tunnel: CertificateManager verified post-quantum certificates', 'encryption', 'VPNMonitor → CertificateManager');
                 
                 // Start auto-generation every 4 seconds for VPN feed
                 activityFeedManager.startAutoGeneration(vpnFeedId, 4000);
@@ -2227,12 +2218,12 @@
             
             list.innerHTML = '';
 
-            // SOC-focused automated response actions
+            // SOC-focused automated response actions reflecting comprehensive cyber defense
             const responseActions = [
                 {
                     id: 'response-001',
                     title: 'Cert Auto-Renewal',
-                    details: 'VPNMonitor → CertificateManager',
+                    details: 'VPNMonitor → CertificateManager → EncryptionManager',
                     priority: 'high',
                     eta: '2m',
                     status: 'Auto-Execute'
@@ -2240,7 +2231,7 @@
                 {
                     id: 'response-002', 
                     title: 'Geo-Block Suspicious IPs',
-                    details: 'VPNMonitor → DefenseOrchestrator',
+                    details: 'VPNMonitor → ThreatScanner → DefenseOrchestrator',
                     priority: 'medium',
                     eta: '30s',
                     status: 'Auto-Execute'
@@ -2248,7 +2239,7 @@
                 {
                     id: 'response-003',
                     title: 'Traffic Pattern Analysis',
-                    details: 'VPNMonitor → AnalyticsEngine',
+                    details: 'VPNMonitor → AnalyticsEngine → ThreatScanner',
                     priority: 'low',
                     eta: '5m',
                     status: 'Scheduled'
@@ -2256,7 +2247,7 @@
                 {
                     id: 'response-004',
                     title: 'Failed Auth IP Block',
-                    details: 'VPNMonitor → ThreatScanner',
+                    details: 'VPNMonitor → ThreatScanner → DefenseOrchestrator',
                     priority: 'high',
                     eta: '15s',
                     status: 'Auto-Execute'
@@ -2361,7 +2352,7 @@
             
             // Notify chat if open
             if (typeof SentinelState !== 'undefined' && SentinelState.chatOpen && window.sentinelChat) {
-                window.sentinelChat.addMessage(`🤖 VPNMonitor: Auto-executed "${title}" successfully. All VPN tunnels remain secure with hybrid encryption.`, false, 'system');
+                window.sentinelChat.addMessage(`🤖 VPNMonitor: Auto-executed "${title}" successfully. All VPN tunnels remain secure with comprehensive cyber defense coordination.`, false, 'system');
             }
         }
 
@@ -2374,7 +2365,7 @@
                 if (window.sentinelChat) {
                     window.sentinelChat.addMessage(`Manual override requested for response action. Stopping automation for this cycle.`, true);
                     setTimeout(() => {
-                        window.sentinelChat.addMessage(`VPNMonitor: Manual execution mode enabled. Use "resume auto" to restart automated responses.`, false);
+                        window.sentinelChat.addMessage(`VPNMonitor: Manual execution mode enabled. Coordinating with sub-agents. Use "resume auto" to restart automated responses.`, false);
                     }, 800);
                 }
             }, 300);
@@ -2512,7 +2503,7 @@
 • Location: ${service.location}
 • Status: ${service.status.toUpperCase()}
 • SOC Alert Level: ${service.connections > 6 ? 'ELEVATED' : 'NORMAL'}
-• Sub-Agent Coordination: VPNMonitor → EncryptionManager → CertificateManager`, false);
+• Sub-Agent Coordination: VPNMonitor → EncryptionManager → CertificateManager → ThreatScanner`, false);
                     }
                 }
             }, 300);
@@ -2536,7 +2527,7 @@
 • Threat Score: ${threatScore}/10 ${threatScore > 7 ? '(HIGH RISK)' : threatScore > 4 ? '(MEDIUM RISK)' : '(LOW RISK)'}
 • Authentication: Multi-factor verified
 • Certificate: Valid (Hybrid signatures)
-• Sub-Agent Status: ${threatScore > 7 ? 'ThreatScanner alerted' : 'Normal monitoring'}`, false);
+• Sub-Agent Status: ${threatScore > 7 ? 'ThreatScanner alerted → DefenseOrchestrator coordinating' : 'Normal monitoring'}`, false);
                     }
                 }
             }, 300);
@@ -2572,11 +2563,7 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    if (type === 'classical') {
-                        window.sentinelChat.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all VPN tunnels. Performance: 2.1M ops/sec. Integration with VPNMonitor: Real-time key rotation every 24 hours.`, false);
-                    } else {
-                        window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) deployed on 100% of VPN connections. Future-proof against quantum attacks. VPNMonitor reports all tunnels hybrid-ready.`, false);
-                    }
+                    window.sentinelChat.addMessage(`VPNMonitor: Hybrid encryption coordinating with EncryptionManager across all VPN tunnels. Post-quantum algorithms (Kyber-1024, Dilithium-3, SPHINCS+, Falcon) integrated with classical encryption protecting comprehensive VPN infrastructure. All connections secured with hybrid-resistant encryption and ThreatScanner behavioral monitoring active.`, false);
                 }
             }, 300);
         }
@@ -2655,7 +2642,7 @@
                     startAutoExecution();
                     if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                         activityFeedManager.startAutoGeneration(vpnFeedId, 4000);
-                        activityFeedManager.addMessage(vpnFeedId, '🤖 Main Agent resumed: Auto-execution enabled', '', 'Main Agent');
+                        activityFeedManager.addMessage(vpnFeedId, '🤖 Main Agent resumed: VPN coordination with all sub-agents reactivated', '', 'Main Agent');
                     }
                 } else {
                     if (agentStatus) {
@@ -2675,21 +2662,21 @@
                     if (autoExecutionInterval) clearInterval(autoExecutionInterval);
                     if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                         activityFeedManager.stopAutoGeneration(vpnFeedId);
-                        activityFeedManager.addMessage(vpnFeedId, '⚠️ Main Agent paused: Manual control only', 'warning', 'Main Agent');
+                        activityFeedManager.addMessage(vpnFeedId, '⚠️ Main Agent paused: VPN sub-agents in manual control mode', 'warning', 'Main Agent');
                     }
                 }
                 
                 closeModal();
                 
                 if (SentinelState.chatOpen && window.sentinelChat) {
-                    const status = SentinelState.agentActive ? 'resumed autonomous operation with auto-execution' : 'switched to manual control mode';
+                    const status = SentinelState.agentActive ? 'resumed autonomous operation with comprehensive cyber defense coordination' : 'switched to manual control mode';
                     window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. VPNMonitor coordination ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
                 }
             }
         };
         
         window.handleLogout = () => {
-            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your VPN connections autonomously.')) {
+            if (confirm('Are you sure you want to logout? The AI agent will continue comprehensive autonomous cyber defense with coordinated VPN monitoring across all sub-agents.')) {
                 localStorage.removeItem('sentinel_auth');
                 localStorage.removeItem('sentinel_scale');
                 window.location.href = 'index.html';
