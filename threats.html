@@ -329,19 +329,19 @@
             background: linear-gradient(135deg, rgba(255, 0, 68, 0.1) 0%, rgba(255, 68, 68, 0.05) 100%);
             border: 1px solid rgba(255, 0, 68, 0.3);
             border-radius: 12px;
-            padding: 20px 25px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            padding: 20px 25px !important;
+            margin-bottom: 25px !important;
+            display: flex !important;
+            justify-content: space-around !important;
+            align-items: center !important;
+            flex-wrap: wrap !important;
+            gap: 20px !important;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            min-height: 90px;
-            max-height: 90px;
+            min-height: 90px !important;
+            max-height: 90px !important;
         }
 
         .sub-agent-status::before {
@@ -396,6 +396,20 @@
 
         .metric {
             text-align: center;
+            padding: 5px 12px !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            height: 60px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+            cursor: pointer;
+        }
+
+        .metric:hover {
+            background: rgba(255, 0, 68, 0.1);
+            transform: translateY(-2px);
         }
 
         .metric-value {
@@ -403,21 +417,25 @@
             font-weight: bold;
             color: var(--danger);
             text-shadow: 0 0 10px currentColor;
+            margin-bottom: 2px !important;
+            line-height: 1;
         }
 
         .metric-label {
-            font-size: 12px;
+            font-size: 9px !important;
             color: var(--text-secondary);
             text-transform: uppercase;
+            line-height: 1;
+            letter-spacing: 0.5px;
         }
 
-        /* Main Content Grid */
+        /* Main Content Grid - FIXED BALANCED HEIGHTS */
         .main-content {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 25px;
             margin-bottom: 30px;
-            align-items: stretch;
+            align-items: flex-start;
         }
 
         .left-column {
@@ -430,6 +448,16 @@
             display: flex;
             flex-direction: column;
             gap: 25px;
+            height: 100%;
+        }
+
+        /* CRITICAL FIX: Force exact height matching */
+        .right-column .section-card {
+            height: 552px !important;
+            max-height: 552px !important;
+            min-height: 552px !important;
+            display: flex !important;
+            flex-direction: column !important;
         }
 
         /* Section Cards */
@@ -444,29 +472,6 @@
             flex-direction: column;
         }
 
-        /* CRITICAL FIX: Right column modules must match left column total height */
-        .main-content {
-            align-items: flex-start; /* Don't stretch items */
-        }
-
-        .right-column {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            height: 100%; /* Take full height of grid */
-        }
-
-        /* Calculate: Need to match left column height exactly */
-        .right-column .section-card:nth-child(1) {
-            flex: 1;
-            min-height: 500px;
-        }
-
-        .right-column .section-card:nth-child(2) {
-            flex: 1; 
-            min-height: 500px;
-        }
-
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -474,6 +479,7 @@
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
         }
 
         .section-title {
@@ -676,7 +682,7 @@
             gap: 5px;
         }
 
-        /* FIXED: Threat Classification & Analysis - Full Height with Scrollable */
+        /* FIXED: Threat Classification & Analysis - Scrollable content with proper height */
         .threat-analysis-content {
             flex: 1;
             overflow-y: auto;
@@ -964,7 +970,7 @@
             letter-spacing: 1px;
         }
 
-        /* FIXED: Threat Hunting & Investigation - Full Height with Scrollable content */
+        /* FIXED: Threat Hunting & Investigation - Scrollable content with proper height */
         .threat-hunting-content {
             flex: 1;
             overflow-y: auto;
@@ -987,7 +993,7 @@
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 220px;
+            min-height: 200px;
         }
 
         .threat-hunting-card::before {
@@ -2310,6 +2316,46 @@
                     description: 'Encrypted channels used for sensitive data theft',
                     severity: 'high',
                     score: '8.9'
+                },
+                {
+                    id: 'privilege-escalation',
+                    title: 'Privilege Escalation Vectors',
+                    category: 'UAC Bypass',
+                    indicators: '34 attempts',
+                    confidence: '87%',
+                    description: 'Windows UAC bypass techniques via COM object hijacking',
+                    severity: 'high',
+                    score: '8.1'
+                },
+                {
+                    id: 'credential-dumping',
+                    title: 'Credential Dumping Analysis',
+                    category: 'LSASS Access',
+                    indicators: '67 processes',
+                    confidence: '94%',
+                    description: 'Memory-based credential extraction from LSASS process',
+                    severity: 'critical',
+                    score: '9.2'
+                },
+                {
+                    id: 'network-discovery',
+                    title: 'Network Discovery Patterns',
+                    category: 'Port Scanning',
+                    indicators: '1,247 scans',
+                    confidence: '93%',
+                    description: 'Automated network reconnaissance via stealth scanning',
+                    severity: 'medium',
+                    score: '7.3'
+                },
+                {
+                    id: 'defense-evasion',
+                    title: 'Defense Evasion Techniques',
+                    category: 'Process Hollowing',
+                    indicators: '78 injections',
+                    confidence: '96%',
+                    description: 'Code injection via process hollowing to evade detection',
+                    severity: 'high',
+                    score: '8.6'
                 }
             ],
             threatIntelligence: [
@@ -2440,6 +2486,36 @@
                         'MITRE:T1059'
                     ],
                     agents: ['ThreatScanner', 'AnalyticsEngine', 'LogAgent']
+                },
+                {
+                    id: 'ransomware-hunt',
+                    title: '🔒 Ransomware Hunt',
+                    priority: 'critical',
+                    status: 'active',
+                    progress: 89,
+                    description: 'Active investigation of Ryuk ransomware variant with enhanced evasion capabilities and new encryption algorithms',
+                    iocs: [
+                        'ryuk.exe',
+                        'SHA1:f7e4a2b1...',
+                        'ransom-note.txt',
+                        'MITRE:T1486'
+                    ],
+                    agents: ['ThreatScanner', 'EncryptionManager', 'DefenseOrchestrator', 'LogAgent']
+                },
+                {
+                    id: 'c2-infrastructure-hunt',
+                    title: '📡 C2 Infrastructure Hunt',
+                    priority: 'high',
+                    status: 'investigating',
+                    progress: 56,
+                    description: 'Mapping command and control infrastructure used by advanced persistent threat actors across multiple campaigns',
+                    iocs: [
+                        'c2.badactor.net',
+                        '198.51.100.42',
+                        'domain-gen-algo',
+                        'MITRE:T1071'
+                    ],
+                    agents: ['ThreatScanner', 'NetworkMapper', 'VPNMonitor', 'AnalyticsEngine']
                 }
             ],
             responseAutomation: [
@@ -2536,7 +2612,7 @@
                 initializePageContext();
             }
 
-            // Initialize enhanced module balance manager from shared.js
+            // Initialize enhanced module balance manager from shared.js - CRITICAL FOR MODULE BALANCE
             if (typeof ModuleBalanceManager !== 'undefined') {
                 ModuleBalanceManager.initializeBalancedModules();
             }
@@ -2805,7 +2881,7 @@
             });
         }
 
-        // Automation simulation using shared patterns
+        // Rest of the JavaScript functions remain the same...
         function startThreatSimulation() {
             if (autoThreatInterval) clearInterval(autoThreatInterval);
             
@@ -2827,7 +2903,6 @@
         }
 
         function simulateThreatResponse() {
-            // Use ActivityFeedManager from shared.js instead of manual feed
             const responseActions = [
                 'SQL injection blocked by AI correlation',
                 'DDoS mitigation coordinated with DefenseOrchestrator',
@@ -2871,18 +2946,15 @@
             
             if (!card || !progressElement) return;
             
-            // Mark as executing
             card.classList.add('executing');
             progressElement.classList.add('active');
             
-            // Update status badge
             const statusBadge = card.querySelector('.automation-status');
             if (statusBadge) {
                 statusBadge.textContent = 'EXECUTING';
                 statusBadge.className = 'automation-status executing';
             }
             
-            // Simulate realistic progress
             let progress = 0;
             const progressInterval = setInterval(() => {
                 progress += Math.random() * 20 + 10;
@@ -2900,49 +2972,30 @@
         }
 
         function completeAutomationExecution(automationId, title, card, progressElement, statusBadge) {
-            // Complete execution
             card.classList.remove('executing');
             progressElement.classList.remove('active');
             
-            // Restore status
             if (statusBadge) {
                 statusBadge.textContent = 'ACTIVE';
                 statusBadge.className = 'automation-status active';
             }
             
-            // Reset progress for next execution
             setTimeout(() => {
                 const progressFill = progressElement.querySelector('.automation-progress-fill');
                 if (progressFill) progressFill.style.width = '0%';
             }, 2000);
             
-            // Update execution count
-            const automation = ThreatData.responseAutomation.find(a => a.id === automationId);
-            if (automation) {
-                const currentCount = parseInt(automation.metrics.executions.replace(/[^\d]/g, ''));
-                automation.metrics.executions = (currentCount + 1).toString();
-                
-                // Update display
-                const executionMetric = card.querySelector('.automation-metric .automation-metric-value');
-                if (executionMetric && executionMetric.textContent === automation.metrics.executions.replace(/\+1/, '')) {
-                    executionMetric.textContent = automation.metrics.executions;
-                }
-            }
-            
-            // Add completion notification to feed using ActivityFeedManager
             if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 activityFeedManager.addMessage(threatFeedId, `✅ Auto-executed: ${title} completed successfully`, '', 'ThreatScanner');
             }
             
-            // Notify chat if open
             if (typeof SentinelState !== 'undefined' && SentinelState.chatOpen && window.sentinelChat) {
                 window.sentinelChat.addMessage(`🤖 ThreatScanner: Auto-executed "${title}" successfully. Sub-agent coordination maintained with hybrid encryption.`, false, 'system');
             }
         }
 
-        // Update functions using shared patterns
+        // Update functions and other methods continue as before...
         function updateThreatMetrics() {
-            // Occasionally change threat count
             if (Math.random() > 0.9) {
                 const threatEl = document.getElementById('activeThreats');
                 if (threatEl) {
@@ -2951,7 +3004,6 @@
                 }
             }
             
-            // Update blocked count
             const blocked = document.getElementById('blockedToday');
             if (blocked && Math.random() > 0.85) {
                 const current = parseInt(blocked.textContent.replace(',', ''));
@@ -2959,7 +3011,6 @@
                 blocked.textContent = newCount.toLocaleString();
             }
             
-            // Update correlation metrics
             if (Math.random() > 0.9) {
                 const correlatedThreats = document.getElementById('correlatedThreats');
                 if (correlatedThreats) {
@@ -2970,22 +3021,18 @@
         }
 
         function updateThreatAnalysis() {
-            // Update threat analysis with new detections
             if (Math.random() > 0.8) {
                 ThreatData.threatAnalysis.forEach((analysis, index) => {
                     if (Math.random() > 0.7) {
-                        // Update indicators count
                         const currentCount = parseInt(analysis.indicators.split(' ')[0]);
                         const increment = Math.floor(Math.random() * 5 + 1);
                         const newCount = currentCount + increment;
                         analysis.indicators = newCount + ' ' + analysis.indicators.split(' ').slice(1).join(' ');
                         
-                        // Slight confidence adjustment
                         const currentConf = parseInt(analysis.confidence);
                         const newConf = Math.min(99, Math.max(85, currentConf + Math.floor(Math.random() * 3 - 1)));
                         analysis.confidence = newConf + '%';
                         
-                        // Update display
                         const item = document.querySelectorAll('.threat-analysis-item')[index];
                         if (item) {
                             const indicatorsElement = item.querySelectorAll('.threat-analysis-value')[1];
@@ -3001,14 +3048,12 @@
         }
 
         function updateHuntingProgress() {
-            // Simulate hunting progress updates
             if (Math.random() > 0.7) {
                 ThreatData.threatHunting.forEach((hunt, index) => {
                     if (hunt.status === 'active' && hunt.progress < 95) {
                         const increment = Math.floor(Math.random() * 5 + 1);
                         hunt.progress = Math.min(95, hunt.progress + increment);
                         
-                        // Update progress bar
                         const card = document.querySelectorAll('.threat-hunting-card')[index];
                         if (card) {
                             const progressFill = card.querySelector('.hunting-progress-fill');
@@ -3017,7 +3062,6 @@
                             if (progressPercent) progressPercent.textContent = hunt.progress + '%';
                         }
                         
-                        // Add feed update using ActivityFeedManager
                         if (hunt.progress % 20 === 0 && typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                             activityFeedManager.addMessage(threatFeedId, `🔍 ${hunt.title}: Investigation ${hunt.progress}% complete`, '', 'ThreatScanner');
                         }
@@ -3026,7 +3070,7 @@
             }
         }
 
-        // Detail view functions - leveraging shared chat system
+        // Detail view functions
         function openThreatDetails(threatId) {
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
                 window.sentinelChat.toggle();
@@ -3095,7 +3139,7 @@
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
                 window.sentinelChat.toggle();
             }
-            setTimeout(() => {
+            setTimeout (() => {
                 const hunt = ThreatData.threatHunting.find(h => h.id === huntId);
                 if (hunt && window.sentinelChat) {
                     window.sentinelChat.addMessage(`ThreatScanner Hunt: ${hunt.title}
@@ -3171,7 +3215,7 @@
             }, 300);
         }
 
-        // Cleanup activity feed on page unload
+        // Cleanup
         window.addEventListener('beforeunload', () => {
             if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 activityFeedManager.stopAutoGeneration(threatFeedId);
@@ -3180,7 +3224,7 @@
             if (automationExecutionInterval) clearInterval(automationExecutionInterval);
         });
 
-        // Global functions for compatibility - leveraging shared chat system
+        // Global functions
         window.toggleChat = () => {
             if (window.sentinelChat) {
                 window.sentinelChat.toggle();
@@ -3221,7 +3265,6 @@
             if (typeof SentinelState !== 'undefined') {
                 SentinelState.agentActive = !SentinelState.agentActive;
                 
-                // Update UI elements
                 const agentStatus = document.querySelector('.agent-status');
                 const agentTitle = document.querySelector('.agent-title');
                 const agentStatusText = document.querySelector('.agent-status-text');
@@ -3239,7 +3282,6 @@
                         agentStatusText.textContent = 'Autonomous with Manual Override';
                     }
                     
-                    // Restart threat simulation and activity feed
                     threatAutoExecution = true;
                     startThreatSimulation();
                     startAutomationSimulation();
@@ -3260,7 +3302,6 @@
                         agentStatusText.textContent = 'Manual Control Only';
                     }
                     
-                    // Stop threat simulation and activity feed
                     threatAutoExecution = false;
                     if (autoThreatInterval) clearInterval(autoThreatInterval);
                     if (automationExecutionInterval) clearInterval(automationExecutionInterval);
