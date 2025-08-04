@@ -1484,33 +1484,7 @@
             </div>
         </div>
 
-        <!-- Main Agent Status -->
-        <div class="main-agent-status">
-            <div class="main-agent-content">
-                <div class="main-agent-info">
-                    <div class="main-agent-title">🤖 MAIN AGENT OPERATIONAL</div>
-                    <div class="main-agent-subtitle">Autonomous AI orchestrating comprehensive cyber defense across all sub-agents with hybrid encryption</div>
-                    <div class="agent-metrics">
-                        <div class="agent-metric" onclick="showMetricDetails('subagents')">
-                            <div class="agent-metric-value" id="subAgentsActiveCard">10</div>
-                            <div class="agent-metric-label">Sub-Agents Active</div>
-                        </div>
-                        <div class="agent-metric" onclick="showMetricDetails('decisions')">
-                            <div class="agent-metric-value" id="decisionsPerMinCard">2.4K</div>
-                            <div class="agent-metric-label">Decisions/Min</div>
-                        </div>
-                        <div class="agent-metric" onclick="showMetricDetails('accuracy')">
-                            <div class="agent-metric-value">99.8%</div>
-                            <div class="agent-metric-label">ML Accuracy</div>
-                        </div>
-                        <div class="agent-metric" onclick="showMetricDetails('uptime')">
-                            <div class="agent-metric-value" id="systemUptimeCard">99.98%</div>
-                            <div class="agent-metric-label">Uptime</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
 
         <!-- Main Grid - Perfect 2x2 layout -->
         <div class="ai-engine-grid">
@@ -1882,15 +1856,11 @@
                 container.appendChild(div);
             });
 
-            // Update sub-agent count in banner and card
+            // Update sub-agent count in banner only
             const countElement = document.getElementById('subAgentsActive');
-            const countCardElement = document.getElementById('subAgentsActiveCard');
             const agentCount = Object.keys(SubAgentConfigs).length;
             if (countElement) {
                 countElement.textContent = agentCount;
-            }
-            if (countCardElement) {
-                countCardElement.textContent = agentCount;
             }
         }
 
@@ -2023,12 +1993,10 @@
         function updateMetrics() {
             // Update decisions per minute
             const decisions = document.getElementById('decisionsPerMin');
-            const decisionsCard = document.getElementById('decisionsPerMinCard');
             if (decisions) {
                 const current = parseFloat(decisions.textContent.replace('K', ''));
                 const newValue = (current + 0.1).toFixed(1) + 'K';
                 decisions.textContent = newValue;
-                if (decisionsCard) decisionsCard.textContent = newValue;
             }
             
             // Update training progress occasionally
