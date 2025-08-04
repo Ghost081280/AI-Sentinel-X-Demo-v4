@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +28,11 @@
             --gradient-1: linear-gradient(135deg, #00ff88 0%, #00ccff 100%);
             --gradient-2: linear-gradient(135deg, #7c3aed 0%, #00ccff 100%);
             --gradient-shield: linear-gradient(135deg, #1a4d2e 0%, #00ff88 50%, #00ccff 100%);
+            --gradient-encryption: linear-gradient(135deg, #00ff88 0%, #00aa66 100%);
+            --gradient-quantum: linear-gradient(135deg, #7c3aed 0%, #ff00ff 50%, #00ccff 100%);
+            --gradient-hybrid: linear-gradient(135deg, #00ff88 0%, #7c3aed 50%, #00ccff 100%);
             --gradient-danger: linear-gradient(135deg, #ff0044 0%, #ff6644 100%);
+            --gradient-threat: linear-gradient(135deg, rgba(255, 0, 68, 0.15) 0%, rgba(255, 170, 0, 0.1) 50%, rgba(255, 68, 68, 0.15) 100%);
         }
 
         body {
@@ -183,7 +188,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badge */
+        /* Encryption Status Badges */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -195,34 +200,54 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
-            background: rgba(0, 255, 136, 0.1);
-            border: 1px solid var(--primary);
             border-radius: 20px;
-            font-size: 12px;
             font-weight: bold;
+            font-size: 12px;
             text-transform: uppercase;
-            cursor: pointer;
+            letter-spacing: 1px;
+            border: 2px solid;
+            backdrop-filter: blur(10px);
             transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .encryption-badge.classical {
+            background: rgba(0, 255, 136, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .encryption-badge.quantum {
+            background: rgba(124, 58, 237, 0.1);
+            border-color: var(--accent);
+            color: var(--accent);
         }
 
         .encryption-badge:hover {
-            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
+            animation: statusPulse 2s ease-in-out infinite;
+        }
+
+        .status-light.active {
             background: var(--success);
-            box-shadow: 0 0 8px var(--success);
-            animation: statusPulse 3s ease-in-out infinite;
+            box-shadow: 0 0 10px var(--success);
+        }
+
+        .status-light.inactive {
+            background: var(--danger);
+            box-shadow: 0 0 10px var(--danger);
         }
 
         @keyframes statusPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
         }
 
         .agent-status {
@@ -238,9 +263,9 @@
         }
 
         .agent-status:hover {
-            background: rgba(0, 255, 136, 0.15);
+            background: rgba(0, 255, 136, 0.2);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
         }
 
         .agent-icon {
@@ -324,40 +349,19 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner - EXACT 90px HEIGHT FROM SHARED.JS */
+        /* Sub-Agent Status Banner */
         .sub-agent-status {
-            background: linear-gradient(135deg, rgba(255, 0, 68, 0.1) 0%, rgba(255, 68, 68, 0.05) 100%);
+            background: linear-gradient(135deg, rgba(255, 0, 68, 0.1) 0%, rgba(255, 170, 0, 0.05) 100%);
             border: 1px solid rgba(255, 0, 68, 0.3);
             border-radius: 12px;
-            padding: 20px 25px !important;
-            margin-bottom: 25px !important;
-            display: flex !important;
-            justify-content: space-around !important;
-            align-items: center !important;
-            flex-wrap: wrap !important;
-            gap: 20px !important;
+            padding: 20px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
             backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-            min-height: 90px !important;
-            max-height: 90px !important;
-        }
-
-        .sub-agent-status::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 0, 68, 0.1), transparent);
-            animation: bannerScan 8s linear infinite;
-        }
-
-        @keyframes bannerScan {
-            0% { left: -100%; }
-            100% { left: 100%; }
         }
 
         .sub-agent-info {
@@ -396,46 +400,27 @@
 
         .metric {
             text-align: center;
-            padding: 5px 12px !important;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            height: 60px !important;
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: center !important;
-            align-items: center !important;
-            cursor: pointer;
-        }
-
-        .metric:hover {
-            background: rgba(255, 0, 68, 0.1);
-            transform: translateY(-2px);
         }
 
         .metric-value {
             font-size: 24px;
             font-weight: bold;
             color: var(--danger);
-            text-shadow: 0 0 10px currentColor;
-            margin-bottom: 2px !important;
-            line-height: 1;
         }
 
         .metric-label {
-            font-size: 9px !important;
+            font-size: 12px;
             color: var(--text-secondary);
             text-transform: uppercase;
-            line-height: 1;
-            letter-spacing: 0.5px;
         }
 
-        /* CRITICAL FIX: Main Content Grid with PERFECT Height Matching */
+        /* Main Content Grid */
         .main-content {
             display: grid;
             grid-template-columns: 2fr 1fr;
             gap: 25px;
             margin-bottom: 30px;
-            align-items: flex-start;
+            align-items: stretch;
         }
 
         .left-column {
@@ -450,17 +435,6 @@
             gap: 25px;
         }
 
-        /* EXACT HEIGHT CALCULATION: Left column total height = Right column total height */
-        /* Active Threats: ~600px + Threat Intelligence: ~600px + gap: 25px = ~1225px total */
-        /* Right column: Each module = (1225px - 25px gap) / 2 = 600px each */
-        .right-column .section-card {
-            height: 600px !important;
-            max-height: 600px !important;
-            min-height: 600px !important;
-            display: flex !important;
-            flex-direction: column !important;
-        }
-
         /* Section Cards */
         .section-card {
             background: var(--bg-card);
@@ -473,6 +447,13 @@
             flex-direction: column;
         }
 
+        /* Make the intelligence section fill available height */
+        .section-card.intelligence-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
         .section-header {
             display: flex;
             justify-content: space-between;
@@ -480,7 +461,6 @@
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 1px solid var(--border);
-            flex-shrink: 0;
         }
 
         .section-title {
@@ -531,8 +511,6 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 20px;
-            overflow-y: auto;
-            padding-right: 10px;
         }
 
         .threat-card {
@@ -685,22 +663,17 @@
             gap: 5px;
         }
 
-        /* Threat Classification & Analysis - Perfect scrollable content */
-        .threat-analysis-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-            min-height: 0;
-        }
-
+        /* Threat Classification & Analysis */
         .threat-analysis-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
         }
 
         .threat-analysis-item {
-            padding: 16px;
+            padding: 18px;
             border-radius: 12px;
             border-left: 4px solid;
             display: flex;
@@ -710,7 +683,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-height: 80px;
+            min-height: 85px;
             gap: 15px;
         }
 
@@ -753,7 +726,7 @@
             border-left-color: var(--success);
         }
 
-        .threat-analysis-content-inner {
+        .threat-analysis-content {
             flex: 1;
             min-width: 0;
         }
@@ -828,36 +801,24 @@
             border: 1px solid var(--success);
         }
 
-        /* Threat Intelligence & Correlation */
-        .intelligence-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .intelligence-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-            min-height: 0;
-        }
-
+        /* Threat Intelligence & Correlation - Fixed grid for 6 cards */
         .intelligence-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
+            gap: 20px;
+            flex: 1;
         }
 
         .intelligence-card {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(0, 204, 255, 0.02) 100%);
             border: 1px solid rgba(124, 58, 237, 0.3);
             border-radius: 12px;
-            padding: 18px;
+            padding: 20px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 140px;
+            min-height: 160px;
             display: flex;
             flex-direction: column;
         }
@@ -887,22 +848,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .intelligence-title {
             font-weight: bold;
             color: var(--accent);
-            font-size: 14px;
+            font-size: 16px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .intelligence-status {
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 9px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
             background: rgba(124, 58, 237, 0.2);
@@ -913,34 +874,34 @@
         .intelligence-metrics {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 12px;
+            gap: 12px;
+            margin-bottom: 15px;
         }
 
         .intelligence-metric {
             text-align: center;
-            padding: 6px;
+            padding: 8px;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .intelligence-metric-value {
-            font-size: 14px;
+            font-size: 16px;
             font-weight: bold;
             color: var(--accent);
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .intelligence-metric-label {
-            font-size: 8px;
+            font-size: 9px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .intelligence-coordination {
-            padding: 10px;
+            padding: 12px;
             background: rgba(124, 58, 237, 0.05);
             border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 8px;
@@ -948,10 +909,10 @@
         }
 
         .coordination-title {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
             color: var(--accent);
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -959,44 +920,38 @@
         .coordination-agents {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 6px;
         }
 
         .coordination-agent {
-            padding: 2px 6px;
+            padding: 3px 8px;
             background: rgba(0, 255, 136, 0.1);
             border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 6px;
-            font-size: 8px;
+            border-radius: 8px;
+            font-size: 9px;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* Threat Hunting & Investigation - Perfect scrollable content */
-        .threat-hunting-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-            min-height: 0;
-        }
-
+        /* Threat Hunting & Investigation - Extended height */
         .threat-hunting-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
+            gap: 20px;
+            min-height: 500px;
         }
 
         .threat-hunting-card {
             background: linear-gradient(135deg, rgba(255, 170, 0, 0.05) 0%, rgba(255, 68, 68, 0.02) 100%);
             border: 1px solid rgba(255, 170, 0, 0.3);
             border-radius: 12px;
-            padding: 18px;
+            padding: 22px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 180px;
+            min-height: 220px;
         }
 
         .threat-hunting-card::before {
@@ -1034,22 +989,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .hunting-title {
             font-weight: bold;
             color: var(--warning);
-            font-size: 14px;
+            font-size: 16px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .hunting-priority {
-            padding: 3px 10px;
-            border-radius: 10px;
-            font-size: 9px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -1074,21 +1029,21 @@
         }
 
         .hunting-description {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             line-height: 1.4;
         }
 
         .hunting-iocs {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .hunting-iocs-title {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
             color: var(--warning);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -1096,71 +1051,71 @@
         .hunting-iocs-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 6px;
         }
 
         .hunting-ioc {
-            padding: 2px 6px;
+            padding: 3px 8px;
             background: rgba(255, 170, 0, 0.1);
             border: 1px solid rgba(255, 170, 0, 0.3);
-            border-radius: 6px;
-            font-size: 9px;
+            border-radius: 8px;
+            font-size: 10px;
             color: var(--warning);
             font-family: 'Courier New', monospace;
         }
 
         .hunting-progress {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         .hunting-progress-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         .hunting-progress-label {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .hunting-progress-percent {
-            font-size: 10px;
+            font-size: 11px;
             color: var(--warning);
             font-weight: bold;
         }
 
         .hunting-progress-bar {
             width: 100%;
-            height: 4px;
+            height: 6px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 2px;
+            border-radius: 3px;
             overflow: hidden;
         }
 
         .hunting-progress-fill {
             height: 100%;
             background: var(--gradient-1);
-            border-radius: 2px;
+            border-radius: 3px;
             transition: width 0.3s ease;
-            box-shadow: 0 0 8px rgba(255, 170, 0, 0.5);
+            box-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
         }
 
         .hunting-agents {
-            padding: 10px;
+            padding: 12px;
             background: rgba(255, 170, 0, 0.05);
             border: 1px solid rgba(255, 170, 0, 0.2);
             border-radius: 8px;
         }
 
         .hunting-agents-title {
-            font-size: 10px;
+            font-size: 11px;
             font-weight: bold;
             color: var(--warning);
-            margin-bottom: 5px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -1168,15 +1123,15 @@
         .hunting-agents-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px;
+            gap: 6px;
         }
 
         .hunting-agent {
-            padding: 2px 6px;
+            padding: 3px 8px;
             background: rgba(0, 255, 136, 0.1);
             border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 6px;
-            font-size: 8px;
+            border-radius: 8px;
+            font-size: 9px;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -1356,8 +1311,8 @@
             letter-spacing: 1px;
         }
 
-        /* Activity Feed */
-        .activity-feed {
+        /* Real-time Activity Feed */
+        .feed-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
@@ -1366,43 +1321,38 @@
             display: flex;
             flex-direction: column;
             backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            margin-top: 25px;
         }
 
         .feed-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
             border-bottom: 1px solid var(--border);
         }
 
         .feed-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .live-indicator {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             color: var(--danger);
-            font-size: 12px;
+            font-size: 13px;
             font-weight: bold;
             text-transform: uppercase;
         }
 
         .live-dot {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             background: var(--danger);
             border-radius: 50%;
             animation: livePulse 2s ease-in-out infinite;
@@ -1423,15 +1373,10 @@
             background: rgba(255, 0, 68, 0.05);
             border-left: 3px solid var(--danger);
             padding: 15px 20px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             border-radius: 0 10px 10px 0;
-            transition: all 0.3s ease;
             animation: feedSlide 0.3s ease;
-        }
-
-        @keyframes feedSlide {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+            transition: all 0.3s ease;
         }
 
         .feed-item:hover {
@@ -1439,23 +1384,28 @@
             transform: translateX(5px);
         }
 
+        @keyframes feedSlide {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .feed-item.ai-action {
+            background: rgba(124, 58, 237, 0.05);
+            border-left-color: var(--accent);
+        }
+
+        .feed-item.encryption {
+            background: rgba(0, 255, 136, 0.05);
+            border-left-color: var(--primary);
+        }
+
         .feed-item.warning {
             background: rgba(255, 170, 0, 0.05);
             border-left-color: var(--warning);
         }
 
-        .feed-item.danger {
-            background: rgba(255, 0, 68, 0.05);
-            border-left-color: var(--danger);
-        }
-
-        .feed-item.encryption {
-            background: rgba(124, 58, 237, 0.05);
-            border-left-color: var(--accent);
-        }
-
         .feed-time {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--text-secondary);
             margin-bottom: 5px;
             text-transform: uppercase;
@@ -1463,14 +1413,14 @@
         }
 
         .feed-message {
-            font-size: 13px;
-            line-height: 1.4;
-            margin-bottom: 5px;
+            font-size: 14px;
+            line-height: 1.5;
         }
 
         .feed-agent {
-            font-size: 11px;
+            font-size: 12px;
             color: var(--accent);
+            margin-top: 5px;
             font-style: italic;
         }
 
@@ -1778,12 +1728,6 @@
             .response-automation-grid {
                 grid-template-columns: 1fr;
             }
-
-            .right-column .section-card {
-                height: auto !important;
-                min-height: 300px !important;
-                max-height: none !important;
-            }
         }
 
         @media (max-width: 768px) {
@@ -1804,8 +1748,6 @@
             .sub-agent-status {
                 flex-direction: column;
                 text-align: center;
-                min-height: auto !important;
-                max-height: none !important;
             }
             
             .sub-agent-metrics {
@@ -1853,7 +1795,7 @@
         }
     </style>
 </head>
-    <body class="threats-page">
+<body>
     <script>
         // Check authentication
         const auth = localStorage.getItem('sentinel_auth');
@@ -1896,16 +1838,20 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge" onclick="showEncryptionStatus('hybrid')">
-                            <div class="status-light"></div>
-                            <span>HYBRID MODE ACTIVE</span>
+                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
+                            <div class="status-light active" id="classicalStatus"></div>
+                            <span>CLASSICAL</span>
+                        </div>
+                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light active" id="quantumStatus"></div>
+                            <span>HYBRID</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
                         <span class="agent-icon">🤖</span>
                         <div class="agent-info">
                             <span class="agent-title">AI Agent Active</span>
-                            <span class="agent-status-text" id="agentModeText">Autonomous with Manual Override</span>
+                            <span class="agent-status-text">Autonomous with Manual Override</span>
                         </div>
                     </div>
                     <button class="logout-btn" onclick="handleLogout()">Logout</button>
@@ -1953,7 +1899,7 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner - EXACT 90px HEIGHT -->
+        <!-- Sub-Agent Status Banner -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">🛡️</div>
@@ -1963,19 +1909,19 @@
                 </div>
             </div>
             <div class="sub-agent-metrics">
-                <div class="metric" onclick="showMetricDetails('threats')">
+                <div class="metric">
                     <div class="metric-value" id="activeThreats">8</div>
                     <div class="metric-label">Active Threats</div>
                 </div>
-                <div class="metric" onclick="showMetricDetails('blocked')">
+                <div class="metric">
                     <div class="metric-value" id="blockedToday">3,247</div>
                     <div class="metric-label">Blocked Today</div>
                 </div>
-                <div class="metric" onclick="showMetricDetails('detection')">
+                <div class="metric">
                     <div class="metric-value">99.8%</div>
                     <div class="metric-label">Detection Rate</div>
                 </div>
-                <div class="metric" onclick="showMetricDetails('correlated')">
+                <div class="metric">
                     <div class="metric-value" id="correlatedThreats">16</div>
                     <div class="metric-label">Correlated</div>
                 </div>
@@ -2015,10 +1961,8 @@
                             <span>AI Enhanced</span>
                         </div>
                     </div>
-                    <div class="intelligence-content">
-                        <div class="intelligence-grid" id="intelligenceGrid">
-                            <!-- Intelligence cards will be populated by JavaScript -->
-                        </div>
+                    <div class="intelligence-grid" id="intelligenceGrid">
+                        <!-- Intelligence cards will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
@@ -2037,10 +1981,8 @@
                             <span id="threatAnalysisStatus">Live Analysis</span>
                         </div>
                     </div>
-                    <div class="threat-analysis-content">
-                        <div class="threat-analysis-list" id="threatAnalysisList">
-                            <!-- Threat analysis will be populated by JavaScript -->
-                        </div>
+                    <div class="threat-analysis-list" id="threatAnalysisList">
+                        <!-- Threat analysis will be populated by JavaScript -->
                     </div>
                 </div>
 
@@ -2056,10 +1998,8 @@
                             <span>4 Active Hunts</span>
                         </div>
                     </div>
-                    <div class="threat-hunting-content">
-                        <div class="threat-hunting-grid" id="threatHuntingGrid">
-                            <!-- Threat hunting cards will be populated by JavaScript -->
-                        </div>
+                    <div class="threat-hunting-grid" id="threatHuntingGrid">
+                        <!-- Threat hunting cards will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
@@ -2083,19 +2023,16 @@
         </div>
 
         <!-- ThreatScanner Activity Feed -->
-        <div class="activity-feed">
+        <div class="feed-section">
             <div class="feed-header">
-                <h2 class="feed-title">
-                    <span>🛡️</span>
-                    <span>ThreatScanner Activity Feed</span>
-                </h2>
+                <h2 class="feed-title">ThreatScanner Activity Feed</h2>
                 <div class="live-indicator">
                     <div class="live-dot"></div>
                     <span>LIVE</span>
                 </div>
             </div>
-            <div class="feed-content" id="threatActivityFeed">
-                <!-- Feed items will be populated by ActivityFeedManager -->
+            <div class="feed-content" id="threatFeed">
+                <!-- Feed items will be populated by JavaScript -->
             </div>
         </div>
     </div>
@@ -2153,592 +2090,501 @@
 
     <script src="shared.js"></script>
     <script>
-        // Threats page-specific configurations
+        // Enhanced V4 threat data - ACTIVE ONGOING THREATS (8 total for full grid)
+        const threats = [
+            {
+                id: 1,
+                name: 'Advanced DDoS Attack',
+                type: 'Network Attack',
+                severity: 'critical',
+                source: '45.12.78.* (Botnet)',
+                target: 'API Gateway',
+                attempts: '67,892',
+                status: 'Mitigating',
+                aiAnalysis: 'Multi-vector attack pattern matches APT-29. Coordinating with DefenseOrchestrator for automated mitigation.',
+                subAgent: 'ThreatScanner → DefenseOrchestrator'
+            },
+            {
+                id: 2,
+                name: 'SQL Injection Campaign',
+                type: 'Web Application',
+                severity: 'critical',
+                source: '192.168.1.105',
+                target: '/api/users',
+                attempts: '247',
+                status: 'Blocked',
+                aiAnalysis: 'Union-based SQL injection with privilege escalation. EncryptionManager prevented data access.',
+                subAgent: 'ThreatScanner → EncryptionManager'
+            },
+            {
+                id: 3,
+                name: 'Insider Threat Pattern',
+                type: 'Behavioral Analysis',
+                severity: 'critical',
+                source: 'Internal User',
+                target: 'Sensitive Data',
+                attempts: '15',
+                status: 'Investigating',
+                aiAnalysis: 'Anomalous access patterns detected. AnalyticsEngine flagged behavioral deviation.',
+                subAgent: 'ThreatScanner → AnalyticsEngine'
+            },
+            {
+                id: 4,
+                name: 'Zero-Day Exploit Attempt',
+                type: 'Advanced Persistent Threat',
+                severity: 'high',
+                source: 'Unknown',
+                target: 'Web Server',
+                attempts: 'N/A',
+                status: 'Analyzing',
+                aiAnalysis: 'Novel attack vector identified. AI correlation engine updating threat signatures.',
+                subAgent: 'ThreatScanner → AI Engine'
+            },
+            {
+                id: 5,
+                name: 'Cryptocurrency Mining Malware',
+                type: 'Malware',
+                severity: 'high',
+                source: '192.168.1.87',
+                target: 'Workstation Network',
+                attempts: '1,247',
+                status: 'Quarantined',
+                aiAnalysis: 'Coinhive variant detected. NetworkMapper isolated affected endpoints.',
+                subAgent: 'ThreatScanner → NetworkMapper'
+            },
+            {
+                id: 6,
+                name: 'Phishing Campaign',
+                type: 'Social Engineering',
+                severity: 'high',
+                source: 'External Email',
+                target: 'User Credentials',
+                attempts: '4,892',
+                status: 'Blocked',
+                aiAnalysis: 'Targeted spear-phishing with credential harvesting. AnalyticsEngine updated patterns.',
+                subAgent: 'ThreatScanner → AnalyticsEngine'
+            },
+            {
+                id: 7,
+                name: 'Privilege Escalation',
+                type: 'System Compromise',
+                severity: 'medium',
+                source: 'Compromised Account',
+                target: 'Domain Controller',
+                attempts: '23',
+                status: 'Contained',
+                aiAnalysis: 'Local privilege escalation attempt blocked. DefenseOrchestrator deployed countermeasures.',
+                subAgent: 'ThreatScanner → DefenseOrchestrator'
+            },
+            {
+                id: 8,
+                name: 'Command & Control Traffic',
+                type: 'Network Communications',
+                severity: 'high',
+                source: 'c2.malicious-domain.net',
+                target: 'Multiple Endpoints',
+                attempts: '156',
+                status: 'Monitoring',
+                aiAnalysis: 'Persistent C2 beaconing detected. VPNMonitor and NetworkMapper coordinating response.',
+                subAgent: 'ThreatScanner → VPNMonitor'
+            }
+        ];
+
+        // Threat Classification & Analysis data - More specific to threats page
+        const threatAnalysis = [
+            {
+                id: 'malware-family',
+                title: 'Malware Family Classification',
+                category: 'Ransomware',
+                indicators: '47 samples',
+                confidence: '98%',
+                description: 'Ryuk variants with novel evasion techniques detected',
+                severity: 'critical',
+                score: '9.4'
+            },
+            {
+                id: 'attack-vector',
+                title: 'Primary Attack Vector Analysis',
+                category: 'Email Phishing',
+                indicators: '2,847 emails',
+                confidence: '96%',
+                description: 'Spear-phishing campaign targeting finance departments',
+                severity: 'high',
+                score: '8.7'
+            },
+            {
+                id: 'persistence-method',
+                title: 'Persistence Method Detection',
+                category: 'Registry Keys',
+                indicators: '156 modifications',
+                confidence: '94%',
+                description: 'Advanced registry persistence mechanisms identified',
+                severity: 'high',
+                score: '8.2'
+            },
+            {
+                id: 'command-control',
+                title: 'Command & Control Pattern',
+                category: 'DNS Tunneling',
+                indicators: '23 domains',
+                confidence: '92%',
+                description: 'Covert DNS tunneling for data exfiltration detected',
+                severity: 'medium',
+                score: '7.8'
+            },
+            {
+                id: 'lateral-movement',
+                title: 'Lateral Movement Techniques',
+                category: 'WMI/PowerShell',
+                indicators: '89 instances',
+                confidence: '91%',
+                description: 'Living-off-the-land techniques for network traversal',
+                severity: 'medium',
+                score: '7.5'
+            },
+            {
+                id: 'data-exfiltration',
+                title: 'Data Exfiltration Methods',
+                category: 'HTTPS Tunneling',
+                indicators: '12 connections',
+                confidence: '89%',
+                description: 'Encrypted channels used for sensitive data theft',
+                severity: 'high',
+                score: '8.9'
+            }
+        ];
+
+        // Threat Intelligence correlation data - Extended with 6 total cards
+        const threatIntelligence = [
+            {
+                id: 'correlation-engine',
+                title: '🧠 AI Correlation Engine',
+                status: 'ACTIVE',
+                metrics: {
+                    accuracy: '99.8%',
+                    patterns: '2.4K',
+                    speed: '0.3ms'
+                },
+                agents: ['AnalyticsEngine', 'AI Engine', 'DefenseOrchestrator']
+            },
+            {
+                id: 'behavioral-analysis',
+                title: '🎯 Behavioral Analysis',
+                status: 'LEARNING',
+                metrics: {
+                    profiles: '247',
+                    anomalies: '14',
+                    confidence: '96%'
+                },
+                agents: ['AnalyticsEngine', 'NetworkMapper', 'LogAgent']
+            },
+            {
+                id: 'threat-prediction',
+                title: '🔮 Threat Prediction',
+                status: 'ACTIVE',
+                metrics: {
+                    forecast: '72h',
+                    models: '8',
+                    accuracy: '94%'
+                },
+                agents: ['AI Engine', 'AnalyticsEngine', 'ThreatScanner']
+            },
+            {
+                id: 'signature-updates',
+                title: '🔄 Signature Updates',
+                status: 'SYNCING',
+                metrics: {
+                    signatures: '45K',
+                    updated: '2m ago',
+                    sources: '12'
+                },
+                agents: ['ThreatScanner', 'DefenseOrchestrator', 'VPNMonitor']
+            },
+            {
+                id: 'threat-attribution',
+                title: '🔍 Threat Attribution',
+                status: 'ACTIVE',
+                metrics: {
+                    actors: '127',
+                    campaigns: '34',
+                    confidence: '91%'
+                },
+                agents: ['ThreatScanner', 'AnalyticsEngine', 'AI Engine']
+            },
+            {
+                id: 'ioc-enrichment',
+                title: '📡 IOC Enrichment',
+                status: 'ACTIVE',
+                metrics: {
+                    feeds: '23',
+                    indicators: '890K',
+                    quality: '98%'
+                },
+                agents: ['ThreatScanner', 'LogAgent', 'AnalyticsEngine']
+            }
+        ];
+
+        // Threat Response Automation data
+        const threatResponseAutomation = [
+            {
+                id: 'sql-injection-block',
+                title: '🛡️ SQL Injection Auto-Block',
+                status: 'active',
+                metrics: {
+                    executions: '247',
+                    success: '100%',
+                    avgTime: '0.2s'
+                },
+                chain: 'ThreatScanner → EncryptionManager → DefenseOrchestrator',
+                description: 'Automatically blocks SQL injection attempts and protects data with encryption'
+            },
+            {
+                id: 'ddos-mitigation',
+                title: '⚡ DDoS Auto-Mitigation',
+                status: 'executing',
+                metrics: {
+                    executions: '12',
+                    success: '98%',
+                    avgTime: '1.4s'
+                },
+                chain: 'ThreatScanner → DefenseOrchestrator → NetworkMapper',
+                description: 'Coordinates automated DDoS response across network infrastructure'
+            },
+            {
+                id: 'insider-threat-response',
+                title: '🎯 Insider Threat Response',
+                status: 'active',
+                metrics: {
+                    executions: '8',
+                    success: '94%',
+                    avgTime: '3.1s'
+                },
+                chain: 'ThreatScanner → AnalyticsEngine → DefenseOrchestrator → LogAgent',
+                description: 'Behavioral analysis triggers automated access restriction and logging'
+            },
+            {
+                id: 'malware-quarantine',
+                title: '🔒 Malware Auto-Quarantine',
+                status: 'active',
+                metrics: {
+                    executions: '156',
+                    success: '99%',
+                    avgTime: '0.8s'
+                },
+                chain: 'ThreatScanner → NetworkMapper → EncryptionManager',
+                description: 'Isolates infected endpoints and secures unaffected systems'
+            },
+            {
+                id: 'zero-day-analysis',
+                title: '🔍 Zero-Day Auto-Analysis',
+                status: 'standby',
+                metrics: {
+                    executions: '3',
+                    success: '100%',
+                    avgTime: '12.5s'
+                },
+                chain: 'ThreatScanner → AI Engine → AnalyticsEngine → DefenseOrchestrator',
+                description: 'AI-powered analysis of novel threats with signature generation'
+            },
+            {
+                id: 'phishing-block',
+                title: '📧 Phishing Auto-Block',
+                status: 'active',
+                metrics: {
+                    executions: '4.8K',
+                    success: '99%',
+                    avgTime: '0.1s'
+                },
+                chain: 'ThreatScanner → AnalyticsEngine → DefenseOrchestrator',
+                description: 'Real-time phishing detection with credential harvesting prevention'
+            }
+        ];
+
+        // Threat Hunting & Investigation data - Extended content
+        const threatHunting = [
+            {
+                id: 'apt-campaign-hunt',
+                title: '🎯 APT Campaign Hunt',
+                priority: 'critical',
+                status: 'active',
+                progress: 78,
+                description: 'Investigating suspected APT-29 campaign targeting financial infrastructure with novel TTPs and custom malware variants',
+                iocs: [
+                    'SHA256:a4b2c3d4...',
+                    '45.12.78.92',
+                    'evil.domain.com',
+                    'MITRE:T1055'
+                ],
+                agents: ['ThreatScanner', 'AnalyticsEngine', 'AI Engine', 'LogAgent']
+            },
+            {
+                id: 'insider-behavior-hunt',
+                title: '👤 Insider Behavior Hunt',
+                priority: 'high',
+                status: 'investigating',
+                progress: 45,
+                description: 'Anomalous data access patterns from privileged accounts during off-hours, potential data theft investigation',
+                iocs: [
+                    'user.jdoe@corp',
+                    '192.168.1.105',
+                    'lateral-move',
+                    'MITRE:T1078'
+                ],
+                agents: ['ThreatScanner', 'AnalyticsEngine', 'NetworkMapper', 'LogAgent']
+            },
+            {
+                id: 'supply-chain-hunt',
+                title: '🔗 Supply Chain Hunt',
+                priority: 'high',
+                status: 'active',
+                progress: 23,
+                description: 'Investigating potential compromise of third-party software dependencies and update mechanisms in development environment',
+                iocs: [
+                    'update-server.lib',
+                    'MD5:9a8b7c6d...',
+                    'signed-malware',
+                    'MITRE:T1195'
+                ],
+                agents: ['ThreatScanner', 'AI Engine', 'EncryptionManager', 'ComplianceMonitor']
+            },
+            {
+                id: 'living-off-land-hunt',
+                title: '⚡ Living-off-Land Hunt',
+                priority: 'medium',
+                status: 'active',
+                progress: 67,
+                description: 'Tracking abuse of legitimate system tools for malicious purposes, including PowerShell and WMI exploitation patterns',
+                iocs: [
+                    'powershell.exe',
+                    'wmic.exe',
+                    'base64-payload',
+                    'MITRE:T1059'
+                ],
+                agents: ['ThreatScanner', 'AnalyticsEngine', 'LogAgent']
+            }
+        ];
+
+        // Enhanced V4 threat management
         let threatAutoExecution = true;
         let autoThreatInterval;
         let automationExecutionInterval;
-        let threatFeedId = 'threats-feed';
 
-        // Enhanced V4 threat data with MORE CONTENT to fill modules properly
-        const ThreatData = {
-            activeThreats: [
-                {
-                    id: 1,
-                    name: 'Advanced DDoS Attack',
-                    type: 'Network Attack',
-                    severity: 'critical',
-                    source: '45.12.78.* (Botnet)',
-                    target: 'API Gateway',
-                    attempts: '67,892',
-                    status: 'Mitigating',
-                    aiAnalysis: 'Multi-vector attack pattern matches APT-29. Coordinating with DefenseOrchestrator for automated mitigation.',
-                    subAgent: 'ThreatScanner → DefenseOrchestrator'
-                },
-                {
-                    id: 2,
-                    name: 'SQL Injection Campaign',
-                    type: 'Web Application',
-                    severity: 'critical',
-                    source: '192.168.1.105',
-                    target: '/api/users',
-                    attempts: '247',
-                    status: 'Blocked',
-                    aiAnalysis: 'Union-based SQL injection with privilege escalation. EncryptionManager prevented data access.',
-                    subAgent: 'ThreatScanner → EncryptionManager'
-                },
-                {
-                    id: 3,
-                    name: 'Insider Threat Pattern',
-                    type: 'Behavioral Analysis',
-                    severity: 'critical',
-                    source: 'Internal User',
-                    target: 'Sensitive Data',
-                    attempts: '15',
-                    status: 'Investigating',
-                    aiAnalysis: 'Anomalous access patterns detected. AnalyticsEngine flagged behavioral deviation.',
-                    subAgent: 'ThreatScanner → AnalyticsEngine'
-                },
-                {
-                    id: 4,
-                    name: 'Zero-Day Exploit Attempt',
-                    type: 'Advanced Persistent Threat',
-                    severity: 'high',
-                    source: 'Unknown',
-                    target: 'Web Server',
-                    attempts: 'N/A',
-                    status: 'Analyzing',
-                    aiAnalysis: 'Novel attack vector identified. AI correlation engine updating threat signatures.',
-                    subAgent: 'ThreatScanner → AI Engine'
-                },
-                {
-                    id: 5,
-                    name: 'Cryptocurrency Mining Malware',
-                    type: 'Malware',
-                    severity: 'high',
-                    source: '192.168.1.87',
-                    target: 'Workstation Network',
-                    attempts: '1,247',
-                    status: 'Quarantined',
-                    aiAnalysis: 'Coinhive variant detected. NetworkMapper isolated affected endpoints.',
-                    subAgent: 'ThreatScanner → NetworkMapper'
-                },
-                {
-                    id: 6,
-                    name: 'Phishing Campaign',
-                    type: 'Social Engineering',
-                    severity: 'high',
-                    source: 'External Email',
-                    target: 'User Credentials',
-                    attempts: '4,892',
-                    status: 'Blocked',
-                    aiAnalysis: 'Targeted spear-phishing with credential harvesting. AnalyticsEngine updated patterns.',
-                    subAgent: 'ThreatScanner → AnalyticsEngine'
-                },
-                {
-                    id: 7,
-                    name: 'VPN Anomaly Detection',
-                    type: 'Network Communications',
-                    severity: 'medium',
-                    source: 'Multiple Locations',
-                    target: 'VPN Endpoints',
-                    attempts: '89',
-                    status: 'Monitoring',
-                    aiAnalysis: 'Geographic anomaly detected in VPN connections. VPNMonitor enhanced analysis active.',
-                    subAgent: 'ThreatScanner → VPNMonitor'
-                },
-                {
-                    id: 8,
-                    name: 'Command & Control Traffic',
-                    type: 'Network Communications',
-                    severity: 'high',
-                    source: 'c2.malicious-domain.net',
-                    target: 'Multiple Endpoints',
-                    attempts: '156',
-                    status: 'Monitoring',
-                    aiAnalysis: 'Persistent C2 beaconing detected. VPNMonitor and NetworkMapper coordinating response.',
-                    subAgent: 'ThreatScanner → VPNMonitor'
-                }
-            ],
-            // EXPANDED threat analysis to fill right column properly
-            threatAnalysis: [
-                {
-                    id: 'malware-family',
-                    title: 'Malware Family Classification',
-                    category: 'Ransomware',
-                    indicators: '47 samples',
-                    confidence: '98%',
-                    description: 'Ryuk variants with novel evasion techniques detected',
-                    severity: 'critical',
-                    score: '9.4'
-                },
-                {
-                    id: 'attack-vector',
-                    title: 'Primary Attack Vector Analysis',
-                    category: 'Email Phishing',
-                    indicators: '2,847 emails',
-                    confidence: '96%',
-                    description: 'Spear-phishing campaign targeting finance departments',
-                    severity: 'high',
-                    score: '8.7'
-                },
-                {
-                    id: 'persistence-method',
-                    title: 'Persistence Method Detection',
-                    category: 'Registry Keys',
-                    indicators: '156 modifications',
-                    confidence: '94%',
-                    description: 'Advanced registry persistence mechanisms identified',
-                    severity: 'high',
-                    score: '8.2'
-                },
-                {
-                    id: 'command-control',
-                    title: 'Command & Control Pattern',
-                    category: 'DNS Tunneling',
-                    indicators: '23 domains',
-                    confidence: '92%',
-                    description: 'Covert DNS tunneling for data exfiltration detected',
-                    severity: 'medium',
-                    score: '7.8'
-                },
-                {
-                    id: 'lateral-movement',
-                    title: 'Lateral Movement Techniques',
-                    category: 'WMI/PowerShell',
-                    indicators: '89 instances',
-                    confidence: '91%',
-                    description: 'Living-off-the-land techniques for network traversal',
-                    severity: 'medium',
-                    score: '7.5'
-                },
-                {
-                    id: 'data-exfiltration',
-                    title: 'Data Exfiltration Methods',
-                    category: 'HTTPS Tunneling',
-                    indicators: '12 connections',
-                    confidence: '89%',
-                    description: 'Encrypted channels used for sensitive data theft',
-                    severity: 'high',
-                    score: '8.9'
-                },
-                {
-                    id: 'privilege-escalation',
-                    title: 'Privilege Escalation Vectors',
-                    category: 'UAC Bypass',
-                    indicators: '34 attempts',
-                    confidence: '87%',
-                    description: 'Windows UAC bypass techniques via COM object hijacking',
-                    severity: 'high',
-                    score: '8.1'
-                },
-                {
-                    id: 'credential-dumping',
-                    title: 'Credential Dumping Analysis',
-                    category: 'LSASS Access',
-                    indicators: '67 processes',
-                    confidence: '94%',
-                    description: 'Memory-based credential extraction from LSASS process',
-                    severity: 'critical',
-                    score: '9.2'
-                },
-                {
-                    id: 'network-discovery',
-                    title: 'Network Discovery Patterns',
-                    category: 'Port Scanning',
-                    indicators: '1,247 scans',
-                    confidence: '93%',
-                    description: 'Automated network reconnaissance via stealth scanning',
-                    severity: 'medium',
-                    score: '7.3'
-                },
-                {
-                    id: 'defense-evasion',
-                    title: 'Defense Evasion Techniques',
-                    category: 'Process Hollowing',
-                    indicators: '78 injections',
-                    confidence: '96%',
-                    description: 'Code injection via process hollowing to evade detection',
-                    severity: 'high',
-                    score: '8.6'
-                },
-                {
-                    id: 'steganography-detect',
-                    title: 'Steganography Detection',
-                    category: 'Image Files',
-                    indicators: '234 files',
-                    confidence: '88%',
-                    description: 'Hidden payloads in image files for covert communication',
-                    severity: 'medium',
-                    score: '7.9'
-                },
-                {
-                    id: 'fileless-malware',
-                    title: 'Fileless Malware Analysis',
-                    category: 'Memory Resident',
-                    indicators: '45 processes',
-                    confidence: '95%',
-                    description: 'PowerShell-based fileless malware execution patterns',
-                    severity: 'critical',
-                    score: '9.1'
-                }
-            ],
-            threatIntelligence: [
-                {
-                    id: 'correlation-engine',
-                    title: '🧠 AI Correlation Engine',
-                    status: 'ACTIVE',
-                    metrics: {
-                        accuracy: '99.8%',
-                        patterns: '2.4K',
-                        speed: '0.3ms'
-                    },
-                    agents: ['AnalyticsEngine', 'AI Engine', 'DefenseOrchestrator']
-                },
-                {
-                    id: 'behavioral-analysis',
-                    title: '🎯 Behavioral Analysis',
-                    status: 'LEARNING',
-                    metrics: {
-                        profiles: '247',
-                        anomalies: '14',
-                        confidence: '96%'
-                    },
-                    agents: ['AnalyticsEngine', 'NetworkMapper', 'LogAgent']
-                },
-                {
-                    id: 'threat-prediction',
-                    title: '🔮 Threat Prediction',
-                    status: 'ACTIVE',
-                    metrics: {
-                        forecast: '72h',
-                        models: '8',
-                        accuracy: '94%'
-                    },
-                    agents: ['AI Engine', 'AnalyticsEngine', 'ThreatScanner']
-                },
-                {
-                    id: 'signature-updates',
-                    title: '🔄 Signature Updates',
-                    status: 'SYNCING',
-                    metrics: {
-                        signatures: '45K',
-                        updated: '2m ago',
-                        sources: '12'
-                    },
-                    agents: ['ThreatScanner', 'DefenseOrchestrator', 'VPNMonitor']
-                },
-                {
-                    id: 'threat-attribution',
-                    title: '🔍 Threat Attribution',
-                    status: 'ACTIVE',
-                    metrics: {
-                        actors: '127',
-                        campaigns: '34',
-                        confidence: '91%'
-                    },
-                    agents: ['ThreatScanner', 'AnalyticsEngine', 'AI Engine']
-                },
-                {
-                    id: 'ioc-enrichment',
-                    title: '📡 IOC Enrichment',
-                    status: 'ACTIVE',
-                    metrics: {
-                        feeds: '23',
-                        indicators: '890K',
-                        quality: '98%'
-                    },
-                    agents: ['ThreatScanner', 'LogAgent', 'AnalyticsEngine']
-                }
-            ],
-            // EXPANDED threat hunting to fill right column properly
-            threatHunting: [
-                {
-                    id: 'apt-campaign-hunt',
-                    title: '🎯 APT Campaign Hunt',
-                    priority: 'critical',
-                    status: 'active',
-                    progress: 78,
-                    description: 'Investigating suspected APT-29 campaign targeting financial infrastructure with novel TTPs and custom malware variants',
-                    iocs: [
-                        'SHA256:a4b2c3d4...',
-                        '45.12.78.92',
-                        'evil.domain.com',
-                        'MITRE:T1055'
-                    ],
-                    agents: ['ThreatScanner', 'AnalyticsEngine', 'AI Engine', 'LogAgent']
-                },
-                {
-                    id: 'insider-behavior-hunt',
-                    title: '👤 Insider Behavior Hunt',
-                    priority: 'high',
-                    status: 'investigating',
-                    progress: 45,
-                    description: 'Anomalous data access patterns from privileged accounts during off-hours, potential data theft investigation',
-                    iocs: [
-                        'user.jdoe@corp',
-                        '192.168.1.105',
-                        'lateral-move',
-                        'MITRE:T1078'
-                    ],
-                    agents: ['ThreatScanner', 'AnalyticsEngine', 'NetworkMapper', 'LogAgent']
-                },
-                {
-                    id: 'supply-chain-hunt',
-                    title: '🔗 Supply Chain Hunt',
-                    priority: 'high',
-                    status: 'active',
-                    progress: 23,
-                    description: 'Investigating potential compromise of third-party software dependencies and update mechanisms in development environment',
-                    iocs: [
-                        'update-server.lib',
-                        'MD5:9a8b7c6d...',
-                        'signed-malware',
-                        'MITRE:T1195'
-                    ],
-                    agents: ['ThreatScanner', 'AI Engine', 'EncryptionManager', 'ComplianceMonitor']
-                },
-                {
-                    id: 'living-off-land-hunt',
-                    title: '⚡ Living-off-Land Hunt',
-                    priority: 'medium',
-                    status: 'active',
-                    progress: 67,
-                    description: 'Tracking abuse of legitimate system tools for malicious purposes, including PowerShell and WMI exploitation patterns',
-                    iocs: [
-                        'powershell.exe',
-                        'wmic.exe',
-                        'base64-payload',
-                        'MITRE:T1059'
-                    ],
-                    agents: ['ThreatScanner', 'AnalyticsEngine', 'LogAgent']
-                },
-                {
-                    id: 'ransomware-hunt',
-                    title: '🔒 Ransomware Hunt',
-                    priority: 'critical',
-                    status: 'active',
-                    progress: 89,
-                    description: 'Active investigation of Ryuk ransomware variant with enhanced evasion capabilities and new encryption algorithms',
-                    iocs: [
-                        'ryuk.exe',
-                        'SHA1:f7e4a2b1...',
-                        'ransom-note.txt',
-                        'MITRE:T1486'
-                    ],
-                    agents: ['ThreatScanner', 'EncryptionManager', 'DefenseOrchestrator', 'LogAgent']
-                },
-                {
-                    id: 'c2-infrastructure-hunt',
-                    title: '📡 C2 Infrastructure Hunt',
-                    priority: 'high',
-                    status: 'investigating',
-                    progress: 56,
-                    description: 'Mapping command and control infrastructure used by advanced persistent threat actors across multiple campaigns',
-                    iocs: [
-                        'c2.badactor.net',
-                        '198.51.100.42',
-                        'domain-gen-algo',
-                        'MITRE:T1071'
-                    ],
-                    agents: ['ThreatScanner', 'NetworkMapper', 'VPNMonitor', 'AnalyticsEngine']
-                },
-                {
-                    id: 'zero-day-hunt',
-                    title: '🔍 Zero-Day Hunt',
-                    priority: 'critical',
-                    status: 'active',
-                    progress: 34,
-                    description: 'Hunting for zero-day exploits targeting unpatched vulnerabilities in web application frameworks',
-                    iocs: [
-                        'CVE-2025-XXXX',
-                        'exploit.payload',
-                        'framework-rce',
-                        'MITRE:T1190'
-                    ],
-                    agents: ['ThreatScanner', 'AI Engine', 'NetworkMapper', 'DefenseOrchestrator']
-                },
-                {
-                    id: 'lateral-movement-hunt',
-                    title: '🔄 Lateral Movement Hunt',
-                    priority: 'medium',
-                    status: 'investigating',
-                    progress: 72,
-                    description: 'Tracking sophisticated lateral movement techniques across segmented network environments',
-                    iocs: [
-                        'admin-shares',
-                        'wmi-process',
-                        'remote-exec',
-                        'MITRE:T1021'
-                    ],
-                    agents: ['ThreatScanner', 'NetworkMapper', 'AnalyticsEngine', 'LogAgent']
-                }
-            ],
-            responseAutomation: [
-                {
-                    id: 'sql-injection-block',
-                    title: '🛡️ SQL Injection Auto-Block',
-                    status: 'active',
-                    metrics: {
-                        executions: '247',
-                        success: '100%',
-                        avgTime: '0.2s'
-                    },
-                    chain: 'ThreatScanner → EncryptionManager → DefenseOrchestrator',
-                    description: 'Automatically blocks SQL injection attempts and protects data with encryption'
-                },
-                {
-                    id: 'ddos-mitigation',
-                    title: '⚡ DDoS Auto-Mitigation',
-                    status: 'executing',
-                    metrics: {
-                        executions: '12',
-                        success: '98%',
-                        avgTime: '1.4s'
-                    },
-                    chain: 'ThreatScanner → DefenseOrchestrator → NetworkMapper',
-                    description: 'Coordinates automated DDoS response across network infrastructure'
-                },
-                {
-                    id: 'insider-threat-response',
-                    title: '🎯 Insider Threat Response',
-                    status: 'active',
-                    metrics: {
-                        executions: '8',
-                        success: '94%',
-                        avgTime: '3.1s'
-                    },
-                    chain: 'ThreatScanner → AnalyticsEngine → DefenseOrchestrator → LogAgent',
-                    description: 'Behavioral analysis triggers automated access restriction and logging'
-                },
-                {
-                    id: 'malware-quarantine',
-                    title: '🔒 Malware Auto-Quarantine',
-                    status: 'active',
-                    metrics: {
-                        executions: '156',
-                        success: '99%',
-                        avgTime: '0.8s'
-                    },
-                    chain: 'ThreatScanner → NetworkMapper → EncryptionManager',
-                    description: 'Isolates infected endpoints and secures unaffected systems'
-                },
-                {
-                    id: 'zero-day-analysis',
-                    title: '🔍 Zero-Day Auto-Analysis',
-                    status: 'standby',
-                    metrics: {
-                        executions: '3',
-                        success: '100%',
-                        avgTime: '12.5s'
-                    },
-                    chain: 'ThreatScanner → AI Engine → AnalyticsEngine → DefenseOrchestrator',
-                    description: 'AI-powered analysis of novel threats with signature generation'
-                },
-                {
-                    id: 'vpn-anomaly-response',
-                    title: '🔒 VPN Anomaly Response',
-                    status: 'active',
-                    metrics: {
-                        executions: '23',
-                        success: '97%',
-                        avgTime: '2.1s'
-                    },
-                    chain: 'ThreatScanner → VPNMonitor → DefenseOrchestrator',
-                    description: 'Geographic and behavioral VPN anomaly detection with auto-response'
-                }
-            ]
-        };
-
-        // Threats page initialization
+        // Initialize threats page
         document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(() => {
-                initializeThreatsPage();
-            }, 100);
+            initializeThreatsPage();
         });
 
         function initializeThreatsPage() {
-            // Initialize neural background
-            if (typeof initNeuralBackground === 'function') {
-                initNeuralBackground();
-            }
-
-            // Initialize page context
-            if (typeof initializePageContext === 'function') {
-                initializePageContext();
-            }
-
-            // CRITICAL: Initialize module balance manager
-            if (typeof ModuleBalanceManager !== 'undefined') {
-                ModuleBalanceManager.initializeBalancedModules();
-            }
-
-            // Initialize activity feed
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.initializeFeed(threatFeedId, 'threats');
-                activityFeedManager.setFeedContainer(threatFeedId, 'threatActivityFeed');
-                
-                setTimeout(() => {
-                    activityFeedManager.addMessage(threatFeedId, '🛡️ ThreatScanner V4 enhanced with AI correlation engine active', '', 'ThreatScanner');
-                }, 800);
-                
-                setTimeout(() => {
-                    activityFeedManager.addMessage(threatFeedId, '🔐 All threat data encrypted with hybrid-resistant algorithms', 'encryption', 'EncryptionManager');
-                }, 1800);
-                
-                setTimeout(() => {
-                    activityFeedManager.addMessage(threatFeedId, '🧠 AI correlation identified multi-stage attack campaign', '', 'AI Engine → ThreatScanner');
-                }, 2800);
-                
-                setTimeout(() => {
-                    activityFeedManager.addMessage(threatFeedId, '⚡ DefenseOrchestrator deployed honeypot targeting ransomware group', '', 'DefenseOrchestrator');
-                }, 3800);
-                
-                setTimeout(() => {
-                    activityFeedManager.startAutoGeneration(threatFeedId, 7000);
-                }, 5000);
-            } else {
-                console.log('ActivityFeedManager not available yet, retrying...');
-                setTimeout(initializeThreatsPage, 200);
-                return;
-            }
-
-            // Initialize chat system
-            if (typeof SentinelChat !== 'undefined') {
-                window.sentinelChat = new SentinelChat();
-            }
-
-            // Populate all sections
             populateActiveThreats();
             populateThreatAnalysis();
             populateThreatIntelligence();
             populateThreatHunting();
             populateResponseAutomation();
+            initializeThreatFeed();
             
-            // Start simulations
+            // Start automated threat simulation
             startThreatSimulation();
             startAutomationSimulation();
             
-            // Start updates
+            // Start periodic updates
             setInterval(() => {
                 updateThreatMetrics();
             }, 4000);
-            
+            setInterval(() => {
+                generateThreatFeedItem();
+            }, 7000);
             setInterval(() => {
                 updateThreatAnalysis();
             }, 15000);
-            
             setInterval(() => {
                 updateHuntingProgress();
             }, 8000);
         }
 
+        function populateThreatAnalysis() {
+            const list = document.getElementById('threatAnalysisList');
+            list.innerHTML = '';
+
+            threatAnalysis.forEach(analysis => {
+                const item = document.createElement('div');
+                item.className = `threat-analysis-item ${analysis.severity}`;
+                item.onclick = () => openThreatAnalysisDetails(analysis.id);
+                
+                item.innerHTML = `
+                    <div class="threat-analysis-content">
+                        <div class="threat-analysis-title">${analysis.title}</div>
+                        <div class="threat-analysis-details">
+                            <div class="threat-analysis-label">Category</div>
+                            <div class="threat-analysis-value">${analysis.category}</div>
+                            <div class="threat-analysis-label">Indicators</div>
+                            <div class="threat-analysis-value">${analysis.indicators}</div>
+                            <div class="threat-analysis-description">${analysis.description} • Confidence: ${analysis.confidence}</div>
+                        </div>
+                    </div>
+                    <div class="threat-analysis-score ${analysis.severity}">${analysis.score}</div>
+                `;
+                
+                list.appendChild(item);
+            });
+        }
+
+        function updateThreatAnalysis() {
+            // Update threat analysis with new detections
+            if (Math.random() > 0.8) {
+                threatAnalysis.forEach((analysis, index) => {
+                    if (Math.random() > 0.7) {
+                        // Update indicators count
+                        const currentCount = parseInt(analysis.indicators.split(' ')[0]);
+                        const increment = Math.floor(Math.random() * 5 + 1);
+                        const newCount = currentCount + increment;
+                        analysis.indicators = newCount + ' ' + analysis.indicators.split(' ').slice(1).join(' ');
+                        
+                        // Slight confidence adjustment
+                        const currentConf = parseInt(analysis.confidence);
+                        const newConf = Math.min(99, Math.max(85, currentConf + Math.floor(Math.random() * 3 - 1)));
+                        analysis.confidence = newConf + '%';
+                        
+                        // Update display
+                        const item = document.querySelectorAll('.threat-analysis-item')[index];
+                        if (item) {
+                            const indicatorsElement = item.querySelectorAll('.threat-analysis-value')[1];
+                            const descElement = item.querySelector('.threat-analysis-description');
+                            if (indicatorsElement) indicatorsElement.textContent = analysis.indicators;
+                            if (descElement) {
+                                descElement.textContent = analysis.description + ' • Confidence: ' + analysis.confidence;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function openThreatAnalysisDetails(analysisId) {
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                const analysis = threatAnalysis.find(a => a.id === analysisId);
+                if (analysis) {
+                    sentinelChat?.addMessage(`ThreatScanner Analysis: ${analysis.title}
+• Category: ${analysis.category}
+• Severity: ${analysis.severity.toUpperCase()} (Score: ${analysis.score}/10)
+• Indicators: ${analysis.indicators}
+• Confidence Level: ${analysis.confidence}
+• Analysis: ${analysis.description}
+• AI Classification: Advanced pattern recognition with MITRE ATT&CK mapping
+• Data Protection: All analysis data encrypted with hybrid-resistant algorithms
+• Integration: Real-time correlation with DefenseOrchestrator and AnalyticsEngine
+• Automated Response: Signatures updated and countermeasures deployed`, false);
+                }
+            }, 300);
+        }
+
         function populateActiveThreats() {
             const grid = document.getElementById('threatsGrid');
-            if (!grid) return;
-            
             grid.innerHTML = '';
 
-            ThreatData.activeThreats.forEach(threat => {
+            threats.forEach(threat => {
                 const card = document.createElement('div');
                 card.className = `threat-card ${threat.severity}`;
                 card.onclick = () => openThreatDetails(threat.id);
@@ -2782,42 +2628,11 @@
             });
         }
 
-        function populateThreatAnalysis() {
-            const list = document.getElementById('threatAnalysisList');
-            if (!list) return;
-            
-            list.innerHTML = '';
-
-            ThreatData.threatAnalysis.forEach(analysis => {
-                const item = document.createElement('div');
-                item.className = `threat-analysis-item ${analysis.severity}`;
-                item.onclick = () => openThreatAnalysisDetails(analysis.id);
-                
-                item.innerHTML = `
-                    <div class="threat-analysis-content-inner">
-                        <div class="threat-analysis-title">${analysis.title}</div>
-                        <div class="threat-analysis-details">
-                            <div class="threat-analysis-label">Category</div>
-                            <div class="threat-analysis-value">${analysis.category}</div>
-                            <div class="threat-analysis-label">Indicators</div>
-                            <div class="threat-analysis-value">${analysis.indicators}</div>
-                            <div class="threat-analysis-description">${analysis.description} • Confidence: ${analysis.confidence}</div>
-                        </div>
-                    </div>
-                    <div class="threat-analysis-score ${analysis.severity}">${analysis.score}</div>
-                `;
-                
-                list.appendChild(item);
-            });
-        }
-
         function populateThreatIntelligence() {
             const grid = document.getElementById('intelligenceGrid');
-            if (!grid) return;
-            
             grid.innerHTML = '';
 
-            ThreatData.threatIntelligence.forEach(intel => {
+            threatIntelligence.forEach(intel => {
                 const card = document.createElement('div');
                 card.className = 'intelligence-card';
                 card.onclick = () => openIntelligenceDetails(intel.id);
@@ -2851,11 +2666,9 @@
 
         function populateThreatHunting() {
             const grid = document.getElementById('threatHuntingGrid');
-            if (!grid) return;
-            
             grid.innerHTML = '';
 
-            ThreatData.threatHunting.forEach(hunt => {
+            threatHunting.forEach(hunt => {
                 const card = document.createElement('div');
                 card.className = `threat-hunting-card ${hunt.status}`;
                 card.onclick = () => openHuntDetails(hunt.id);
@@ -2893,13 +2706,59 @@
             });
         }
 
+        function updateHuntingProgress() {
+            // Simulate hunting progress updates
+            if (Math.random() > 0.7) {
+                threatHunting.forEach((hunt, index) => {
+                    if (hunt.status === 'active' && hunt.progress < 95) {
+                        const increment = Math.floor(Math.random() * 5 + 1);
+                        hunt.progress = Math.min(95, hunt.progress + increment);
+                        
+                        // Update progress bar
+                        const card = document.querySelectorAll('.threat-hunting-card')[index];
+                        if (card) {
+                            const progressFill = card.querySelector('.hunting-progress-fill');
+                            const progressPercent = card.querySelector('.hunting-progress-percent');
+                            if (progressFill) progressFill.style.width = hunt.progress + '%';
+                            if (progressPercent) progressPercent.textContent = hunt.progress + '%';
+                        }
+                        
+                        // Add feed update
+                        if (hunt.progress % 20 === 0) {
+                            addThreatFeedItem(`🔍 ${hunt.title}: Investigation ${hunt.progress}% complete`, 'ai-action', 'ThreatScanner');
+                        }
+                    }
+                });
+            }
+        }
+
+        function openHuntDetails(huntId) {
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                const hunt = threatHunting.find(h => h.id === huntId);
+                if (hunt) {
+                    sentinelChat?.addMessage(`ThreatScanner Hunt: ${hunt.title}
+• Priority: ${hunt.priority.toUpperCase()}
+• Status: ${hunt.status.toUpperCase()}
+• Progress: ${hunt.progress}% complete
+• Description: ${hunt.description}
+• Key IOCs: ${hunt.iocs.join(', ')}
+• Coordinating Agents: ${hunt.agents.join(', ')}
+• Data Protection: All hunt data encrypted with hybrid-resistant algorithms
+• MITRE ATT&CK: Mapped to framework for threat intelligence correlation
+• Timeline: Estimated completion in ${Math.floor((100 - hunt.progress) / 10)} hours
+• AI Enhancement: Pattern recognition and behavioral analysis active`, false);
+                }
+            }, 300);
+        }
+
         function populateResponseAutomation() {
             const grid = document.getElementById('responseAutomationGrid');
-            if (!grid) return;
-            
             grid.innerHTML = '';
 
-            ThreatData.responseAutomation.forEach(automation => {
+            threatResponseAutomation.forEach(automation => {
                 const card = document.createElement('div');
                 card.className = `response-automation-card ${automation.status === 'executing' ? 'executing' : ''}`;
                 card.onclick = () => openAutomationDetails(automation.id);
@@ -2933,50 +2792,18 @@
             });
         }
 
-        // All other functions remain the same...
-        function startThreatSimulation() {
-            if (autoThreatInterval) clearInterval(autoThreatInterval);
-            
-            autoThreatInterval = setInterval(() => {
-                if (threatAutoExecution && typeof SentinelState !== 'undefined' && SentinelState.agentActive) {
-                    simulateThreatResponse();
-                }
-            }, 20000);
-        }
-
         function startAutomationSimulation() {
             if (automationExecutionInterval) clearInterval(automationExecutionInterval);
             
             automationExecutionInterval = setInterval(() => {
-                if (threatAutoExecution && typeof SentinelState !== 'undefined' && SentinelState.agentActive) {
+                if (threatAutoExecution && SentinelState.agentActive) {
                     simulateAutomationExecution();
                 }
-            }, 25000);
-        }
-
-        function simulateThreatResponse() {
-            const responseActions = [
-                'SQL injection blocked by AI correlation',
-                'DDoS mitigation coordinated with DefenseOrchestrator',
-                'Insider threat pattern flagged by AnalyticsEngine',
-                'Zero-day signature updated via AI Engine',
-                'Behavioral anomaly detected and contained',
-                'Phishing campaign blocked automatically',
-                'VPN anomaly investigation by VPNMonitor completed'
-            ];
-            
-            const action = responseActions[Math.floor(Math.random() * responseActions.length)];
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(threatFeedId, `🤖 Auto-executed: ${action}`, '', 'ThreatScanner');
-            }
-            
-            if (typeof SentinelState !== 'undefined' && SentinelState.chatOpen && window.sentinelChat) {
-                window.sentinelChat.addMessage(`ThreatScanner: Auto-executed "${action}" successfully. All sub-agent coordination maintained with hybrid encryption.`, false, 'system');
-            }
+            }, 25000); // Execute every 25 seconds
         }
 
         function simulateAutomationExecution() {
-            const activeAutomations = ThreatData.responseAutomation.filter(a => a.status === 'active');
+            const activeAutomations = threatResponseAutomation.filter(a => a.status === 'active');
             if (activeAutomations.length === 0) return;
             
             const automation = activeAutomations[Math.floor(Math.random() * activeAutomations.length)];
@@ -2984,29 +2811,23 @@
         }
 
         function executeAutomation(automationId, title) {
-            const cards = document.querySelectorAll('.response-automation-card');
-            let card = null;
-            let progressElement = null;
-            
-            cards.forEach(c => {
-                const progress = c.querySelector(`#progress-${automationId}`);
-                if (progress) {
-                    card = c;
-                    progressElement = progress;
-                }
-            });
+            const card = document.querySelector(`#responseAutomationGrid .response-automation-card:has(#progress-${automationId})`);
+            const progressElement = document.getElementById(`progress-${automationId}`);
             
             if (!card || !progressElement) return;
             
+            // Mark as executing
             card.classList.add('executing');
             progressElement.classList.add('active');
             
+            // Update status badge
             const statusBadge = card.querySelector('.automation-status');
             if (statusBadge) {
                 statusBadge.textContent = 'EXECUTING';
                 statusBadge.className = 'automation-status executing';
             }
             
+            // Simulate realistic progress
             let progress = 0;
             const progressInterval = setInterval(() => {
                 progress += Math.random() * 20 + 10;
@@ -3024,199 +2845,53 @@
         }
 
         function completeAutomationExecution(automationId, title, card, progressElement, statusBadge) {
+            // Complete execution
             card.classList.remove('executing');
             progressElement.classList.remove('active');
             
+            // Restore status
             if (statusBadge) {
                 statusBadge.textContent = 'ACTIVE';
                 statusBadge.className = 'automation-status active';
             }
             
+            // Reset progress for next execution
             setTimeout(() => {
                 const progressFill = progressElement.querySelector('.automation-progress-fill');
                 if (progressFill) progressFill.style.width = '0%';
             }, 2000);
             
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(threatFeedId, `✅ Auto-executed: ${title} completed successfully`, '', 'ThreatScanner');
-            }
-            
-            if (typeof SentinelState !== 'undefined' && SentinelState.chatOpen && window.sentinelChat) {
-                window.sentinelChat.addMessage(`🤖 ThreatScanner: Auto-executed "${title}" successfully. Sub-agent coordination maintained with hybrid encryption.`, false, 'system');
-            }
-        }
-
-        function updateThreatMetrics() {
-            if (Math.random() > 0.9) {
-                const threatEl = document.getElementById('activeThreats');
-                if (threatEl) {
-                    const current = parseInt(threatEl.textContent);
-                    threatEl.textContent = Math.max(6, Math.min(10, current + Math.floor(Math.random() * 3 - 1)));
+            // Update execution count
+            const automation = threatResponseAutomation.find(a => a.id === automationId);
+            if (automation) {
+                const currentCount = parseInt(automation.metrics.executions.replace(/[^\d]/g, ''));
+                automation.metrics.executions = (currentCount + 1).toString();
+                
+                // Update display
+                const executionMetric = card.querySelector('.automation-metric .automation-metric-value');
+                if (executionMetric && executionMetric.textContent === automation.metrics.executions.replace(/\+1/, '')) {
+                    executionMetric.textContent = automation.metrics.executions;
                 }
             }
             
-            const blocked = document.getElementById('blockedToday');
-            if (blocked && Math.random() > 0.85) {
-                const current = parseInt(blocked.textContent.replace(',', ''));
-                const newCount = current + Math.floor(Math.random() * 15 + 5);
-                blocked.textContent = newCount.toLocaleString();
-            }
+            // Add completion notification to feed
+            addThreatFeedItem(`✅ Auto-executed: ${title} completed successfully`, 'ai-action', 'ThreatScanner');
             
-            if (Math.random() > 0.9) {
-                const correlatedThreats = document.getElementById('correlatedThreats');
-                if (correlatedThreats) {
-                    const newCorrelated = Math.floor(Math.random() * 20 + 12);
-                    correlatedThreats.textContent = newCorrelated;
-                }
+            // Notify chat if open
+            if (SentinelState.chatOpen && sentinelChat) {
+                sentinelChat.addMessage(`🤖 ThreatScanner: Auto-executed "${title}" successfully. Sub-agent coordination maintained with hybrid encryption.`, false, 'system');
             }
-        }
-
-        function updateThreatAnalysis() {
-            if (Math.random() > 0.8) {
-                ThreatData.threatAnalysis.forEach((analysis, index) => {
-                    if (Math.random() > 0.7) {
-                        const currentCount = parseInt(analysis.indicators.split(' ')[0]);
-                        const increment = Math.floor(Math.random() * 5 + 1);
-                        const newCount = currentCount + increment;
-                        analysis.indicators = newCount + ' ' + analysis.indicators.split(' ').slice(1).join(' ');
-                        
-                        const currentConf = parseInt(analysis.confidence);
-                        const newConf = Math.min(99, Math.max(85, currentConf + Math.floor(Math.random() * 3 - 1)));
-                        analysis.confidence = newConf + '%';
-                        
-                        const item = document.querySelectorAll('.threat-analysis-item')[index];
-                        if (item) {
-                            const indicatorsElement = item.querySelectorAll('.threat-analysis-value')[1];
-                            const descElement = item.querySelector('.threat-analysis-description');
-                            if (indicatorsElement) indicatorsElement.textContent = analysis.indicators;
-                            if (descElement) {
-                                descElement.textContent = analysis.description + ' • Confidence: ' + analysis.confidence;
-                            }
-                        }
-                    }
-                });
-            }
-        }
-
-        function updateHuntingProgress() {
-            if (Math.random() > 0.7) {
-                ThreatData.threatHunting.forEach((hunt, index) => {
-                    if (hunt.status === 'active' && hunt.progress < 95) {
-                        const increment = Math.floor(Math.random() * 5 + 1);
-                        hunt.progress = Math.min(95, hunt.progress + increment);
-                        
-                        const card = document.querySelectorAll('.threat-hunting-card')[index];
-                        if (card) {
-                            const progressFill = card.querySelector('.hunting-progress-fill');
-                            const progressPercent = card.querySelector('.hunting-progress-percent');
-                            if (progressFill) progressFill.style.width = hunt.progress + '%';
-                            if (progressPercent) progressPercent.textContent = hunt.progress + '%';
-                        }
-                        
-                        if (hunt.progress % 20 === 0 && typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                            activityFeedManager.addMessage(threatFeedId, `🔍 ${hunt.title}: Investigation ${hunt.progress}% complete`, '', 'ThreatScanner');
-                        }
-                    }
-                });
-            }
-        }
-
-        // Detail view functions
-        function openThreatDetails(threatId) {
-            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                window.sentinelChat.toggle();
-            }
-            setTimeout(() => {
-                const threat = ThreatData.activeThreats.find(t => t.id === threatId);
-                if (threat && window.sentinelChat) {
-                    window.sentinelChat.addMessage(`ThreatScanner V4: ${threat.name} Analysis
-• Type: ${threat.type}
-• Severity: ${threat.severity.toUpperCase()}
-• Source: ${threat.source}
-• Target: ${threat.target}
-• Attempts: ${threat.attempts}  
-• Status: ${threat.status}
-• AI Analysis: ${threat.aiAnalysis}
-• Sub-Agent Coordination: ${threat.subAgent}
-• All threat data protected with hybrid-resistant encryption
-• Correlation Score: ${Math.floor(Math.random() * 20 + 80)}% match with known patterns
-• Automated Response: ${threat.status === 'Blocked' || threat.status === 'Quarantined' ? 'Successfully executed' : 'In progress'}`, false);
-                }
-            }, 300);
-        }
-
-        function openThreatAnalysisDetails(analysisId) {
-            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                window.sentinelChat.toggle();
-            }
-            setTimeout(() => {
-                const analysis = ThreatData.threatAnalysis.find(a => a.id === analysisId);
-                if (analysis && window.sentinelChat) {
-                    window.sentinelChat.addMessage(`ThreatScanner Analysis: ${analysis.title}
-• Category: ${analysis.category}
-• Severity: ${analysis.severity.toUpperCase()} (Score: ${analysis.score}/10)
-• Indicators: ${analysis.indicators}
-• Confidence Level: ${analysis.confidence}
-• Analysis: ${analysis.description}
-• AI Classification: Advanced pattern recognition with MITRE ATT&CK mapping
-• Data Protection: All analysis data encrypted with hybrid-resistant algorithms
-• Integration: Real-time correlation with DefenseOrchestrator and AnalyticsEngine
-• Automated Response: Signatures updated and countermeasures deployed`, false);
-                }
-            }, 300);
-        }
-
-        function openIntelligenceDetails(intelId) {
-            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                window.sentinelChat.toggle();
-            }
-            setTimeout(() => {
-                const intel = ThreatData.threatIntelligence.find(i => i.id === intelId);
-                if (intel && window.sentinelChat) {
-                    const metricsText = Object.entries(intel.metrics).map(([key, value]) => `${key}: ${value}`).join(', ');
-                    window.sentinelChat.addMessage(`ThreatScanner Intelligence: ${intel.title}
-• Status: ${intel.status}
-• Metrics: ${metricsText}
-• Coordinating Sub-Agents: ${intel.agents.join(', ')}
-• AI Enhancement: Real-time pattern recognition and behavioral analysis
-• Data Protection: All intelligence encrypted with hybrid-resistant algorithms
-• Integration: Seamless coordination with DefenseOrchestrator, AnalyticsEngine, and AI Engine
-• Performance: Processing 147K events/sec with 99.8% accuracy`, false);
-                }
-            }, 300);
-        }
-
-        function openHuntDetails(huntId) {
-            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                window.sentinelChat.toggle();
-            }
-            setTimeout(() => {
-                const hunt = ThreatData.threatHunting.find(h => h.id === huntId);
-                if (hunt && window.sentinelChat) {
-                    window.sentinelChat.addMessage(`ThreatScanner Hunt: ${hunt.title}
-• Priority: ${hunt.priority.toUpperCase()}
-• Status: ${hunt.status.toUpperCase()}
-• Progress: ${hunt.progress}% complete
-• Description: ${hunt.description}
-• Key IOCs: ${hunt.iocs.join(', ')}
-• Coordinating Agents: ${hunt.agents.join(', ')}
-• Data Protection: All hunt data encrypted with hybrid-resistant algorithms
-• MITRE ATT&CK: Mapped to framework for threat intelligence correlation
-• Timeline: Estimated completion in ${Math.floor((100 - hunt.progress) / 10)} hours
-• AI Enhancement: Pattern recognition and behavioral analysis active`, false);
-                }
-            }, 300);
         }
 
         function openAutomationDetails(automationId) {
-            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                window.sentinelChat.toggle();
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
             }
             setTimeout(() => {
-                const automation = ThreatData.responseAutomation.find(a => a.id === automationId);
-                if (automation && window.sentinelChat) {
+                const automation = threatResponseAutomation.find(a => a.id === automationId);
+                if (automation) {
                     const metricsText = Object.entries(automation.metrics).map(([key, value]) => `${key}: ${value}`).join(', ');
-                    window.sentinelChat.addMessage(`ThreatScanner Automation: ${automation.title}
+                    sentinelChat?.addMessage(`ThreatScanner Automation: ${automation.title}
 • Status: ${automation.status.toUpperCase()}
 • Metrics: ${metricsText}
 • Automation Chain: ${automation.chain}
@@ -3229,148 +2904,245 @@
             }, 300);
         }
 
-        function showMetricDetails(type) {
-            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                window.sentinelChat.toggle();
+        function initializeThreatFeed() {
+            addThreatFeedItem('🛡️ ThreatScanner V4 enhanced with AI correlation engine active', '', 'ThreatScanner');
+            addThreatFeedItem('🔐 All threat data encrypted with hybrid-resistant algorithms', 'encryption', 'EncryptionManager');
+            addThreatFeedItem('🧠 AI correlation identified multi-stage attack campaign', 'ai-action', 'AI Engine → ThreatScanner');
+            addThreatFeedItem('⚡ DefenseOrchestrator deployed honeypot targeting ransomware group', 'ai-action', 'DefenseOrchestrator');
+            addThreatFeedItem('⚠️ Advanced DDoS targeting API gateway - auto-mitigation active', 'warning', 'DefenseOrchestrator');
+            addThreatFeedItem('🎯 Behavioral analysis detected insider threat pattern', 'warning', 'AnalyticsEngine');
+            addThreatFeedItem('✅ SQL injection blocked with encryption preventing data access', 'encryption', 'EncryptionManager');
+            addThreatFeedItem('🤖 Threat correlation engine updated with 47 new signatures', 'ai-action', 'ThreatScanner');
+        }
+
+        function addThreatFeedItem(message, type = '', agent = '') {
+            const feed = document.getElementById('threatFeed');
+            const item = document.createElement('div');
+            item.className = `feed-item ${type}`;
+            
+            const time = new Date().toLocaleTimeString();
+            item.innerHTML = `
+                <div class="feed-time">${time}</div>
+                <div class="feed-message">${message}</div>
+                ${agent ? `<div class="feed-agent">via ${agent}</div>` : ''}
+            `;
+            
+            feed.insertBefore(item, feed.firstChild);
+            
+            // Keep only last 25 items
+            while (feed.children.length > 25) {
+                feed.removeChild(feed.lastChild);
+            }
+        }
+
+        // V4 Enhanced SOC-focused feed messages
+        const threatFeedMessages = [
+            { msg: '🛡️ ThreatScanner blocked advanced SQL injection with privilege escalation', type: '', agent: 'ThreatScanner' },
+            { msg: '🧠 AI correlation engine identified APT-29 attack pattern signatures', type: 'ai-action', agent: 'AI Engine → ThreatScanner' },
+            { msg: '🤖 Behavioral analysis detected anomalous insider access patterns', type: 'warning', agent: 'AnalyticsEngine → ThreatScanner' },
+            { msg: '⚡ DefenseOrchestrator deployed automated honeypot for threat analysis', type: 'ai-action', agent: 'DefenseOrchestrator → ThreatScanner' },
+            { msg: '🔍 Zero-day exploit attempt detected and contained automatically', type: 'warning', agent: 'ThreatScanner → AI Engine' },
+            { msg: '🔐 Hybrid encryption prevented data access during breach attempt', type: 'encryption', agent: 'EncryptionManager → ThreatScanner' },
+            { msg: '📊 Threat intelligence updated: 2,400 new attack patterns analyzed', type: 'ai-action', agent: 'AnalyticsEngine → ThreatScanner' },
+            { msg: '🎯 Predictive model flagged potential cryptocurrency mining malware', type: 'warning', agent: 'ThreatScanner → AnalyticsEngine' },
+            { msg: '🛡️ Phishing campaign blocked: 4,892 malicious emails intercepted', type: '', agent: 'ThreatScanner' },
+            { msg: '🔗 Sub-agent coordination enhanced: 97% correlation accuracy achieved', type: 'ai-action', agent: 'ThreatScanner' },
+            { msg: '📝 All threat actions logged with Dilithium-3 signatures for compliance', type: 'encryption', agent: 'LogAgent → ThreatScanner' },
+            { msg: '🚀 Automated response time improved to 0.3ms average detection speed', type: 'ai-action', agent: 'ThreatScanner' }
+        ];
+
+        function generateThreatFeedItem() {
+            const item = threatFeedMessages[Math.floor(Math.random() * threatFeedMessages.length)];
+            addThreatFeedItem(item.msg, item.type, item.agent);
+        }
+
+        function updateThreatMetrics() {
+            // Update blocked count in both banner and stats
+            const blocked = document.getElementById('blockedToday');
+            const current = parseInt(blocked.textContent.replace(',', ''));
+            const newCount = current + Math.floor(Math.random() * 15 + 5);
+            const formatted = newCount.toLocaleString();
+            
+            blocked.textContent = formatted;
+            
+            // Occasionally change threat count (should match actual threats array)
+            if (Math.random() > 0.85) {
+                const threats = document.getElementById('activeThreats');
+                const currentThreats = parseInt(threats.textContent);
+                const newThreats = Math.max(6, Math.min(10, currentThreats + Math.floor(Math.random() * 3 - 1)));
+                
+                threats.textContent = newThreats;
+                
+                // Update status text
+                document.getElementById('threatStatus').textContent = `${newThreats} Critical Threats`;
+            }
+            
+            // Update correlation metrics
+            if (Math.random() > 0.9) {
+                const correlatedThreats = document.getElementById('correlatedThreats');
+                const newCorrelated = Math.floor(Math.random() * 20 + 12);
+                correlatedThreats.textContent = newCorrelated;
+            }
+        }
+
+        function startThreatSimulation() {
+            if (autoThreatInterval) clearInterval(autoThreatInterval);
+            
+            autoThreatInterval = setInterval(() => {
+                if (threatAutoExecution && SentinelState.agentActive) {
+                    simulateThreatResponse();
+                }
+            }, 20000); // Execute every 20 seconds
+        }
+
+        function simulateThreatResponse() {
+            const responseActions = [
+                'SQL injection blocked by AI correlation',
+                'DDoS mitigation coordinated with DefenseOrchestrator',
+                'Insider threat pattern flagged by AnalyticsEngine',
+                'Zero-day signature updated via AI Engine',
+                'Behavioral anomaly detected and contained',
+                'Phishing campaign blocked automatically',
+                'Privilege escalation attempt neutralized'
+            ];
+            
+            const action = responseActions[Math.floor(Math.random() * responseActions.length)];
+            addThreatFeedItem(`🤖 Auto-executed: ${action}`, 'ai-action', 'ThreatScanner');
+            
+            if (SentinelState.chatOpen && sentinelChat) {
+                sentinelChat.addMessage(`ThreatScanner: Auto-executed "${action}" successfully. All sub-agent coordination maintained with hybrid encryption.`, false, 'system');
+            }
+        }
+
+        function openThreatDetails(threatId) {
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
             }
             setTimeout(() => {
-                let message = '';
-                switch(type) {
-                    case 'threats':
-                        message = 'ThreatScanner: 8 active threats currently under analysis and response. AI correlation engine coordinating with DefenseOrchestrator and AnalyticsEngine.';
-                        break;
-                    case 'blocked':
-                        message = 'ThreatScanner: 3,247 threats blocked today through automated response chains. Success rate: 99.8% with sub-second response times.';
-                        break;
-                    case 'detection':
-                        message = 'ThreatScanner: 99.8% detection rate maintained through AI correlation engine and behavioral analysis. Processing 147K events/sec.';
-                        break;
-                    case 'correlated':
-                        message = 'ThreatScanner: 16 threats correlated with known attack patterns. MITRE ATT&CK framework integration active with threat attribution.';
-                        break;
+                const threat = threats.find(t => t.id === threatId);
+                if (threat) {
+                    sentinelChat?.addMessage(`ThreatScanner V4: ${threat.name} Analysis
+• Type: ${threat.type}
+• Severity: ${threat.severity.toUpperCase()}
+• Source: ${threat.source}
+• Target: ${threat.target}
+• Attempts: ${threat.attempts}
+• Status: ${threat.status}
+• AI Analysis: ${threat.aiAnalysis}
+• Sub-Agent Coordination: ${threat.subAgent}
+• All threat data protected with hybrid-resistant encryption
+• Correlation Score: ${Math.floor(Math.random() * 20 + 80)}% match with known patterns
+• Automated Response: ${threat.status === 'Blocked' || threat.status === 'Quarantined' ? 'Successfully executed' : 'In progress'}`, false);
                 }
-                if (window.sentinelChat) {
-                    window.sentinelChat.addMessage(message, false);
+            }, 300);
+        }
+
+        function openIntelligenceDetails(intelId) {
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                const intel = threatIntelligence.find(i => i.id === intelId);
+                if (intel) {
+                    const metricsText = Object.entries(intel.metrics).map(([key, value]) => `${key}: ${value}`).join(', ');
+                    sentinelChat?.addMessage(`ThreatScanner Intelligence: ${intel.title}
+• Status: ${intel.status}
+• Metrics: ${metricsText}
+• Coordinating Sub-Agents: ${intel.agents.join(', ')}
+• AI Enhancement: Real-time pattern recognition and behavioral analysis
+• Data Protection: All intelligence encrypted with hybrid-resistant algorithms
+• Integration: Seamless coordination with DefenseOrchestrator, AnalyticsEngine, and AI Engine
+• Performance: Processing 147K events/sec with 99.8% accuracy`, false);
                 }
             }, 300);
         }
 
         function showEncryptionStatus(type) {
-            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                window.sentinelChat.toggle();
+            if (sentinelChat && !SentinelState.chatOpen) {
+                sentinelChat.toggle();
             }
             setTimeout(() => {
-                if (window.sentinelChat) {
-                    window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all threat intelligence. ThreatScanner reports all data hybrid-resistant with coordination across all ${Object.keys(SubAgentConfigs || {}).length} sub-agents.`, false);
+                if (type === 'classical') {
+                    sentinelChat?.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all threat detection systems. Performance: 2.1M ops/sec. Integration with ThreatScanner: Real-time threat data encryption.`, false);
+                } else {
+                    sentinelChat?.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all threat intelligence. ThreatScanner reports all data hybrid-resistant.`, false);
                 }
             }, 300);
         }
 
-        // Cleanup
-        window.addEventListener('beforeunload', () => {
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.stopAutoGeneration(threatFeedId);
+        // Helper function for time formatting
+        function getTimeAgo(timestamp) {
+            const now = new Date();
+            const time = new Date(timestamp);
+            const diffMs = now - time;
+            const diffMins = Math.floor(diffMs / (1000 * 60));
+            
+            if (diffMins < 60) {
+                return diffMins + ' minutes ago';
+            } else {
+                const diffHours = Math.floor(diffMins / 60);
+                return diffHours + ' hours ago';
             }
-            if (autoThreatInterval) clearInterval(autoThreatInterval);
-            if (automationExecutionInterval) clearInterval(automationExecutionInterval);
-        });
+        }
 
-        // Global functions
-        window.toggleChat = () => {
-            if (window.sentinelChat) {
-                window.sentinelChat.toggle();
-            }
-        };
-        
+        // Global functions for compatibility
+        window.toggleChat = () => sentinelChat?.toggle();
         window.sendChatMessage = () => {
             const input = document.getElementById('aiChatInput');
-            if (input && input.value.trim() && window.sentinelChat) {
-                window.sentinelChat.sendMessage(input.value.trim());
+            if (input && input.value.trim()) {
+                sentinelChat?.sendMessage(input.value.trim());
                 input.value = '';
             }
         };
-        
         window.handleChatKeyPress = (e) => {
             if (e.key === 'Enter') {
                 sendChatMessage();
             }
         };
-        
-        window.showAgentShutdownModal = () => {
-            const modal = document.getElementById('agentShutdownModal');
-            if (modal) modal.style.display = 'flex';
-        };
-        
-        window.closeModal = () => {
-            const modal = document.getElementById('agentShutdownModal');
-            if (modal) modal.style.display = 'none';
-        };
-        
-        window.closeModalOnOverlay = (e) => {
-            if (e.target.classList.contains('modal-overlay')) {
-                closeModal();
-            }
-        };
-        
+        window.showAgentShutdownModal = () => document.getElementById('agentShutdownModal').style.display = 'flex';
+        window.closeModal = () => document.getElementById('agentShutdownModal').style.display = 'none';
+        window.closeModalOnOverlay = (e) => {if (e.target.classList.contains('modal-overlay')) closeModal();};
         window.confirmAgentShutdown = () => {
-            if (typeof SentinelState !== 'undefined') {
-                SentinelState.agentActive = !SentinelState.agentActive;
+            SentinelState.agentActive = !SentinelState.agentActive;
+            
+            // Update UI elements
+            const agentStatus = document.querySelector('.agent-status');
+            const agentTitle = document.querySelector('.agent-title');
+            const agentStatusText = document.querySelector('.agent-status-text');
+            
+            if (SentinelState.agentActive) {
+                agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
+                agentStatus.style.borderColor = '#00ff88';
+                agentTitle.textContent = 'AI Agent Active';
+                agentTitle.style.color = 'var(--primary)';
+                agentStatusText.textContent = 'Autonomous with Manual Override';
                 
-                const agentStatus = document.querySelector('.agent-status');
-                const agentTitle = document.querySelector('.agent-title');
-                const agentStatusText = document.querySelector('.agent-status-text');
+                // Restart threat simulation
+                threatAutoExecution = true;
+                startThreatSimulation();
+                startAutomationSimulation();
+                addThreatFeedItem('🤖 Main Agent resumed: Threat auto-response enabled', 'ai-action', 'Main Agent');
+            } else {
+                agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
+                agentStatus.style.borderColor = '#ffaa00';
+                agentTitle.textContent = 'AI Agent Paused';
+                agentTitle.style.color = '#ffaa00';
+                agentStatusText.textContent = 'Manual Control Only';
                 
-                if (SentinelState.agentActive) {
-                    if (agentStatus) {
-                        agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
-                        agentStatus.style.borderColor = '#00ff88';
-                    }
-                    if (agentTitle) {
-                        agentTitle.textContent = 'AI Agent Active';
-                        agentTitle.style.color = 'var(--primary)';
-                    }
-                    if (agentStatusText) {
-                        agentStatusText.textContent = 'Autonomous with Manual Override';
-                    }
-                    
-                    threatAutoExecution = true;
-                    startThreatSimulation();
-                    startAutomationSimulation();
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.startAutoGeneration(threatFeedId, 7000);
-                        activityFeedManager.addMessage(threatFeedId, '🤖 Main Agent resumed: Threat auto-response enabled', '', 'Main Agent');
-                    }
-                } else {
-                    if (agentStatus) {
-                        agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
-                        agentStatus.style.borderColor = '#ffaa00';
-                    }
-                    if (agentTitle) {
-                        agentTitle.textContent = 'AI Agent Paused';
-                        agentTitle.style.color = '#ffaa00';
-                    }
-                    if (agentStatusText) {
-                        agentStatusText.textContent = 'Manual Control Only';
-                    }
-                    
-                    threatAutoExecution = false;
-                    if (autoThreatInterval) clearInterval(autoThreatInterval);
-                    if (automationExecutionInterval) clearInterval(automationExecutionInterval);
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.stopAutoGeneration(threatFeedId);
-                        activityFeedManager.addMessage(threatFeedId, '⚠️ Main Agent paused: Manual threat response only', 'warning', 'Main Agent');
-                    }
-                }
-                
-                closeModal();
-                
-                if (SentinelState.chatOpen && window.sentinelChat) {
-                    const status = SentinelState.agentActive ? 'resumed autonomous operation with threat auto-response' : 'switched to manual control mode';
-                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. ThreatScanner coordination ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
-                }
+                // Stop threat simulation
+                threatAutoExecution = false;
+                if (autoThreatInterval) clearInterval(autoThreatInterval);
+                if (automationExecutionInterval) clearInterval(automationExecutionInterval);
+                addThreatFeedItem('⚠️ Main Agent paused: Manual threat response only', 'warning', 'Main Agent');
+            }
+            
+            closeModal();
+            
+            if (SentinelState.chatOpen && sentinelChat) {
+                const status = SentinelState.agentActive ? 'resumed autonomous operation with threat auto-response' : 'switched to manual control mode';
+                sentinelChat.addMessage(`⚠️ Main Agent has ${status}. ThreatScanner coordination ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
             }
         };
-        
         window.handleLogout = () => {
             if (confirm('Are you sure you want to logout? The AI agent will continue protecting against threats autonomously.')) {
                 localStorage.removeItem('sentinel_auth');
