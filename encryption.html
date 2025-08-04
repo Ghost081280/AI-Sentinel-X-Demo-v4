@@ -185,7 +185,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badges */
+        /* Encryption Status Badge - Matching other pages */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -197,49 +197,29 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .encryption-badge.classical {
             background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .encryption-badge.quantum {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .encryption-badge:hover {
+            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 3s ease-in-out infinite;
-        }
-
-        .status-light.active {
             background: var(--success);
             box-shadow: 0 0 8px var(--success);
-        }
-
-        .status-light.inactive {
-            background: var(--danger);
-            box-shadow: 0 0 8px var(--danger);
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         @keyframes statusPulse {
@@ -346,20 +326,20 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner - FIXED TO MATCH OTHER PAGES EXACTLY */
+        /* Sub-Agent Status Banner - Standardized from shared.js */
         .sub-agent-status {
             background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 170, 102, 0.05) 100%);
             border: 1px solid rgba(0, 255, 136, 0.3);
             border-radius: 12px;
-            padding: 15px 20px;
-            margin-bottom: 25px;
+            padding: 15px 20px !important;
+            margin-bottom: 25px !important;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 20px;
             backdrop-filter: blur(15px);
-            min-height: 90px;
-            max-height: 90px;
+            min-height: 90px !important;
+            max-height: 90px !important;
         }
 
         .sub-agent-info {
@@ -383,22 +363,20 @@
         }
 
         .sub-agent-details h3 {
-            font-size: 16px;
+            font-size: 18px;
             color: var(--primary);
-            margin-bottom: 3px;
-            font-weight: 600;
+            margin-bottom: 5px;
         }
 
         .sub-agent-details p {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--text-secondary);
-            margin: 0;
-            line-height: 1.4;
         }
 
         .sub-agent-metrics {
             display: flex;
             gap: 30px;
+            flex-shrink: 0;
         }
 
         .metric {
@@ -406,13 +384,14 @@
         }
 
         .metric-value {
-            font-size: 24px;
+            font-size: 24px !important;
             font-weight: bold;
             color: var(--primary);
+            margin-bottom: 3px;
         }
 
         .metric-label {
-            font-size: 12px;
+            font-size: 12px !important;
             color: var(--text-secondary);
             text-transform: uppercase;
         }
@@ -1437,6 +1416,8 @@
             .sub-agent-status {
                 flex-direction: column;
                 text-align: center;
+                min-height: auto !important;
+                max-height: none !important;
             }
 
             .hub-header {
@@ -1517,13 +1498,9 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
-                            <div class="status-light active" id="quantumStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
@@ -1584,7 +1561,7 @@
                 <div class="sub-agent-icon">🔐</div>
                 <div class="sub-agent-details">
                     <h3>EncryptionManager Sub-Agent</h3>
-                    <p>Hybrid-resistant encryption • Classical + Post-quantum • Coordinating with sub-agents • Reports to Main Agent</p>
+                    <p>Hybrid encryption coordinating with EncryptionDeployer & CertificateManager • NetworkMapper integration • Reports to Main Agent</p>
                 </div>
             </div>
             <div class="sub-agent-metrics">
@@ -1614,7 +1591,7 @@
                     <div class="hub-icon">🔐</div>
                     <div class="hub-details">
                         <h2>Encryption & Security</h2>
-                        <p class="hub-subtitle">Hybrid-Resistant Protection • Classical + Post-Quantum Algorithms</p>
+                        <p class="hub-subtitle">Hybrid Protection • Classical + Post-Quantum • Multi-Agent Coordination</p>
                     </div>
                 </div>
                 <div class="hub-actions">
@@ -1628,22 +1605,22 @@
                 <div class="feature-card" onclick="showFeatureDetails('hybrid')">
                     <div class="feature-icon">🔒</div>
                     <div class="feature-title">Hybrid Encryption</div>
-                    <div class="feature-description">Classical + Post-quantum algorithms providing future-proof security</div>
+                    <div class="feature-description">Classical + Post-quantum algorithms coordinated across all sub-agents</div>
                 </div>
                 <div class="feature-card" onclick="showFeatureDetails('deployment')">
                     <div class="feature-icon">🔧</div>
                     <div class="feature-title">Auto Deployment</div>
-                    <div class="feature-description">Network-wide encryption deployment with zero downtime</div>
+                    <div class="feature-description">EncryptionDeployer coordinates with NetworkMapper for comprehensive coverage</div>
                 </div>
                 <div class="feature-card" onclick="showFeatureDetails('certificates')">
                     <div class="feature-icon">📜</div>
                     <div class="feature-title">Certificate Management</div>
-                    <div class="feature-description">Automated certificate lifecycle management and renewal</div>
+                    <div class="feature-description">CertificateManager automates lifecycle with hybrid signatures</div>
                 </div>
                 <div class="feature-card" onclick="showFeatureDetails('rotation')">
                     <div class="feature-icon">🔄</div>
                     <div class="feature-title">Key Rotation</div>
-                    <div class="feature-description">Automated key rotation with zero service interruption</div>
+                    <div class="feature-description">Coordinated across all sub-agents with zero service interruption</div>
                 </div>
             </div>
         </div>
@@ -1789,7 +1766,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        EncryptionManager: Hybrid mode active with 8 algorithms protecting your data. EncryptionDeployer and CertificateManager are online and ready for commands. All sub-agent communications secured.
+                        EncryptionManager: Hybrid encryption coordinating with EncryptionDeployer and CertificateManager. NetworkMapper integration active for comprehensive deployment. All sub-agents reporting to Main Agent with 8 algorithms protecting your infrastructure.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1838,667 +1815,637 @@
                 activityFeedManager.initializeFeed(encryptionFeedId, 'encryption');
                 activityFeedManager.setFeedContainer(encryptionFeedId, 'encryptionActivityFeed');
                 
-                // Add initial encryption-specific messages
-                activityFeedManager.addMessage(encryptionFeedId, '🔐 EncryptionManager: Hybrid mode operational with 8 algorithms active', 'encryption', 'EncryptionManager');
-                activityFeedManager.addMessage(encryptionFeedId, '🔧 EncryptionDeployer: 3/4 deployment modules active across infrastructure', '', 'EncryptionDeployer');
-                activityFeedManager.addMessage(encryptionFeedId, '📜 CertificateManager: 12 certificates monitored with auto-renewal enabled', '', 'CertificateManager');
-                activityFeedManager.addMessage(encryptionFeedId, '🔄 Key rotation: 47 rotations completed today with zero downtime', 'encryption', 'EncryptionManager');
+                // Add initial encryption-specific messages reflecting system architecture
+                activityFeedManager.addMessage(encryptionFeedId, '🔐 EncryptionManager: Coordinating with EncryptionDeployer and CertificateManager for comprehensive hybrid encryption', 'encryption', 'EncryptionManager');
+                activityFeedManager.addMessage(encryptionFeedId, '🔧 EncryptionDeployer: NetworkMapper integration active for automatic encryption deployment', '', 'EncryptionDeployer');
+                activityFeedManager.addMessage(encryptionFeedId, '📜 CertificateManager: 12 certificates with hybrid signatures monitored across infrastructure', '', 'CertificateManager');
+                activityFeedManager.addMessage(encryptionFeedId, '🤖 Main Agent: All encryption sub-agents coordinated for autonomous cyber defense', '', 'Main Agent');
+                
                 // Start auto-generation every 8 seconds for encryption feed
-            activityFeedManager.startAutoGeneration(encryptionFeedId, 8000);
-        } else {
-            console.log('ActivityFeedManager not available yet, retrying...');
-            setTimeout(initializeEncryptionPage, 200);
-            return;
-        }
-
-        // Initialize chat system from shared.js
-        if (typeof SentinelChat !== 'undefined') {
-            window.sentinelChat = new SentinelChat();
-        }
-
-        // Populate encryption sections using shared.js data
-        populateDeploymentModules();
-        populateCertificates();
-        
-        // Start automated systems
-        startMetricsUpdates();
-    }
-
-    function populateDeploymentModules() {
-        const grid = document.getElementById('deploymentGrid');
-        if (!grid) return;
-        
-        grid.innerHTML = '';
-
-        // Use shared EncryptionDeploymentConfigs if available, otherwise fallback
-        const modules = (typeof EncryptionDeploymentConfigs !== 'undefined' && EncryptionDeploymentConfigs.modules) 
-            ? EncryptionDeploymentConfigs.modules 
-            : [
-                {
-                    id: 'web-tier',
-                    name: 'Web Tier',
-                    status: 'deployed',
-                    coverage: '47/50 servers',
-                    protocols: ['TLS 1.3', 'Kyber-1024', 'Dilithium-3'],
-                    lastDeployed: '2024-01-20'
-                },
-                {
-                    id: 'database',
-                    name: 'Database Layer',
-                    status: 'deployed',
-                    coverage: '12/12 instances',
-                    protocols: ['AES-256-GCM', 'HMAC-SHA256', 'Falcon'],
-                    lastDeployed: '2024-01-18'
-                },
-                {
-                    id: 'api-gateway',
-                    name: 'API Gateway',
-                    status: 'pending',
-                    coverage: '3/5 gateways',
-                    protocols: ['RSA-4096', 'ECDSA P-384', 'SPHINCS+'],
-                    lastDeployed: null
-                },
-                {
-                    id: 'message-queue',
-                    name: 'Message Queue',
-                    status: 'deployed',
-                    coverage: '8/8 queues',
-                    protocols: ['ChaCha20-Poly1305', 'Kyber-1024'],
-                    lastDeployed: '2024-01-22'
-                }
-            ];
-
-        modules.forEach(module => {
-            const card = document.createElement('div');
-            card.className = 'deployment-module';
-            card.onclick = () => showModuleDetails(module.id);
-            
-            const coverage = module.coverage.includes('/') ? 
-                calculateCoverage(module.coverage) : 100;
-
-            card.innerHTML = `
-                <div class="module-header">
-                    <div class="module-name">${module.name}</div>
-                    <div class="module-status ${module.status}">${module.status.toUpperCase()}</div>
-                </div>
-                <div class="module-coverage">${module.coverage}</div>
-                <div class="coverage-bar">
-                    <div class="coverage-fill" style="width: ${coverage}%"></div>
-                </div>
-                <div class="module-protocols">
-                    ${module.protocols.map(protocol => 
-                        `<span class="protocol-tag">${protocol}</span>`
-                    ).join('')}
-                </div>
-                <div class="module-actions">
-                    <button class="module-btn primary" onclick="event.stopPropagation(); deployModule('${module.id}')">
-                        ${module.status === 'deployed' ? 'Redeploy' : 'Deploy'}
-                    </button>
-                    <button class="module-btn" onclick="event.stopPropagation(); moduleStatus('${module.id}')">Status</button>
-                    <button class="module-btn" onclick="event.stopPropagation(); configureModule('${module.id}')">Configure</button>
-                </div>
-            `;
-
-            grid.appendChild(card);
-        });
-    }
-
-    function populateCertificates() {
-        const grid = document.getElementById('certificateGrid');
-        if (!grid) return;
-        
-        grid.innerHTML = '';
-
-        // Use shared CertificateConfigs if available, otherwise fallback
-        const certificates = (typeof CertificateConfigs !== 'undefined' && CertificateConfigs.certificates) 
-            ? CertificateConfigs.certificates 
-            : [
-                {
-                    id: 'main-ssl',
-                    name: 'Main SSL Certificate',
-                    domain: 'sentinel-x.example.com',
-                    status: 'valid',
-                    expires: '2024-08-15T00:00:00Z',
-                    issuer: 'Let\'s Encrypt',
-                    keyAlgorithm: 'RSA-4096 + Dilithium-3'
-                },
-                {
-                    id: 'api-cert',
-                    name: 'API Certificate',
-                    domain: 'api.sentinel-x.example.com',
-                    status: 'valid',
-                    expires: '2024-09-20T00:00:00Z',
-                    issuer: 'DigiCert',
-                    keyAlgorithm: 'ECDSA P-384 + Falcon'
-                },
-                {
-                    id: 'internal-ca',
-                    name: 'Internal CA',
-                    domain: 'internal.sentinel-x.local',
-                    status: 'expiring',
-                    expires: '2024-03-10T00:00:00Z',
-                    issuer: 'Internal CA',
-                    keyAlgorithm: 'RSA-4096 + SPHINCS+'
-                },
-                {
-                    id: 'backup-cert',
-                    name: 'Backup Service Certificate',
-                    domain: 'backup.sentinel-x.example.com',
-                    status: 'valid',
-                    expires: '2024-11-30T00:00:00Z',
-                    issuer: 'GlobalSign',
-                    keyAlgorithm: 'ECDSA P-384 + Kyber-1024'
-                }
-            ];
-
-        certificates.forEach(cert => {
-            const card = document.createElement('div');
-            card.className = 'certificate-card';
-            card.onclick = () => showCertificateDetails(cert.id);
-            
-            const daysUntilExpiry = getDaysUntilExpiry(cert.expires);
-            const expiryClass = daysUntilExpiry < 30 ? 'warning' : '';
-
-            card.innerHTML = `
-                <div class="cert-header">
-                    <div>
-                        <div class="cert-name">${cert.name}</div>
-                        <div class="cert-domain">${cert.domain}</div>
-                    </div>
-                    <div class="cert-status ${cert.status}">${cert.status.toUpperCase()}</div>
-                </div>
-                <div class="cert-details">
-                    <div class="cert-detail">
-                        <span class="cert-detail-label">Issuer:</span>
-                        <span class="cert-detail-value">${cert.issuer}</span>
-                    </div>
-                    <div class="cert-detail">
-                        <span class="cert-detail-label">Expires:</span>
-                        <span class="cert-detail-value cert-expiry ${expiryClass}">
-                            ${formatDateFromISO(cert.expires)}
-                            ${daysUntilExpiry > 0 ? `(${daysUntilExpiry} days)` : '(EXPIRED)'}
-                        </span>
-                    </div>
-                    <div class="cert-detail">
-                        <span class="cert-detail-label">Algorithm:</span>
-                        <span class="cert-algorithm">${cert.keyAlgorithm}</span>
-                    </div>
-                </div>
-                <div class="cert-actions">
-                    <button class="cert-btn primary" onclick="event.stopPropagation(); renewCertificate('${cert.id}')">Renew</button>
-                    <button class="cert-btn" onclick="event.stopPropagation(); rotateCertKey('${cert.id}')">Rotate Key</button>
-                    <button class="cert-btn" onclick="event.stopPropagation(); certDiagnostics('${cert.id}')">Details</button>
-                </div>
-            `;
-
-            grid.appendChild(card);
-        });
-    }
-
-    function startMetricsUpdates() {
-        if (metricsUpdateInterval) clearInterval(metricsUpdateInterval);
-        
-        metricsUpdateInterval = setInterval(() => {
-            updateMetrics();
-        }, 5000);
-    }
-
-    function updateMetrics() {
-        // Update metrics occasionally
-        if (Math.random() > 0.8) {
-            const cryptoOps = document.getElementById('cryptoOps');
-            if (cryptoOps) {
-                const ops = 2.0 + Math.random() * 0.3;
-                cryptoOps.textContent = ops.toFixed(1) + 'M';
-            }
-            
-            const rotations = document.getElementById('keyRotations');
-            if (rotations && Math.random() > 0.9) {
-                const current = parseInt(rotations.textContent);
-                rotations.textContent = current + 1;
-            }
-        }
-    }
-
-    // Detail view functions using shared chat system
-    function showMetricDetails(metricType) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                let message = '';
-                switch(metricType) {
-                    case 'cryptoOps':
-                        message = 'EncryptionManager: Processing 2.1M cryptographic operations per second. Hybrid mode combining classical and post-quantum algorithms for maximum security.';
-                        break;
-                    case 'deployments':
-                        message = 'EncryptionDeployer: 3/4 deployment modules active. 1 pending deployment on API Gateway. Auto-deployment protocols ready for immediate execution.';
-                        break;
-                    case 'certificates':
-                        message = 'CertificateManager: Managing 12 certificates with hybrid signatures. 2 certificates require attention within 30 days. Auto-renewal enabled.';
-                        break;
-                    case 'rotations':
-                        message = 'Key Rotation System: 47 key rotations completed today. Zero downtime maintained. Next scheduled rotation in 6 hours.';
-                        break;
-                }
-                window.sentinelChat.addMessage(message, false);
-            }
-        }, 300);
-    }
-
-    function showFeatureDetails(featureType) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                let message = '';
-                switch(featureType) {
-                    case 'hybrid':
-                        message = 'Hybrid Encryption: Combining AES-256-GCM, RSA-4096, Kyber-1024, and Dilithium-3 for quantum-resistant protection. 8 algorithms active.';
-                        break;
-                    case 'deployment':
-                        message = 'EncryptionDeployer: Auto-deployment system manages network-wide encryption with zero downtime. Coordinates with NetworkMapper for discovery.';
-                        break;
-                    case 'certificates':
-                        message = 'CertificateManager: Automated lifecycle management with hybrid signatures. Supports auto-renewal and rotation schedules.';
-                        break;
-                    case 'rotation':
-                        message = 'Key Rotation: Automated rotation schedules maintain security while ensuring zero service interruption. 47 rotations completed today.';
-                        break;
-                }
-                window.sentinelChat.addMessage(message, false);
-            }
-        }, 300);
-    }
-
-    function showLayerDetails(layerType) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                let message = '';
-                switch(layerType) {
-                    case 'classical':
-                        message = 'Classical Encryption Layer: AES-256-GCM, HMAC-SHA256, RSA-4096, ECDSA P-384 active. 2.1M ops/sec, 0.8ms latency, 12% CPU usage.';
-                        break;
-                    case 'quantum':
-                        message = 'Post-Quantum Layer: Kyber-1024, Dilithium-3, SPHINCS+, Falcon active. 847K ops/sec, 2.1ms latency, 28% CPU usage. Future-proof security.';
-                        break;
-                }
-                window.sentinelChat.addMessage(message, false);
-            }
-        }, 300);
-    }
-
-    function showModuleDetails(moduleId) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage(`EncryptionDeployer: Connecting to ${moduleId} module...`, false, 'system');
-                setTimeout(() => {
-                    window.sentinelChat.addMessage(`Module ${moduleId} details: Status active, protocols deployed, encryption operational. Use "deploy ${moduleId}" to redeploy or "status ${moduleId}" for diagnostics.`, false);
-                }, 800);
-            }
-        }, 300);
-    }
-
-    function showCertificateDetails(certId) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage(`CertificateManager: Retrieving certificate ${certId} details...`, false, 'system');
-                setTimeout(() => {
-                    window.sentinelChat.addMessage(`Certificate ${certId} analysis complete. Use "renew ${certId}" for renewal or "rotate ${certId}" for key rotation. All operations use hybrid signatures.`, false);
-                }, 800);
-            }
-        }, 300);
-    }
-
-    // Deployment Actions
-    function deployModule(moduleId) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage(`deploy ${moduleId}`, true);
-                setTimeout(() => {
-                    window.sentinelChat.addMessage(`EncryptionDeployer: Initiating deployment of ${moduleId}. Using hybrid algorithms for maximum security. Estimated completion: 2-3 minutes.`, false);
-                    
-                    // Also add to activity feed
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.addMessage(encryptionFeedId, `🔧 Deployment initiated: ${moduleId} module with hybrid encryption`, 'encryption', 'EncryptionDeployer');
-                    }
-                    
-                    setTimeout(() => {
-                        window.sentinelChat.addMessage(`EncryptionDeployer: ${moduleId} deployment completed successfully. All protocols active and verified.`, false);
-                        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                            activityFeedManager.addMessage(encryptionFeedId, `✅ Deployment complete: ${moduleId} module operational`, '', 'EncryptionDeployer');
-                        }
-                    }, 3000);
-                }, 800);
-            }
-        }, 300);
-    }
-
-    function deployAllModules() {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage('deploy all', true);
-                setTimeout(() => {
-                    window.sentinelChat.addMessage(`EncryptionDeployer: Initiating batch deployment across all modules. Zero downtime deployment with hybrid-resistant algorithms. All modules will be updated.`, false);
-                    
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.addMessage(encryptionFeedId, '🚀 Batch deployment: All encryption modules updating', 'encryption', 'EncryptionDeployer');
-                    }
-                }, 800);
-            }
-        }, 300);
-    }
-
-    function moduleStatus(moduleId) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage(`EncryptionDeployer: ${moduleId} status - OPERATIONAL. All encryption protocols active. Last deployment successful. Performance metrics optimal.`, false);
-            }
-        }, 300);
-    }
-
-    function configureModule(moduleId) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage(`EncryptionDeployer: ${moduleId} configuration interface ready. Available commands: "configure ${moduleId} [protocol]", "update ${moduleId}", "test ${moduleId}".`, false);
-            }
-        }, 300);
-    }
-
-    function scanDeploymentGaps() {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage('scan encryption gaps', true);
-                setTimeout(() => {
-                    const gapCount = Math.floor(Math.random() * 5 + 1);
-                    window.sentinelChat.addMessage(`EncryptionDeployer: Gap analysis complete. Found ${gapCount} devices without encryption. NetworkMapper coordination active. Auto-remediation available.`, false);
-                    
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.addMessage(encryptionFeedId, `🔍 Gap scan: ${gapCount} devices require encryption deployment`, 'warning', 'EncryptionDeployer');
-                    }
-                }, 1500);
-            }
-        }, 300);
-    }
-
-    // Certificate Actions
-    function renewCertificate(certId) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage(`renew certificate ${certId}`, true);
-                setTimeout(() => {
-                    window.sentinelChat.addMessage(`CertificateManager: Renewing certificate ${certId} with hybrid signature algorithms. New certificate will be valid for 365 days.`, false);
-                    
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.addMessage(encryptionFeedId, `📜 Certificate renewal: ${certId} updated with hybrid signatures`, 'encryption', 'CertificateManager');
-                    }
-                }, 800);
-            }
-        }, 300);
-    }
-
-    function rotateCertKey(certId) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage(`CertificateManager: Rotating keys for certificate ${certId}. Generating new hybrid key pair. Zero downtime rotation in progress.`, false);
-                
-                if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                    activityFeedManager.addMessage(encryptionFeedId, `🔄 Key rotation: ${certId} keys rotated successfully`, 'encryption', 'CertificateManager');
-                }
-            }
-        }, 300);
-    }
-
-    function certDiagnostics(certId) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage(`CertificateManager: Certificate ${certId} diagnostics complete. Status: Valid, Algorithm: Hybrid, Expiry: Within limits. Full report available.`, false);
-            }
-        }, 300);
-    }
-
-    function renewExpiring() {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage(`CertificateManager: Auto-renewing expiring certificates. All renewals will use latest hybrid algorithms for future-proof security.`, false);
-                
-                if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                    activityFeedManager.addMessage(encryptionFeedId, '🔄 Auto-renewal: Expiring certificates updated with hybrid signatures', 'encryption', 'CertificateManager');
-                }
-            }
-        }, 300);
-    }
-
-    function generateReport() {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage('generate certificate report', true);
-                setTimeout(() => {
-                    window.sentinelChat.addMessage(`CertificateManager: Certificate report generated. 12 certificates total, 10 valid, 2 expiring. All certificates use hybrid-resistant signatures. Report encrypted with Dilithium-3.`, false);
-                    
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.addMessage(encryptionFeedId, '📊 Report generated: Certificate status and compliance overview', '', 'CertificateManager');
-                    }
-                }, 1200);
-            }
-        }, 300);
-    }
-
-    // Master Actions
-    function rotateMasterKeys() {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                window.sentinelChat.addMessage('rotate master keys', true);
-                setTimeout(() => {
-                    window.sentinelChat.addMessage('EncryptionManager: Master key rotation initiated. Generating new Kyber-1024 + AES-256 key pairs. All sub-systems will be updated automatically with zero service interruption.', false);
-                    
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.addMessage(encryptionFeedId, '🔑 Master key rotation: System-wide key update in progress', 'encryption', 'EncryptionManager');
-                    }
-                }, 800);
-            }
-        }, 300);
-    }
-
-    function showEncryptionStatus(type) {
-        if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-            window.sentinelChat.toggle();
-        }
-        setTimeout(() => {
-            if (window.sentinelChat) {
-                if (type === 'classical') {
-                    window.sentinelChat.addMessage(`EncryptionManager: Classical encryption layer - AES-256-GCM, RSA-4096, ECDSA P-384 active. Performance: 2.1M ops/sec. All sub-agents coordinating.`, false);
-                } else {
-                    window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption layer - Kyber-1024, Dilithium-3, SPHINCS+, Falcon active. Future-proof security across all operations.`, false);
-                }
-            }
-        }, 300);
-    }
-
-    // Utility functions
-    function calculateCoverage(coverageStr) {
-        const parts = coverageStr.split('/');
-        if (parts.length === 2) {
-            const current = parseInt(parts[0]);
-            const total = parseInt(parts[1]);
-            return Math.round((current / total) * 100);
-        }
-        return 100;
-    }
-
-    function formatDateFromISO(isoString) {
-        const date = new Date(isoString);
-        return date.toLocaleDateString('en-US', { 
-            year: 'numeric', 
-            month: 'short', 
-            day: 'numeric' 
-        });
-    }
-
-    function getDaysUntilExpiry(expiryDate) {
-        const today = new Date();
-        const expiry = new Date(expiryDate);
-        const diffTime = expiry - today;
-        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-    }
-
-    // Cleanup activity feed on page unload
-    window.addEventListener('beforeunload', () => {
-        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-            activityFeedManager.stopAutoGeneration(encryptionFeedId);
-        }
-        if (metricsUpdateInterval) {
-            clearInterval(metricsUpdateInterval);
-        }
-    });
-
-    // Global functions for compatibility - leveraging shared chat system
-    window.toggleChat = () => {
-        if (window.sentinelChat) {
-            window.sentinelChat.toggle();
-        }
-    };
-    
-    window.sendChatMessage = () => {
-        const input = document.getElementById('aiChatInput');
-        if (input && input.value.trim() && window.sentinelChat) {
-            window.sentinelChat.sendMessage(input.value.trim());
-            input.value = '';
-        }
-    };
-    
-    window.handleChatKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            sendChatMessage();
-        }
-    };
-    
-    window.showAgentShutdownModal = () => {
-        const modal = document.getElementById('agentShutdownModal');
-        if (modal) modal.style.display = 'flex';
-    };
-    
-    window.closeModal = () => {
-        const modal = document.getElementById('agentShutdownModal');
-        if (modal) modal.style.display = 'none';
-    };
-    
-    window.closeModalOnOverlay = (e) => {
-        if (e.target.classList.contains('modal-overlay')) {
-            closeModal();
-        }
-    };
-    
-    window.confirmAgentShutdown = () => {
-        if (typeof SentinelState !== 'undefined') {
-            SentinelState.agentActive = !SentinelState.agentActive;
-            
-            // Update UI elements
-            const agentStatus = document.querySelector('.agent-status');
-            const agentTitle = document.querySelector('.agent-title');
-            const agentStatusText = document.querySelector('.agent-status-text');
-            
-            if (SentinelState.agentActive) {
-                if (agentStatus) {
-                    agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
-                    agentStatus.style.borderColor = '#00ff88';
-                }
-                if (agentTitle) {
-                    agentTitle.textContent = 'AI Agent Active';
-                    agentTitle.style.color = 'var(--primary)';
-                }
-                if (agentStatusText) {
-                    agentStatusText.textContent = 'Autonomous with Manual Override';
-                }
-                
-                // Resume encryption systems and activity feed
-                if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                    activityFeedManager.startAutoGeneration(encryptionFeedId, 8000);
-                    activityFeedManager.addMessage(encryptionFeedId, '🤖 Main Agent resumed: Encryption systems reactivated', '', 'Main Agent');
-                }
-                startMetricsUpdates();
+                activityFeedManager.startAutoGeneration(encryptionFeedId, 8000);
             } else {
-                if (agentStatus) {
-                    agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
-                    agentStatus.style.borderColor = '#ffaa00';
-                }
-                if (agentTitle) {
-                    agentTitle.textContent = 'AI Agent Paused';
-                    agentTitle.style.color = '#ffaa00';
-                }
-                if (agentStatusText) {
-                    agentStatusText.textContent = 'Manual Control Only';
+                console.log('ActivityFeedManager not available yet, retrying...');
+                setTimeout(initializeEncryptionPage, 200);
+                return;
+            }
+
+            // Initialize chat system from shared.js
+            if (typeof SentinelChat !== 'undefined') {
+                window.sentinelChat = new SentinelChat();
+            }
+
+            // Populate encryption sections using shared.js data
+            populateDeploymentModules();
+            populateCertificates();
+            
+            // Start automated systems
+            startMetricsUpdates();
+        }
+
+        function populateDeploymentModules() {
+            const grid = document.getElementById('deploymentGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+
+            // Use shared EncryptionDeploymentConfigs if available, otherwise fallback
+            const modules = (typeof EncryptionDeploymentConfigs !== 'undefined' && EncryptionDeploymentConfigs.modules) 
+                ? EncryptionDeploymentConfigs.modules 
+                : [
+                    {
+                        id: 'tls',
+                        name: 'TLS Configuration',
+                        status: 'deployed',
+                        coverage: '247/247 devices',
+                        protocols: ['TLS 1.3', 'Hybrid KEX'],
+                        lastDeployed: '2024-12-19T10:30:00Z'
+                    },
+                    {
+                        id: 'database',
+                        name: 'Database Encryption',
+                        status: 'deployed',
+                        coverage: '12/12 databases',
+                        protocols: ['AES-256-GCM', 'Kyber-1024'],
+                        lastDeployed: '2024-12-19T09:15:00Z'
+                    },
+                    {
+                        id: 'disk',
+                        name: 'Disk Encryption',
+                        status: 'pending',
+                        coverage: '189/247 devices',
+                        protocols: ['LUKS2', 'BitLocker'],
+                        lastDeployed: null
+                    },
+                    {
+                        id: 'messaging',
+                        name: 'Message Encryption',
+                        status: 'deployed',
+                        coverage: '100% channels',
+                        protocols: ['Signal Protocol', 'Dilithium-3'],
+                        lastDeployed: '2024-12-19T08:45:00Z'
+                    }
+                ];
+
+            modules.forEach(module => {
+                const card = document.createElement('div');
+                card.className = 'deployment-module';
+                card.onclick = () => showModuleDetails(module.id);
+                
+                const coverage = module.coverage.includes('/') ? 
+                    calculateCoverage(module.coverage) : 100;
+
+                card.innerHTML = `
+                    <div class="module-header">
+                        <div class="module-name">${module.name}</div>
+                        <div class="module-status ${module.status}">${module.status.toUpperCase()}</div>
+                    </div>
+                    <div class="module-coverage">${module.coverage}</div>
+                    <div class="coverage-bar">
+                        <div class="coverage-fill" style="width: ${coverage}%"></div>
+                    </div>
+                    <div class="module-protocols">
+                        ${module.protocols.map(protocol => 
+                            `<span class="protocol-tag">${protocol}</span>`
+                        ).join('')}
+                    </div>
+                    <div class="module-actions">
+                        <button class="module-btn primary" onclick="event.stopPropagation(); deployModule('${module.id}')">
+                            ${module.status === 'deployed' ? 'Redeploy' : 'Deploy'}
+                        </button>
+                        <button class="module-btn" onclick="event.stopPropagation(); moduleStatus('${module.id}')">Status</button>
+                        <button class="module-btn" onclick="event.stopPropagation(); configureModule('${module.id}')">Configure</button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function populateCertificates() {
+            const grid = document.getElementById('certificateGrid');
+            if (!grid) return;
+            
+            grid.innerHTML = '';
+
+            // Use shared CertificateConfigs if available, otherwise fallback
+            const certificates = (typeof CertificateConfigs !== 'undefined' && CertificateConfigs.certificates) 
+                ? CertificateConfigs.certificates 
+                : [
+                    {
+                        id: 'web-primary',
+                        name: 'Primary Web Certificate',
+                        domain: '*.sentinel-x.com',
+                        issuer: 'DigiCert',
+                        expires: '2025-06-15T23:59:59Z',
+                        status: 'valid',
+                        keyAlgorithm: 'RSA-4096 + Dilithium-3'
+                    },
+                    {
+                        id: 'api-cert',
+                        name: 'API Gateway Certificate',
+                        domain: 'api.sentinel-x.com',
+                        issuer: 'Let\'s Encrypt',
+                        expires: '2025-01-20T12:00:00Z',
+                        status: 'expiring',
+                        keyAlgorithm: 'ECDSA P-384 + SPHINCS+'
+                    },
+                    {
+                        id: 'internal-ca',
+                        name: 'Internal CA Root',
+                        domain: 'Internal CA',
+                        issuer: 'Sentinel-X CA',
+                        expires: '2027-12-31T23:59:59Z',
+                        status: 'valid',
+                        keyAlgorithm: 'Hybrid Root CA'
+                    },
+                    {
+                        id: 'client-auth',
+                        name: 'Client Authentication',
+                        domain: 'client-auth.sentinel-x.com',
+                        issuer: 'Sentinel-X CA',
+                        expires: '2024-12-25T12:00:00Z',
+                        status: 'expiring',
+                        keyAlgorithm: 'Ed25519 + Falcon'
+                    }
+                ];
+
+            certificates.forEach(cert => {
+                const card = document.createElement('div');
+                card.className = 'certificate-card';
+                card.onclick = () => showCertificateDetails(cert.id);
+                
+                const daysUntilExpiry = getDaysUntilExpiry(cert.expires);
+                const expiryClass = daysUntilExpiry < 30 ? 'warning' : '';
+
+                card.innerHTML = `
+                    <div class="cert-header">
+                        <div>
+                            <div class="cert-name">${cert.name}</div>
+                            <div class="cert-domain">${cert.domain}</div>
+                        </div>
+                        <div class="cert-status ${cert.status}">${cert.status.toUpperCase()}</div>
+                    </div>
+                    <div class="cert-details">
+                        <div class="cert-detail">
+                            <span class="cert-detail-label">Issuer:</span>
+                            <span class="cert-detail-value">${cert.issuer}</span>
+                        </div>
+                        <div class="cert-detail">
+                            <span class="cert-detail-label">Expires:</span>
+                            <span class="cert-detail-value cert-expiry ${expiryClass}">
+                                ${formatDateFromISO(cert.expires)}
+                                ${daysUntilExpiry > 0 ? `(${daysUntilExpiry} days)` : '(EXPIRED)'}
+                            </span>
+                        </div>
+                        <div class="cert-detail">
+                            <span class="cert-detail-label">Algorithm:</span>
+                            <span class="cert-algorithm">${cert.keyAlgorithm}</span>
+                        </div>
+                    </div>
+                    <div class="cert-actions">
+                        <button class="cert-btn primary" onclick="event.stopPropagation(); renewCertificate('${cert.id}')">Renew</button>
+                        <button class="cert-btn" onclick="event.stopPropagation(); rotateCertKey('${cert.id}')">Rotate Key</button>
+                        <button class="cert-btn" onclick="event.stopPropagation(); certDiagnostics('${cert.id}')">Details</button>
+                    </div>
+                `;
+
+                grid.appendChild(card);
+            });
+        }
+
+        function startMetricsUpdates() {
+            if (metricsUpdateInterval) clearInterval(metricsUpdateInterval);
+            
+            metricsUpdateInterval = setInterval(() => {
+                updateMetrics();
+            }, 5000);
+        }
+
+        function updateMetrics() {
+            // Update metrics occasionally
+            if (Math.random() > 0.8) {
+                const cryptoOps = document.querySelector('.metric-value');
+                if (cryptoOps && cryptoOps.textContent.includes('M')) {
+                    const ops = 2.0 + Math.random() * 0.3;
+                    cryptoOps.textContent = ops.toFixed(1) + 'M';
                 }
                 
-                // Pause encryption systems and activity feed
-                if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                    activityFeedManager.stopAutoGeneration(encryptionFeedId);
-                    activityFeedManager.addMessage(encryptionFeedId, '⚠️ Main Agent paused: Encryption systems in manual control mode', 'warning', 'Main Agent');
+                const rotations = document.querySelector('.metric-value:last-child');
+                if (rotations && Math.random() > 0.9) {
+                    const current = parseInt(rotations.textContent);
+                    rotations.textContent = current + 1;
                 }
-                if (metricsUpdateInterval) clearInterval(metricsUpdateInterval);
-            }
-            
-            closeModal();
-            
-            if (SentinelState.chatOpen && window.sentinelChat) {
-                const status = SentinelState.agentActive ? 'resumed autonomous operation with encryption coordination' : 'switched to manual control mode';
-                window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. Encryption sub-agents ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
             }
         }
-    };
-    
-    window.handleLogout = () => {
-        if (confirm('Are you sure you want to logout? The AI agent will continue protecting your systems autonomously.')) {
-            localStorage.removeItem('sentinel_auth');
-            localStorage.removeItem('sentinel_scale');
-            window.location.href = 'index.html';
+
+        // Detail view functions using shared chat system with updated messaging
+        function showFeatureDetails(featureType) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    let message = '';
+                    switch(featureType) {
+                        case 'hybrid':
+                            message = 'EncryptionManager: Hybrid encryption coordinating AES-256-GCM, RSA-4096, Kyber-1024, and Dilithium-3 across all sub-agents. 8 algorithms protecting comprehensive cyber defense infrastructure.';
+                            break;
+                        case 'deployment':
+                            message = 'EncryptionDeployer: Auto-deployment coordinating with NetworkMapper for discovery and ThreatScanner for security assessment. Zero downtime deployment across all detected assets.';
+                            break;
+                        case 'certificates':
+                            message = 'CertificateManager: Hybrid signature lifecycle management coordinating with EncryptionManager and reporting to Main Agent. Auto-renewal with post-quantum algorithms.';
+                            break;
+                        case 'rotation':
+                            message = 'EncryptionManager: Coordinated key rotation across all sub-agents maintaining security with zero service interruption. 47 rotations completed today with Main Agent oversight.';
+                            break;
+                    }
+                    window.sentinelChat.addMessage(message, false);
+                }
+            }, 300);
         }
-    };
-</script>
-    
+
+        function showLayerDetails(layerType) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    let message = '';
+                    switch(layerType) {
+                        case 'classical':
+                            message = 'EncryptionManager Classical Layer: AES-256-GCM, HMAC-SHA256, RSA-4096, ECDSA P-384 coordinating across all sub-agents. 2.1M ops/sec, 0.8ms latency, 12% CPU usage.';
+                            break;
+                        case 'quantum':
+                            message = 'EncryptionManager Post-Quantum Layer: Kyber-1024, Dilithium-3, SPHINCS+, Falcon protecting comprehensive cyber defense. 847K ops/sec, 2.1ms latency, 28% CPU usage.';
+                            break;
+                    }
+                    window.sentinelChat.addMessage(message, false);
+                }
+            }, 300);
+        }
+
+        function showModuleDetails(moduleId) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`EncryptionDeployer: Connecting to ${moduleId} module with NetworkMapper coordination...`, false, 'system');
+                    setTimeout(() => {
+                        window.sentinelChat.addMessage(`Module ${moduleId} details: Coordinated deployment status active, protocols secured, encryption operational. NetworkMapper integration confirmed. Use "deploy ${moduleId}" to redeploy or "status ${moduleId}" for diagnostics.`, false);
+                    }, 800);
+                }
+            }, 300);
+        }
+
+        function showCertificateDetails(certId) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`CertificateManager: Retrieving certificate ${certId} details with Main Agent coordination...`, false, 'system');
+                    setTimeout(() => {
+                        window.sentinelChat.addMessage(`Certificate ${certId} analysis complete. Multi-agent coordination verified. Use "renew ${certId}" for renewal or "rotate ${certId}" for key rotation. All operations use hybrid signatures with EncryptionManager coordination.`, false);
+                    }, 800);
+                }
+            }, 300);
+        }
+
+        // Deployment Actions with updated messaging
+        function deployModule(moduleId) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`deploy ${moduleId}`, true);
+                    setTimeout(() => {
+                        window.sentinelChat.addMessage(`EncryptionDeployer: Coordinating ${moduleId} deployment with NetworkMapper for asset discovery and EncryptionManager for hybrid algorithms. Estimated completion: 2-3 minutes.`, false);
+                        
+                        // Also add to activity feed
+                        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                            activityFeedManager.addMessage(encryptionFeedId, `🔧 Multi-agent deployment: ${moduleId} module with NetworkMapper coordination`, 'encryption', 'EncryptionDeployer');
+                        }
+                        
+                        setTimeout(() => {
+                            window.sentinelChat.addMessage(`EncryptionDeployer: ${moduleId} deployment completed with NetworkMapper verification. All protocols coordinated with EncryptionManager and reported to Main Agent.`, false);
+                            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                                activityFeedManager.addMessage(encryptionFeedId, `✅ Deployment complete: ${moduleId} operational across comprehensive infrastructure`, '', 'EncryptionDeployer');
+                            }
+                        }, 3000);
+                    }, 800);
+                }
+            }, 300);
+        }
+
+        function deployAllModules() {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage('deploy all', true);
+                    setTimeout(() => {
+                        window.sentinelChat.addMessage(`EncryptionDeployer: Coordinating batch deployment with NetworkMapper discovery, EncryptionManager algorithms, and Main Agent oversight. Comprehensive cyber defense encryption update initiated.`, false);
+                        
+                        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                            activityFeedManager.addMessage(encryptionFeedId, '🚀 Multi-agent batch deployment: All encryption modules coordinating across sub-agents', 'encryption', 'EncryptionDeployer');
+                        }
+                    }, 800);
+                }
+            }, 300);
+        }
+
+        function moduleStatus(moduleId) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`EncryptionDeployer: ${moduleId} status - OPERATIONAL with NetworkMapper coordination. All encryption protocols active with EncryptionManager. Main Agent oversight confirmed. Performance metrics optimal.`, false);
+                }
+            }, 300);
+        }
+
+        function configureModule(moduleId) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`EncryptionDeployer: ${moduleId} configuration interface ready with multi-agent coordination. Available commands: "configure ${moduleId} [protocol]", "update ${moduleId}", "test ${moduleId}". NetworkMapper integration active.`, false);
+                }
+            }, 300);
+        }
+
+        function scanDeploymentGaps() {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage('scan encryption gaps', true);
+                    setTimeout(() => {
+                        const gapCount = Math.floor(Math.random() * 5 + 1);
+                        window.sentinelChat.addMessage(`EncryptionDeployer: Gap analysis coordinating with NetworkMapper discovery complete. Found ${gapCount} devices requiring encryption. ThreatScanner priority assessment active. Auto-remediation available.`, false);
+                        
+                        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                            activityFeedManager.addMessage(encryptionFeedId, `🔍 Multi-agent gap scan: ${gapCount} devices identified by NetworkMapper coordination`, 'warning', 'EncryptionDeployer');
+                        }
+                    }, 1500);
+                }
+            }, 300);
+        }
+
+        // Certificate Actions with updated messaging
+        function renewCertificate(certId) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`renew certificate ${certId}`, true);
+                    setTimeout(() => {
+                        window.sentinelChat.addMessage(`CertificateManager: Renewing certificate ${certId} with EncryptionManager hybrid signature algorithms and Main Agent coordination. New certificate valid for 365 days.`, false);
+                        
+                        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                            activityFeedManager.addMessage(encryptionFeedId, `📜 Multi-agent certificate renewal: ${certId} updated with EncryptionManager coordination`, 'encryption', 'CertificateManager');
+                        }
+                    }, 800);
+                }
+            }, 300);
+        }
+
+        function rotateCertKey(certId) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`CertificateManager: Coordinating key rotation for certificate ${certId} with EncryptionManager hybrid algorithms. Zero downtime rotation with Main Agent oversight in progress.`, false);
+                    
+                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                        activityFeedManager.addMessage(encryptionFeedId, `🔄 Multi-agent key rotation: ${certId} coordinated with EncryptionManager`, 'encryption', 'CertificateManager');
+                    }
+                }
+            }, 300);
+        }
+
+        function certDiagnostics(certId) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`CertificateManager: Certificate ${certId} diagnostics with multi-agent coordination complete. Status: Valid, Algorithm: Hybrid with EncryptionManager, Expiry: Within limits, Main Agent: Verified. Full report available.`, false);
+                }
+            }, 300);
+        }
+
+        function renewExpiring() {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`CertificateManager: Auto-renewing expiring certificates with EncryptionManager coordination. All renewals use latest hybrid algorithms coordinated across comprehensive cyber defense infrastructure.`, false);
+                    
+                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                        activityFeedManager.addMessage(encryptionFeedId, '🔄 Multi-agent auto-renewal: Expiring certificates coordinated with EncryptionManager', 'encryption', 'CertificateManager');
+                    }
+                }
+            }, 300);
+        }
+
+        function generateReport() {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage('generate certificate report', true);
+                    setTimeout(() => {
+                        window.sentinelChat.addMessage(`CertificateManager: Certificate report generated with Main Agent coordination. 12 certificates total, 10 valid, 2 expiring. All certificates use EncryptionManager hybrid signatures. Report secured with Dilithium-3 and comprehensive cyber defense protocols.`, false);
+                        
+                        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                            activityFeedManager.addMessage(encryptionFeedId, '📊 Multi-agent report: Certificate status coordinated across comprehensive infrastructure', '', 'CertificateManager');
+                        }
+                    }, 1200);
+                }
+            }, 300);
+        }
+
+        // Master Actions with updated messaging
+        function rotateMasterKeys() {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage('rotate master keys', true);
+                    setTimeout(() => {
+                        window.sentinelChat.addMessage('EncryptionManager: Master key rotation coordinating across all sub-agents with Main Agent oversight. Generating new Kyber-1024 + AES-256 key pairs. All sub-systems updating automatically with zero service interruption across comprehensive cyber defense.', false);
+                        
+                        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                            activityFeedManager.addMessage(encryptionFeedId, '🔑 System-wide master key rotation: Multi-agent coordination across comprehensive infrastructure', 'encryption', 'EncryptionManager');
+                        }
+                    }, 800);
+                }
+            }, 300);
+        }
+
+        function showEncryptionStatus(type) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption coordinating with EncryptionDeployer, CertificateManager, NetworkMapper, and all sub-agents. Post-quantum algorithms (Kyber-1024, Dilithium-3, SPHINCS+, Falcon) integrated with classical encryption across comprehensive autonomous cyber defense infrastructure.`, false);
+                }
+            }, 300);
+        }
+
+        // Utility functions
+        function calculateCoverage(coverageStr) {
+            const parts = coverageStr.split('/');
+            if (parts.length === 2) {
+                const current = parseInt(parts[0]);
+                const total = parseInt(parts[1]);
+                return Math.round((current / total) * 100);
+            }
+            return 100;
+        }
+
+        function formatDateFromISO(isoString) {
+            const date = new Date(isoString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        function getDaysUntilExpiry(expiryDate) {
+            const today = new Date();
+            const expiry = new Date(expiryDate);
+            const diffTime = expiry - today;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        // Cleanup activity feed on page unload
+        window.addEventListener('beforeunload', () => {
+            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                activityFeedManager.stopAutoGeneration(encryptionFeedId);
+            }
+            if (metricsUpdateInterval) {
+                clearInterval(metricsUpdateInterval);
+            }
+        });
+
+        // Global functions for compatibility - leveraging shared chat system
+        window.toggleChat = () => {
+            if (window.sentinelChat) {
+                window.sentinelChat.toggle();
+            }
+        };
+        
+        window.sendChatMessage = () => {
+            const input = document.getElementById('aiChatInput');
+            if (input && input.value.trim() && window.sentinelChat) {
+                window.sentinelChat.sendMessage(input.value.trim());
+                input.value = '';
+            }
+        };
+        
+        window.handleChatKeyPress = (e) => {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        };
+        
+        window.showAgentShutdownModal = () => {
+            const modal = document.getElementById('agentShutdownModal');
+            if (modal) modal.style.display = 'flex';
+        };
+        
+        window.closeModal = () => {
+            const modal = document.getElementById('agentShutdownModal');
+            if (modal) modal.style.display = 'none';
+        };
+        
+        window.closeModalOnOverlay = (e) => {
+            if (e.target.classList.contains('modal-overlay')) {
+                closeModal();
+            }
+        };
+        
+        window.confirmAgentShutdown = () => {
+            if (typeof SentinelState !== 'undefined') {
+                SentinelState.agentActive = !SentinelState.agentActive;
+                
+                // Update UI elements
+                const agentStatus = document.querySelector('.agent-status');
+                const agentTitle = document.querySelector('.agent-title');
+                const agentStatusText = document.querySelector('.agent-status-text');
+                
+                if (SentinelState.agentActive) {
+                    if (agentStatus) {
+                        agentStatus.style.background = 'rgba(0, 255, 136, 0.1)';
+                        agentStatus.style.borderColor = '#00ff88';
+                    }
+                    if (agentTitle) {
+                        agentTitle.textContent = 'AI Agent Active';
+                        agentTitle.style.color = 'var(--primary)';
+                    }
+                    if (agentStatusText) {
+                        agentStatusText.textContent = 'Autonomous with Manual Override';
+                    }
+                    
+                    // Resume encryption systems and activity feed
+                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                        activityFeedManager.startAutoGeneration(encryptionFeedId, 8000);
+                        activityFeedManager.addMessage(encryptionFeedId, '🤖 Main Agent resumed: Multi-agent encryption coordination reactivated', '', 'Main Agent');
+                    }
+                    startMetricsUpdates();
+                } else {
+                    if (agentStatus) {
+                        agentStatus.style.background = 'rgba(255, 170, 0, 0.1)';
+                        agentStatus.style.borderColor = '#ffaa00';
+                    }
+                    if (agentTitle) {
+                        agentTitle.textContent = 'AI Agent Paused';
+                        agentTitle.style.color = '#ffaa00';
+                    }
+                    if (agentStatusText) {
+                        agentStatusText.textContent = 'Manual Control Only';
+                    }
+                    
+                    // Pause encryption systems and activity feed
+                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                        activityFeedManager.stopAutoGeneration(encryptionFeedId);
+                        activityFeedManager.addMessage(encryptionFeedId, '⚠️ Main Agent paused: Encryption sub-agents in manual control mode', 'warning', 'Main Agent');
+                    }
+                    if (metricsUpdateInterval) clearInterval(metricsUpdateInterval);
+                }
+                
+                closeModal();
+                
+                if (SentinelState.chatOpen && window.sentinelChat) {
+                    const status = SentinelState.agentActive ? 'resumed autonomous operation with comprehensive encryption coordination' : 'switched to manual control mode';
+                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. Encryption sub-agents ${SentinelState.agentActive ? 'coordinating' : 'paused'}.`, false, 'system');
+                }
+            }
+        };
+        
+        window.handleLogout = () => {
+            if (confirm('Are you sure you want to logout? The AI agent will continue comprehensive autonomous cyber defense with multi-agent encryption coordination.')) {
+                localStorage.removeItem('sentinel_auth');
+                localStorage.removeItem('sentinel_scale');
+                window.location.href = 'index.html';
+            }
+        };
+    </script>
 </body>
 </html>
