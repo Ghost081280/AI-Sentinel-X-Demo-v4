@@ -182,7 +182,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badge - Only Hybrid */
+        /* Encryption Status Badge - Matching encryption.html style */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -194,38 +194,29 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
             border-radius: 20px;
-            font-weight: bold;
             font-size: 12px;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
             cursor: pointer;
-        }
-
-        .encryption-badge.hybrid {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
+            transition: all 0.3s ease;
         }
 
         .encryption-badge:hover {
+            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(124, 58, 237, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 3s ease-in-out infinite;
-        }
-
-        .status-light.active {
             background: var(--success);
             box-shadow: 0 0 8px var(--success);
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         @keyframes statusPulse {
@@ -332,13 +323,13 @@
             font-weight: bold;
         }
 
-        /* System Status Banner - FIXED TO MATCH DEFENSE PAGE EXACTLY */
+        /* System Status Banner - FIXED SIZING */
         .system-status-banner {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 20px 25px !important; /* Force exact defense page padding */
-            margin-bottom: 25px !important; /* Force exact defense page margin */
+            padding: 20px 25px !important;
+            margin-bottom: 25px !important;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
@@ -348,8 +339,8 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 20px;
-            min-height: 90px !important; /* Force exact defense page height */
-            max-height: 90px !important; /* Prevent expansion */
+            min-height: 90px !important;
+            max-height: 90px !important;
         }
 
         .system-status-banner::before {
@@ -372,7 +363,7 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            padding: 10px 16px !important; /* Force exact defense page padding */
+            padding: 10px 16px !important;
             border-radius: 10px;
             position: relative;
             z-index: 1;
@@ -388,22 +379,22 @@
         }
 
         .banner-stat-icon {
-            font-size: 32px !important; /* Force exact defense page size */
-            margin-bottom: 10px;
+            font-size: 24px !important;
+            margin-bottom: 5px !important;
             filter: drop-shadow(0 0 6px currentColor);
             color: var(--primary);
         }
 
         .banner-stat-value {
-            font-size: 16px !important; /* Force exact defense page size */
+            font-size: 14px !important;
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             text-shadow: 0 0 10px currentColor;
         }
 
         .banner-stat-label {
-            font-size: 11px !important; /* Force exact defense page size */
+            font-size: 10px !important;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -649,7 +640,7 @@
             color: var(--bg-darker);
         }
 
-        /* Right Column Modules - FIXED HEIGHT FOR PERFECT BALANCE */
+        /* Right Column Modules - FIXED HEIGHT */
         .right-column-module {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -659,7 +650,7 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            height: 287px !important; /* FORCE exact height to balance with left column */
+            height: 552px !important;
             display: flex;
             flex-direction: column;
         }
@@ -1541,9 +1532,9 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge hybrid" onclick="showEncryptionStatus('hybrid')">
-                            <div class="status-light active" id="hybridStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
@@ -1598,7 +1589,7 @@
             </a>
         </nav>
 
-        <!-- System Status Banner - EXACT DEFENSE PAGE SIZE -->
+        <!-- System Status Banner - FIXED SIZE -->
         <div class="system-status-banner">
             <div class="banner-stat" onclick="showStatusDetails('devices')">
                 <div class="banner-stat-icon">🛡️</div>
@@ -1704,7 +1695,7 @@
 
             <!-- Right Column -->
             <div class="right-column">
-                <!-- Global Network Updates Module - PERFECTLY SIZED -->
+                <!-- Global Network Updates Module - BALANCED HEIGHT -->
                 <div class="right-column-module">
                     <div class="module-header">
                         <h2 class="module-title">
@@ -1723,7 +1714,7 @@
                     </div>
                 </div>
 
-                <!-- SOC Intelligence Overview Module - PERFECTLY SIZED -->
+                <!-- SOC Intelligence Overview Module - BALANCED HEIGHT -->
                 <div class="right-column-module">
                     <div class="module-header">
                         <h2 class="module-title">
@@ -1864,32 +1855,10 @@
 
         // Dashboard page initialization with STAGGERED LOADING
         document.addEventListener('DOMContentLoaded', () => {
-            // FORCE IMMEDIATE MODULE BALANCING BEFORE OTHER INIT
-            forceModuleBalance();
-            
             setTimeout(() => {
                 initializeDashboard();
             }, 100);
         });
-
-        // CRITICAL FIX: Force module heights immediately
-        function forceModuleBalance() {
-            // Force right column module heights
-            const rightModules = document.querySelectorAll('.right-column-module');
-            rightModules.forEach(module => {
-                module.style.height = '287px !important';
-                module.style.maxHeight = '287px !important';
-                module.style.minHeight = '287px !important';
-            });
-            
-            // Force banner sizing
-            const banner = document.querySelector('.system-status-banner');
-            if (banner) {
-                banner.style.padding = '20px 25px !important';
-                banner.style.minHeight = '90px !important';
-                banner.style.maxHeight = '90px !important';
-            }
-        }
 
         function initializeDashboard() {
             // Initialize neural background first
@@ -1902,16 +1871,13 @@
                 initializePageContext();
             }
 
-            // Force module balance again after page context
-            forceModuleBalance();
-
-            // Initialize activity feed for dashboard with STAGGERED LOADING - FIX THE SIMULTANEOUS LOADING ISSUE
+            // Initialize activity feed for dashboard with STAGGERED LOADING
             if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                 // Initialize dashboard feed
                 activityFeedManager.initializeFeed(dashboardFeedId, 'dashboard');
                 activityFeedManager.setFeedContainer(dashboardFeedId, 'dashboardActivityFeed');
                 
-                // Add initial messages ONE AT A TIME with proper delays - NO MORE SIMULTANEOUS LOADING
+                // Add initial messages ONE AT A TIME with proper delays
                 setTimeout(() => {
                     activityFeedManager.addMessage(dashboardFeedId, '🤖 Main Agent initialized with 10 sub-agents including VPNMonitor', '', 'Main Agent');
                 }, 800);
@@ -1928,7 +1894,7 @@
                     activityFeedManager.addMessage(dashboardFeedId, '🛡️ ThreatScanner: 7 active threats under monitoring', 'warning', 'ThreatScanner');
                 }, 3800);
                 
-                // Start auto-generation AFTER initial messages are loaded - MUCH LATER
+                // Start auto-generation AFTER initial messages are loaded
                 setTimeout(() => {
                     activityFeedManager.startAutoGeneration(dashboardFeedId, 7000);
                 }, 5000);
@@ -1969,11 +1935,6 @@
             setInterval(() => {
                 updateSOCIntelligence();
             }, 7000);
-
-            // Reapply module balance periodically to ensure it sticks
-            setInterval(() => {
-                forceModuleBalance();
-            }, 5000);
         }
 
         function populateSubAgents() {
@@ -2023,7 +1984,7 @@
             
             container.innerHTML = '';
 
-            // Load updates with STAGGERED timing - fix simultaneous loading
+            // Load updates with STAGGERED timing
             const updates = [
                 {
                     type: 'system',
@@ -2072,7 +2033,7 @@
                     `;
                     
                     container.appendChild(updateItem);
-                }, 1200 + (index * 1000)); // Start after 1.2 seconds, then 1 second intervals
+                }, 1200 + (index * 1000));
             });
         }
 
@@ -2080,7 +2041,7 @@
             const grid = document.getElementById('socIntelligenceGrid');
             if (!grid) return;
 
-            // Metrics that PERFECTLY fill the 287px module height
+            // Metrics that fill the module
             const socMetrics = [
                 {
                     icon: '🎯',
@@ -2118,7 +2079,7 @@
                         <div class="soc-metric-label">${metric.label}</div>
                     `;
                     grid.appendChild(metricDiv);
-                }, 1800 + (index * 500)); // Start after 1.8 seconds, then 500ms intervals
+                }, 1800 + (index * 500));
             });
         }
 
