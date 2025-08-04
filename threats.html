@@ -324,24 +324,24 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner - STANDARDIZED 90px HEIGHT */
+        /* Sub-Agent Status Banner - FIXED STANDARDIZED 90px HEIGHT */
         .sub-agent-status {
-            background: var(--bg-card);
+            background: linear-gradient(135deg, rgba(255, 0, 68, 0.1) 0%, rgba(255, 68, 68, 0.05) 100%);
             border: 1px solid rgba(255, 0, 68, 0.3);
             border-radius: 12px;
-            padding: 20px 25px !important;
-            margin-bottom: 25px !important;
+            padding: 20px 25px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
             position: relative;
             overflow: hidden;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            min-height: 90px !important;
-            max-height: 90px !important;
+            min-height: 90px;
+            max-height: 90px;
         }
 
         .sub-agent-status::before {
@@ -364,8 +364,6 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            position: relative;
-            z-index: 1;
         }
 
         .sub-agent-icon {
@@ -394,47 +392,23 @@
         .sub-agent-metrics {
             display: flex;
             gap: 30px;
-            position: relative;
-            z-index: 1;
         }
 
         .metric {
             text-align: center;
-            padding: 5px 12px !important;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 0, 68, 0.2);
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            height: 60px !important;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .metric:hover {
-            background: rgba(255, 0, 68, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 0, 68, 0.2);
         }
 
         .metric-value {
-            font-size: 18px !important;
+            font-size: 24px;
             font-weight: bold;
             color: var(--danger);
-            margin-bottom: 2px !important;
-            line-height: 1;
-            text-shadow: 0 0 8px currentColor;
+            text-shadow: 0 0 10px currentColor;
         }
 
         .metric-label {
-            font-size: 9px !important;
+            font-size: 12px;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
-            line-height: 1;
         }
 
         /* Main Content Grid */
@@ -470,11 +444,11 @@
             flex-direction: column;
         }
 
-        /* Make the right column cards fill available height (552px each) */
+        /* FIXED: Make the right column cards fill available height properly */
         .right-column .section-card {
-            height: 552px !important;
-            min-height: 552px !important;
-            max-height: 552px !important;
+            height: 575px;
+            min-height: 575px;
+            max-height: 575px;
         }
 
         .section-header {
@@ -686,11 +660,12 @@
             gap: 5px;
         }
 
-        /* Threat Classification & Analysis - Scrollable */
+        /* FIXED: Threat Classification & Analysis - Full Height with Scrollable */
         .threat-analysis-content {
             flex: 1;
             overflow-y: auto;
             padding-right: 10px;
+            min-height: 0;
         }
 
         .threat-analysis-list {
@@ -839,6 +814,7 @@
             flex: 1;
             overflow-y: auto;
             padding-right: 10px;
+            min-height: 0;
         }
 
         .intelligence-grid {
@@ -972,11 +948,12 @@
             letter-spacing: 1px;
         }
 
-        /* Threat Hunting & Investigation - Scrollable content */
+        /* FIXED: Threat Hunting & Investigation - Full Height with Scrollable content */
         .threat-hunting-content {
             flex: 1;
             overflow-y: auto;
             padding-right: 10px;
+            min-height: 0;
         }
 
         .threat-hunting-grid {
@@ -1365,6 +1342,7 @@
             flex-direction: column;
             backdrop-filter: blur(15px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            margin-top: 25px;
         }
 
         .feed-header {
@@ -1950,7 +1928,7 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner - STANDARDIZED 90px HEIGHT -->
+        <!-- FIXED: Sub-Agent Status Banner - STANDARDIZED with proper metric layout -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">🛡️</div>
