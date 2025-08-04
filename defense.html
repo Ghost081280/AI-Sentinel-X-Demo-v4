@@ -186,7 +186,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badges */
+        /* Encryption Status Badge - Matching dashboard.html style */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -198,49 +198,29 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .encryption-badge.classical {
             background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .encryption-badge.quantum {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .encryption-badge:hover {
+            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 3s ease-in-out infinite;
-        }
-
-        .status-light.active {
             background: var(--success);
             box-shadow: 0 0 8px var(--success);
-        }
-
-        .status-light.inactive {
-            background: var(--danger);
-            box-shadow: 0 0 8px var(--danger);
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         @keyframes statusPulse {
@@ -645,8 +625,8 @@
             font-style: italic;
         }
 
-        /* Encryption Playbooks Section */
-        .encryption-playbooks-section {
+        /* Multi-Agent Coordination Section */
+        .coordination-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
@@ -656,7 +636,7 @@
             margin-bottom: 30px;
         }
 
-        .encryption-playbooks-header {
+        .coordination-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -665,117 +645,86 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .encryption-playbooks-title {
+        .coordination-title {
             display: flex;
             align-items: center;
             gap: 15px;
             font-size: 20px;
             font-weight: bold;
-            color: var(--accent);
+            color: var(--secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .new-badge {
-            background: var(--gradient-hybrid);
-            color: var(--bg-darker);
-            font-size: 10px;
-            padding: 4px 8px;
-            border-radius: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-            animation: newBadgePulse 3s ease-in-out infinite;
-        }
-
-        @keyframes newBadgePulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .encryption-playbook-grid {
+        .coordination-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 20px;
         }
 
-        .encryption-playbook-card {
-            background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
-            border: 1px solid rgba(124, 58, 237, 0.3);
+        .coordination-card {
+            background: linear-gradient(135deg, rgba(0, 204, 255, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
+            border: 1px solid rgba(0, 204, 255, 0.3);
             border-radius: 12px;
             padding: 25px;
             transition: all 0.3s ease;
             cursor: pointer;
         }
 
-        .encryption-playbook-card:hover {
+        .coordination-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(124, 58, 237, 0.2);
-            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 204, 255, 0.2);
+            border-color: var(--secondary);
         }
 
-        .encryption-playbook-header {
+        .coordination-card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 15px;
         }
 
-        .encryption-playbook-icon {
+        .coordination-card-icon {
             font-size: 48px;
             margin-bottom: 15px;
             filter: drop-shadow(0 0 6px currentColor);
         }
 
-        .encryption-playbook-status {
+        .coordination-card-status {
             padding: 4px 8px;
             border-radius: 10px;
             font-size: 10px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
-
-        .encryption-playbook-status.active {
             background: rgba(0, 255, 136, 0.2);
             color: var(--success);
             border: 1px solid var(--success);
         }
 
-        .encryption-playbook-name {
+        .coordination-card-name {
             font-weight: bold;
             margin-bottom: 10px;
-            color: var(--accent);
+            color: var(--secondary);
             font-size: 18px;
         }
 
-        .encryption-playbook-description {
+        .coordination-card-description {
             font-size: 14px;
             color: var(--text-secondary);
             margin-bottom: 15px;
             line-height: 1.4;
         }
 
-        .encryption-playbook-stats {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            font-size: 13px;
-        }
-
-        .encryption-playbook-executions {
-            color: var(--primary);
-            font-weight: bold;
-        }
-
-        .encryption-playbook-agent {
+        .coordination-card-agents {
             font-size: 12px;
             color: var(--accent);
             font-style: italic;
             text-align: center;
             padding: 10px;
-            background: rgba(124, 58, 237, 0.05);
+            background: rgba(0, 204, 255, 0.05);
             border-radius: 8px;
-            border: 1px solid rgba(124, 58, 237, 0.2);
+            border: 1px solid rgba(0, 204, 255, 0.2);
         }
 
         /* Activity Feed using shared.js infrastructure */
@@ -1189,7 +1138,7 @@
                 grid-template-columns: 1fr;
             }
             
-            .encryption-playbook-grid {
+            .coordination-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -1294,13 +1243,9 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
-                            <div class="status-light active" id="quantumStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
@@ -1361,7 +1306,7 @@
                 <div class="sub-agent-icon">⚔️</div>
                 <div class="sub-agent-details">
                     <h3>DefenseOrchestrator Sub-Agent</h3>
-                    <p>Deploying honeypots • Coordinating responses • Managing encryption playbooks • Reports to Main Agent</p>
+                    <p>Coordinating with ThreatScanner & NetworkMapper • Honeypot management • Automated response • Reports to Main Agent</p>
                 </div>
             </div>
             <div class="sub-agent-metrics">
@@ -1378,8 +1323,8 @@
                     <div class="metric-label">Responses</div>
                 </div>
                 <div class="metric">
-                    <div class="metric-value" id="encryptionPlaybooks">4</div>
-                    <div class="metric-label">Enc Playbooks</div>
+                    <div class="metric-value" id="agentCoordination">3</div>
+                    <div class="metric-label">Coordinated</div>
                 </div>
             </div>
         </div>
@@ -1413,18 +1358,17 @@
             </div>
         </div>
 
-        <!-- Encryption Playbooks Section -->
-        <div class="encryption-playbooks-section">
-            <div class="encryption-playbooks-header">
-                <div class="encryption-playbooks-title">
-                    <span>🔐</span>
-                    <span>Encryption Playbooks</span>
-                    <span class="new-badge">NEW</span>
+        <!-- Multi-Agent Coordination Section -->
+        <div class="coordination-section">
+            <div class="coordination-header">
+                <div class="coordination-title">
+                    <span>🤝</span>
+                    <span>Multi-Agent Defense Coordination</span>
                 </div>
-                <span style="color: var(--text-secondary); font-size: 14px;">DefenseOrchestrator coordinates with encryption sub-agents</span>
+                <span style="color: var(--text-secondary); font-size: 14px;">DefenseOrchestrator working with ThreatScanner & NetworkMapper</span>
             </div>
-            <div class="encryption-playbook-grid" id="encryptionPlaybookGrid">
-                <!-- Encryption playbooks will be populated by JavaScript -->
+            <div class="coordination-grid" id="coordinationGrid">
+                <!-- Coordination cards will be populated by JavaScript -->
             </div>
         </div>
 
@@ -1435,7 +1379,7 @@
                     <span>📋</span>
                     <span>Active Security Playbooks</span>
                 </h2>
-                <span style="color: var(--text-secondary); font-size: 14px;">System can discover new playbooks autonomously</span>
+                <span style="color: var(--text-secondary); font-size: 14px;">Autonomous playbook discovery and execution across all sub-agents</span>
             </div>
             <div class="playbook-grid" id="playbookGrid">
                 <!-- Playbooks will be populated by JavaScript -->
@@ -1492,7 +1436,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        DefenseOrchestrator V3 online. Managing 8 honeypots, executing security playbooks, and coordinating with encryption sub-agents. Now includes EncryptionDeployer and CertificateManager integration for comprehensive defense.
+                        DefenseOrchestrator online. Coordinating with ThreatScanner for threat detection and NetworkMapper for asset discovery. Managing 8 honeypots and executing multi-agent security playbooks for comprehensive autonomous cyber defense.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1518,7 +1462,7 @@
         let autoTimelineInterval;
         let defenseFeedId = 'defense-feed';
 
-        // Defense data structures
+        // Defense data structures with multi-agent coordination
         const DefenseData = {
             honeypots: [
                 {
@@ -1527,7 +1471,7 @@
                     icon: '🔐',
                     details: 'Port 22 • 12 intrusions trapped',
                     status: 'ACTIVE',
-                    aiStatus: 'DefenseOrchestrator: Monitoring brute force attempts'
+                    aiStatus: 'DefenseOrchestrator + ThreatScanner: Monitoring brute force attempts'
                 },
                 {
                     id: 'web',
@@ -1535,7 +1479,7 @@
                     icon: '🌐',
                     details: 'Port 8080 • WordPress simulation',
                     status: 'ACTIVE',
-                    aiStatus: 'DefenseOrchestrator: Collecting attack patterns'
+                    aiStatus: 'DefenseOrchestrator + NetworkMapper: Collecting attack patterns'
                 },
                 {
                     id: 'database',
@@ -1543,7 +1487,7 @@
                     icon: '🗄️',
                     details: 'Port 3306 • MySQL with fake data',
                     status: 'ACTIVE',
-                    aiStatus: 'DefenseOrchestrator: Learning SQL injection patterns'
+                    aiStatus: 'DefenseOrchestrator + ThreatScanner: Learning SQL injection patterns'
                 },
                 {
                     id: 'ftp',
@@ -1551,7 +1495,7 @@
                     icon: '📁',
                     details: 'Port 21 • Ready to deploy',
                     status: 'STANDBY',
-                    aiStatus: 'DefenseOrchestrator: On standby for activation'
+                    aiStatus: 'DefenseOrchestrator: On standby for activation coordination'
                 },
                 {
                     id: 'email',
@@ -1559,7 +1503,7 @@
                     icon: '📧',
                     details: 'Port 25 • Collecting phishing attempts',
                     status: 'ACTIVE',
-                    aiStatus: 'DefenseOrchestrator: 89 phishing attempts trapped'
+                    aiStatus: 'DefenseOrchestrator + ThreatScanner: 89 phishing attempts trapped'
                 },
                 {
                     id: 'rdp',
@@ -1567,7 +1511,7 @@
                     icon: '🖥️',
                     details: 'Port 3389 • Windows Server simulation',
                     status: 'ACTIVE',
-                    aiStatus: 'DefenseOrchestrator: Analyzing credential attacks'
+                    aiStatus: 'DefenseOrchestrator + NetworkMapper: Analyzing credential attacks'
                 }
             ],
             playbooks: [
@@ -1627,6 +1571,32 @@
                     stats: 'Executed 15 times today',
                     agent: 'DefenseOrchestrator → EncryptionManager'
                 }
+            ],
+            coordination: [
+                {
+                    id: 'threat-defense',
+                    name: 'Threat Detection & Response',
+                    description: 'Real-time coordination between threat detection and automated response systems',
+                    icon: '🛡️',
+                    agents: 'DefenseOrchestrator ↔ ThreatScanner',
+                    status: 'ACTIVE'
+                },
+                {
+                    id: 'network-defense',
+                    name: 'Network Discovery & Protection',
+                    description: 'Automatic deployment of defense measures to newly discovered network assets',
+                    icon: '🌐',
+                    agents: 'DefenseOrchestrator ↔ NetworkMapper',
+                    status: 'ACTIVE'
+                },
+                {
+                    id: 'intelligence-defense',
+                    name: 'Intelligence-Driven Defense',
+                    description: 'ML-powered defense adaptation based on analytics and threat intelligence',
+                    icon: '🧠',
+                    agents: 'DefenseOrchestrator ↔ AnalyticsEngine',
+                    status: 'ACTIVE'
+                }
             ]
         };
 
@@ -1654,11 +1624,11 @@
                 activityFeedManager.initializeFeed(defenseFeedId, 'defense');
                 activityFeedManager.setFeedContainer(defenseFeedId, 'defenseActivityFeed');
                 
-                // Add initial messages
-                activityFeedManager.addMessage(defenseFeedId, '⚔️ DefenseOrchestrator V3 enhanced with encryption playbook coordination', '', 'DefenseOrchestrator');
-                activityFeedManager.addMessage(defenseFeedId, '🍯 Honeypot management: 8 active deception systems deployed', '', 'DefenseOrchestrator');
-                activityFeedManager.addMessage(defenseFeedId, '🔐 Encryption playbooks: 4 automation chains active', 'encryption', 'DefenseOrchestrator');
-                activityFeedManager.addMessage(defenseFeedId, '📋 Security playbooks: 8 response automations coordinated', '', 'DefenseOrchestrator');
+                // Add initial messages showing multi-agent coordination
+                activityFeedManager.addMessage(defenseFeedId, '⚔️ DefenseOrchestrator coordinating with ThreatScanner and NetworkMapper for comprehensive autonomous cyber defense', '', 'DefenseOrchestrator');
+                activityFeedManager.addMessage(defenseFeedId, '🍯 Honeypot management: 8 active deception systems with multi-agent threat correlation', '', 'DefenseOrchestrator');
+                activityFeedManager.addMessage(defenseFeedId, '🤝 Multi-agent coordination: 3 active partnerships for intelligent defense automation', '', 'DefenseOrchestrator → Main Agent');
+                activityFeedManager.addMessage(defenseFeedId, '📋 Security playbooks: 8 response automations across multiple sub-agents', '', 'DefenseOrchestrator');
                 
                 // Start auto-generation every 6 seconds for defense feed
                 activityFeedManager.startAutoGeneration(defenseFeedId, 6000);
@@ -1675,7 +1645,7 @@
 
             // Populate defense data sections
             populateHoneypots();
-            populateEncryptionPlaybooks();
+            populateCoordination();
             populateSecurityPlaybooks();
             initializeTimeline();
             
@@ -1715,94 +1685,31 @@
             });
         }
 
-        function populateEncryptionPlaybooks() {
-            const grid = document.getElementById('encryptionPlaybookGrid');
+        function populateCoordination() {
+            const grid = document.getElementById('coordinationGrid');
             if (!grid) return;
             
             grid.innerHTML = '';
 
-            // Use EncryptionPlaybooks from shared.js if available
-            if (typeof EncryptionPlaybooks !== 'undefined') {
-                EncryptionPlaybooks.forEach(playbook => {
-                    const card = document.createElement('div');
-                    card.className = 'encryption-playbook-card';
-                    card.onclick = () => showEncryptionPlaybookDetails(playbook.id);
-                    
-                    card.innerHTML = `
-                        <div class="encryption-playbook-header">
-                            <div style="text-align: center; flex: 1;">
-                                <div class="encryption-playbook-icon">🔐</div>
-                            </div>
-                            <div class="encryption-playbook-status active">ACTIVE</div>
-                        </div>
-                        <div class="encryption-playbook-name">${playbook.name}</div>
-                        <div class="encryption-playbook-description">${playbook.description}</div>
-                        <div class="encryption-playbook-stats">
-                            <span>Executions:</span>
-                            <span class="encryption-playbook-executions">${playbook.executions}</span>
-                        </div>
-                        <div class="encryption-playbook-agent">${playbook.agent}</div>
-                    `;
-                    
-                    grid.appendChild(card);
-                });
-            } else {
-                // Fallback data if shared.js not loaded
-                const fallbackPlaybooks = [
-                    {
-                        id: 'auto-encrypt-devices',
-                        name: 'Auto-encrypt New Devices',
-                        description: 'Automatically deploy encryption to newly discovered devices',
-                        executions: 47,
-                        agent: 'EncryptionDeployer → NetworkMapper'
-                    },
-                    {
-                        id: 'key-rotation',
-                        name: 'Quarterly Key Rotation',
-                        description: 'Rotate all encryption keys every 90 days',
-                        executions: 4,
-                        agent: 'CertificateManager → EncryptionManager'
-                    },
-                    {
-                        id: 'tls-enforcement',
-                        name: 'TLS Port Enforcement',
-                        description: 'Block unencrypted connections when open ports detected',
-                        executions: 23,
-                        agent: 'EncryptionDeployer → DefenseOrchestrator'
-                    },
-                    {
-                        id: 'compliance-scan',
-                        name: 'Compliance Gap Scanner',
-                        description: 'Scan for encryption compliance gaps across frameworks',
-                        executions: 12,
-                        agent: 'ComplianceMonitor → AnalyticsEngine'
-                    }
-                ];
+            DefenseData.coordination.forEach(coord => {
+                const card = document.createElement('div');
+                card.className = 'coordination-card';
+                card.onclick = () => showCoordinationDetails(coord.id);
                 
-                fallbackPlaybooks.forEach(playbook => {
-                    const card = document.createElement('div');
-                    card.className = 'encryption-playbook-card';
-                    card.onclick = () => showEncryptionPlaybookDetails(playbook.id);
-                    
-                    card.innerHTML = `
-                        <div class="encryption-playbook-header">
-                            <div style="text-align: center; flex: 1;">
-                                <div class="encryption-playbook-icon">🔐</div>
-                            </div>
-                            <div class="encryption-playbook-status active">ACTIVE</div>
+                card.innerHTML = `
+                    <div class="coordination-card-header">
+                        <div style="text-align: center; flex: 1;">
+                            <div class="coordination-card-icon">${coord.icon}</div>
                         </div>
-                        <div class="encryption-playbook-name">${playbook.name}</div>
-                        <div class="encryption-playbook-description">${playbook.description}</div>
-                        <div class="encryption-playbook-stats">
-                            <span>Executions:</span>
-                            <span class="encryption-playbook-executions">${playbook.executions}</span>
-                        </div>
-                        <div class="encryption-playbook-agent">${playbook.agent}</div>
-                    `;
-                    
-                    grid.appendChild(card);
-                });
-            }
+                        <div class="coordination-card-status">${coord.status}</div>
+                    </div>
+                    <div class="coordination-card-name">${coord.name}</div>
+                    <div class="coordination-card-description">${coord.description}</div>
+                    <div class="coordination-card-agents">${coord.agents}</div>
+                `;
+                
+                grid.appendChild(card);
+            });
         }
 
         function populateSecurityPlaybooks() {
@@ -1831,35 +1738,35 @@
             const timeline = document.getElementById('responseTimeline');
             if (!timeline) return;
             
-            // Initial timeline events
+            // Initial timeline events showing multi-agent coordination
             const initialEvents = [
                 { 
-                    icon: '🔐', 
-                    action: 'Encryption Deployed', 
+                    icon: '🤝', 
+                    action: 'Multi-Agent Coordination', 
                     time: new Date(),
-                    details: 'Auto-encryption playbook triggered for new device 192.168.1.105. TLS 1.3 + Kyber-1024 deployed.',
-                    agent: 'DefenseOrchestrator → EncryptionDeployer'
+                    details: 'DefenseOrchestrator coordinated with ThreatScanner to neutralize zero-day exploit targeting web services.',
+                    agent: 'DefenseOrchestrator → ThreatScanner'
                 },
                 { 
                     icon: '🛡️', 
                     action: 'Blocked Attack', 
                     time: new Date(Date.now() - 300000),
-                    details: 'SQL injection attempt blocked on web honeypot. Pattern matches CVE-2021-44228.',
-                    agent: 'DefenseOrchestrator'
+                    details: 'SQL injection attempt blocked on web honeypot. ThreatScanner pattern matching active.',
+                    agent: 'DefenseOrchestrator + ThreatScanner'
                 },
                 { 
                     icon: '🍯', 
                     action: 'Honeypot Triggered', 
                     time: new Date(Date.now() - 600000),
-                    details: 'SSH honeypot accessed from 185.220.101.45. Brute force attempt detected.',
-                    agent: 'DefenseOrchestrator'
+                    details: 'SSH honeypot accessed from 185.220.101.45. NetworkMapper correlating with asset discovery.',
+                    agent: 'DefenseOrchestrator + NetworkMapper'
                 },
                 { 
-                    icon: '📜', 
-                    action: 'Certificate Rotated', 
+                    icon: '🧠', 
+                    action: 'Intelligence Update', 
                     time: new Date(Date.now() - 900000),
-                    details: 'Quarterly key rotation playbook executed. 12 certificates updated with hybrid signatures.',
-                    agent: 'DefenseOrchestrator → CertificateManager'
+                    details: 'AnalyticsEngine provided threat prediction model updates for enhanced defense posture.',
+                    agent: 'DefenseOrchestrator + AnalyticsEngine'
                 }
             ];
 
@@ -1909,40 +1816,40 @@
         function generateTimelineEvent() {
             const events = [
                 { 
-                    icon: '🔐', 
-                    action: 'Encryption Deployed', 
-                    details: 'Auto-encryption triggered for ' + Math.floor(Math.random() * 5 + 1) + ' new devices. Hybrid algorithms deployed.',
-                    agent: 'DefenseOrchestrator → EncryptionDeployer'
+                    icon: '🤝', 
+                    action: 'Multi-Agent Response', 
+                    details: 'DefenseOrchestrator + ThreatScanner coordinated to block ' + Math.floor(Math.random() * 5 + 1) + ' simultaneous attacks.',
+                    agent: 'DefenseOrchestrator + ThreatScanner'
                 },
                 { 
-                    icon: '📜', 
-                    action: 'Certificate Renewed', 
-                    details: 'Certificate auto-renewal completed. New hybrid signature generated.',
-                    agent: 'DefenseOrchestrator → CertificateManager'
+                    icon: '🌐', 
+                    action: 'Network Asset Protection', 
+                    details: 'NetworkMapper discovered new device. DefenseOrchestrator deployed protection automatically.',
+                    agent: 'DefenseOrchestrator + NetworkMapper'
+                },
+                { 
+                    icon: '🧠', 
+                    action: 'Intelligence-Driven Defense', 
+                    details: 'AnalyticsEngine predicted attack vector. DefenseOrchestrator preemptively strengthened defenses.',
+                    agent: 'DefenseOrchestrator + AnalyticsEngine'
                 },
                 { 
                     icon: '🔒', 
-                    action: 'TLS Enforced', 
-                    details: 'Unencrypted port detected. TLS enforcement playbook activated.',
-                    agent: 'DefenseOrchestrator → EncryptionDeployer'
-                },
-                { 
-                    icon: '✅', 
-                    action: 'Compliance Gap Fixed', 
-                    details: 'Compliance scanner found gap. Automated remediation completed.',
-                    agent: 'DefenseOrchestrator → ComplianceMonitor'
+                    action: 'Encryption Coordination', 
+                    details: 'EncryptionManager rotated keys. DefenseOrchestrator updated security protocols accordingly.',
+                    agent: 'DefenseOrchestrator + EncryptionManager'
                 },
                 { 
                     icon: '🛡️', 
                     action: 'Attack Blocked', 
-                    details: `${['DDoS', 'SQL Injection', 'XSS', 'Brute Force'][Math.floor(Math.random() * 4)]} attack blocked automatically.`,
+                    details: `${['DDoS', 'SQL Injection', 'XSS', 'Brute Force'][Math.floor(Math.random() * 4)]} attack blocked via multi-agent coordination.`,
                     agent: 'DefenseOrchestrator'
                 },
                 { 
                     icon: '🍯', 
                     action: 'Honeypot Triggered', 
-                    details: 'Honeypot detected intrusion. Data collected for threat intelligence.',
-                    agent: 'DefenseOrchestrator'
+                    details: 'Honeypot detected intrusion. ThreatScanner analyzing patterns for threat intelligence.',
+                    agent: 'DefenseOrchestrator + ThreatScanner'
                 }
             ];
             
@@ -1976,32 +1883,6 @@
         }
 
         // Detail view functions using shared chat system
-        function showStatusDetails(type) {
-            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
-                window.sentinelChat.toggle();
-            }
-            setTimeout(() => {
-                let message = '';
-                switch(type) {
-                    case 'mode':
-                        message = 'DefenseOrchestrator: Active defense mode with 8 honeypots and 4 encryption playbooks. All systems protected with hybrid-resistant logging.';
-                        break;
-                    case 'response':
-                        message = 'DefenseOrchestrator: Average response time 0.3s including encryption playbook execution. All responses Dilithium-3 signed.';
-                        break;
-                    case 'success':
-                        message = 'DefenseOrchestrator: 99.7% success rate. 47 attacks trapped, 4 encryption playbooks executed successfully today.';
-                        break;
-                    case 'automation':
-                        message = 'DefenseOrchestrator: Full automation with encryption coordination. Working with EncryptionDeployer and CertificateManager.';
-                        break;
-                }
-                if (window.sentinelChat) {
-                    window.sentinelChat.addMessage(message, false);
-                }
-            }, 300);
-        }
-
         function showHoneypotDetails(honeypotId) {
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
                 window.sentinelChat.toggle();
@@ -2011,44 +1892,33 @@
                     window.sentinelChat.addMessage(`Routing to DefenseOrchestrator sub-agent...`, false, 'system');
                     setTimeout(() => {
                         const details = {
-                            'ssh': 'SSH Honeypot: 3 active sessions monitored. 147 login attempts logged with hybrid encryption. Tracking 12 unique attack sources.',
-                            'web': 'Web Decoy: WordPress 4.5 simulation capturing SQL injections. Session data protected with AES-256-GCM + Kyber-1024.',
-                            'database': 'Database Honeypot: MySQL with fake customer records. Learning attack patterns with AnalyticsEngine. 23 SQL injection attempts today.',
-                            'ftp': 'FTP Trap: On standby mode. Ready for instant deployment. Will simulate vulnerable FTP service with hybrid logging.',
-                            'email': 'Email Decoy: 89 phishing emails trapped today. DefenseOrchestrator analyzing patterns for campaign detection.',
-                            'rdp': 'RDP Honeypot: Windows Server simulation active. 45 credential attacks captured with full session recording and hybrid encryption.'
+                            'ssh': 'DefenseOrchestrator + ThreatScanner: SSH Honeypot monitoring 3 active sessions. 147 login attempts logged with threat correlation. Tracking 12 unique attack sources across network.',
+                            'web': 'DefenseOrchestrator + NetworkMapper: Web Decoy capturing SQL injections. Session data correlated with asset discovery. Real-time threat pattern analysis active.',
+                            'database': 'DefenseOrchestrator + ThreatScanner: Database Honeypot with fake records. ML threat analysis via AnalyticsEngine. 23 SQL injection attempts today.',
+                            'ftp': 'DefenseOrchestrator: FTP Trap on standby. Ready for instant multi-agent deployment coordination. Will integrate with ThreatScanner for attack analysis.',
+                            'email': 'DefenseOrchestrator + ThreatScanner: Email Decoy trapped 89 phishing emails. Campaign detection with threat intelligence correlation active.',
+                            'rdp': 'DefenseOrchestrator + NetworkMapper: RDP Honeypot simulating Windows Server. 45 credential attacks captured with network topology correlation.'
                         };
-                        window.sentinelChat.addMessage(`DefenseOrchestrator: ${details[honeypotId]}`, false);
+                        window.sentinelChat.addMessage(`${details[honeypotId]}`, false);
                     }, 800);
                 }
             }, 300);
         }
 
-        function showEncryptionPlaybookDetails(playbookId) {
+        function showCoordinationDetails(coordId) {
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
                 window.sentinelChat.toggle();
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage('Routing to encryption playbook system...', false, 'system');
+                    window.sentinelChat.addMessage('Accessing multi-agent coordination details...', false, 'system');
                     setTimeout(() => {
                         const details = {
-                            'auto-encrypt-devices': 'DefenseOrchestrator → EncryptionDeployer: Auto-encryption active for new devices. 47 deployments completed. Uses TLS 1.3 + Kyber-1024 by default.',
-                            'key-rotation': 'DefenseOrchestrator → CertificateManager: Quarterly rotation active. Next rotation in 67 days. All certificates use hybrid signatures.',
-                            'tls-enforcement': 'DefenseOrchestrator → EncryptionDeployer: TLS enforcement triggers when unencrypted ports detected. 23 automatic enforcements today.',
-                            'compliance-scan': 'DefenseOrchestrator → ComplianceMonitor: Compliance gap scanner active. Monitors SOC2, ISO27001, NIST, and PCI DSS requirements.'
+                            'threat-defense': 'Threat Detection & Response Coordination: DefenseOrchestrator receives real-time threat alerts from ThreatScanner and automatically deploys countermeasures. Average response time: 0.3 seconds. 147 coordinated responses today.',
+                            'network-defense': 'Network Discovery & Protection Coordination: NetworkMapper reports new assets to DefenseOrchestrator for automatic protection deployment. 15 new devices secured today with immediate honeypot and firewall rule deployment.',
+                            'intelligence-defense': 'Intelligence-Driven Defense Coordination: AnalyticsEngine provides predictive models to DefenseOrchestrator for proactive defense adjustments. ML-powered threat prediction accuracy: 99.7%.'
                         };
-                        
-                        let playbookData;
-                        if (typeof EncryptionPlaybooks !== 'undefined') {
-                            playbookData = EncryptionPlaybooks.find(p => p.id === playbookId);
-                        }
-                        
-                        const message = details[playbookId] || 
-                            (playbookData ? `DefenseOrchestrator: ${playbookData.name} - ${playbookData.description}. Executed ${playbookData.executions} times. Agent chain: ${playbookData.agent}.` : 
-                            `DefenseOrchestrator: Encryption playbook ${playbookId} coordinating with sub-agents for automated defense.`);
-                        
-                        window.sentinelChat.addMessage(message, false);
+                        window.sentinelChat.addMessage(`${details[coordId]}`, false);
                     }, 800);
                 }
             }, 300);
@@ -2060,17 +1930,17 @@
             }
             setTimeout(() => {
                 const details = {
-                    'ddos': 'DDoS Playbook: Rate limiting + traffic filtering coordination. DefenseOrchestrator works with ThreatScanner. Average mitigation time: 1.2 seconds.',
-                    'malware': 'Malware Playbook: Instant host isolation by DefenseOrchestrator. NetworkMapper identifies infected systems. All samples encrypted for analysis.',
-                    'phishing': 'Phishing Playbook: Email quarantine + user notification system. DefenseOrchestrator coordinates with ThreatScanner. 89 attacks neutralized today.',
-                    'insider': 'Insider Threat: Evidence collection by LogAgent with chain of custody. DefenseOrchestrator ensures Dilithium-3 signatures on forensic data.',
-                    'ransomware': 'Ransomware Defense: Instant backup trigger by EncryptionManager. DefenseOrchestrator coordinates full system response. Zero data loss record.',
-                    'zeroday': 'Zero-Day Response: Virtual patches deployed autonomously. DefenseOrchestrator + AnalyticsEngine predict and prevent unknown attacks.',
-                    'lateral': 'Lateral Movement Defense: Network segmentation enforcement. DefenseOrchestrator works with NetworkMapper to isolate suspicious traffic patterns.',
-                    'data_exfil': 'Data Exfiltration Block: Real-time data loss prevention. EncryptionManager encrypts sensitive data while DefenseOrchestrator blocks unauthorized transfers.'
+                    'ddos': 'DDoS Playbook: Rate limiting + traffic filtering via multi-agent coordination. DefenseOrchestrator works with ThreatScanner for pattern recognition. Average mitigation time: 1.2 seconds.',
+                    'malware': 'Malware Playbook: Instant host isolation by DefenseOrchestrator. NetworkMapper identifies infected systems across network topology. All samples analyzed via AnalyticsEngine.',
+                    'phishing': 'Phishing Playbook: Email quarantine + user notification system. DefenseOrchestrator coordinates with ThreatScanner for campaign detection. 89 attacks neutralized today.',
+                    'insider': 'Insider Threat Playbook: Evidence collection by LogAgent with DefenseOrchestrator coordination. Multi-agent behavioral analysis via AnalyticsEngine for pattern detection.',
+                    'ransomware': 'Ransomware Defense Playbook: Instant backup trigger coordination with EncryptionManager. DefenseOrchestrator orchestrates full system response across all agents.',
+                    'zeroday': 'Zero-Day Response Playbook: Virtual patches deployed via DefenseOrchestrator + AnalyticsEngine coordination. Predictive threat modeling prevents unknown attack vectors.',
+                    'lateral': 'Lateral Movement Defense: Network segmentation enforcement via DefenseOrchestrator + NetworkMapper. Real-time traffic analysis isolates suspicious patterns.',
+                    'data_exfil': 'Data Exfiltration Block: Real-time DLP via EncryptionManager + DefenseOrchestrator coordination. Automated encryption of sensitive data during transfer attempts.'
                 };
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage(`DefenseOrchestrator: ${details[playbookId]}`, false);
+                    window.sentinelChat.addMessage(`${details[playbookId]}`, false);
                 }
             }, 300);
         }
@@ -2081,11 +1951,7 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    if (type === 'classical') {
-                        window.sentinelChat.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all defense systems. Performance: 2.1M ops/sec. Integration with DefenseOrchestrator: Real-time response encryption.`, false);
-                    } else {
-                        window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all defense operations. DefenseOrchestrator reports all playbooks hybrid-ready.`, false);
-                    }
+                    window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption coordinating with DefenseOrchestrator for security operations. Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all defense coordination channels and response data.`, false);
                 }
             }, 300);
         }
@@ -2164,7 +2030,7 @@
                     startTimelineGeneration();
                     if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                         activityFeedManager.startAutoGeneration(defenseFeedId, 6000);
-                        activityFeedManager.addMessage(defenseFeedId, '🤖 Main Agent resumed: Defense automation enabled', '', 'Main Agent');
+                        activityFeedManager.addMessage(defenseFeedId, '🤖 Main Agent resumed: Multi-agent defense coordination enabled', '', 'Main Agent');
                     }
                 } else {
                     if (agentStatus) {
@@ -2184,21 +2050,21 @@
                     if (autoTimelineInterval) clearInterval(autoTimelineInterval);
                     if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                         activityFeedManager.stopAutoGeneration(defenseFeedId);
-                        activityFeedManager.addMessage(defenseFeedId, '⚠️ Main Agent paused: Manual defense control only', 'warning', 'Main Agent');
+                        activityFeedManager.addMessage(defenseFeedId, '⚠️ Main Agent paused: Manual defense control only, multi-agent coordination suspended', 'warning', 'Main Agent');
                     }
                 }
                 
                 closeModal();
                 
                 if (SentinelState.chatOpen && window.sentinelChat) {
-                    const status = SentinelState.agentActive ? 'resumed autonomous operation with defense automation' : 'switched to manual control mode';
-                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. DefenseOrchestrator coordination ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
+                    const status = SentinelState.agentActive ? 'resumed autonomous operation with multi-agent defense coordination' : 'switched to manual control mode';
+                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. DefenseOrchestrator coordination with ThreatScanner and NetworkMapper ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
                 }
             }
         };
         
         window.handleLogout = () => {
-            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your systems autonomously.')) {
+            if (confirm('Are you sure you want to logout? The AI agent will continue autonomous cyber defense coordination across all sub-agents.')) {
                 localStorage.removeItem('sentinel_auth');
                 localStorage.removeItem('sentinel_scale');
                 window.location.href = 'index.html';
