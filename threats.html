@@ -183,7 +183,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badge - Matching dashboard style */
+        /* Encryption Status Badge */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -324,7 +324,7 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner - FIXED STANDARDIZED 90px HEIGHT */
+        /* Sub-Agent Status Banner - EXACT 90px HEIGHT FROM SHARED.JS */
         .sub-agent-status {
             background: linear-gradient(135deg, rgba(255, 0, 68, 0.1) 0%, rgba(255, 68, 68, 0.05) 100%);
             border: 1px solid rgba(255, 0, 68, 0.3);
@@ -429,7 +429,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* Main Content Grid - FIXED BALANCED HEIGHTS */
+        /* CRITICAL FIX: Main Content Grid with PERFECT Height Matching */
         .main-content {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -448,14 +448,15 @@
             display: flex;
             flex-direction: column;
             gap: 25px;
-            height: 100%;
         }
 
-        /* CRITICAL FIX: Force exact height matching */
+        /* EXACT HEIGHT CALCULATION: Left column total height = Right column total height */
+        /* Active Threats: ~600px + Threat Intelligence: ~600px + gap: 25px = ~1225px total */
+        /* Right column: Each module = (1225px - 25px gap) / 2 = 600px each */
         .right-column .section-card {
-            height: 552px !important;
-            max-height: 552px !important;
-            min-height: 552px !important;
+            height: 600px !important;
+            max-height: 600px !important;
+            min-height: 600px !important;
             display: flex !important;
             flex-direction: column !important;
         }
@@ -530,6 +531,8 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 20px;
+            overflow-y: auto;
+            padding-right: 10px;
         }
 
         .threat-card {
@@ -682,7 +685,7 @@
             gap: 5px;
         }
 
-        /* FIXED: Threat Classification & Analysis - Scrollable content with proper height */
+        /* Threat Classification & Analysis - Perfect scrollable content */
         .threat-analysis-content {
             flex: 1;
             overflow-y: auto;
@@ -693,11 +696,11 @@
         .threat-analysis-list {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
 
         .threat-analysis-item {
-            padding: 18px;
+            padding: 16px;
             border-radius: 12px;
             border-left: 4px solid;
             display: flex;
@@ -707,7 +710,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            min-height: 85px;
+            min-height: 80px;
             gap: 15px;
         }
 
@@ -825,7 +828,7 @@
             border: 1px solid var(--success);
         }
 
-        /* Threat Intelligence & Correlation - Balanced height with scrollable content */
+        /* Threat Intelligence & Correlation */
         .intelligence-section {
             flex: 1;
             display: flex;
@@ -842,19 +845,19 @@
         .intelligence-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 15px;
         }
 
         .intelligence-card {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.05) 0%, rgba(0, 204, 255, 0.02) 100%);
             border: 1px solid rgba(124, 58, 237, 0.3);
             border-radius: 12px;
-            padding: 20px;
+            padding: 18px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 160px;
+            min-height: 140px;
             display: flex;
             flex-direction: column;
         }
@@ -884,22 +887,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .intelligence-title {
             font-weight: bold;
             color: var(--accent);
-            font-size: 16px;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .intelligence-status {
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
             background: rgba(124, 58, 237, 0.2);
@@ -910,34 +913,34 @@
         .intelligence-metrics {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-            margin-bottom: 15px;
+            gap: 8px;
+            margin-bottom: 12px;
         }
 
         .intelligence-metric {
             text-align: center;
-            padding: 8px;
+            padding: 6px;
             background: rgba(255, 255, 255, 0.02);
             border-radius: 6px;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .intelligence-metric-value {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             color: var(--accent);
-            margin-bottom: 3px;
+            margin-bottom: 2px;
         }
 
         .intelligence-metric-label {
-            font-size: 9px;
+            font-size: 8px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .intelligence-coordination {
-            padding: 12px;
+            padding: 10px;
             background: rgba(124, 58, 237, 0.05);
             border: 1px solid rgba(124, 58, 237, 0.2);
             border-radius: 8px;
@@ -945,10 +948,10 @@
         }
 
         .coordination-title {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             color: var(--accent);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -956,21 +959,21 @@
         .coordination-agents {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 4px;
         }
 
         .coordination-agent {
-            padding: 3px 8px;
+            padding: 2px 6px;
             background: rgba(0, 255, 136, 0.1);
             border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 8px;
-            font-size: 9px;
+            border-radius: 6px;
+            font-size: 8px;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        /* FIXED: Threat Hunting & Investigation - Scrollable content with proper height */
+        /* Threat Hunting & Investigation - Perfect scrollable content */
         .threat-hunting-content {
             flex: 1;
             overflow-y: auto;
@@ -981,19 +984,19 @@
         .threat-hunting-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 15px;
         }
 
         .threat-hunting-card {
             background: linear-gradient(135deg, rgba(255, 170, 0, 0.05) 0%, rgba(255, 68, 68, 0.02) 100%);
             border: 1px solid rgba(255, 170, 0, 0.3);
             border-radius: 12px;
-            padding: 22px;
+            padding: 18px;
             transition: all 0.3s ease;
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            min-height: 200px;
+            min-height: 180px;
         }
 
         .threat-hunting-card::before {
@@ -1031,22 +1034,22 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .hunting-title {
             font-weight: bold;
             color: var(--warning);
-            font-size: 16px;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .hunting-priority {
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 10px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 9px;
             font-weight: bold;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -1071,21 +1074,21 @@
         }
 
         .hunting-description {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-secondary);
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             line-height: 1.4;
         }
 
         .hunting-iocs {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .hunting-iocs-title {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             color: var(--warning);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -1093,71 +1096,71 @@
         .hunting-iocs-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 4px;
         }
 
         .hunting-ioc {
-            padding: 3px 8px;
+            padding: 2px 6px;
             background: rgba(255, 170, 0, 0.1);
             border: 1px solid rgba(255, 170, 0, 0.3);
-            border-radius: 8px;
-            font-size: 10px;
+            border-radius: 6px;
+            font-size: 9px;
             color: var(--warning);
             font-family: 'Courier New', monospace;
         }
 
         .hunting-progress {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
 
         .hunting-progress-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
         }
 
         .hunting-progress-label {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
         .hunting-progress-percent {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--warning);
             font-weight: bold;
         }
 
         .hunting-progress-bar {
             width: 100%;
-            height: 6px;
+            height: 4px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
+            border-radius: 2px;
             overflow: hidden;
         }
 
         .hunting-progress-fill {
             height: 100%;
             background: var(--gradient-1);
-            border-radius: 3px;
+            border-radius: 2px;
             transition: width 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 170, 0, 0.5);
+            box-shadow: 0 0 8px rgba(255, 170, 0, 0.5);
         }
 
         .hunting-agents {
-            padding: 12px;
+            padding: 10px;
             background: rgba(255, 170, 0, 0.05);
             border: 1px solid rgba(255, 170, 0, 0.2);
             border-radius: 8px;
         }
 
         .hunting-agents-title {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             color: var(--warning);
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -1165,15 +1168,15 @@
         .hunting-agents-list {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
+            gap: 4px;
         }
 
         .hunting-agent {
-            padding: 3px 8px;
+            padding: 2px 6px;
             background: rgba(0, 255, 136, 0.1);
             border: 1px solid rgba(0, 255, 136, 0.3);
-            border-radius: 8px;
-            font-size: 9px;
+            border-radius: 6px;
+            font-size: 8px;
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -1353,7 +1356,7 @@
             letter-spacing: 1px;
         }
 
-        /* Activity Feed using shared.js infrastructure */
+        /* Activity Feed */
         .activity-feed {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -1950,7 +1953,7 @@
             </a>
         </nav>
 
-        <!-- FIXED: Sub-Agent Status Banner - STANDARDIZED with proper metric layout -->
+        <!-- Sub-Agent Status Banner - EXACT 90px HEIGHT -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">🛡️</div>
@@ -2156,7 +2159,7 @@
         let automationExecutionInterval;
         let threatFeedId = 'threats-feed';
 
-        // Enhanced V4 threat data - leveraging shared.js for sub-agent coordination
+        // Enhanced V4 threat data with MORE CONTENT to fill modules properly
         const ThreatData = {
             activeThreats: [
                 {
@@ -2256,6 +2259,7 @@
                     subAgent: 'ThreatScanner → VPNMonitor'
                 }
             ],
+            // EXPANDED threat analysis to fill right column properly
             threatAnalysis: [
                 {
                     id: 'malware-family',
@@ -2356,6 +2360,26 @@
                     description: 'Code injection via process hollowing to evade detection',
                     severity: 'high',
                     score: '8.6'
+                },
+                {
+                    id: 'steganography-detect',
+                    title: 'Steganography Detection',
+                    category: 'Image Files',
+                    indicators: '234 files',
+                    confidence: '88%',
+                    description: 'Hidden payloads in image files for covert communication',
+                    severity: 'medium',
+                    score: '7.9'
+                },
+                {
+                    id: 'fileless-malware',
+                    title: 'Fileless Malware Analysis',
+                    category: 'Memory Resident',
+                    indicators: '45 processes',
+                    confidence: '95%',
+                    description: 'PowerShell-based fileless malware execution patterns',
+                    severity: 'critical',
+                    score: '9.1'
                 }
             ],
             threatIntelligence: [
@@ -2426,6 +2450,7 @@
                     agents: ['ThreatScanner', 'LogAgent', 'AnalyticsEngine']
                 }
             ],
+            // EXPANDED threat hunting to fill right column properly
             threatHunting: [
                 {
                     id: 'apt-campaign-hunt',
@@ -2516,6 +2541,36 @@
                         'MITRE:T1071'
                     ],
                     agents: ['ThreatScanner', 'NetworkMapper', 'VPNMonitor', 'AnalyticsEngine']
+                },
+                {
+                    id: 'zero-day-hunt',
+                    title: '🔍 Zero-Day Hunt',
+                    priority: 'critical',
+                    status: 'active',
+                    progress: 34,
+                    description: 'Hunting for zero-day exploits targeting unpatched vulnerabilities in web application frameworks',
+                    iocs: [
+                        'CVE-2025-XXXX',
+                        'exploit.payload',
+                        'framework-rce',
+                        'MITRE:T1190'
+                    ],
+                    agents: ['ThreatScanner', 'AI Engine', 'NetworkMapper', 'DefenseOrchestrator']
+                },
+                {
+                    id: 'lateral-movement-hunt',
+                    title: '🔄 Lateral Movement Hunt',
+                    priority: 'medium',
+                    status: 'investigating',
+                    progress: 72,
+                    description: 'Tracking sophisticated lateral movement techniques across segmented network environments',
+                    iocs: [
+                        'admin-shares',
+                        'wmi-process',
+                        'remote-exec',
+                        'MITRE:T1021'
+                    ],
+                    agents: ['ThreatScanner', 'NetworkMapper', 'AnalyticsEngine', 'LogAgent']
                 }
             ],
             responseAutomation: [
@@ -2594,7 +2649,7 @@
             ]
         };
 
-        // Threats page initialization using shared.js infrastructure
+        // Threats page initialization
         document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 initializeThreatsPage();
@@ -2602,28 +2657,26 @@
         });
 
         function initializeThreatsPage() {
-            // Initialize neural background first
+            // Initialize neural background
             if (typeof initNeuralBackground === 'function') {
                 initNeuralBackground();
             }
 
-            // Initialize page context for shared.js
+            // Initialize page context
             if (typeof initializePageContext === 'function') {
                 initializePageContext();
             }
 
-            // Initialize enhanced module balance manager from shared.js - CRITICAL FOR MODULE BALANCE
+            // CRITICAL: Initialize module balance manager
             if (typeof ModuleBalanceManager !== 'undefined') {
                 ModuleBalanceManager.initializeBalancedModules();
             }
 
-            // Initialize threats activity feed using shared.js ActivityFeedManager
+            // Initialize activity feed
             if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                // Initialize threats feed
                 activityFeedManager.initializeFeed(threatFeedId, 'threats');
                 activityFeedManager.setFeedContainer(threatFeedId, 'threatActivityFeed');
                 
-                // Add initial messages with staggered loading
                 setTimeout(() => {
                     activityFeedManager.addMessage(threatFeedId, '🛡️ ThreatScanner V4 enhanced with AI correlation engine active', '', 'ThreatScanner');
                 }, 800);
@@ -2640,7 +2693,6 @@
                     activityFeedManager.addMessage(threatFeedId, '⚡ DefenseOrchestrator deployed honeypot targeting ransomware group', '', 'DefenseOrchestrator');
                 }, 3800);
                 
-                // Start auto-generation after initial messages are loaded
                 setTimeout(() => {
                     activityFeedManager.startAutoGeneration(threatFeedId, 7000);
                 }, 5000);
@@ -2650,23 +2702,23 @@
                 return;
             }
 
-            // Initialize chat system from shared.js
+            // Initialize chat system
             if (typeof SentinelChat !== 'undefined') {
                 window.sentinelChat = new SentinelChat();
             }
 
-            // Populate all threat data sections
+            // Populate all sections
             populateActiveThreats();
             populateThreatAnalysis();
             populateThreatIntelligence();
             populateThreatHunting();
             populateResponseAutomation();
             
-            // Start automated threat simulation
+            // Start simulations
             startThreatSimulation();
             startAutomationSimulation();
             
-            // Start periodic updates
+            // Start updates
             setInterval(() => {
                 updateThreatMetrics();
             }, 4000);
@@ -2881,7 +2933,7 @@
             });
         }
 
-        // Rest of the JavaScript functions remain the same...
+        // All other functions remain the same...
         function startThreatSimulation() {
             if (autoThreatInterval) clearInterval(autoThreatInterval);
             
@@ -2994,7 +3046,6 @@
             }
         }
 
-        // Update functions and other methods continue as before...
         function updateThreatMetrics() {
             if (Math.random() > 0.9) {
                 const threatEl = document.getElementById('activeThreats');
@@ -3139,7 +3190,7 @@
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
                 window.sentinelChat.toggle();
             }
-            setTimeout (() => {
+            setTimeout(() => {
                 const hunt = ThreatData.threatHunting.find(h => h.id === huntId);
                 if (hunt && window.sentinelChat) {
                     window.sentinelChat.addMessage(`ThreatScanner Hunt: ${hunt.title}
