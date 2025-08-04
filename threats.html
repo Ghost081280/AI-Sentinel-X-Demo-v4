@@ -444,30 +444,27 @@
             flex-direction: column;
         }
 
-        /* Right column should match left column total height */
+        /* CRITICAL FIX: Right column modules must match left column total height */
+        .main-content {
+            align-items: flex-start; /* Don't stretch items */
+        }
+
         .right-column {
-            height: 1205px; /* This should match the total height of left column */
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            height: 100%; /* Take full height of grid */
         }
 
-        /* FIXED: Make the right column cards fill available height properly - EQUAL SPLIT */
-        .right-column > .section-card {
-            height: 575px !important;
-            min-height: 575px !important;
-            max-height: 575px !important;
-            flex: none !important;
-            margin-bottom: 25px;
+        /* Calculate: Need to match left column height exactly */
+        .right-column .section-card:nth-child(1) {
+            flex: 1;
+            min-height: 500px;
         }
 
-        .right-column > .section-card:last-child {
-            margin-bottom: 0;
-        }
-
-        /* Force the content areas to be scrollable */
-        .right-column .threat-analysis-content,
-        .right-column .threat-hunting-content {
-            flex: 1 !important;
-            overflow-y: auto !important;
-            min-height: 0 !important;
+        .right-column .section-card:nth-child(2) {
+            flex: 1; 
+            min-height: 500px;
         }
 
         .section-header {
