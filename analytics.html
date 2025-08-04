@@ -1081,7 +1081,7 @@
             bottom: 80px;
             right: 0;
             width: 400px;
-            height: 600px;
+            height: 500px;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 20px;
@@ -1110,6 +1110,7 @@
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
+            flex-shrink: 0;
         }
 
         .ai-chat-status {
@@ -1183,6 +1184,7 @@
             display: flex;
             gap: 15px;
             align-items: center;
+            flex-shrink: 0;
         }
 
         .ai-chat-input {
@@ -1193,11 +1195,16 @@
             padding: 12px 15px;
             color: var(--text-primary);
             font-size: 14px;
+            font-family: inherit;
         }
 
         .ai-chat-input:focus {
             outline: none;
             border-color: var(--primary);
+        }
+
+        .ai-chat-input::placeholder {
+            color: var(--text-secondary);
         }
 
         .ai-chat-send {
@@ -1222,6 +1229,7 @@
             font-size: 12px;
             color: var(--warning);
             display: none;
+            flex-shrink: 0;
         }
 
         .cli-mode-indicator.active {
@@ -1347,7 +1355,7 @@
             
             .ai-chat-window {
                 width: calc(100vw - 40px);
-                height: calc(100vh - 120px);
+                height: calc(100vh - 140px);
                 right: -20px;
                 bottom: 80px;
             }
