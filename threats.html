@@ -1136,12 +1136,15 @@
             letter-spacing: 1px;
         }
 
-        /* Threat Response Automation */
+        /* Threat Response Automation - Fixed spacing */
+        .section-card.threat-response-section {
+            margin-bottom: 30px; /* THIS IS THE CORRECT FIX - SPACING ON THE SECTION CARD */
+        }
+
         .response-automation-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
-            margin-bottom: 30px; /* ADDED SPACING HERE - THIS FIXES THE ISSUE */
         }
 
         .response-automation-card {
@@ -1867,13 +1870,9 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
-                            <div class="status-light active" id="quantumStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge classical" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light active"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
@@ -2035,7 +2034,7 @@
         </div>
 
         <!-- Threat Response Automation -->
-        <div class="section-card">
+        <div class="section-card threat-response-section">
             <div class="section-header">
                 <h2 class="section-title">
                     <span>🚀</span>
@@ -3105,11 +3104,7 @@
             }
             setTimeout(() => {
                 if (sentinelChat) {
-                    if (type === 'classical') {
-                        sentinelChat.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all threat detection systems. Performance: 2.1M ops/sec. Integration with ThreatScanner: Real-time threat data encryption.`, false);
-                    } else {
-                        sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all threat intelligence. ThreatScanner reports all data hybrid-resistant.`, false);
-                    }
+                    sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3, SPHINCS+) combined with proven classical encryption (AES-256-GCM, ChaCha20-Poly1305). All threat detection systems protected with hybrid-resistant algorithms across 247 devices.`, false);
                 }
             }, 300);
         }
