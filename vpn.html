@@ -806,12 +806,28 @@
             color: var(--text-secondary);
         }
 
-        /* Protocols List - Precisely calculated height to match Live Connections bottom perfectly */
+        /* Security Overview - Match exact height of Live Connections module */
+        .right-column .section-card:last-child {
+            height: 585px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .right-column .section-card:last-child .security-overview-grid {
+            flex-shrink: 0;
+        }
+
+        .right-column .section-card:last-child .protocols-list {
+            flex: 1;
+            min-height: 0;
+        }
+
+        /* Protocols List - Let it fill remaining space */
         .protocols-list {
             display: flex;
             flex-direction: column;
             gap: 10px;
-            height: 295px;
+            height: auto;
             overflow-y: auto;
             padding-right: 5px;
         }
