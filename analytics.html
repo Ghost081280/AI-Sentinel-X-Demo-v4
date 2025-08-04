@@ -186,7 +186,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badges */
+        /* Encryption Status Badge - Matching other pages */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -198,48 +198,34 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
             border-radius: 20px;
-            font-weight: bold;
             font-size: 12px;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .encryption-badge.classical {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .encryption-badge.quantum {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
+        .encryption-badge:hover {
+            background: rgba(0, 255, 136, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 2s ease-in-out infinite;
-        }
-
-        .status-light.active {
             background: var(--success);
-            box-shadow: 0 0 10px var(--success);
-        }
-
-        .status-light.inactive {
-            background: var(--danger);
-            box-shadow: 0 0 10px var(--danger);
+            box-shadow: 0 0 8px var(--success);
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         @keyframes statusPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.2); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
         .agent-status {
@@ -342,25 +328,27 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner - FIXED TO MATCH THREATS/NETWORK PAGES */
+        /* Sub-Agent Status Banner - Standardized from shared.js */
         .sub-agent-status {
             background: linear-gradient(135deg, rgba(0, 204, 255, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
             border: 1px solid rgba(0, 204, 255, 0.3);
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 15px 20px !important;
+            margin-bottom: 25px !important;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 20px;
             backdrop-filter: blur(15px);
+            min-height: 90px !important;
+            max-height: 90px !important;
         }
 
         .sub-agent-info {
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         .sub-agent-icon {
@@ -373,6 +361,7 @@
             justify-content: center;
             font-size: 24px;
             box-shadow: 0 4px 20px rgba(0, 204, 255, 0.3);
+            flex-shrink: 0;
         }
 
         .sub-agent-details h3 {
@@ -389,6 +378,7 @@
         .sub-agent-metrics {
             display: flex;
             gap: 30px;
+            flex-shrink: 0;
         }
 
         .metric {
@@ -396,13 +386,14 @@
         }
 
         .metric-value {
-            font-size: 24px;
+            font-size: 24px !important;
             font-weight: bold;
             color: var(--secondary);
+            margin-bottom: 3px;
         }
 
         .metric-label {
-            font-size: 12px;
+            font-size: 12px !important;
             color: var(--text-secondary);
             text-transform: uppercase;
         }
@@ -646,14 +637,14 @@
             color: var(--danger);
         }
 
-        /* Log Agent Section - ENHANCED WITH MORE SPACE */
+        /* Log Agent Section - Enhanced with Fixed Height and Scrolling */
         .log-agent {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 15px;
             padding: 25px;
             backdrop-filter: blur(15px);
-            min-height: 600px;
+            height: 500px; /* Fixed height to match AnalyticsEngine */
             display: flex;
             flex-direction: column;
         }
@@ -705,12 +696,12 @@
             color: var(--primary);
         }
 
-        /* Log Feed - ENHANCED TO FILL SPACE */
+        /* Log Feed - Enhanced with Scrolling */
         .log-feed {
             flex: 1;
             overflow-y: auto;
             padding-right: 10px;
-            min-height: 500px;
+            max-height: 380px; /* Proper max height for scrolling */
         }
 
         .log-entry {
@@ -1415,6 +1406,8 @@
             .sub-agent-status {
                 flex-direction: column;
                 text-align: center;
+                min-height: auto !important;
+                max-height: none !important;
             }
 
             .hub-header {
@@ -1494,15 +1487,10 @@
                     </div>
                 </div>
                 <div class="header-right">
-                    <!-- Separate Encryption Badges -->
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum">
-                            <div class="status-light active" id="quantumStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
@@ -1557,7 +1545,7 @@
             </a>
         </nav>
 
-        <!-- Sub-Agent Status Banner - FIXED TO MATCH OTHER PAGES -->
+        <!-- Sub-Agent Status Banner -->
         <div class="sub-agent-status">
             <div class="sub-agent-info">
                 <div class="sub-agent-icon">📊</div>
@@ -1647,7 +1635,7 @@
                     <!-- Metrics will be populated by JavaScript -->
                 </div>
 
-                <!-- Additional Analytics Content -->
+                <!-- Additional Analytics Content - Trimmed for Balance -->
                 <div style="margin-top: 30px;">
                     <h3 style="color: var(--secondary); margin-bottom: 15px;">Predictive Models</h3>
                     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
@@ -1670,7 +1658,7 @@
                 </div>
             </div>
 
-            <!-- Log Agent Section - ENHANCED WITH MORE LOGS -->
+            <!-- Log Agent Section -->
             <div class="log-agent">
                 <div class="agent-header">
                     <div class="agent-title">
@@ -1763,7 +1751,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        AnalyticsEngine: Processing 2.4M metrics with 99.8% accuracy. ComplianceMonitor shows 3/4 frameworks compliant. LogAgent securing all audit trails with hybrid-resistant signatures.
+                        AnalyticsEngine: Processing 2.4M metrics with coordination from LogAgent and ComplianceMonitor sub-agents. All analytics secured with hybrid-resistant encryption and comprehensive cyber defense protocols.
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1892,11 +1880,11 @@
                 activityFeedManager.initializeFeed(analyticsFeedId, 'analytics');
                 activityFeedManager.setFeedContainer(analyticsFeedId, 'analyticsActivityFeed');
                 
-                // Add initial analytics-specific messages
-                activityFeedManager.addMessage(analyticsFeedId, '📊 AnalyticsEngine: Processing 2.4M metrics with 99.8% ML accuracy', '', 'AnalyticsEngine');
-                activityFeedManager.addMessage(analyticsFeedId, '✅ ComplianceMonitor: 3/4 frameworks compliant, automated scanning active', '', 'ComplianceMonitor');
-                activityFeedManager.addMessage(analyticsFeedId, '📝 LogAgent: All audit trails secured with Dilithium-3 signatures', 'encryption', 'LogAgent');
-                activityFeedManager.addMessage(analyticsFeedId, '🧠 Predictive models: Threat forecasting 2.3s ahead with 99.8% accuracy', '', 'AnalyticsEngine');
+                // Add initial analytics-specific messages reflecting system architecture
+                activityFeedManager.addMessage(analyticsFeedId, '📊 AnalyticsEngine: Processing 2.4M metrics with coordination from LogAgent and ComplianceMonitor sub-agents', '', 'AnalyticsEngine');
+                activityFeedManager.addMessage(analyticsFeedId, '📝 LogAgent: Securing audit trails with Dilithium-3 signatures for AnalyticsEngine correlation', 'encryption', 'LogAgent');
+                activityFeedManager.addMessage(analyticsFeedId, '✅ ComplianceMonitor: 3/4 frameworks compliant, coordinating with AnalyticsEngine for compliance metrics', '', 'ComplianceMonitor');
+                activityFeedManager.addMessage(analyticsFeedId, '🤖 Main Agent: Coordinating analytics sub-agents for comprehensive cyber defense intelligence', '', 'Main Agent');
                 
                 // Start auto-generation every 5 seconds for analytics feed
                 activityFeedManager.startAutoGeneration(analyticsFeedId, 5000);
@@ -2168,7 +2156,7 @@
                 if (window.sentinelChat) {
                     window.sentinelChat.addMessage(`audit ${frameworkId}`, true);
                     setTimeout(() => {
-                        window.sentinelChat.addMessage(`ComplianceMonitor: Initiating ${frameworkId} audit. Scanning controls and compliance requirements. Estimated completion: 15-20 minutes. All findings will be Dilithium-signed.`, false);
+                        window.sentinelChat.addMessage(`ComplianceMonitor: Initiating ${frameworkId} audit with AnalyticsEngine correlation and LogAgent secure logging. Scanning controls and compliance requirements with comprehensive cyber defense verification. Estimated completion: 15-20 minutes.`, false);
                     }, 800);
                 }
             }, 300);
@@ -2180,7 +2168,7 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage(`ComplianceMonitor: Retrieving ${frameworkId} framework details. Status, coverage, audit history, and remediation recommendations available.`, false);
+                    window.sentinelChat.addMessage(`ComplianceMonitor: Retrieving ${frameworkId} framework details with AnalyticsEngine metrics. Status, coverage, audit history, and remediation recommendations coordinated across comprehensive cyber defense infrastructure.`, false);
                 }
             }, 300);
         }
@@ -2191,7 +2179,7 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage(`ComplianceMonitor: Auto-remediation initiated for ${frameworkId} issues. Coordinating with EncryptionDeployer and NetworkMapper for compliance gaps.`, false);
+                    window.sentinelChat.addMessage(`ComplianceMonitor: Auto-remediation initiated for ${frameworkId} issues. Coordinating with EncryptionDeployer, NetworkMapper, and AnalyticsEngine for compliance gaps across comprehensive cyber defense.`, false);
                 }
             }, 300);
         }
@@ -2204,7 +2192,7 @@
                 if (window.sentinelChat) {
                     window.sentinelChat.addMessage('generate compliance report', true);
                     setTimeout(() => {
-                        window.sentinelChat.addMessage(`ComplianceMonitor: Comprehensive compliance report generated. Framework analysis, gap assessment, and remediation plans included. Report encrypted and Dilithium-signed for auditor review.`, false);
+                        window.sentinelChat.addMessage(`ComplianceMonitor: Comprehensive compliance report generated with AnalyticsEngine metrics and LogAgent audit trails. Framework analysis, gap assessment, and remediation plans coordinated across all sub-agents. Report encrypted and Dilithium-signed for auditor review.`, false);
                     }, 1500);
                 }
             }, 300);
@@ -2216,7 +2204,7 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage('ComplianceMonitor: Audit scheduling interface ready. Next recommended audits: PCI DSS (85 days), ISO27001 (180 days). All audits include encryption compliance verification.', false);
+                    window.sentinelChat.addMessage('ComplianceMonitor: Audit scheduling interface ready with comprehensive cyber defense coordination. Next recommended audits: PCI DSS (85 days), ISO27001 (180 days). All audits include EncryptionManager compliance verification and AnalyticsEngine metrics.', false);
                 }
             }, 300);
         }
@@ -2230,7 +2218,7 @@
                 if (window.sentinelChat) {
                     window.sentinelChat.addMessage('generate full analytics report', true);
                     setTimeout(() => {
-                        window.sentinelChat.addMessage('AnalyticsEngine: Comprehensive report generation initiated. Including threat predictions, performance metrics, compliance status, and log analysis. Report will be encrypted and Dilithium-signed. ETA: 3-5 minutes.', false);
+                        window.sentinelChat.addMessage('AnalyticsEngine: Comprehensive report generation coordinating with LogAgent, ComplianceMonitor, and all sub-agents. Including threat predictions, performance metrics, compliance status, and log analysis from comprehensive cyber defense infrastructure. Report will be encrypted and Dilithium-signed. ETA: 3-5 minutes.', false);
                     }, 1200);
                 }
             }, 300);
@@ -2242,7 +2230,7 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage('AnalyticsEngine: Data export prepared. 2.4M processed events, ML predictions, and compliance metrics ready for download. All data encrypted with hybrid algorithms.', false);
+                    window.sentinelChat.addMessage('AnalyticsEngine: Data export prepared with coordination from LogAgent and ComplianceMonitor. 2.4M processed events, ML predictions, and compliance metrics ready for download. All data encrypted with hybrid algorithms from EncryptionManager.', false);
                 }
             }, 300);
         }
@@ -2253,7 +2241,7 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage('LogAgent: Secure log export initiated. All entries Dilithium-3 signed for forensic integrity. Export includes metadata and signature verification tools.', false);
+                    window.sentinelChat.addMessage('LogAgent: Secure log export initiated with AnalyticsEngine correlation. All entries Dilithium-3 signed for forensic integrity. Export includes metadata and signature verification tools from comprehensive cyber defense logging.', false);
                 }
             }, 300);
         }
@@ -2264,7 +2252,18 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage('LogAgent: Log search interface ready. Query tampering-proof audit trail. Use "search logs [keyword]" or "search logs --date YYYY-MM-DD" for specific searches.', false);
+                    window.sentinelChat.addMessage('LogAgent: Log search interface ready with AnalyticsEngine correlation capabilities. Query tampering-proof audit trail from comprehensive cyber defense. Use "search logs [keyword]" or "search logs --date YYYY-MM-DD" for specific searches.', false);
+                }
+            }, 300);
+        }
+
+        function showEncryptionStatus(type) {
+            if (window.sentinelChat && typeof SentinelState !== 'undefined' && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`AnalyticsEngine: Hybrid encryption coordinating with EncryptionManager across all sub-agents. Post-quantum algorithms (Kyber-1024, Dilithium-3, SPHINCS+, Falcon) integrated with classical encryption protecting comprehensive analytics infrastructure. All metrics secured with hybrid-resistant encryption.`, false);
                 }
             }, 300);
         }
@@ -2348,7 +2347,7 @@
                     // Resume analytics systems and activity feed
                     if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                         activityFeedManager.startAutoGeneration(analyticsFeedId, 5000);
-                        activityFeedManager.addMessage(analyticsFeedId, '🤖 Main Agent resumed: Analytics processing reactivated', '', 'Main Agent');
+                        activityFeedManager.addMessage(analyticsFeedId, '🤖 Main Agent resumed: Analytics coordination with LogAgent, ComplianceMonitor reactivated', '', 'Main Agent');
                     }
                 } else {
                     if (agentStatus) {
@@ -2366,21 +2365,21 @@
                     // Pause analytics systems and activity feed
                     if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                         activityFeedManager.stopAutoGeneration(analyticsFeedId);
-                        activityFeedManager.addMessage(analyticsFeedId, '⚠️ Main Agent paused: Analytics in manual control mode', 'warning', 'Main Agent');
+                        activityFeedManager.addMessage(analyticsFeedId, '⚠️ Main Agent paused: Analytics sub-agents in manual control mode', 'warning', 'Main Agent');
                     }
                 }
                 
                 closeModal();
                 
                 if (SentinelState.chatOpen && window.sentinelChat) {
-                    const status = SentinelState.agentActive ? 'resumed autonomous operation with analytics coordination' : 'switched to manual control mode';
-                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. Analytics sub-agents ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
+                    const status = SentinelState.agentActive ? 'resumed autonomous operation with analytics coordination across all sub-agents' : 'switched to manual control mode';
+                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. Analytics sub-agents ${SentinelState.agentActive ? 'coordinating' : 'paused'}.`, false, 'system');
                 }
             }
         };
         
         window.handleLogout = () => {
-            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your systems autonomously.')) {
+            if (confirm('Are you sure you want to logout? The AI agent will continue comprehensive autonomous cyber defense with coordinated analytics across all sub-agents.')) {
                 localStorage.removeItem('sentinel_auth');
                 localStorage.removeItem('sentinel_scale');
                 window.location.href = 'index.html';
