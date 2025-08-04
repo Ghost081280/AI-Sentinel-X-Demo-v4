@@ -412,80 +412,6 @@
             text-transform: uppercase;
         }
 
-        /* Defense Status Bar */
-        .defense-status-bar {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px 25px;
-            margin-bottom: 25px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .defense-status-bar::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
-            animation: bannerScan 8s linear infinite;
-        }
-
-        @keyframes bannerScan {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-
-        .status-item {
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 10px 16px;
-            border-radius: 10px;
-            position: relative;
-            z-index: 1;
-            border: 1px solid rgba(0, 255, 136, 0.2);
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-        }
-
-        .status-item:hover {
-            background: rgba(0, 255, 136, 0.1);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
-        }
-
-        .status-icon {
-            font-size: 32px;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 6px currentColor);
-        }
-
-        .status-label {
-            font-size: 11px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .status-value {
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px currentColor;
-        }
-
         /* Main Grid */
         .defense-grid {
             display: grid;
@@ -1293,10 +1219,6 @@
                 gap: 15px;
             }
             
-            .defense-status-bar {
-                flex-direction: column;
-            }
-            
             .playbook-grid {
                 grid-template-columns: 1fr;
             }
@@ -1459,30 +1381,6 @@
                     <div class="metric-value" id="encryptionPlaybooks">4</div>
                     <div class="metric-label">Enc Playbooks</div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Defense Status Bar -->
-        <div class="defense-status-bar">
-            <div class="status-item" onclick="showStatusDetails('mode')">
-                <div class="status-icon">🛡️</div>
-                <div class="status-value">ACTIVE</div>
-                <div class="status-label">Defense Mode</div>
-            </div>
-            <div class="status-item" onclick="showStatusDetails('response')">
-                <div class="status-icon">⏱️</div>
-                <div class="status-value">0.3s</div>
-                <div class="status-label">Avg Response</div>
-            </div>
-            <div class="status-item" onclick="showStatusDetails('success')">
-                <div class="status-icon">🎯</div>
-                <div class="status-value">99.7%</div>
-                <div class="status-label">Success Rate</div>
-            </div>
-            <div class="status-item" onclick="showStatusDetails('automation')">
-                <div class="status-icon">🤖</div>
-                <div class="status-value">FULL</div>
-                <div class="status-label">Automation</div>
             </div>
         </div>
 
