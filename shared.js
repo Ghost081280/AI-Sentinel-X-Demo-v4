@@ -323,6 +323,17 @@ class ActivityFeedManager {
                 { msg: '📜 Certificate management: {certCount} certificates monitored, {expiringCount} expiring soon', type: 'warning', agent: 'CertificateManager' },
                 { msg: '⚔️ Defense coordination: {honeypotCount} honeypots active, {attacksBlocked} attacks neutralized', type: '', agent: 'DefenseOrchestrator' }
             ],
+            network: [
+                { msg: '🌐 NetworkMapper: External scan via Shodan - {publicIPs} public IPs detected', type: '', agent: 'NetworkMapper' },
+                { msg: '🔍 Internal agent discovery: {newDevices} new endpoints detected on {networkRange}', type: '', agent: 'NetworkMapper' },
+                { msg: '⚠️ Security gap: {gapCount} devices lack encryption - coordinating with EncryptionDeployer', type: 'warning', agent: 'NetworkMapper → EncryptionDeployer' },
+                { msg: '🛡️ ThreatScanner correlation: {anomalyCount} anomalies detected in network behavior', type: 'warning', agent: 'NetworkMapper → ThreatScanner' },
+                { msg: '📡 Dual-layer scan complete: External {openPorts} ports, Internal {internalDevices} devices', type: '', agent: 'NetworkMapper' },
+                { msg: '🔐 EncryptionDeployer: Deployed hybrid encryption to {deployedCount} devices', type: 'encryption', agent: 'NetworkMapper → EncryptionDeployer' },
+                { msg: '🚨 Rogue device detected: {rogueIP} quarantined by DefenseOrchestrator', type: 'danger', agent: 'NetworkMapper → DefenseOrchestrator' },
+                { msg: '📊 Network topology updated: {topologyChanges} infrastructure changes mapped', type: '', agent: 'NetworkMapper' },
+                { msg: '✅ ComplianceMonitor: Network configuration meets {frameworkName} requirements', type: '', agent: 'NetworkMapper → ComplianceMonitor' }
+            ],
             vpn: [
                 { msg: '🔒 VPN tunnel established: {protocol} connection from {location}', type: '', agent: 'VPNMonitor' },
                 { msg: '🌍 Geographic anomaly: Suspicious access pattern from {suspiciousCountry}', type: 'warning', agent: 'VPNMonitor → ThreatScanner' },
@@ -339,13 +350,6 @@ class ActivityFeedManager {
                 { msg: '🔍 Behavioral analysis: {anomalyCount} anomalies detected in last hour', type: 'warning', agent: 'ThreatScanner → AnalyticsEngine' },
                 { msg: '🚫 Auto-quarantine: {quarantinedIPs} IPs isolated by DefenseOrchestrator', type: 'danger', agent: 'ThreatScanner → DefenseOrchestrator' },
                 { msg: '📊 ML confidence: {confidence}% accuracy in threat classification', type: '', agent: 'ThreatScanner' }
-            ],
-            network: [
-                { msg: '🌐 Device discovery: {newDevices} new endpoints detected and secured', type: '', agent: 'NetworkMapper' },
-                { msg: '🔍 Port scan completed: {portCount} services identified across {deviceRange} devices', type: '', agent: 'NetworkMapper' },
-                { msg: '🚨 Rogue device detected: {rogueIP} blocked and quarantined', type: 'warning', agent: 'NetworkMapper → DefenseOrchestrator' },
-                { msg: '📡 Network topology updated: {topologyChanges} changes mapped', type: '', agent: 'NetworkMapper' },
-                { msg: '🔐 Encryption gaps detected: {gapCount} devices require encryption deployment', type: 'warning', agent: 'NetworkMapper → EncryptionDeployer' }
             ],
             defense: [
                 { msg: '⚔️ Honeypot triggered: {attackType} attempt from {attackerIP}', type: 'warning', agent: 'DefenseOrchestrator' },
@@ -386,6 +390,11 @@ class ActivityFeedManager {
             '{expiringCount}': () => Math.floor(Math.random() * 3 + 1).toString(),
             '{honeypotCount}': () => Math.floor(Math.random() * 3 + 8).toString(),
             '{attacksBlocked}': () => Math.floor(Math.random() * 20 + 120).toString(),
+            '{publicIPs}': () => Math.floor(Math.random() * 5 + 1).toString(),
+            '{networkRange}': () => `192.168.${Math.floor(Math.random() * 255)}.0/24`,
+            '{openPorts}': () => Math.floor(Math.random() * 10 + 3).toString(),
+            '{internalDevices}': () => Math.floor(Math.random() * 50 + 200).toString(),
+            '{deployedCount}': () => Math.floor(Math.random() * 20 + 5).toString(),
             '{protocol}': () => ['OpenVPN', 'WireGuard', 'IPSec'][Math.floor(Math.random() * 3)],
             '{location}': () => ['San Francisco', 'London', 'Tokyo', 'Frankfurt', 'Sydney'][Math.floor(Math.random() * 5)],
             '{suspiciousCountry}': () => ['Russia', 'China', 'Iran', 'North Korea'][Math.floor(Math.random() * 4)],
@@ -1074,6 +1083,21 @@ class SentinelChat {
         const lowerMessage = userMessage.toLowerCase();
         
         // Context-specific responses
+        if (context === 'network') {
+            if (lowerMessage.includes('scan') || lowerMessage.includes('discover')) {
+                return `NetworkMapper: I perform dual-layer scanning - external reconnaissance via Shodan API detects ${Math.floor(Math.random() * 5 + 1)} public IPs with ${Math.floor(Math.random() * 10 + 3)} open ports. Internal agent discovered ${Math.floor(Math.random() * 50 + 200)} devices. Coordinating with ThreatScanner for vulnerability assessment and EncryptionDeployer for gap remediation.`;
+            }
+            if (lowerMessage.includes('encryption gap') || lowerMessage.includes('gap')) {
+                return `NetworkMapper → EncryptionDeployer: ${Math.floor(Math.random() * 8 + 2)} encryption gaps detected. EncryptionDeployer ready to deploy hybrid-resistant modules. Shall I initiate remediation with TLS 1.3 + Kyber-1024 for network traffic and AES-256-GCM + Dilithium-3 for data at rest?`;
+            }
+            if (lowerMessage.includes('external') || lowerMessage.includes('shodan')) {
+                return `NetworkMapper: External scan via Shodan API reveals your public attack surface. Currently monitoring ${Math.floor(Math.random() * 5 + 1)} public IPs, ${Math.floor(Math.random() * 10 + 3)} open ports. ThreatScanner correlating with global threat intelligence for risk assessment.`;
+            }
+            if (lowerMessage.includes('internal') || lowerMessage.includes('agent')) {
+                return `NetworkMapper: Internal agent deployed across your infrastructure. Discovered ${Math.floor(Math.random() * 50 + 200)} devices, mapped network topology, identified ${Math.floor(Math.random() * 20 + 5)} critical services. DefenseOrchestrator ready to quarantine any rogue devices detected.`;
+            }
+        }
+        
         if (context === 'vpn') {
             if (lowerMessage.includes('vpn') || lowerMessage.includes('connection')) {
                 return `VPNMonitor: I'm monitoring ${Math.floor(Math.random() * 5 + 10)} active VPN connections with hybrid encryption. OpenVPN, WireGuard, and IPSec services are operational. Current threat level: ${Math.random() > 0.5 ? 'ELEVATED' : 'NORMAL'}. Would you like details on specific connections or security protocols?`;
