@@ -363,13 +363,18 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            padding: 10px 16px !important;
-            border-radius: 10px;
+            padding: 5px 12px !important;
+            border-radius: 8px;
             position: relative;
             z-index: 1;
             border: 1px solid rgba(0, 255, 136, 0.2);
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
+            height: 60px !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
 
         .banner-stat:hover {
@@ -379,25 +384,28 @@
         }
 
         .banner-stat-icon {
-            font-size: 24px !important;
-            margin-bottom: 5px !important;
-            filter: drop-shadow(0 0 6px currentColor);
+            font-size: 18px !important;
+            margin-bottom: 2px !important;
+            filter: drop-shadow(0 0 4px currentColor);
             color: var(--primary);
+            line-height: 1;
         }
 
         .banner-stat-value {
-            font-size: 14px !important;
+            font-size: 12px !important;
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 3px;
-            text-shadow: 0 0 10px currentColor;
+            margin-bottom: 1px;
+            line-height: 1.2;
+            text-shadow: 0 0 8px currentColor;
         }
 
         .banner-stat-label {
-            font-size: 10px !important;
+            font-size: 9px !important;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            line-height: 1;
         }
 
         /* Dashboard Grid */
@@ -739,17 +747,17 @@
         .network-updates {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 10px;
         }
 
         .network-update-item {
             background: rgba(0, 204, 255, 0.05);
             border: 1px solid rgba(0, 204, 255, 0.2);
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 10px;
+            padding: 12px;
             transition: all 0.3s ease;
             cursor: pointer;
-            border-left: 4px solid;
+            border-left: 3px solid;
             animation: updateSlideIn 0.5s ease;
         }
 
@@ -784,44 +792,44 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .update-title {
             font-weight: bold;
             color: var(--secondary);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .update-timestamp {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-secondary);
             white-space: nowrap;
         }
 
         .update-message {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-secondary);
             line-height: 1.4;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .update-source {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--accent);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
         .update-priority {
-            font-size: 9px;
-            padding: 2px 6px;
-            border-radius: 8px;
+            font-size: 8px;
+            padding: 2px 5px;
+            border-radius: 6px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             font-weight: bold;
             margin-left: auto;
         }
@@ -845,17 +853,18 @@
         .soc-intelligence-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            gap: 12px;
         }
 
         .soc-metric {
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 12px;
-            padding: 15px;
+            padding: 12px;
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            height: fit-content;
         }
 
         .soc-metric:hover {
@@ -865,24 +874,119 @@
         }
 
         .soc-metric-icon {
-            font-size: 24px;
-            margin-bottom: 8px;
+            font-size: 20px;
+            margin-bottom: 6px;
             filter: drop-shadow(0 0 5px currentColor);
         }
 
         .soc-metric-value {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: var(--primary);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .soc-metric-label {
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             line-height: 1.2;
+        }
+
+        /* Enhanced SOC Sub-sections */
+        .soc-subsections {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .soc-section {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(0, 204, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px;
+        }
+
+        .soc-section-header {
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .soc-badge {
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--primary);
+        }
+
+        /* Threat Trends Mini Chart */
+        .threat-trends {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            height: 40px;
+            gap: 3px;
+            margin-bottom: 8px;
+        }
+
+        .trend-bar {
+            flex: 1;
+            background: var(--gradient-1);
+            border-radius: 2px 2px 0 0;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .trend-bar:hover {
+            opacity: 1;
+            transform: scaleY(1.1);
+        }
+
+        /* Alert List */
+        .alert-list {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 6px;
+            font-size: 10px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .alert-item:hover {
+            background: rgba(0, 255, 136, 0.05);
+            color: var(--text-primary);
+        }
+
+        .alert-icon {
+            font-size: 12px;
+            filter: drop-shadow(0 0 3px currentColor);
+        }
+
+        .alert-time {
+            margin-left: auto;
+            font-size: 9px;
+            color: var(--text-secondary);
         }
 
         /* Activity Feed */
@@ -1984,7 +2088,7 @@
             
             container.innerHTML = '';
 
-            // Load updates with STAGGERED timing
+            // Load more updates to fill the space better
             const updates = [
                 {
                     type: 'system',
@@ -2009,10 +2113,26 @@
                     timestamp: '1h ago',
                     source: 'Regional Control',
                     priority: 'high'
+                },
+                {
+                    type: 'info',
+                    title: 'Performance Optimization',
+                    message: 'Hybrid encryption performance improved by 12%.',
+                    timestamp: '2h ago',
+                    source: 'Performance Team',
+                    priority: 'low'
+                },
+                {
+                    type: 'system',
+                    title: 'Certificate Renewal',
+                    message: 'Global certificate renewal completed for 2,847 agents.',
+                    timestamp: '3h ago',
+                    source: 'Certificate Authority',
+                    priority: 'medium'
                 }
             ];
 
-            // Load updates ONE AT A TIME with proper staggered timing
+            // Load updates with staggered timing
             updates.forEach((update, index) => {
                 setTimeout(() => {
                     const updateItem = document.createElement('div');
@@ -2033,20 +2153,52 @@
                     `;
                     
                     container.appendChild(updateItem);
-                }, 1200 + (index * 1000));
+                }, 300 + (index * 200));
             });
         }
 
         function initializeSOCIntelligence() {
-            const grid = document.getElementById('socIntelligenceGrid');
-            if (!grid) return;
+            const container = document.getElementById('socIntelligenceGrid').parentElement;
+            if (!container) return;
 
-            // Metrics that fill the module
+            // Clear and rebuild with enhanced content
+            container.innerHTML = `
+                <div class="soc-intelligence-grid" id="socIntelligenceGrid">
+                    <!-- Main metrics will be populated here -->
+                </div>
+                <div class="soc-subsections">
+                    <!-- Threat Trends Section -->
+                    <div class="soc-section">
+                        <div class="soc-section-header">
+                            <span>Threat Activity Trends</span>
+                            <span class="soc-badge">LAST 7 DAYS</span>
+                        </div>
+                        <div class="threat-trends" id="threatTrends">
+                            <!-- Trend bars will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Alerts Section -->
+                    <div class="soc-section">
+                        <div class="soc-section-header">
+                            <span>Critical Alerts</span>
+                            <span class="soc-badge" id="alertCount">4 NEW</span>
+                        </div>
+                        <div class="alert-list" id="alertList">
+                            <!-- Alerts will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            const grid = document.getElementById('socIntelligenceGrid');
+            
+            // Main metrics
             const socMetrics = [
                 {
                     icon: '🎯',
                     value: '99.7%',
-                    label: 'Threat Detection'
+                    label: 'Detection Rate'
                 },
                 {
                     icon: '⚡',
@@ -2065,9 +2217,7 @@
                 }
             ];
 
-            grid.innerHTML = '';
-            
-            // Load metrics ONE AT A TIME with staggered timing
+            // Populate main metrics
             socMetrics.forEach((metric, index) => {
                 setTimeout(() => {
                     const metricDiv = document.createElement('div');
@@ -2079,8 +2229,68 @@
                         <div class="soc-metric-label">${metric.label}</div>
                     `;
                     grid.appendChild(metricDiv);
-                }, 1800 + (index * 500));
+                }, 300 + (index * 150));
             });
+
+            // Populate threat trends
+            const trendContainer = document.getElementById('threatTrends');
+            const trendData = [30, 45, 60, 40, 80, 65, 90]; // Sample trend data
+            
+            setTimeout(() => {
+                trendData.forEach((value, index) => {
+                    const bar = document.createElement('div');
+                    bar.className = 'trend-bar';
+                    bar.style.height = `${value}%`;
+                    bar.title = `Day ${index + 1}: ${Math.floor(value * 2.4)} threats`;
+                    bar.onclick = () => showTrendDetails(index + 1, value);
+                    trendContainer.appendChild(bar);
+                });
+            }, 1500);
+
+            // Populate recent alerts
+            const alertContainer = document.getElementById('alertList');
+            const alerts = [
+                { icon: '⚠️', text: 'Brute force attempt blocked', time: '2m ago' },
+                { icon: '🚨', text: 'Anomalous traffic pattern detected', time: '15m ago' },
+                { icon: '🔐', text: 'Certificate expiry warning', time: '1h ago' },
+                { icon: '🌍', text: 'Geo-location anomaly flagged', time: '2h ago' }
+            ];
+
+            alerts.forEach((alert, index) => {
+                setTimeout(() => {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert-item';
+                    alertDiv.onclick = () => showAlertDetails(alert);
+                    alertDiv.innerHTML = `
+                        <span class="alert-icon">${alert.icon}</span>
+                        <span>${alert.text}</span>
+                        <span class="alert-time">${alert.time}</span>
+                    `;
+                    alertContainer.appendChild(alertDiv);
+                }, 2000 + (index * 200));
+            });
+        }
+
+        function showTrendDetails(day, value) {
+            if (window.sentinelChat && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`SOC Intelligence: Day ${day} threat analysis - ${Math.floor(value * 2.4)} threats detected. Pattern analysis shows ${value > 70 ? 'elevated' : 'normal'} activity levels. ML correlation confidence: 98.7%.`, false);
+                }
+            }, 300);
+        }
+
+        function showAlertDetails(alert) {
+            if (window.sentinelChat && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    window.sentinelChat.addMessage(`SOC Alert Details: ${alert.text} (${alert.time}). Automated response deployed. No manual intervention required. Alert correlation shows ${Math.random() > 0.5 ? 'isolated incident' : 'part of larger pattern'}.`, false);
+                }
+            }, 300);
         }
 
         function addRandomGlobalUpdate() {
@@ -2114,8 +2324,8 @@
             const container = document.getElementById('networkUpdates');
             if (!container) return;
 
-            // Remove oldest update if we have 3 or more
-            if (container.children.length >= 3) {
+            // Remove oldest update if we have 5 or more
+            if (container.children.length >= 5) {
                 container.removeChild(container.lastChild);
             }
 
