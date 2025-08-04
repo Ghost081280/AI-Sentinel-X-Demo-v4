@@ -185,7 +185,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badges */
+        /* Encryption Status Badge - Matching defense.html style */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -197,49 +197,29 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .encryption-badge.classical {
             background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .encryption-badge.quantum {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .encryption-badge:hover {
+            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 3s ease-in-out infinite;
-        }
-
-        .status-light.active {
             background: var(--success);
             box-shadow: 0 0 8px var(--success);
-        }
-
-        .status-light.inactive {
-            background: var(--danger);
-            box-shadow: 0 0 8px var(--danger);
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         @keyframes statusPulse {
@@ -344,6 +324,76 @@
             background: var(--gradient-1);
             color: var(--bg-darker);
             font-weight: bold;
+        }
+
+        /* Sub-Agent Status - Standardized from shared.js */
+        .sub-agent-status {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(124, 58, 237, 0.05) 100%);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 15px 20px !important;
+            margin-bottom: 25px !important;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            backdrop-filter: blur(15px);
+            min-height: 90px !important;
+            max-height: 90px !important;
+        }
+
+        .sub-agent-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+        }
+
+        .sub-agent-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-neural);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .sub-agent-details h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .sub-agent-details p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .sub-agent-metrics {
+            display: flex;
+            gap: 30px;
+            flex-shrink: 0;
+        }
+
+        .metric {
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 24px !important;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 3px;
+        }
+
+        .metric-label {
+            font-size: 12px !important;
+            color: var(--text-secondary);
+            text-transform: uppercase;
         }
 
         /* Main Agent Status Banner */
@@ -1257,6 +1307,18 @@
                 -webkit-overflow-scrolling: touch;
             }
             
+            .sub-agent-status {
+                flex-direction: column;
+                text-align: center;
+                min-height: auto !important;
+                max-height: none !important;
+            }
+            
+            .sub-agent-metrics {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
             .main-agent-status {
                 padding: 20px;
             }
@@ -1336,13 +1398,9 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
-                            <div class="status-light active" id="quantumStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
@@ -1397,19 +1455,48 @@
             </a>
         </nav>
 
+        <!-- Sub-Agent Status -->
+        <div class="sub-agent-status">
+            <div class="sub-agent-info">
+                <div class="sub-agent-icon">🧠</div>
+                <div class="sub-agent-details">
+                    <h3>Main Agent AI Engine</h3>
+                    <p>Central AI orchestrating all 10 sub-agents • Neural networks monitoring ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, VPNMonitor and more</p>
+                </div>
+            </div>
+            <div class="sub-agent-metrics">
+                <div class="metric">
+                    <div class="metric-value" id="subAgentsActive">10</div>
+                    <div class="metric-label">Sub-Agents</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="decisionsPerMin">2.4K</div>
+                    <div class="metric-label">Decisions/Min</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value">99.8%</div>
+                    <div class="metric-label">ML Accuracy</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="systemUptime">99.98%</div>
+                    <div class="metric-label">Uptime</div>
+                </div>
+            </div>
+        </div>
+
         <!-- Main Agent Status -->
         <div class="main-agent-status">
             <div class="main-agent-content">
                 <div class="main-agent-info">
                     <div class="main-agent-title">🤖 MAIN AGENT OPERATIONAL</div>
-                    <div class="main-agent-subtitle">Autonomous AI orchestrating all sub-agents with hybrid-resistant encryption</div>
+                    <div class="main-agent-subtitle">Autonomous AI orchestrating comprehensive cyber defense across all sub-agents with hybrid encryption</div>
                     <div class="agent-metrics">
                         <div class="agent-metric" onclick="showMetricDetails('subagents')">
-                            <div class="agent-metric-value" id="subAgentsActive">10</div>
+                            <div class="agent-metric-value" id="subAgentsActiveCard">10</div>
                             <div class="agent-metric-label">Sub-Agents Active</div>
                         </div>
                         <div class="agent-metric" onclick="showMetricDetails('decisions')">
-                            <div class="agent-metric-value" id="decisionsPerMin">2.4K</div>
+                            <div class="agent-metric-value" id="decisionsPerMinCard">2.4K</div>
                             <div class="agent-metric-label">Decisions/Min</div>
                         </div>
                         <div class="agent-metric" onclick="showMetricDetails('accuracy')">
@@ -1417,7 +1504,7 @@
                             <div class="agent-metric-label">ML Accuracy</div>
                         </div>
                         <div class="agent-metric" onclick="showMetricDetails('uptime')">
-                            <div class="agent-metric-value" id="systemUptime">99.98%</div>
+                            <div class="agent-metric-value" id="systemUptimeCard">99.98%</div>
                             <div class="agent-metric-label">Uptime</div>
                         </div>
                     </div>
@@ -1476,7 +1563,7 @@
         <div class="training-section">
             <div class="panel-header">
                 <h2 class="panel-title">AI Training & Optimization</h2>
-                <span style="color: var(--text-secondary); font-size: 14px;">Continuous learning enabled</span>
+                <span style="color: var(--text-secondary); font-size: 14px;">Continuous learning across all sub-agents</span>
             </div>
             <div class="training-progress">
                 <div class="progress-item">
@@ -1501,8 +1588,8 @@
 
                 <div class="progress-item">
                     <div class="progress-header">
-                        <span class="progress-label">Anomaly Detection Model</span>
-                        <span class="progress-value" id="anomalyLearning">96.1%</span>
+                        <span class="progress-label">Defense Response Optimization</span>
+                        <span class="progress-value" id="defenseOptimization">96.1%</span>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 96.1%"></div>
@@ -1511,8 +1598,8 @@
 
                 <div class="progress-item">
                     <div class="progress-header">
-                        <span class="progress-label">Response Optimization</span>
-                        <span class="progress-value" id="responseLearning">91.8%</span>
+                        <span class="progress-label">Multi-Agent Coordination</span>
+                        <span class="progress-value" id="coordinationLearning">91.8%</span>
                     </div>
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: 91.8%"></div>
@@ -1571,7 +1658,7 @@
             <div class="ai-chat-messages" id="aiChatMessages">
                 <div class="ai-message">
                     <div class="ai-message-bubble">
-                        I am the Main Agent orchestrating all sub-agents. I coordinate ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All communications use hybrid-resistant encryption. How can I assist you?
+                        I am the Main Agent orchestrating comprehensive autonomous cyber defense. I coordinate ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All inter-agent communications use hybrid encryption. How can I assist you?
                     </div>
                     <div class="ai-message-time">Just now</div>
                 </div>
@@ -1604,29 +1691,29 @@
                     name: 'CPU Usage',
                     value: '28%',
                     status: 'optimal',
-                    description: 'Hybrid encryption processing load',
+                    description: 'Main Agent + 10 sub-agents processing',
                     percentage: 28
                 },
                 {
                     name: 'Memory Usage', 
                     value: '3.2GB',
                     status: 'optimal',
-                    description: '10 sub-agents + neural networks',
+                    description: 'Neural networks + sub-agent models',
                     percentage: 64
                 },
                 {
                     name: 'Threat Response',
                     value: '0.3s',
                     status: 'optimal', 
-                    description: 'Average detection to response time',
+                    description: 'ThreatScanner → DefenseOrchestrator',
                     percentage: 95
                 },
                 {
-                    name: 'Encryption Ops',
-                    value: '2.1M/s',
+                    name: 'Sub-Agent Sync',
+                    value: '99.8%',
                     status: 'optimal',
-                    description: 'Classical + Post-quantum operations',
-                    percentage: 85
+                    description: 'All 10 sub-agents coordinated',
+                    percentage: 99
                 }
             ],
             neuralMetrics: [
@@ -1634,28 +1721,28 @@
                     name: 'Active Nodes',
                     value: '2,847',
                     status: 'training',
-                    description: 'Neural pathways processing data',
+                    description: 'Neural pathways across all agents',
                     percentage: 92
                 },
                 {
                     name: 'Learning Rate',
                     value: '0.001',
                     status: 'optimal',
-                    description: 'Adaptive learning optimization',
+                    description: 'Adaptive optimization active',
                     percentage: 88
                 },
                 {
                     name: 'Model Accuracy',
                     value: '99.8%',
                     status: 'optimal',
-                    description: 'Threat classification precision',
+                    description: 'Cross-agent threat classification',
                     percentage: 99
                 },
                 {
                     name: 'Training Data',
                     value: '14.2M',
                     status: 'training',
-                    description: 'Samples processed today',
+                    description: 'Multi-agent samples processed',
                     percentage: 76
                 }
             ]
@@ -1686,9 +1773,9 @@
                 activityFeedManager.setFeedContainer(aiEngineFeedId, 'aiEngineActivityFeed');
                 
                 // Add initial AI-specific messages
-                activityFeedManager.addMessage(aiEngineFeedId, '🧠 Main Agent: AI Engine V4 initialized with enhanced neural network monitoring', '', 'Main Agent');
-                activityFeedManager.addMessage(aiEngineFeedId, '🤖 Neural Network: 2,847 active nodes with 99.8% threat classification accuracy', '', 'AI Engine');
-                activityFeedManager.addMessage(aiEngineFeedId, '⚡ Performance Monitor: All sub-agents operating within optimal parameters', '', 'AI Engine');
+                activityFeedManager.addMessage(aiEngineFeedId, '🧠 Main Agent: Autonomous cyber defense orchestration active across all 10 sub-agents', '', 'Main Agent');
+                activityFeedManager.addMessage(aiEngineFeedId, '🤖 Neural Network: Cross-agent coordination with 99.8% threat classification accuracy', '', 'AI Engine');
+                activityFeedManager.addMessage(aiEngineFeedId, '⚡ Performance Monitor: ThreatScanner, NetworkMapper, DefenseOrchestrator, and VPNMonitor operating optimally', '', 'AI Engine');
                 activityFeedManager.addMessage(aiEngineFeedId, '🔐 Agent Coordination: Hybrid encryption securing all inter-agent communications', 'encryption', 'AI Engine');
                 
                 // Start auto-generation every 7 seconds for AI Engine feed
@@ -1795,10 +1882,15 @@
                 container.appendChild(div);
             });
 
-            // Update sub-agent count in banner
+            // Update sub-agent count in banner and card
             const countElement = document.getElementById('subAgentsActive');
+            const countCardElement = document.getElementById('subAgentsActiveCard');
+            const agentCount = Object.keys(SubAgentConfigs).length;
             if (countElement) {
-                countElement.textContent = Object.keys(SubAgentConfigs).length;
+                countElement.textContent = agentCount;
+            }
+            if (countCardElement) {
+                countCardElement.textContent = agentCount;
             }
         }
 
@@ -1806,33 +1898,33 @@
             const container = document.getElementById('coordinationActivities');
             if (!container) return;
 
-            // Initial coordination activities
+            // Initial coordination activities showing comprehensive cyber defense
             const initialActivities = [
                 {
                     time: new Date(),
-                    agents: 'MAIN → ENCRYPT → DEPLOY',
-                    message: 'Coordinated encryption deployment for 3 new devices discovered by NetworkMapper',
-                    result: 'TLS 1.3 + Kyber-1024 deployed successfully',
-                    type: 'encryption'
-                },
-                {
-                    time: new Date(Date.now() - 60000),
                     agents: 'MAIN → THREAT → DEFENSE',
-                    message: 'SQL injection detected, coordinated response between ThreatScanner and DefenseOrchestrator',
+                    message: 'Coordinated SQL injection response between ThreatScanner and DefenseOrchestrator',
                     result: 'Attack blocked, honeypot triggered',
                     type: 'security'
                 },
                 {
+                    time: new Date(Date.now() - 60000),
+                    agents: 'MAIN → NETWORK → ENCRYPT',
+                    message: 'NetworkMapper discovered new devices, EncryptionDeployer securing automatically',
+                    result: 'Hybrid encryption deployed',
+                    type: 'encryption'
+                },
+                {
                     time: new Date(Date.now() - 120000),
                     agents: 'MAIN → VPN → CERT',
-                    message: 'VPN certificate expiration alert triggered auto-renewal workflow via CertificateManager',
+                    message: 'VPNMonitor alert triggered CertificateManager auto-renewal workflow',
                     result: 'Certificate renewed with hybrid signatures',
                     type: 'compliance'
                 },
                 {
                     time: new Date(Date.now() - 180000),
                     agents: 'MAIN → ANALYTICS → LOG',
-                    message: 'Anomaly pattern detected, coordinated logging and analysis across multiple agents',
+                    message: 'AnalyticsEngine detected anomaly, LogAgent coordinating audit trail',
                     result: '99.8% confidence threat classification',
                     type: 'security'
                 }
@@ -1879,34 +1971,34 @@
         function generateCoordinationActivity() {
             const coordActions = [
                 {
-                    agents: 'MAIN → ENCRYPT → DEPLOY',
-                    message: 'Auto-deployed encryption to newly discovered IoT device',
-                    result: 'TLS 1.3 + Kyber-1024 active',
+                    agents: 'MAIN → THREAT → DEFENSE',
+                    message: 'ThreatScanner detected malware, DefenseOrchestrator deployed containment',
+                    result: 'Threat neutralized automatically',
+                    type: 'security'
+                },
+                {
+                    agents: 'MAIN → NETWORK → VPN',
+                    message: 'NetworkMapper found new endpoint, VPNMonitor securing connection',
+                    result: 'VPN tunnel established with hybrid encryption',
                     type: 'encryption'
                 },
                 {
                     agents: 'MAIN → COMPLIANCE → CERT',
-                    message: 'Triggered certificate renewal for compliance requirement',
-                    result: 'Certificate updated with hybrid signature',
+                    message: 'ComplianceMonitor triggered certificate renewal for SOC2 compliance',
+                    result: 'Certificate updated with post-quantum signature',
                     type: 'compliance'
                 },
                 {
-                    agents: 'MAIN → THREAT → ANALYTICS',
-                    message: 'Coordinated threat analysis with ML prediction engine',
-                    result: '99.8% confidence malware classification',
+                    agents: 'MAIN → ANALYTICS → LOG',
+                    message: 'AnalyticsEngine correlated events with LogAgent for audit trail',
+                    result: 'Complete audit chain with Dilithium signatures',
                     type: 'security'
                 },
                 {
-                    agents: 'MAIN → NETWORK → DEFENSE',
-                    message: 'Synchronized honeypot deployment after network scan',
-                    result: 'SSH honeypot active on suspicious subnet',
-                    type: 'security'
-                },
-                {
-                    agents: 'MAIN → VPN → ANALYTICS',
-                    message: 'VPN traffic anomaly detected, coordinated analysis initiated',
-                    result: 'Geo-blocking rules updated automatically',
-                    type: 'security'
+                    agents: 'MAIN → ENCRYPT → DEPLOY',
+                    message: 'EncryptionManager coordinated deployment across infrastructure',
+                    result: 'Hybrid encryption active on new assets',
+                    type: 'encryption'
                 }
             ];
             
@@ -1931,17 +2023,20 @@
         function updateMetrics() {
             // Update decisions per minute
             const decisions = document.getElementById('decisionsPerMin');
+            const decisionsCard = document.getElementById('decisionsPerMinCard');
             if (decisions) {
                 const current = parseFloat(decisions.textContent.replace('K', ''));
-                decisions.textContent = (current + 0.1).toFixed(1) + 'K';
+                const newValue = (current + 0.1).toFixed(1) + 'K';
+                decisions.textContent = newValue;
+                if (decisionsCard) decisionsCard.textContent = newValue;
             }
             
             // Update training progress occasionally
             const progressElements = [
                 { id: 'threatLearning', max: 96 },
                 { id: 'networkLearning', max: 92 },
-                { id: 'anomalyLearning', max: 97 },
-                { id: 'responseLearning', max: 94 }
+                { id: 'defenseOptimization', max: 97 },
+                { id: 'coordinationLearning', max: 94 }
             ];
             
             progressElements.forEach(prog => {
@@ -1972,28 +2067,28 @@
                     let message = '';
                     switch(metricType) {
                         case 'subagents':
-                            message = `Main Agent: Coordinating ${Object.keys(SubAgentConfigs || {}).length} sub-agents including VPNMonitor and encryption specialists. All inter-agent communications protected with hybrid-resistant encryption.`;
+                            message = `Main Agent: Orchestrating ${Object.keys(SubAgentConfigs || {}).length} specialized sub-agents: ThreatScanner, NetworkMapper, DefenseOrchestrator, EncryptionManager, EncryptionDeployer, CertificateManager, ComplianceMonitor, VPNMonitor, AnalyticsEngine, and LogAgent. All inter-agent communications protected with hybrid encryption.`;
                             break;
                         case 'decisions':
-                            message = 'Main Agent: Processing 2.4K decisions per minute across threat detection, encryption deployment, and network coordination. Neural network optimization active.';
+                            message = 'Main Agent: Processing 2.4K autonomous decisions per minute across threat detection, network mapping, defense coordination, encryption deployment, VPN monitoring, and compliance checking. Neural network optimization active.';
                             break;
                         case 'accuracy':
-                            message = 'AI Engine: 99.8% ML accuracy in threat classification. Neural network trained on 14.2M samples with continuous learning algorithms active.';
+                            message = 'AI Engine: 99.8% ML accuracy in cross-agent threat classification. Neural networks trained on 14.2M samples with continuous learning algorithms coordinating all sub-agents.';
                             break;
                         case 'uptime':
-                            message = 'System Monitor: 99.98% uptime maintained. Redundant systems and automated failover ensuring continuous protection with hybrid encryption.';
+                            message = 'System Monitor: 99.98% uptime maintained across all sub-agents. Redundant systems and automated failover ensuring continuous comprehensive cyber defense.';
                             break;
                         case 'cpu usage':
-                            message = 'Performance Monitor: 28% CPU utilization handling hybrid encryption processing across all sub-agents. Optimal performance maintained.';
+                            message = 'Performance Monitor: 28% CPU utilization handling Main Agent + 10 sub-agents coordination. Optimal performance across ThreatScanner, NetworkMapper, DefenseOrchestrator, and all specialized agents.';
                             break;
                         case 'memory usage':
-                            message = 'Memory Manager: 3.2GB allocated for 10 sub-agents and neural networks. Memory optimization algorithms active for peak performance.';
+                            message = 'Memory Manager: 3.2GB allocated for neural networks and sub-agent models. Memory optimization across all coordinated agents for peak performance.';
                             break;
                         case 'threat response':
-                            message = 'Response Engine: 0.3s average detection to response time. Real-time coordination between ThreatScanner and DefenseOrchestrator.';
+                            message = 'Response Engine: 0.3s average detection to response time. Real-time coordination between ThreatScanner detection and DefenseOrchestrator response.';
                             break;
-                        case 'encryption ops':
-                            message = 'Encryption Engine: 2.1M operations per second combining classical and post-quantum algorithms. All data flows protected.';
+                        case 'sub-agent sync':
+                            message = 'Coordination Engine: 99.8% synchronization across all 10 sub-agents. Real-time coordination ensuring comprehensive autonomous cyber defense.';
                             break;
                     }
                     window.sentinelChat.addMessage(message, false);
@@ -2010,16 +2105,16 @@
                     let message = '';
                     switch(neuralType) {
                         case 'active nodes':
-                            message = 'Neural Network: 2,847 active nodes processing real-time threat data. Deep learning pathways optimizing threat detection patterns continuously.';
+                            message = 'Neural Network: 2,847 active nodes processing real-time data across all sub-agents. Deep learning pathways optimizing threat detection, network mapping, defense coordination, and encryption deployment.';
                             break;
                         case 'learning rate':
-                            message = 'Learning Engine: 0.001 adaptive learning rate optimized for stability and accuracy. Auto-adjusting based on threat landscape changes.';
+                            message = 'Learning Engine: 0.001 adaptive learning rate optimized for cross-agent coordination. Auto-adjusting based on threat landscape and sub-agent performance.';
                             break;
                         case 'model accuracy':
-                            message = 'ML Engine: 99.8% accuracy in threat classification. Model trained on millions of samples with ensemble learning techniques.';
+                            message = 'ML Engine: 99.8% accuracy in cross-agent threat classification. Model trained on millions of samples from ThreatScanner, NetworkMapper, DefenseOrchestrator, and all coordinated agents.';
                             break;
                         case 'training data':
-                            message = 'Training System: 14.2M samples processed today. Continuous learning from live threat data while maintaining privacy with hybrid encryption.';
+                            message = 'Training System: 14.2M multi-agent samples processed today. Continuous learning from live threat data across all sub-agents while maintaining privacy with hybrid encryption.';
                             break;
                     }
                     window.sentinelChat.addMessage(message, false);
@@ -2039,7 +2134,7 @@
                     setTimeout(() => {
                         const agent = SubAgentConfigs[agentKey];
                         if (agent) {
-                            window.sentinelChat.addMessage(`${agent.name}: ${agent.description}. Status: ${agent.status}. Activity: ${agent.activity}. All communications secured with hybrid encryption.`, false);
+                            window.sentinelChat.addMessage(`${agent.name}: ${agent.description}. Status: ${agent.status}. Activity: ${agent.activity}. Coordinating with Main Agent for comprehensive cyber defense. All communications secured with hybrid encryption.`, false);
                         }
                     }, 800);
                 }
@@ -2052,13 +2147,14 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    window.sentinelChat.addMessage(`Coordination Details:
+                    window.sentinelChat.addMessage(`Multi-Agent Coordination Details:
 • Agents: ${activity.agents}
 • Action: ${activity.message}
 • Result: ${activity.result}
 • Time: ${activity.time.toLocaleTimeString()}
 • Type: ${activity.type.toUpperCase()}
-• Security: All coordination secured with hybrid-resistant encryption`, false);
+• Security: All coordination secured with hybrid encryption
+• Context: Part of comprehensive autonomous cyber defense strategy`, false);
                 }
             }, 300);
         }
@@ -2069,11 +2165,7 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    if (type === 'classical') {
-                        window.sentinelChat.addMessage(`EncryptionManager: Classical encryption status - AES-256-GCM active across all AI Engine systems. Performance: 2.1M ops/sec. Neural network protection: OPTIMAL.`, false);
-                    } else {
-                        window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all AI operations. Neural network communications quantum-safe.`, false);
-                    }
+                    window.sentinelChat.addMessage(`EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3, SPHINCS+) combined with classical encryption protecting all AI Engine operations. Neural network communications and sub-agent coordination secured with quantum-resistant protection.`, false);
                 }
             }, 300);
         }
@@ -2153,7 +2245,7 @@
                     // Resume AI systems and activity feed
                     if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                         activityFeedManager.startAutoGeneration(aiEngineFeedId, 7000);
-                        activityFeedManager.addMessage(aiEngineFeedId, '🤖 Main Agent resumed: AI Engine and neural networks reactivated', '', 'Main Agent');
+                        activityFeedManager.addMessage(aiEngineFeedId, '🤖 Main Agent resumed: Comprehensive autonomous cyber defense reactivated across all sub-agents', '', 'Main Agent');
                     }
                     startCoordinationGeneration();
                     startMetricsUpdates();
@@ -2173,7 +2265,7 @@
                     // Pause AI systems and activity feed
                     if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
                         activityFeedManager.stopAutoGeneration(aiEngineFeedId);
-                        activityFeedManager.addMessage(aiEngineFeedId, '⚠️ Main Agent paused: AI Engine in standby mode, manual control only', 'warning', 'Main Agent');
+                        activityFeedManager.addMessage(aiEngineFeedId, '⚠️ Main Agent paused: Sub-agent coordination in standby mode, manual control only', 'warning', 'Main Agent');
                     }
                     if (coordinationInterval) clearInterval(coordinationInterval);
                     if (metricsUpdateInterval) clearInterval(metricsUpdateInterval);
@@ -2182,14 +2274,14 @@
                 closeModal();
                 
                 if (SentinelState.chatOpen && window.sentinelChat) {
-                    const status = SentinelState.agentActive ? 'resumed autonomous operation with AI coordination' : 'switched to manual control mode';
-                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. Neural networks ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
+                    const status = SentinelState.agentActive ? 'resumed autonomous operation with comprehensive cyber defense coordination' : 'switched to manual control mode';
+                    window.sentinelChat.addMessage(`⚠️ Main Agent has ${status}. Sub-agent neural networks ${SentinelState.agentActive ? 'active' : 'paused'}.`, false, 'system');
                 }
             }
         };
         
         window.handleLogout = () => {
-            if (confirm('Are you sure you want to logout? The AI agent will continue protecting your systems autonomously.')) {
+            if (confirm('Are you sure you want to logout? The AI agent will continue comprehensive autonomous cyber defense across all sub-agents.')) {
                 localStorage.removeItem('sentinel_auth');
                 localStorage.removeItem('sentinel_scale');
                 window.location.href = 'index.html';
