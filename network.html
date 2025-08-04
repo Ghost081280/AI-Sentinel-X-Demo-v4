@@ -233,43 +233,34 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid var(--primary);
             border-radius: 20px;
-            font-weight: bold;
             font-size: 12px;
+            font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
+            cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .encryption-badge.classical {
-            background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .encryption-badge.quantum {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
+        .encryption-badge:hover {
+            background: rgba(0, 255, 136, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 2s ease-in-out infinite;
-        }
-
-        .status-light.active {
             background: var(--success);
-            box-shadow: 0 0 10px var(--success);
+            box-shadow: 0 0 8px var(--success);
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         @keyframes statusPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.2); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
         .agent-status {
@@ -604,250 +595,6 @@
             font-style: italic;
         }
 
-        /* Solution Divider */
-        .solution-divider {
-            margin: 40px 0 30px 0;
-            position: relative;
-            color: var(--text-secondary);
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .solution-divider::before,
-        .solution-divider::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 40%;
-            height: 1px;
-            background: var(--border);
-        }
-
-        .solution-divider::before {
-            left: 0;
-        }
-
-        .solution-divider::after {
-            right: 0;
-        }
-
-        /* Enhanced Scale Options */
-        .scale-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            margin-bottom: 30px;
-        }
-
-        .scale-option {
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scale-option::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .scale-option:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 40px rgba(0, 255, 136, 0.2);
-            border-color: var(--primary);
-        }
-
-        .scale-option:hover::before {
-            opacity: 1;
-        }
-
-        .scale-option.selected {
-            border-color: var(--primary);
-            background: rgba(0, 255, 136, 0.1);
-            transform: translateY(-5px);
-        }
-
-        .scale-option.selected::before {
-            opacity: 1;
-        }
-
-        .scale-option.business:hover,
-        .scale-option.business.selected {
-            border-color: #9333ea;
-            box-shadow: 0 15px 40px rgba(147, 51, 234, 0.2);
-        }
-
-        .scale-option.business::before {
-            background: linear-gradient(90deg, transparent, #9333ea, transparent);
-        }
-
-        .scale-option.enterprise:hover,
-        .scale-option.enterprise.selected {
-            border-color: #ff6b35;
-            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.2);
-        }
-
-        .scale-option.enterprise::before {
-            background: linear-gradient(90deg, transparent, #ff6b35, transparent);
-        }
-
-        /* Scale Option Header */
-        .scale-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .scale-icon {
-            font-size: 48px;
-        }
-
-        .scale-badge {
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .scale-badge.starter {
-            background: rgba(0, 255, 136, 0.2);
-            color: var(--primary);
-            border: 1px solid var(--primary);
-        }
-
-        .scale-badge.professional {
-            background: rgba(147, 51, 234, 0.2);
-            color: #9333ea;
-            border: 1px solid #9333ea;
-        }
-
-        .scale-badge.enterprise {
-            background: rgba(255, 107, 53, 0.2);
-            color: #ff6b35;
-            border: 1px solid #ff6b35;
-        }
-
-        .scale-title {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            color: var(--text-primary);
-        }
-
-        .scale-subtitle {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* Scale Features */
-        .scale-features {
-            margin-bottom: 20px;
-        }
-
-        .feature {
-            font-size: 14px;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            line-height: 1.5;
-        }
-
-        .feature::before {
-            content: '';
-            width: 4px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 50%;
-            margin-right: 10px;
-            flex-shrink: 0;
-        }
-
-        .business .feature::before {
-            background: #9333ea;
-        }
-
-        .enterprise .feature::before {
-            background: #ff6b35;
-        }
-
-        /* Updated Pricing - Now License-based */
-        .scale-pricing {
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--primary);
-            text-align: center;
-            padding: 12px;
-            background: rgba(0, 255, 136, 0.1);
-            border-radius: 10px;
-            border: 1px solid rgba(0, 255, 136, 0.3);
-            margin-bottom: 15px;
-        }
-
-        .business .scale-pricing {
-            color: #9333ea;
-            background: rgba(147, 51, 234, 0.1);
-            border-color: rgba(147, 51, 234, 0.3);
-        }
-
-        .enterprise .scale-pricing {
-            color: #ff6b35;
-            background: rgba(255, 107, 53, 0.1);
-            border-color: rgba(255, 107, 53, 0.3);
-        }
-
-        .scale-coverage {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-align: center;
-            font-style: italic;
-        }
-
-        /* Solution Footer */
-        .solution-footer {
-            margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .solution-footer p {
-            margin-bottom: 10px;
-        }
-
-        .solution-footer a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .solution-footer a:hover {
-            color: var(--secondary);
-            text-decoration: underline;
-        }
-
         /* IP Range Manager */
         .ip-range-manager {
             background: var(--bg-card);
@@ -980,16 +727,10 @@
             letter-spacing: 1px;
         }
 
-        .auto-scan-controls {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        /* Scanning Grid */
-        .scanning-grid {
-            display: none;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        /* Dual Layer Scanning - NEW FROM HYBRID DEMO */
+        .scanning-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
             gap: 25px;
             margin-bottom: 30px;
         }
@@ -1001,6 +742,14 @@
             padding: 25px;
             backdrop-filter: blur(15px);
             transition: all 0.3s ease;
+        }
+
+        .scan-panel.external {
+            border-color: rgba(255, 0, 68, 0.3);
+        }
+
+        .scan-panel.internal {
+            border-color: rgba(0, 255, 136, 0.3);
         }
 
         .scan-panel:hover {
@@ -1021,6 +770,20 @@
             font-size: 18px;
             font-weight: bold;
             color: var(--primary);
+        }
+
+        .panel-title.external {
+            background: var(--gradient-external);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .panel-title.internal {
+            background: var(--gradient-internal);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .scan-status {
@@ -1055,6 +818,9 @@
         }
 
         .scan-results {
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 204, 255, 0.05) 100%);
+            border-radius: 12px;
+            padding: 20px;
             margin-bottom: 20px;
         }
 
@@ -1144,6 +910,11 @@
         .status-update {
             background: rgba(255, 170, 0, 0.2);
             color: var(--warning);
+        }
+
+        .status-vulnerable {
+            background: rgba(255, 0, 68, 0.2);
+            color: var(--danger);
         }
 
         /* Network Overview */
@@ -1328,7 +1099,7 @@
             color: var(--text-secondary);
         }
 
-        /* Real-time Feed Section - NEW */
+        /* Feed Section - NEW FROM VPN PAGE */
         .feed-section {
             background: var(--bg-card);
             border: 1px solid var(--border);
@@ -1435,6 +1206,207 @@
             color: var(--accent);
             margin-top: 5px;
             font-style: italic;
+        }
+
+        /* Checkout Section - NEW */
+        .checkout-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(20px);
+            display: none;
+            text-align: center;
+        }
+
+        .checkout-header {
+            margin-bottom: 30px;
+        }
+
+        .checkout-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .checkout-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        .pricing-summary {
+            background: rgba(0, 255, 136, 0.05);
+            border: 1px solid var(--primary);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .pricing-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pricing-item:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 18px;
+            color: var(--primary);
+        }
+
+        .pricing-label {
+            color: var(--text-secondary);
+        }
+
+        .pricing-value {
+            color: var(--text-primary);
+            font-weight: bold;
+        }
+
+        .checkout-form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .checkout-btn {
+            background: var(--gradient-1);
+            border: none;
+            border-radius: 12px;
+            padding: 15px 40px;
+            color: var(--bg-darker);
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.3);
+        }
+
+        .security-note {
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        /* IP Range Card Styling */
+        .ip-range-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(15px);
+        }
+
+        .ip-range-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
+            border-color: var(--primary);
+        }
+
+        .range-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .range-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .range-status {
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .status-warning {
+            background: rgba(255, 170, 0, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+
+        .range-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .info-value {
+            font-size: 14px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .range-metrics {
+            display: flex;
+            justify-content: space-around;
+            gap: 15px;
+        }
+
+        .range-metric {
+            text-align: center;
+            flex: 1;
+        }
+
+        .range-metric-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .range-metric-label {
+            font-size: 11px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         /* Modal Styles */
@@ -1548,111 +1520,6 @@
             color: var(--text-secondary);
             font-size: 13px;
             font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* IP Range Card Styling */
-        .ip-range-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(15px);
-        }
-
-        .ip-range-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 255, 136, 0.2);
-            border-color: var(--primary);
-        }
-
-        .range-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .range-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .range-status {
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .status-warning {
-            background: rgba(255, 170, 0, 0.2);
-            color: var(--warning);
-            border: 1px solid var(--warning);
-        }
-
-        .status-vulnerable {
-            background: rgba(255, 0, 68, 0.2);
-            color: var(--danger);
-            border: 1px solid var(--danger);
-        }
-
-        .range-info {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-            margin-bottom: 15px;
-        }
-
-        .info-item {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .info-label {
-            font-size: 12px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .info-value {
-            font-size: 14px;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .range-metrics {
-            display: flex;
-            justify-content: space-around;
-            gap: 15px;
-        }
-
-        .range-metric {
-            text-align: center;
-            flex: 1;
-        }
-
-        .range-metric-value {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 4px;
-        }
-
-        .range-metric-label {
-            font-size: 11px;
-            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -1841,11 +1708,7 @@
                 flex-direction: column;
             }
             
-            .scale-options {
-                grid-template-columns: 1fr;
-            }
-            
-            .scanning-grid {
+            .scanning-sections {
                 grid-template-columns: 1fr;
             }
             
@@ -1970,15 +1833,11 @@
                         <span id="scaleText">DETECTING</span>
                     </div>
                     
-                    <!-- Encryption Badges -->
+                    <!-- Updated Encryption Badge -->
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum">
-                            <div class="status-light active" id="quantumStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge" onclick="showEncryptionStatus()">
+                            <div class="status-light"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     
@@ -2025,6 +1884,10 @@
                 <span>📊</span>
                 <span>Analytics</span>
             </a>
+            <a href="vpn.html" class="nav-tab">
+                <span>🔒</span>
+                <span>VPNMonitor</span>
+            </a>
             <a href="settings.html" class="nav-tab">
                 <span>⚙️</span>
                 <span>Settings</span>
@@ -2060,7 +1923,7 @@
             </div>
         </div>
 
-        <!-- NEW: Encryption Gap Alert -->
+        <!-- NEW: Encryption Gap Alert (Hidden by default) -->
         <div class="encryption-gap-alert" id="encryptionGapAlert">
             <div class="alert-content">
                 <div class="alert-title">⚠️ Encryption Gaps Detected</div>
@@ -2071,341 +1934,332 @@
 
         <!-- Environment Detection with Auto-Scan -->
         <div class="environment-detection" id="environmentDetection">
-            <div class="detection-title">🎯 Intelligent Network Discovery</div>
+            <div class="detection-title">🎯 Comprehensive Network Discovery</div>
             <div class="detection-description">
-                AI Sentinel-X will automatically discover and analyze your network infrastructure to configure optimal security monitoring. Enhanced with encryption gap detection to ensure all devices are properly protected with hybrid-resistant algorithms.
+                AI Sentinel-X performs dual-layer network discovery using external reconnaissance (Shodan API) and internal agent scanning. Our autonomous system will map your entire infrastructure, identify vulnerabilities, and recommend the optimal security configuration based on your network size and complexity.
             </div>
             
             <div class="auto-scan-section">
                 <button class="auto-scan-btn" onclick="startAutoScan()" id="autoScanBtn">
                     <span class="scan-icon">🔍</span>
-                    <span class="scan-text">Auto-Scan My Network</span>
-                    <span class="scan-subtitle">Detect infrastructure & configure monitoring</span>
+                    <span class="scan-text">Start Network Discovery</span>
+                    <span class="scan-subtitle">External + Internal Dual-Layer Scan</span>
                 </button>
                 <div class="scan-progress" id="scanProgress" style="display: none;">
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill"></div>
                     </div>
-                    <div class="progress-text" id="progressText">Scanning network infrastructure...</div>
+                    <div class="progress-text" id="progressText">Initializing dual-layer scan...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IP Range Manager (Hidden until configured) -->
+        <div class="ip-range-manager" id="ipRangeManager" style="display: none;">
+            <div class="ip-range-header">
+                <h2 class="ip-range-title" id="ipRangeTitle">Network Range Management</h2>
+                <div class="ip-range-controls">
+                    <button class="add-range-btn" onclick="showAddRangeModal()" id="addRangeBtn">Add IP Range</button>
+                    <button class="reset-config-btn" onclick="showRescanModal()" title="Reset network discovery and reconfigure environment">
+                        <span class="icon">🔄</span>
+                        <span>Reset Configuration</span>
+                    </button>
                 </div>
             </div>
             
-            <div class="solution-divider">
-                <span>Or manually configure your deployment:</span>
+            <div class="ip-ranges-grid" id="ipRangesGrid">
+                <!-- IP ranges will be populated here -->
             </div>
-            
-            <div class="scale-options">
-                <div class="scale-option individual" onclick="selectScale('individual')">
-                    <div class="scale-header">
-                        <div class="scale-icon">🌐</div>
-                        <div class="scale-badge starter">ESSENTIAL</div>
+        </div>
+
+        <!-- Interactive Dashboard Section -->
+        <div class="dashboard-interactive" id="dashboardInteractive" style="display: none;">
+            <div class="interactive-header">
+                <h2 class="interactive-title" id="interactiveTitle">Network Discovery Dashboard</h2>
+                <div class="auto-scan-controls">
+                    <span style="color: var(--text-secondary); font-size: 14px;" id="scanDetails">Continuous Monitoring Active</span>
+                    <button class="reset-config-btn" onclick="showRescanModal()" title="Reset network discovery and reconfigure environment">
+                        <span class="icon">🔄</span>
+                        <span>Reset Configuration</span>
+                    </button>
+                </div>
+            </div>
+            <p style="color: var(--text-secondary); text-align: center; font-size: 14px; line-height: 1.6;" id="dashboardDescription">
+                🤖 <strong>Autonomous scanning active</strong> • Hybrid-resistant encryption • No manual intervention required
+            </p>
+        </div>
+
+        <!-- Dual Layer Scanning Sections -->
+        <div class="scanning-sections" id="scanningSections" style="display: none;">
+            <!-- External Scan Panel -->
+            <div class="scan-panel external">
+                <div class="panel-header">
+                    <h2 class="panel-title external">External Scan (Shodan)</h2>
+                    <div class="scan-status active">
+                        <div class="status-dot"></div>
+                        <span>SCANNING</span>
                     </div>
-                    <div class="scale-title">Single Server Protection</div>
-                    <div class="scale-subtitle">Individual Server • VPS • Cloud Instance</div>
-                    <div class="scale-features">
-                        <div class="feature">✓ Real-time threat monitoring</div>
-                        <div class="feature">✓ Hybrid-resistant encryption</div>
-                        <div class="feature">✓ Automated incident response</div>
-                        <div class="feature">✓ Basic network discovery</div>
-                        <div class="feature">✓ Encryption gap detection</div>
-                    </div>
-                    <div class="scale-pricing">$29/month License Fee</div>
-                    <div class="scale-coverage">+ $0.10/endpoint/month for internal assets discovered</div>
                 </div>
                 
-                <div class="scale-option business" onclick="selectScale('business')">
-                    <div class="scale-header">
-                        <div class="scale-icon">🏢</div>
-                        <div class="scale-badge professional">BUSINESS</div>
+                <div class="scan-results">
+                    <div class="result-item">
+                        <span class="result-label">Organization</span>
+                        <span class="result-value" id="orgName">Acme Corporation</span>
                     </div>
-                    <div class="scale-title">Multi-Site Security</div>
-                    <div class="scale-subtitle">Small-Medium Business • Multi-Location</div>
-                    <div class="scale-features">
-                        <div class="feature">✓ Everything in Essential</div>
-                        <div class="feature">✓ Cross-location correlation</div>
-                        <div class="feature">✓ Advanced threat intelligence</div>
-                        <div class="feature">✓ Business compliance reports</div>
-                        <div class="feature">✓ Extended monitoring range</div>
-                        <div class="feature">✓ Advanced encryption gap remediation</div>
+                    <div class="result-item">
+                        <span class="result-label">ISP</span>
+                        <span class="result-value" id="ispName">Business Fiber Network</span>
                     </div>
-                    <div class="scale-pricing">$149/month License Fee</div>
-                    <div class="scale-coverage">+ $0.08/endpoint/month for internal assets discovered</div>
+                    <div class="result-item">
+                        <span class="result-label">Location</span>
+                        <span class="result-value" id="location">Columbia, SC, US</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Open Ports</span>
+                        <span class="result-value" id="openPorts" style="color: var(--warning);">7</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Vulnerabilities</span>
+                        <span class="result-value" id="vulnCount" style="color: var(--danger);">2</span>
+                    </div>
+                </div>
+
+                <div class="service-list" id="externalServicesList">
+                    <!-- External services will be populated here -->
+                </div>
+            </div>
+
+            <!-- Internal Scan Panel -->
+            <div class="scan-panel internal">
+                <div class="panel-header">
+                    <h2 class="panel-title internal">Internal Scan (Agent)</h2>
+                    <div class="scan-status active">
+                        <div class="status-dot"></div>
+                        <span>AUTO-DISCOVERING</span>
+                    </div>
                 </div>
                 
-                <div class="scale-option enterprise" onclick="selectScale('enterprise')">
-                    <div class="scale-header">
-                        <div class="scale-icon">🏭</div>
-                        <div class="scale-badge enterprise">ENTERPRISE</div>
+                <div class="scan-results">
+                    <div class="result-item">
+                        <span class="result-label">Network Range</span>
+                        <span class="result-value" id="networkRange">192.168.1.0/24</span>
                     </div>
-                    <div class="scale-title">Global Infrastructure Defense</div>
-                    <div class="scale-subtitle">Data Centers • Global Infrastructure</div>
-                    <div class="scale-features">
-                        <div class="feature">✓ Everything in Business</div>
-                        <div class="feature">✓ Global threat correlation</div>
-                        <div class="feature">✓ Custom threat modeling</div>
-                        <div class="feature">✓ SOC integration & APIs</div>
-                        <div class="feature">✓ Unlimited monitoring scope</div>
-                        <div class="feature">✓ Enterprise encryption orchestration</div>
-                   </div>
-                   <div class="scale-pricing">$499/month License Fee</div>
-                   <div class="scale-coverage">+ $0.05/endpoint/month for internal assets discovered</div>
-               </div>
-           </div>
-           
-           <div class="solution-footer">
-               <p>🛡️ Your license includes the AI agent, threat detection, and basic monitoring infrastructure. Additional charges apply only for internal endpoints discovered during network scanning.</p>
-               <p>🔐 Enhanced V3 features include automatic encryption gap detection and remediation through EncryptionDeployer integration.</p>
-               <p>📊 You control what gets monitored - install the agent only where needed to optimize costs.</p>
-               <p>💰 Annual subscriptions available with 20% discount on license fees.</p>
-           </div>
-       </div>
+                    <div class="result-item">
+                        <span class="result-label">Active Hosts</span>
+                        <span class="result-value" id="activeHosts" style="color: var(--success);">246</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">New Devices (24h)</span>
+                        <span class="result-value" id="newDevicesInternal" style="color: var(--secondary);">14</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Unpatched Systems</span>
+                        <span class="result-value" id="unpatchedSystems" style="color: var(--warning);">18</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">AI Monitoring</span>
+                        <span class="result-value" style="color: var(--accent);">REAL-TIME</span>
+                    </div>
+                </div>
 
-       <!-- IP Range Manager -->
-       <div class="ip-range-manager" id="ipRangeManager" style="display: none;">
-           <div class="ip-range-header">
-               <h2 class="ip-range-title" id="ipRangeTitle">Network Range Management</h2>
-               <div class="ip-range-controls">
-                   <button class="add-range-btn" onclick="showAddRangeModal()" id="addRangeBtn">Add IP Range</button>
-                   <button class="reset-config-btn" onclick="showRescanModal()" title="Reset network discovery and reconfigure environment">
-                       <span class="icon">🔄</span>
-                       <span>Reset Configuration</span>
-                   </button>
-               </div>
-           </div>
-           
-           <div class="ip-ranges-grid" id="ipRangesGrid">
-               <!-- IP ranges will be populated here -->
-           </div>
-       </div>
+                <div class="service-list" id="internalServicesList">
+                    <!-- Internal services will be populated here -->
+                </div>
+            </div>
+        </div>
 
-       <!-- Interactive Dashboard Section -->
-       <div class="dashboard-interactive" id="dashboardInteractive" style="display: none;">
-           <div class="interactive-header">
-               <h2 class="interactive-title" id="interactiveTitle">Network Discovery Dashboard</h2>
-               <div class="auto-scan-controls">
-                   <span style="color: var(--text-secondary); font-size: 14px;" id="scanDetails">Continuous Monitoring Active</span>
-                   <button class="reset-config-btn" onclick="showRescanModal()" title="Reset network discovery and reconfigure environment">
-                       <span class="icon">🔄</span>
-                       <span>Reset Configuration</span>
-                   </button>
-               </div>
-           </div>
-           <p style="color: var(--text-secondary); text-align: center; font-size: 14px; line-height: 1.6;" id="dashboardDescription">
-               🤖 <strong>Autonomous scanning active</strong> • Hybrid-resistant encryption • No manual intervention required
-           </p>
-       </div>
+        <!-- Network Overview -->
+        <div class="network-overview" id="networkOverview" style="display: none;">
+            <div class="overview-header">
+                <h2 class="overview-title" id="overviewTitle">Network Overview</h2>
+            </div>
+            <div class="overview-grid" id="overviewGrid">
+                <!-- Overview cards will be populated here -->
+            </div>
+        </div>
 
-       <!-- Scanning Grid -->
-       <div class="scanning-grid" id="scanningGrid" style="display: none;">
-           <!-- Scan panels will be populated here by JavaScript -->
-       </div>
+        <!-- Device Discovery -->
+        <div class="device-discovery" id="deviceDiscovery" style="display: none;">
+            <div class="discovery-header">
+                <h2 class="discovery-title" id="discoveryTitle">Device Discovery</h2>
+            </div>
+            <div class="device-grid" id="deviceGrid">
+                <!-- Device cards will be populated here -->
+            </div>
+        </div>
 
-       <!-- Network Overview -->
-       <div class="network-overview" id="networkOverview" style="display: none;">
-           <div class="overview-header">
-               <h2 class="overview-title" id="overviewTitle">Network Overview</h2>
-           </div>
-           <div class="overview-grid" id="overviewGrid">
-               <!-- Overview cards will be populated here -->
-           </div>
-       </div>
+        <!-- Sub-Agent Activity Feed -->
+        <div class="feed-section" id="networkFeed" style="display: none;">
+            <div class="feed-header">
+                <h2 class="feed-title">NetworkMapper Activity Feed</h2>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>LIVE</span>
+                </div>
+            </div>
+            <div class="feed-content" id="networkFeedContent">
+                <!-- Feed items will be populated here -->
+            </div>
+        </div>
 
-       <!-- Device Discovery -->
-       <div class="device-discovery" id="deviceDiscovery" style="display: none;">
-           <div class="discovery-header">
-               <h2 class="discovery-title" id="discoveryTitle">Device Discovery</h2>
-           </div>
-           <div class="device-grid" id="deviceGrid">
-               <!-- Device cards will be populated here -->
-           </div>
-       </div>
+        <!-- Checkout Section -->
+        <div class="checkout-section" id="checkoutSection" style="display: none;">
+            <div class="checkout-header">
+                <h2 class="checkout-title">Complete Your Security Setup</h2>
+                <p class="checkout-subtitle">Your network scan is complete. Subscribe to activate AI Sentinel-X protection.</p>
+            </div>
 
-       <!-- Sub-Agent Activity Feed - ONLY SHOWS AFTER SCALE SELECTION -->
-       <div class="feed-section" id="networkFeed" style="display: none;">
-           <div class="feed-header">
-               <h2 class="feed-title">Sub-Agent Activity Feed</h2>
-               <div class="live-indicator">
-                   <div class="live-dot"></div>
-                   <span>LIVE</span>
-               </div>
-           </div>
-           <div class="feed-content" id="networkFeedContent">
-               <!-- Feed items will be populated here -->
-           </div>
-       </div>
+            <div class="pricing-summary" id="pricingSummary">
+                <!-- Pricing will be populated based on selected package -->
+            </div>
 
-   </div>
+            <div class="checkout-form">
+                <button class="checkout-btn" onclick="processCheckout()">
+                    <span>🔒</span>
+                    <span>Secure Checkout with Stripe</span>
+                </button>
+                <div class="security-note">
+                    <span>🛡️</span>
+                    <span>256-bit SSL encryption • PCI compliant • Instant activation</span>
+                </div>
+            </div>
+        </div>
 
-   <!-- Add Range Modal -->
-   <div class="modal-overlay" id="addRangeModal" onclick="closeModalOnOverlay(event)">
-       <div class="modal">
-           <div class="modal-header">
-               <h2 class="modal-title" id="addRangeModalTitle">🌐 Add IP Range</h2>
-           </div>
-           <div class="modal-content">
-               <div class="input-group">
-                   <label for="rangeName">Range Name:</label>
-                   <input type="text" id="rangeName" placeholder="e.g., Main Office" class="modal-input">
-               </div>
-               <div class="input-group">
-                   <label for="ipRange">IP Range (CIDR):</label>
-                   <input type="text" id="ipRange" placeholder="e.g., 192.168.1.0/24" class="modal-input">
-               </div>
-               <div class="input-group">
-                   <label for="location">Location:</label>
-                   <input type="text" id="location" placeholder="e.g., New York, US" class="modal-input">
-               </div>
-               <div class="input-group">
-                   <label for="organization">Organization:</label>
-                   <input type="text" id="organization" placeholder="e.g., Company ISP" class="modal-input">
-               </div>
-           </div>
-           <div class="modal-actions">
-               <button class="modal-btn modal-btn-primary" onclick="addIPRange()">Add Range</button>
-               <button class="modal-btn modal-btn-secondary" onclick="closeAddRangeModal()">Cancel</button>
-           </div>
-       </div>
-   </div>
+    </div>
 
-   <!-- Rescan Modal -->
-   <div class="modal-overlay" id="rescanModal" onclick="closeModalOnOverlay(event)">
-       <div class="modal">
-           <div class="modal-header">
-               <h2 class="modal-title">🔄 Reset Network Discovery</h2>
-           </div>
-           <div class="modal-content">
-               <p>This will reset the network discovery configuration and return you to the environment detection screen. All current network data will be cleared.</p>
-               <p><strong>Warning:</strong> This action cannot be undone. The AI agent will need to reconfigure your environment from scratch.</p>
-           </div>
-           <div class="modal-actions">
-               <button class="modal-btn modal-btn-primary" onclick="confirmRescan()">Reset Configuration</button>
-               <button class="modal-btn modal-btn-secondary" onclick="closeRescanModal()">Cancel</button>
-           </div>
-       </div>
-   </div>
+    <!-- Add Range Modal -->
+    <div class="modal-overlay" id="addRangeModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addRangeModalTitle">🌐 Add IP Range</h2>
+            </div>
+            <div class="modal-content">
+                <div class="input-group">
+                    <label for="rangeName">Range Name:</label>
+                    <input type="text" id="rangeName" placeholder="e.g., Main Office" class="modal-input">
+                </div>
+                <div class="input-group">
+                    <label for="ipRange">IP Range (CIDR):</label>
+                    <input type="text" id="ipRange" placeholder="e.g., 192.168.1.0/24" class="modal-input">
+                </div>
+                <div class="input-group">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" placeholder="e.g., New York, US" class="modal-input">
+                </div>
+                <div class="input-group">
+                    <label for="organization">Organization:</label>
+                    <input type="text" id="organization" placeholder="e.g., Company ISP" class="modal-input">
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="addIPRange()">Add Range</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeAddRangeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-   <!-- Agent Shutdown Modal -->
-   <div class="modal-overlay" id="agentShutdownModal" onclick="closeModalOnOverlay(event)">
-       <div class="modal">
-           <div class="modal-header">
-               <h2 class="modal-title">🤖 AI Agent Control</h2>
-           </div>
-           <div class="modal-content">
-               <p>The AI Agent is currently operating autonomously with manual override capabilities. You can:</p>
-               <ul>
-                   <li><strong>Keep Autonomous:</strong> Agent continues automatic threat response</li>
-                   <li><strong>Manual Control:</strong> Switch to manual-only mode with CLI fallback</li>
-               </ul>
-               <p>Note: Network protection continues regardless of mode selection.</p>
-           </div>
-           <div class="modal-actions">
-               <button class="modal-btn modal-btn-primary" onclick="confirmAgentShutdown()">Toggle Mode</button>
-               <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
-           </div>
-       </div>
-   </div>
+    <!-- Rescan Modal -->
+    <div class="modal-overlay" id="rescanModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">🔄 Reset Network Discovery</h2>
+            </div>
+            <div class="modal-content">
+                <p>This will reset the network discovery configuration and return you to the environment detection screen. All current network data will be cleared.</p>
+                <p><strong>Warning:</strong> This action cannot be undone. The AI agent will need to reconfigure your environment from scratch.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="confirmRescan()">Reset Configuration</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeRescanModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-   <!-- AI Chat Widget -->
-   <div class="ai-chat-widget">
-       <div class="ai-chat-window" id="aiChatWindow">
-           <div class="ai-chat-header">
-               <div class="ai-chat-status">
-                   <span class="chat-status-dot"></span>
-                   <span>NETWORKMAPPER ONLINE</span>
-               </div>
-               <button class="ai-chat-close" onclick="toggleChat()">×</button>
-           </div>
-           <div class="cli-mode-indicator" id="cliModeIndicator">
-               ⚠️ CLI MODE - NetworkMapper Offline
-           </div>
-           <div class="ai-chat-messages" id="aiChatMessages">
-               <div class="ai-message">
-                   <div class="ai-message-bubble">
-                       Welcome to AI Sentinel-X V3 Network Discovery. I'm NetworkMapper with enhanced encryption gap detection. I'll analyze your environment and coordinate with EncryptionDeployer to ensure all devices are properly protected.
-                   </div>
-                   <div class="ai-message-time">Just now</div>
-               </div>
-           </div>
-           <div class="ai-chat-input-container">
-               <input 
-                   type="text" 
-                   class="ai-chat-input" 
-                   id="aiChatInput" 
-                   placeholder="Ask about network configuration, encryption gaps, or scaling..."
-                   onkeypress="handleChatKeyPress(event)"
-               >
-               <button class="ai-chat-send" id="aiChatSend" onclick="sendChatMessage()">SEND</button>
-           </div>
-       </div>
-       <button class="ai-chat-toggle" onclick="toggleChat()">🤖</button>
-   </div>
+    <!-- Agent Shutdown Modal -->
+    <div class="modal-overlay" id="agentShutdownModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title">🤖 AI Agent Control</h2>
+            </div>
+            <div class="modal-content">
+                <p>The AI Agent is currently operating autonomously with manual override capabilities. You can:</p>
+                <ul>
+                    <li><strong>Keep Autonomous:</strong> Agent continues automatic threat response</li>
+                    <li><strong>Manual Control:</strong> Switch to manual-only mode with CLI fallback</li>
+                </ul>
+                <p>Note: Network protection continues regardless of mode selection.</p>
+            </div>
+            <div class="modal-actions">
+                <button class="modal-btn modal-btn-primary" onclick="confirmAgentShutdown()">Toggle Mode</button>
+                <button class="modal-btn modal-btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-   <script src="shared.js"></script>
-   <script src="network-core.js"></script>
-   <script>
-        // V3 Enhancement: Encryption Gap Detection
-        let encryptionGapDetected = false;
-        let gapDeviceCount = 0;
-        let feedInterval = null;
+    <!-- AI Chat Widget -->
+    <div class="ai-chat-widget">
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-chat-header">
+                <div class="ai-chat-status">
+                    <span class="chat-status-dot"></span>
+                    <span>NETWORKMAPPER ONLINE</span>
+                </div>
+                <button class="ai-chat-close" onclick="toggleChat()">×</button>
+            </div>
+            <div class="cli-mode-indicator" id="cliModeIndicator">
+                ⚠️ CLI MODE - NetworkMapper Offline
+            </div>
+            <div class="ai-chat-messages" id="aiChatMessages">
+                <div class="ai-message">
+                    <div class="ai-message-bubble">
+                        Welcome to AI Sentinel-X V4 Network Discovery. I'm NetworkMapper, coordinating with ThreatScanner, EncryptionDeployer, and other sub-agents. I perform dual-layer scanning: external reconnaissance via Shodan API and internal discovery through our deployed agent. Ready to map your infrastructure comprehensively.
+                    </div>
+                    <div class="ai-message-time">Just now</div>
+                </div>
+            </div>
+            <div class="ai-chat-input-container">
+                <input 
+                    type="text" 
+                    class="ai-chat-input" 
+                    id="aiChatInput" 
+                    placeholder="Ask about network discovery, encryption gaps, or security configuration..."
+                    onkeypress="handleChatKeyPress(event)"
+                >
+                <button class="ai-chat-send" id="aiChatSend" onclick="sendChatMessage()">SEND</button>
+            </div>
+        </div>
+        <button class="ai-chat-toggle" onclick="toggleChat()">🤖</button>
+    </div>
 
-        // Network feed messages for V3
-        const networkFeedMessages = {
-            individual: [
-                { msg: '🌐 NetworkMapper: Scanning single server environment', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🔍 External IP scan initiated for server perimeter', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '✅ Server hardening check: SSH secured on port 22', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🔐 EncryptionDeployer: TLS 1.3 active on web services', agent: 'EncryptionDeployer', type: 'encryption' },
-                { msg: '📊 Single server baseline established', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '⚡ Firewall rules optimized for minimal exposure', agent: 'DefenseOrchestrator', type: 'ai-action' },
-                { msg: '🛡️ Essential monitoring active: CPU, RAM, Network', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '📝 LogAgent: Server logs encrypted with Dilithium-3', agent: 'LogAgent', type: 'ai-action' }
-            ],
-            business: [
-                { msg: '🏢 NetworkMapper: Discovering multi-site topology', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🌍 Cross-location correlation engine activated', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🔍 Site A: 47 devices discovered, 3 subnets mapped', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🔍 Site B: 31 devices discovered, 2 subnets mapped', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🔐 EncryptionDeployer: Inter-site VPN secured with Kyber-1024', agent: 'EncryptionDeployer', type: 'encryption' },
-                { msg: '✅ ComplianceMonitor: Business continuity verified', agent: 'ComplianceMonitor', type: 'ai-action' },
-                { msg: '📊 Advanced threat correlation active across sites', agent: 'AnalyticsEngine', type: 'ai-action' },
-                { msg: '🛡️ Unified security policy deployed to all locations', agent: 'DefenseOrchestrator', type: 'ai-action' }
-            ],
-            enterprise: [
-                { msg: '🏭 NetworkMapper: Enterprise infrastructure scan initiated', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🌐 Data Center 1: 1,247 servers discovered', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🌐 Data Center 2: 892 servers discovered', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🔍 Global network topology: 15 locations, 47 subnets', agent: 'NetworkMapper', type: 'discovery' },
-                { msg: '🔐 Enterprise PKI deployed with hybrid certificates', agent: 'CertificateManager', type: 'encryption' },
-                { msg: '📊 Cross-DC threat correlation matrix established', agent: 'AnalyticsEngine', type: 'ai-action' },
-                { msg: '✅ SOC integration verified, APIs operational', agent: 'ComplianceMonitor', type: 'ai-action' },
-                { msg: '🛡️ Global defense orchestration active', agent: 'DefenseOrchestrator', type: 'ai-action' }
-            ]
-        };
-
-        // Common feed messages that apply to all scales
-        const commonFeedMessages = [
-            { msg: '🔐 Encryption gap detected: 3 devices need protection', agent: 'NetworkMapper', type: 'discovery' },
-            { msg: '🔧 EncryptionDeployer: Remediating encryption gaps', agent: 'EncryptionDeployer', type: 'encryption' },
-            { msg: '✅ All devices now protected with hybrid encryption', agent: 'EncryptionDeployer', type: 'encryption' },
-            { msg: '📜 CertificateManager: All certificates valid', agent: 'CertificateManager', type: 'encryption' },
-            { msg: '🛡️ Real-time threat monitoring active', agent: 'ThreatScanner', type: 'ai-action' },
-            { msg: '📝 Audit trail secured with Dilithium-3 signatures', agent: 'LogAgent', type: 'ai-action' }
-        ];
-
-        // Override the initialization to include V3 features
+    <script src="shared.js"></script>
+    <script src="network-core.js"></script>
+    <script>
+        // Enhanced initialization for V4
         document.addEventListener('DOMContentLoaded', () => {
-            console.log('Network V3 module loaded');
-            initializeNetworkV3();
+            console.log('Network V4 module loaded');
+            initializeNetworkV4();
         });
 
-        function initializeNetworkV3() {
+        function initializeNetworkV4() {
             // Call original initialization
             if (typeof initializeEnvironmentDetection === 'function') {
                 initializeEnvironmentDetection();
             }
 
-            // Initialize V3 encryption gap detection
-            initializeEncryptionGapDetection();
+            // Initialize encryption status click handler
+            window.showEncryptionStatus = function() {
+                if (window.sentinelChat && !SentinelState.chatOpen) {
+                    window.sentinelChat.toggle();
+                }
+                setTimeout(() => {
+                    if (window.sentinelChat) {
+                        window.sentinelChat.addMessage('NetworkMapper: Hybrid encryption active across all discovered devices. Classical algorithms (AES-256-GCM, ChaCha20-Poly1305) combined with post-quantum (Kyber-1024, Dilithium-3, SPHINCS+). Coordinating with EncryptionManager for comprehensive protection.', false);
+                    }
+                }, 300);
+            };
+
+            // Initialize V4 features
+            initializeV4Features();
             
             // Auto-update metrics periodically
             setInterval(() => {
@@ -2416,91 +2270,439 @@
             }, 8000);
         }
 
-        function initializeEncryptionGapDetection() {
-            // Simulate initial encryption gap detection
-            setTimeout(() => {
-                if (Math.random() > 0.7) {
-                    simulateEncryptionGaps();
+        function initializeV4Features() {
+            // Enhanced dual-layer scanning data
+            window.externalServices = [
+                {
+                    name: 'HTTPS (443/tcp)',
+                    details: 'nginx/1.18.0 • TLS 1.3',
+                    encryption: '🔐 AES-256-GCM + CRYSTALS-Kyber',
+                    status: 'Secure',
+                    statusClass: 'status-secure'
+                },
+                {
+                    name: 'SSH (22/tcp)',
+                    details: 'OpenSSH_7.4 • Key Auth Only',
+                    encryption: '🔐 Hybrid: Classical + PQ Keys',
+                    status: 'Secure',
+                    statusClass: 'status-secure'
+                },
+                {
+                    name: 'RDP (3389/tcp)',
+                    details: 'Windows Server 2019 • NLA + TLS 1.2',
+                    encryption: '⚠️ Classical only - upgrade needed',
+                    status: 'Monitor',
+                    statusClass: 'status-update'
+                },
+                {
+                    name: 'SMB (445/tcp)',
+                    details: 'SMBv2 • Outdated',
+                    encryption: '❌ Weak encryption',
+                    status: 'Vulnerable',
+                    statusClass: 'status-vulnerable'
                 }
-            }, 3000);
-        }
+            ];
 
-        function simulateEncryptionGaps() {
-            gapDeviceCount = Math.floor(Math.random() * 5) + 1;
-            encryptionGapDetected = true;
-            showEncryptionGapAlert(gapDeviceCount);
-        }
-
-        function checkEncryptionGaps() {
-            // Periodically check for new encryption gaps
-            if (window.currentScale && Math.random() > 0.95) {
-                if (!encryptionGapDetected) {
-                    simulateEncryptionGaps();
+            window.internalServices = [
+                {
+                    name: 'Domain Controllers',
+                    details: '2 servers • AD DS • Kerberos',
+                    encryption: '🔐 Full hybrid encryption',
+                    status: 'Secure',
+                    statusClass: 'status-secure'
+                },
+                {
+                    name: 'Database Servers',
+                    details: '5 instances • TDE enabled',
+                    encryption: '🔐 AES-256 + Kyber-1024',
+                    status: 'Secure',
+                    statusClass: 'status-secure'
+                },
+                {
+                    name: 'IoT Devices',
+                    details: '47 devices • Mixed security',
+                    encryption: '⚠️ Partial encryption support',
+                    status: 'Monitor',
+                    statusClass: 'status-update'
+                },
+                {
+                    name: 'Workstations',
+                    details: '189 systems • BitLocker enabled',
+                    encryption: '🔐 Hybrid disk encryption',
+                    status: 'Update',
+                    statusClass: 'status-update'
                 }
-            }
+            ];
         }
 
-        function showEncryptionGapAlert(deviceCount) {
-            const alert = document.getElementById('encryptionGapAlert');
-            const description = document.getElementById('gapDescription');
-            
-            if (alert && description) {
-                description.textContent = `${deviceCount} devices are not encrypted and require immediate attention.`;
-                alert.classList.add('active');
+        // Override the startAutoScan to include checkout flow
+        const originalStartAutoScan = window.startAutoScan;
+        if (originalStartAutoScan) {
+            window.startAutoScan = function() {
+                console.log('Starting enhanced auto scan...');
+                const autoScanBtn = document.getElementById('autoScanBtn');
+                const scanProgress = document.getElementById('scanProgress');
+                const progressFill = document.getElementById('progressFill');
+                const progressText = document.getElementById('progressText');
                 
-                // Add to chat if open
+                if (!autoScanBtn || !scanProgress || !progressFill || !progressText) {
+                    console.error('Missing scan elements');
+                    return;
+                }
+                
+                // Disable button and show progress
+                autoScanBtn.disabled = true;
+                scanProgress.style.display = 'block';
+                
+                // Enhanced scan steps for dual-layer scanning
+                const scanSteps = [
+                    { progress: 10, text: "Initializing dual-layer scan..." },
+                    { progress: 20, text: "Connecting to Shodan API for external scan..." },
+                    { progress: 35, text: "Scanning public IP addresses..." },
+                    { progress: 50, text: "Deploying internal agent..." },
+                    { progress: 65, text: "Discovering internal network topology..." },
+                    { progress: 80, text: "Analyzing security posture..." },
+                    { progress: 90, text: "Correlating with threat intelligence..." },
+                    { progress: 100, text: "Scan complete! Preparing recommendation..." }
+                ];
+                
+                let currentStep = 0;
+                
+                const interval = setInterval(() => {
+                    if (currentStep < scanSteps.length) {
+                        const step = scanSteps[currentStep];
+                        progressFill.style.width = step.progress + '%';
+                        progressText.textContent = step.text;
+                        currentStep++;
+                    } else {
+                        clearInterval(interval);
+                        
+                        // Simulate scan results and recommendation
+                        setTimeout(() => {
+                            const recommendation = simulateNetworkScan();
+                            showScanResults(recommendation);
+                        }, 1000);
+                    }
+                }, 1000);
+                
+                // Track scan initiation in chat
                 if (window.sentinelChat && SentinelState.chatOpen) {
-                    sentinelChat.addMessage(`⚠️ NetworkMapper: Encryption gap detected! ${deviceCount} devices lack proper encryption. EncryptionDeployer standing by for remediation.`, false, 'system');
+                    sentinelChat.addMessage('🔍 NetworkMapper: Dual-layer scan initiated. External reconnaissance via Shodan API and internal discovery via deployed agent. Coordinating with ThreatScanner and EncryptionDeployer...', false, 'system');
                 }
+            };
+        }
+
+        // Enhanced scan results to show dual-layer findings
+        function showScanResults(recommendation) {
+            console.log('Showing enhanced scan results:', recommendation);
+            const scanProgress = document.getElementById('scanProgress');
+            const autoScanBtn = document.getElementById('autoScanBtn');
+            
+            // Hide progress
+            if (scanProgress) scanProgress.style.display = 'none';
+            
+            // Create enhanced results modal
+            showEnhancedScanResultsModal(recommendation);
+            
+            // Update chat with detailed results
+            if (window.sentinelChat && SentinelState.chatOpen) {
+                sentinelChat.addMessage(`🎯 NetworkMapper: Dual-layer scan complete!
+External Scan: ${recommendation.details.publicIPs} public IPs, ${recommendation.details.openPorts || '7'} open ports detected
+Internal Scan: ${recommendation.details.internalDevices || '246'} devices discovered
+Recommendation: ${recommendation.details.recommendation}
+Confidence: ${recommendation.confidence}%`, false, 'system');
             }
         }
 
-        function hideEncryptionGapAlert() {
-            const alert = document.getElementById('encryptionGapAlert');
-            if (alert) {
-                alert.classList.remove('active');
-            }
-        }
-
-        function remediateEncryptionGaps() {
-            if (!window.sentinelChat) {
-                console.error('Chat system not available');
-                return;
-            }
-
-            // Open chat if not already open
-            if (!SentinelState.chatOpen) {
-                sentinelChat.toggle();
-            }
-
-            setTimeout(() => {
-                sentinelChat.addMessage('remediate encryption gaps', true);
-                
-                setTimeout(() => {
-                    sentinelChat.addMessage('NetworkMapper: Initiating encryption gap remediation. Coordinating with EncryptionDeployer...', false, 'system');
-                }, 500);
-                
-                setTimeout(() => {
-                    sentinelChat.addMessage(`EncryptionDeployer: Analyzing ${gapDeviceCount} unencrypted devices. Deploying hybrid-resistant encryption modules. Estimated completion: 3-5 minutes.`, false);
-                }, 1200);
-                
-                setTimeout(() => {
-                    sentinelChat.addMessage('EncryptionDeployer: Deployment in progress. Using TLS 1.3 + Kyber-1024 for network traffic, AES-256-GCM + Dilithium-3 for data at rest.', false);
-                }, 2500);
-                
-                // Simulate completion
-                setTimeout(() => {
-                    sentinelChat.addMessage(`✅ EncryptionDeployer: Remediation complete! ${gapDeviceCount} devices now protected with hybrid-resistant encryption. No gaps detected.`, false);
+        function showEnhancedScanResultsModal(recommendation) {
+            // Create enhanced results modal with checkout option
+            const modal = document.createElement('div');
+            modal.className = 'modal-overlay scan-results-modal';
+            modal.style.display = 'flex';
+            modal.innerHTML = `
+                <div class="modal scan-results-modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">🎯 Dual-Layer Network Discovery Complete</h2>
+                    </div>
+                    <div class="modal-content">
+                        <div class="scan-results-summary">
+                            <div class="summary-grid">
+                                <div class="summary-item">
+                                    <span class="summary-label">External Exposure</span>
+                                    <span class="summary-value">${recommendation.details.publicIPs} Public IPs • 7 Open Ports</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Internal Discovery</span>
+                                    <span class="summary-value">246 Devices • 42 Services</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Infrastructure Type</span>
+                                    <span class="summary-value">${recommendation.details.infrastructure}</span>
+                                </div>
+                                <div class="summary-item">
+                                    <span class="summary-label">Security Gaps</span>
+                                    <span class="summary-value">3 Encryption Gaps • 2 Vulnerabilities</span>
+                                </div>
+                            </div>
+                            
+                            <div class="recommendation-banner">
+                                <div class="banner-icon">🚀</div>
+                                <div class="banner-content">
+                                    <h3>Recommended Configuration</h3>
+                                    <p>${recommendation.details.recommendation}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="modal-btn modal-btn-primary" onclick="proceedToCheckout('${recommendation.type}')">
+                            View Pricing & Activate
+                        </button>
+                        <button class="modal-btn modal-btn-secondary" onclick="closeScanResultsModal()">
+                            Review Details First
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Add enhanced modal styles
+            if (!document.querySelector('#enhanced-scan-modal-styles')) {
+                const style = document.createElement('style');
+                style.id = 'enhanced-scan-modal-styles';
+                style.textContent = `
+                    .scan-results-modal-content {
+                        max-width: 600px;
+                        max-height: 80vh;
+                        overflow-y: auto;
+                    }
                     
-                    // Hide the alert
-                    encryptionGapDetected = false;
-                    hideEncryptionGapAlert();
-                }, 4000);
-                
-            }, 300);
+                    .summary-grid {
+                        display: grid;
+                        grid-template-columns: 1fr;
+                        gap: 15px;
+                        margin-bottom: 25px;
+                    }
+                    
+                    .summary-item {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 15px;
+                        background: rgba(0, 255, 136, 0.05);
+                        border: 1px solid rgba(0, 255, 136, 0.2);
+                        border-radius: 10px;
+                    }
+                    
+                    .summary-label {
+                        font-size: 14px;
+                        color: var(--text-secondary);
+                        font-weight: 600;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                    }
+                    
+                    .summary-value {
+                        font-size: 14px;
+                        font-weight: bold;
+                        color: var(--primary);
+                        text-align: right;
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+            
+            document.body.appendChild(modal);
+            
+            // Close on overlay click
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeScanResultsModal();
+                }
+            });
         }
 
-        // Network feed functions
+        // New function to proceed to checkout
+        window.proceedToCheckout = function(packageType) {
+            closeScanResultsModal();
+            
+            // Apply configuration and show checkout
+            selectScale(packageType, true);
+            
+            // Show checkout section after a delay
+            setTimeout(() => {
+                showCheckoutSection(packageType);
+            }, 500);
+        };
+
+        function showCheckoutSection(packageType) {
+            const checkoutSection = document.getElementById('checkoutSection');
+            const pricingSummary = document.getElementById('pricingSummary');
+            
+            if (!checkoutSection || !pricingSummary) return;
+            
+            // Get pricing based on package
+            const pricing = {
+                individual: {
+                    name: 'Single Server Protection',
+                    licenseFee: 29,
+                    endpointCost: 0.10,
+                    estimatedEndpoints: 10
+                },
+                business: {
+                    name: 'Multi-Site Security',
+                    licenseFee: 149,
+                    endpointCost: 0.08,
+                    estimatedEndpoints: 127
+                },
+                enterprise: {
+                    name: 'Global Infrastructure Defense',
+                    licenseFee: 499,
+                    endpointCost: 0.05,
+                    estimatedEndpoints: 1926
+                }
+            };
+            
+            const plan = pricing[packageType];
+            const endpointTotal = plan.estimatedEndpoints * plan.endpointCost;
+            const totalMonthly = plan.licenseFee + endpointTotal;
+            
+            pricingSummary.innerHTML = `
+                <div class="pricing-item">
+                    <span class="pricing-label">Plan</span>
+                    <span class="pricing-value">${plan.name}</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="pricing-label">License Fee</span>
+                    <span class="pricing-value">${plan.licenseFee}/month</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="pricing-label">Discovered Endpoints (${plan.estimatedEndpoints})</span>
+                    <span class="pricing-value">${endpointTotal.toFixed(2)}/month</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="pricing-label">AI Sentinel-X API Key</span>
+                    <span class="pricing-value">Included</span>
+                </div>
+                <div class="pricing-item">
+                    <span class="pricing-label">Total Monthly</span>
+                    <span class="pricing-value">${totalMonthly.toFixed(2)}</span>
+                </div>
+            `;
+            
+            // Show checkout section
+            checkoutSection.style.display = 'block';
+            
+            // Scroll to checkout
+            checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Update chat
+            if (window.sentinelChat) {
+                sentinelChat.addMessage(`💳 Ready for checkout! ${plan.name} plan selected. Total: ${totalMonthly.toFixed(2)}/month. Your AI Sentinel-X API key will be automatically configured upon payment.`, false, 'system');
+            }
+        }
+
+        // Process checkout (demo mode)
+        window.processCheckout = function() {
+            // In demo mode, simulate successful checkout
+            if (window.sentinelChat && !SentinelState.chatOpen) {
+                window.sentinelChat.toggle();
+            }
+            
+            setTimeout(() => {
+                if (window.sentinelChat) {
+                    sentinelChat.addMessage('💳 Processing secure payment via Stripe...', false, 'system');
+                }
+                
+                // Simulate payment processing
+                setTimeout(() => {
+                    if (window.sentinelChat) {
+                        sentinelChat.addMessage('✅ Payment successful! AI Sentinel-X is now active.', false, 'system');
+                        sentinelChat.addMessage('🔑 Your AI Sentinel-X API key has been automatically configured in Settings.', false, 'system');
+                        sentinelChat.addMessage('📋 Next steps: Add your Shodan API key for external scanning and OpenAI key for enhanced AI capabilities.', false, 'system');
+                    }
+                    
+                    // Store demo API key
+                    localStorage.setItem('sentinel_api_key', 'sk-sentinel-' + Math.random().toString(36).substr(2, 16));
+                    
+                    // Hide checkout section
+                    const checkoutSection = document.getElementById('checkoutSection');
+                    if (checkoutSection) {
+                        checkoutSection.style.display = 'none';
+                    }
+                    
+                    // Start showing activity feed
+                    initializeNetworkFeed();
+                    
+                    // Simulate finding encryption gaps after activation
+                    setTimeout(() => {
+                        simulateEncryptionGaps();
+                    }, 3000);
+                    
+                }, 2000);
+            }, 500);
+        };
+
+        // Override selectScale to populate dual-layer scanning sections
+        const originalSelectScale = window.selectScale;
+        if (originalSelectScale) {
+            window.selectScale = function(scale, userSelected = true) {
+                // Call original function
+                originalSelectScale(scale, userSelected);
+                
+                // Show dual-layer scanning sections
+                const scanningSections = document.getElementById('scanningSections');
+                if (scanningSections) {
+                    scanningSections.style.display = 'grid';
+                    populateScanningPanels();
+                }
+                
+                // Initialize feed after selection
+                setTimeout(() => {
+                    initializeNetworkFeed();
+                }, 500);
+            };
+        }
+
+        function populateScanningPanels() {
+            // Populate external services
+            const externalList = document.getElementById('externalServicesList');
+            if (externalList) {
+                externalList.innerHTML = '';
+                window.externalServices.forEach(service => {
+                    const item = createServiceItem(service);
+                    externalList.appendChild(item);
+                });
+            }
+            
+            // Populate internal services
+            const internalList = document.getElementById('internalServicesList');
+            if (internalList) {
+                internalList.innerHTML = '';
+                window.internalServices.forEach(service => {
+                    const item = createServiceItem(service);
+                    internalList.appendChild(item);
+                });
+            }
+        }
+
+        function createServiceItem(service) {
+            const item = document.createElement('div');
+            item.className = 'service-item';
+            item.onclick = () => showServiceDetails(service.name);
+            
+            item.innerHTML = `
+                <div class="service-info">
+                    <div class="service-name">${service.name}</div>
+                    <div class="service-details">${service.details}</div>
+                    <div class="service-encryption">${service.encryption}</div>
+                </div>
+                <div class="service-status ${service.statusClass}">${service.status.toUpperCase()}</div>
+            `;
+            
+            return item;
+        }
+
+        // Enhanced network feed initialization
         function initializeNetworkFeed() {
             const feed = document.getElementById('networkFeed');
             const feedContent = document.getElementById('networkFeedContent');
@@ -2510,137 +2712,50 @@
                 feed.style.display = 'flex';
                 feed.classList.add('active');
                 
-                // Clear existing content
-                feedContent.innerHTML = '';
-                
-                // Add initial messages based on scale
-                const scaleMessages = networkFeedMessages[window.currentScale] || [];
-                
-                addNetworkFeedItem('🤖 NetworkMapper V3: Enhanced with encryption gap detection', 'Main Agent', 'ai-action');
-                addNetworkFeedItem('🔐 All network data encrypted with hybrid-resistant algorithms', 'EncryptionManager', 'encryption');
-                
-                // Add scale-specific initial message
-                if (window.currentScale === 'individual') {
-                    addNetworkFeedItem('🌐 Starting single server protection scan', 'NetworkMapper', 'discovery');
-                } else if (window.currentScale === 'business') {
-                    addNetworkFeedItem('🏢 Initiating multi-site security configuration', 'NetworkMapper', 'discovery');
-                } else if (window.currentScale === 'enterprise') {
-                    addNetworkFeedItem('🏭 Beginning enterprise infrastructure defense setup', 'NetworkMapper', 'discovery');
-                }
-                
-                // Start auto-generating feed items
-                if (feedInterval) clearInterval(feedInterval);
-                
-                let messageIndex = 0;
-                feedInterval = setInterval(() => {
-                    // Alternate between scale-specific and common messages
-                    if (Math.random() > 0.7) {
-                        // Use common message
-                        const item = commonFeedMessages[Math.floor(Math.random() * commonFeedMessages.length)];
-                        addNetworkFeedItem(item.msg, item.agent, item.type);
-                    } else {
-                        // Use scale-specific message
-                        const item = scaleMessages[messageIndex % scaleMessages.length];
-                        let message = item.msg;
-                        
-                        // Add random IP for discovery messages
-                        if (message.includes('192.168.1.')) {
-                            message += Math.floor(Math.random() * 254 + 1);
-                        }
-                        
-                        addNetworkFeedItem(message, item.agent, item.type);
-                        messageIndex++;
-                    }
-                }, 4000);
-            }
-        }
-
-        function addNetworkFeedItem(message, agent, type = 'discovery') {
-            const feedContent = document.getElementById('networkFeedContent');
-            if (!feedContent) return;
-            
-            const item = document.createElement('div');
-            item.className = `feed-item ${type}`;
-            
-            const time = new Date().toLocaleTimeString();
-            item.innerHTML = `
-                <div class="feed-time">${time}</div>
-                <div class="feed-message">${message}</div>
-                <div class="feed-agent">via ${agent}</div>
-            `;
-            
-            feedContent.insertBefore(item, feedContent.firstChild);
-            
-            // Keep only last 20 items
-            while (feedContent.children.length > 20) {
-                feedContent.removeChild(feedContent.lastChild);
-            }
-        }
-
-        // Enhanced chat initialization message for V3
-        function initializeNetworkChat() {
-            if (window.sentinelChat && SentinelState.chatOpen) {
-                sentinelChat.addMessage('🌐 NetworkMapper V3: Enhanced with encryption gap detection. I now coordinate with EncryptionDeployer to ensure all discovered devices are properly protected.', false);
-            }
-        }
-
-        // Override selectScale to include V3 enhancements and show feed
-        const originalSelectScale = window.selectScale;
-        if (originalSelectScale) {
-            window.selectScale = function(scale, userSelected = true) {
-                // Call original function
-                originalSelectScale(scale, userSelected);
-                
-                // Show the network feed when scale is selected
-                setTimeout(() => {
-                    initializeNetworkFeed();
-                }, 500);
-                
-                // Add V3 specific initialization
-                setTimeout(() => {
-                    initializeNetworkChat();
+                // Initialize feed with ActivityFeedManager
+                if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+                    const feedId = `network-${window.currentScale}`;
+                    activityFeedManager.initializeFeed(feedId, 'network');
+                    activityFeedManager.setFeedContainer(feedId, 'networkFeedContent');
                     
-                    // Simulate finding encryption gaps after configuration
-                    if (userSelected && Math.random() > 0.6) {
-                        setTimeout(() => {
-                            simulateEncryptionGaps();
-                        }, 2000);
+                    // Add initial messages based on scale
+                    if (window.currentScale === 'individual') {
+                        activityFeedManager.addMessage(feedId, '🌐 NetworkMapper: External scan via Shodan API - 1 public IP detected', '', 'NetworkMapper');
+                        activityFeedManager.addMessage(feedId, '🔍 NetworkMapper: Internal agent deployed - scanning 192.168.1.0/24', '', 'NetworkMapper');
+                        activityFeedManager.addMessage(feedId, '✅ ThreatScanner: No critical vulnerabilities on external surface', '', 'NetworkMapper → ThreatScanner');
+                        activityFeedManager.addMessage(feedId, '🔐 EncryptionDeployer: Hybrid encryption verified on primary server', 'encryption', 'NetworkMapper → EncryptionDeployer');
+                    } else if (window.currentScale === 'business') {
+                        activityFeedManager.addMessage(feedId, '🏢 NetworkMapper: Multi-site scan initiated - 3 locations detected', '', 'NetworkMapper');
+                        activityFeedManager.addMessage(feedId, '🌐 External scan: 3 public IPs across Columbia, Atlanta, Charlotte', '', 'NetworkMapper');
+                        activityFeedManager.addMessage(feedId, '🔍 Internal discovery: 127 devices mapped across all sites', '', 'NetworkMapper');
+                        activityFeedManager.addMessage(feedId, '⚠️ ThreatScanner: 2 medium-risk vulnerabilities detected', 'warning', 'NetworkMapper → ThreatScanner');
+                        activityFeedManager.addMessage(feedId, '🔐 EncryptionDeployer: Deploying hybrid encryption to 18 devices', 'encryption', 'NetworkMapper → EncryptionDeployer');
+                    } else if (window.currentScale === 'enterprise') {
+                        activityFeedManager.addMessage(feedId, '🏭 NetworkMapper: Enterprise scan across 3 data centers', '', 'NetworkMapper');
+                        activityFeedManager.addMessage(feedId, '🌐 External reconnaissance: 12 public IPs, 156 services mapped', '', 'NetworkMapper');
+                        activityFeedManager.addMessage(feedId, '🔍 Internal discovery: 1,926 devices across global infrastructure', '', 'NetworkMapper');
+                        activityFeedManager.addMessage(feedId, '🛡️ ThreatScanner: Advanced persistent threat indicators analyzed', '', 'NetworkMapper → ThreatScanner');
+                        activityFeedManager.addMessage(feedId, '🔐 Full hybrid encryption deployment coordinated', 'encryption', 'NetworkMapper → EncryptionDeployer');
                     }
-                }, 1000);
-            };
+                    
+                    // Start auto-generation
+                    activityFeedManager.startAutoGeneration(feedId, 5000);
+                }
+            }
         }
 
-        // Enhanced network discovery with encryption awareness
-        const originalStartAutoScan = window.startAutoScan;
-        if (originalStartAutoScan) {
-            window.startAutoScan = function() {
-                // Call original function
-                originalStartAutoScan();
-                
-                // Show the network feed when auto-scan completes and shows inner page
-                // This will be triggered when the auto-scan selects a scale
-                // The feed will appear through the selectScale override
-                
-                // Add encryption gap detection to auto-scan process
-                setTimeout(() => {
-                    if (window.sentinelChat && SentinelState.chatOpen) {
-                        sentinelChat.addMessage('🔐 NetworkMapper: Scanning for encryption gaps across discovered infrastructure...', false, 'system');
-                    }
-                }, 3000);
-            };
-        }
-
-        // Clean up feed interval when leaving page
+        // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
-            if (feedInterval) {
-                clearInterval(feedInterval);
+            if (typeof activityFeedManager !== 'undefined' && activityFeedManager && window.currentScale) {
+                const feedId = `network-${window.currentScale}`;
+                activityFeedManager.stopAutoGeneration(feedId);
             }
         });
 
-        // Global function for encryption gap remediation
-        window.remediateEncryptionGaps = remediateEncryptionGaps;
-        window.showEncryptionGapAlert = showEncryptionGapAlert;
-        window.hideEncryptionGapAlert = hideEncryptionGapAlert;
-   </script>
+        // Global function exports
+        window.showEncryptionStatus = showEncryptionStatus;
+        window.proceedToCheckout = proceedToCheckout;
+        window.processCheckout = processCheckout;
+    </script>
 </body>
 </html>
