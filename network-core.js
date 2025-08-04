@@ -1,6 +1,6 @@
 /**
- * AI Sentinel-X Network Discovery Core Module
- * Handles network-specific functionality and adaptive scaling
+ * AI Sentinel-X Network Discovery Core Module V4
+ * Enhanced with dual-layer scanning and comprehensive cyber defense
  */
 
 // Network module state
@@ -27,7 +27,7 @@ function initializeEnvironmentDetection() {
 }
 
 function startAutoScan() {
-    console.log('Starting auto scan...');
+    console.log('Starting enhanced auto scan...');
     const autoScanBtn = document.getElementById('autoScanBtn');
     const scanProgress = document.getElementById('scanProgress');
     const progressFill = document.getElementById('progressFill');
@@ -42,15 +42,16 @@ function startAutoScan() {
     autoScanBtn.disabled = true;
     scanProgress.style.display = 'block';
     
-    // Simulate network scanning process
+    // Enhanced scan steps for dual-layer scanning
     const scanSteps = [
-        { progress: 15, text: "Detecting public IP addresses..." },
-        { progress: 30, text: "Scanning network topology..." },
-        { progress: 45, text: "Analyzing service distribution..." },
-        { progress: 60, text: "Checking geographic presence..." },
-        { progress: 75, text: "Evaluating security requirements..." },
-        { progress: 90, text: "Determining optimal solution..." },
-        { progress: 100, text: "Scan complete! Recommending deployment..." }
+        { progress: 10, text: "Initializing dual-layer scan..." },
+        { progress: 20, text: "Connecting to Shodan API for external scan..." },
+        { progress: 35, text: "Scanning public IP addresses..." },
+        { progress: 50, text: "Deploying internal agent..." },
+        { progress: 65, text: "Discovering internal network topology..." },
+        { progress: 80, text: "Analyzing security posture..." },
+        { progress: 90, text: "Correlating with threat intelligence..." },
+        { progress: 100, text: "Scan complete! Preparing recommendation..." }
     ];
     
     let currentStep = 0;
@@ -70,26 +71,30 @@ function startAutoScan() {
                 showScanResults(recommendation);
             }, 1000);
         }
-    }, 800);
+    }, 1000);
     
     // Track scan initiation in chat
     if (window.sentinelChat && SentinelState.chatOpen) {
-        sentinelChat.addMessage('🔍 NetworkMapper: Auto-scan initiated. Analyzing your network infrastructure to recommend optimal security deployment...', false, 'system');
+        sentinelChat.addMessage('🔍 NetworkMapper: Dual-layer scan initiated. External reconnaissance via Shodan API and internal discovery via deployed agent. Coordinating with ThreatScanner and EncryptionDeployer...', false, 'system');
     }
 }
 
 function simulateNetworkScan() {
-    // Simulate different network configurations
+    // Enhanced network configurations with dual-layer findings
     const scenarios = [
         {
             type: 'individual',
             confidence: 92,
             details: {
                 publicIPs: 1,
+                openPorts: 3,
+                internalDevices: 12,
                 services: 6,
                 complexity: 'Low',
                 infrastructure: 'Single VPS/Cloud Instance',
-                recommendation: 'Essential Protection is perfect for your setup'
+                recommendation: 'Single Server Protection is perfect for your setup',
+                vulnerabilities: 0,
+                encryptionGaps: 2
             }
         },
         {
@@ -97,10 +102,14 @@ function simulateNetworkScan() {
             confidence: 87,
             details: {
                 publicIPs: 3,
+                openPorts: 7,
+                internalDevices: 127,
                 services: 24,
                 complexity: 'Medium',
                 infrastructure: 'Multi-location business network',
-                recommendation: 'Professional solution recommended for your scale'
+                recommendation: 'Multi-Site Security recommended for your scale',
+                vulnerabilities: 2,
+                encryptionGaps: 5
             }
         },
         {
@@ -108,10 +117,14 @@ function simulateNetworkScan() {
             confidence: 94,
             details: {
                 publicIPs: 12,
+                openPorts: 42,
+                internalDevices: 1926,
                 services: 156,
                 complexity: 'High',
                 infrastructure: 'Enterprise data center infrastructure',
-                recommendation: 'Enterprise Defense required for your scale'
+                recommendation: 'Global Infrastructure Defense required for your scale',
+                vulnerabilities: 3,
+                encryptionGaps: 18
             }
         }
     ];
@@ -121,53 +134,55 @@ function simulateNetworkScan() {
 }
 
 function showScanResults(recommendation) {
-    console.log('Showing scan results:', recommendation);
+    console.log('Showing enhanced scan results:', recommendation);
     const scanProgress = document.getElementById('scanProgress');
     const autoScanBtn = document.getElementById('autoScanBtn');
     
-    // Hide progress, show results
+    // Hide progress
     if (scanProgress) scanProgress.style.display = 'none';
-    if (autoScanBtn) {
-        autoScanBtn.disabled = false;
-        autoScanBtn.innerHTML = `
-            <span class="scan-icon">✅</span>
-            <span class="scan-text">Scan Complete</span>
-            <span class="scan-subtitle">Click to rescan network</span>
-        `;
-    }
     
-    // Create results modal or update interface
-    showScanResultsModal(recommendation);
+    // Create enhanced results modal
+    showEnhancedScanResultsModal(recommendation);
     
-    // Highlight recommended solution
-    highlightRecommendedSolution(recommendation.type);
-    
-    // Update chat with results
+    // Update chat with detailed results
     if (window.sentinelChat && SentinelState.chatOpen) {
-        sentinelChat.addMessage(`🎯 NetworkMapper: Scan complete! Detected ${recommendation.details.infrastructure}. ${recommendation.details.recommendation}. Confidence: ${recommendation.confidence}%`, false, 'system');
+        sentinelChat.addMessage(`🎯 NetworkMapper: Dual-layer scan complete!
+External Scan: ${recommendation.details.publicIPs} public IPs, ${recommendation.details.openPorts} open ports detected
+Internal Scan: ${recommendation.details.internalDevices} devices discovered
+Security Gaps: ${recommendation.details.encryptionGaps} encryption gaps, ${recommendation.details.vulnerabilities} vulnerabilities
+Recommendation: ${recommendation.details.recommendation}
+Confidence: ${recommendation.confidence}%`, false, 'system');
     }
 }
 
-function showScanResultsModal(recommendation) {
-    // Create a results modal with proper sizing
+function showEnhancedScanResultsModal(recommendation) {
+    // Create enhanced results modal with checkout option
     const modal = document.createElement('div');
     modal.className = 'modal-overlay scan-results-modal';
     modal.style.display = 'flex';
     modal.innerHTML = `
         <div class="modal scan-results-modal-content">
             <div class="modal-header">
-                <h2 class="modal-title">🎯 Network Discovery Complete</h2>
+                <h2 class="modal-title">🎯 Dual-Layer Network Discovery Complete</h2>
             </div>
             <div class="modal-content">
                 <div class="scan-results-summary">
                     <div class="summary-grid">
                         <div class="summary-item">
+                            <span class="summary-label">External Exposure</span>
+                            <span class="summary-value">${recommendation.details.publicIPs} Public IPs • ${recommendation.details.openPorts} Open Ports</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Internal Discovery</span>
+                            <span class="summary-value">${recommendation.details.internalDevices} Devices • ${recommendation.details.services} Services</span>
+                        </div>
+                        <div class="summary-item">
                             <span class="summary-label">Infrastructure Type</span>
                             <span class="summary-value">${recommendation.details.infrastructure}</span>
                         </div>
                         <div class="summary-item">
-                            <span class="summary-label">Detection Confidence</span>
-                            <span class="summary-value">${recommendation.confidence}%</span>
+                            <span class="summary-label">Security Gaps</span>
+                            <span class="summary-value">${recommendation.details.encryptionGaps} Encryption Gaps • ${recommendation.details.vulnerabilities} Vulnerabilities</span>
                         </div>
                     </div>
                     
@@ -181,86 +196,57 @@ function showScanResultsModal(recommendation) {
                 </div>
             </div>
             <div class="modal-actions">
-                <button class="modal-btn modal-btn-primary" onclick="acceptRecommendation('${recommendation.type}')">
-                    Apply Configuration
+                <button class="modal-btn modal-btn-primary" onclick="proceedToCheckout('${recommendation.type}')">
+                    View Pricing & Activate
                 </button>
                 <button class="modal-btn modal-btn-secondary" onclick="closeScanResultsModal()">
-                    Choose Manually
+                    Review Details First
                 </button>
             </div>
         </div>
     `;
     
-    // Add improved modal styles
-    if (!document.querySelector('#scan-modal-styles')) {
+    // Add enhanced modal styles
+    if (!document.querySelector('#enhanced-scan-modal-styles')) {
         const style = document.createElement('style');
-        style.id = 'scan-modal-styles';
+        style.id = 'enhanced-scan-modal-styles';
         style.textContent = `
             .scan-results-modal-content {
-                max-width: 500px;
+                max-width: 600px;
                 max-height: 80vh;
                 overflow-y: auto;
-            }
-            
-            .scan-results-summary {
-                margin-bottom: 20px;
             }
             
             .summary-grid {
                 display: grid;
                 grid-template-columns: 1fr;
-                gap: 12px;
-                margin-bottom: 20px;
+                gap: 15px;
+                margin-bottom: 25px;
             }
             
             .summary-item {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                padding: 12px;
+                padding: 15px;
                 background: rgba(0, 255, 136, 0.05);
                 border: 1px solid rgba(0, 255, 136, 0.2);
-                border-radius: 8px;
+                border-radius: 10px;
             }
             
             .summary-label {
                 font-size: 14px;
                 color: var(--text-secondary);
-                font-weight: 500;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 1px;
             }
             
             .summary-value {
                 font-size: 14px;
                 font-weight: bold;
                 color: var(--primary);
-            }
-            
-            .recommendation-banner {
-                background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(0, 204, 255, 0.05));
-                border: 1px solid var(--primary);
-                border-radius: 12px;
-                padding: 20px;
-                display: flex;
-                align-items: center;
-                gap: 15px;
-            }
-            
-            .banner-icon {
-                font-size: 32px;
-                flex-shrink: 0;
-            }
-            
-            .banner-content h3 {
-                color: var(--primary);
-                margin-bottom: 8px;
-                font-size: 16px;
-            }
-            
-            .banner-content p {
-                color: var(--text-secondary);
-                font-size: 14px;
-                margin: 0;
-                line-height: 1.4;
+                text-align: right;
             }
         `;
         document.head.appendChild(style);
@@ -281,102 +267,137 @@ function closeScanResultsModal() {
     if (modal) {
         modal.remove();
     }
-}
-
-function acceptRecommendation(recommendedType) {
-    console.log('Accepting recommendation:', recommendedType);
-    closeScanResultsModal();
-    selectScale(recommendedType, true);
     
-    // Show configuration message
-    if (window.sentinelChat && SentinelState.chatOpen) {
-        sentinelChat.addMessage(`✅ NetworkMapper: Applying ${ScaleConfigs[recommendedType].text} configuration. Your license will be configured for optimal monitoring of your infrastructure.`, false, 'system');
-    }
-}
-
-function highlightRecommendedSolution(recommendedType) {
-    // Remove any existing highlights
-    document.querySelectorAll('.scale-option').forEach(option => {
-        option.classList.remove('recommended');
-    });
-    
-    // Add highlight to recommended solution
-    const recommendedOption = document.querySelector(`.scale-option.${recommendedType}`);
-    if (recommendedOption) {
-        recommendedOption.classList.add('recommended');
-        
-        // Add a recommended badge
-        const header = recommendedOption.querySelector('.scale-header');
-        if (header && !header.querySelector('.recommended-badge')) {
-            const badge = document.createElement('div');
-            badge.className = 'recommended-badge';
-            badge.innerHTML = '⭐ RECOMMENDED';
-            header.appendChild(badge);
-        }
-        
-        // Scroll into view
-        recommendedOption.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-    
-    // Add CSS for recommended styling if not already added
-    if (!document.querySelector('#recommended-styles')) {
-        const style = document.createElement('style');
-        style.id = 'recommended-styles';
-        style.textContent = `
-            .scale-option.recommended {
-                border-color: var(--secondary) !important;
-                box-shadow: 0 0 25px rgba(0, 204, 255, 0.4) !important;
-                animation: recommendedPulse 2s ease-in-out 3;
-            }
-            
-            @keyframes recommendedPulse {
-                0%, 100% { box-shadow: 0 0 25px rgba(0, 204, 255, 0.4); }
-                50% { box-shadow: 0 0 35px rgba(0, 204, 255, 0.6); }
-            }
-            
-            .recommended-badge {
-                background: var(--gradient-2);
-                color: white;
-                padding: 4px 10px;
-                border-radius: 15px;
-                font-size: 10px;
-                font-weight: bold;
-                text-transform: uppercase;
-                letter-spacing: 1px;
-                animation: badgePulse 1s ease-in-out infinite;
-            }
-            
-            @keyframes badgePulse {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.05); }
-            }
+    // Reset scan button
+    const autoScanBtn = document.getElementById('autoScanBtn');
+    if (autoScanBtn) {
+        autoScanBtn.disabled = false;
+        autoScanBtn.innerHTML = `
+            <span class="scan-icon">🔍</span>
+            <span class="scan-text">Start Network Discovery</span>
+            <span class="scan-subtitle">External + Internal Dual-Layer Scan</span>
         `;
-        document.head.appendChild(style);
     }
 }
 
-// Enhanced modal overlay handler
-function closeModalOnOverlay(event) {
-    if (event.target.classList.contains('modal-overlay')) {
-        const modalId = event.target.id;
-        if (modalId === 'addRangeModal') {
-            closeAddRangeModal();
-        } else if (modalId === 'rescanModal') {
-            closeRescanModal();
-        } else if (modalId === 'agentShutdownModal') {
-            SentinelEventHandlers.closeModal(modalId);
+// New function to proceed to checkout
+function proceedToCheckout(packageType) {
+    closeScanResultsModal();
+    
+    // Apply configuration and show checkout
+    selectScale(packageType, true);
+    
+    // Show checkout section after a delay
+    setTimeout(() => {
+        showCheckoutSection(packageType);
+    }, 500);
+}
+
+function showCheckoutSection(packageType) {
+    const checkoutSection = document.getElementById('checkoutSection');
+    const pricingSummary = document.getElementById('pricingSummary');
+    
+    if (!checkoutSection || !pricingSummary) return;
+    
+    // Get pricing based on package
+    const pricing = {
+        individual: {
+            name: 'Single Server Protection',
+            licenseFee: 29,
+            endpointCost: 0.10,
+            estimatedEndpoints: 10
+        },
+        business: {
+            name: 'Multi-Site Security',
+            licenseFee: 149,
+            endpointCost: 0.08,
+            estimatedEndpoints: 127
+        },
+        enterprise: {
+            name: 'Global Infrastructure Defense',
+            licenseFee: 499,
+            endpointCost: 0.05,
+            estimatedEndpoints: 1926
         }
+    };
+    
+    const plan = pricing[packageType];
+    const endpointTotal = plan.estimatedEndpoints * plan.endpointCost;
+    const totalMonthly = plan.licenseFee + endpointTotal;
+    
+    pricingSummary.innerHTML = `
+        <div class="pricing-item">
+            <span class="pricing-label">Plan</span>
+            <span class="pricing-value">${plan.name}</span>
+        </div>
+        <div class="pricing-item">
+            <span class="pricing-label">License Fee</span>
+            <span class="pricing-value">$${plan.licenseFee}/month</span>
+        </div>
+        <div class="pricing-item">
+            <span class="pricing-label">Discovered Endpoints (${plan.estimatedEndpoints})</span>
+            <span class="pricing-value">$${endpointTotal.toFixed(2)}/month</span>
+        </div>
+        <div class="pricing-item">
+            <span class="pricing-label">AI Sentinel-X API Key</span>
+            <span class="pricing-value">Included</span>
+        </div>
+        <div class="pricing-item">
+            <span class="pricing-label">Total Monthly</span>
+            <span class="pricing-value">$${totalMonthly.toFixed(2)}</span>
+        </div>
+    `;
+    
+    // Show checkout section
+    checkoutSection.style.display = 'block';
+    
+    // Scroll to checkout
+    checkoutSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    
+    // Update chat
+    if (window.sentinelChat) {
+        sentinelChat.addMessage(`💳 Ready for checkout! ${plan.name} plan selected. Total: $${totalMonthly.toFixed(2)}/month. Your AI Sentinel-X API key will be automatically configured upon payment.`, false, 'system');
     }
 }
 
-function requestConsultation() {
-    if (!SentinelState.chatOpen) {
-        sentinelChat.toggle();
+// Process checkout (demo mode)
+function processCheckout() {
+    // In demo mode, simulate successful checkout
+    if (window.sentinelChat && !SentinelState.chatOpen) {
+        window.sentinelChat.toggle();
     }
     
     setTimeout(() => {
-        sentinelChat.addMessage('📞 Thank you for your interest in a security consultation! Our team will contact you within 24 hours to discuss your infrastructure needs and provide personalized recommendations.', false, 'system');
-        sentinelChat.addMessage('In the meantime, feel free to explore our solutions above or ask me any questions about AI Sentinel-X capabilities.', false, 'system');
+        if (window.sentinelChat) {
+            sentinelChat.addMessage('💳 Processing secure payment via Stripe...', false, 'system');
+        }
+        
+        // Simulate payment processing
+        setTimeout(() => {
+            if (window.sentinelChat) {
+                sentinelChat.addMessage('✅ Payment successful! AI Sentinel-X is now active.', false, 'system');
+                sentinelChat.addMessage('🔑 Your AI Sentinel-X API key has been automatically configured in Settings.', false, 'system');
+                sentinelChat.addMessage('📋 Next steps: Add your Shodan API key for external scanning and OpenAI key for enhanced AI capabilities.', false, 'system');
+            }
+            
+            // Store demo API key
+            localStorage.setItem('sentinel_api_key', 'sk-sentinel-' + Math.random().toString(36).substr(2, 16));
+            
+            // Hide checkout section
+            const checkoutSection = document.getElementById('checkoutSection');
+            if (checkoutSection) {
+                checkoutSection.style.display = 'none';
+            }
+            
+            // Start showing activity feed
+            initializeNetworkFeed();
+            
+            // Simulate finding encryption gaps after activation
+            setTimeout(() => {
+                simulateEncryptionGaps();
+            }, 3000);
+            
+        }, 2000);
     }, 500);
 }
 
@@ -409,8 +430,15 @@ function selectScale(scale, userSelected = true) {
     // Initialize data for scale
     initializeDataForScale(scale, config);
 
-    // CRITICAL: Show all main sections including sub-agent status
+    // Show all main sections including dual-layer scanning
     showMainSections();
+    
+    // Show and populate dual-layer scanning sections
+    const scanningSections = document.getElementById('scanningSections');
+    if (scanningSections) {
+        scanningSections.style.display = 'grid';
+        populateScanningPanels();
+    }
 
     // Populate all grids and data
     populateAllContent();
@@ -420,9 +448,9 @@ function selectScale(scale, userSelected = true) {
         localStorage.setItem('sentinel_scale', scale);
     }
 
-    // Update chat context
+    // Update chat context with comprehensive cyber defense focus
     if (window.sentinelChat && SentinelState.chatOpen && userSelected) {
-        sentinelChat.addMessage(`NetworkMapper: Configured for ${config.text.toLowerCase()} scale. Interface adapted for ${config.chatContext}. All features optimized for your environment.`, false, 'system');
+        sentinelChat.addMessage(`NetworkMapper: Configured for ${config.text.toLowerCase()} scale. Dual-layer scanning active: external via Shodan, internal via deployed agent. Coordinating with ThreatScanner, EncryptionDeployer, and DefenseOrchestrator for comprehensive ${config.chatContext}.`, false, 'system');
     }
 }
 
@@ -434,15 +462,11 @@ function showMainSections() {
         subAgentStatus.style.display = 'flex';
     }
     
-    const sections = ['ipRangeManager', 'dashboardInteractive', 'networkOverview', 'scanningGrid', 'deviceDiscovery'];
+    const sections = ['ipRangeManager', 'dashboardInteractive', 'networkOverview', 'deviceDiscovery'];
     sections.forEach(sectionId => {
         const element = document.getElementById(sectionId);
         if (element) {
-            if (sectionId === 'scanningGrid') {
-                element.style.display = 'grid';
-            } else {
-                element.style.display = sectionId === 'subAgentStatus' ? 'flex' : 'block';
-            }
+            element.style.display = 'block';
         }
     });
 }
@@ -482,14 +506,14 @@ function configureInterfaceForScale(scale, config) {
 
     const scanDetails = document.getElementById('scanDetails');
     if (scanDetails) {
-        scanDetails.textContent = 'Continuous Monitoring Active';
+        scanDetails.textContent = 'Dual-Layer Monitoring Active';
     }
 
     // Update dashboard description
     const descriptions = {
-        individual: '🤖 <strong>Server monitoring active</strong> • Hybrid-resistant encryption • Automatic threat detection',
-        business: '🤖 <strong>Multi-site autonomous scanning</strong> • Business-grade encryption • Cross-location monitoring',
-        enterprise: '🤖 <strong>Enterprise autonomous scanning</strong> • Cross-DC correlation • Full hybrid-resistant infrastructure'
+        individual: '🤖 <strong>Server monitoring active</strong> • External scan via Shodan • Internal agent deployed',
+        business: '🤖 <strong>Multi-site autonomous scanning</strong> • Dual-layer discovery • Cross-location correlation',
+        enterprise: '🤖 <strong>Enterprise autonomous scanning</strong> • Global threat intelligence • Full infrastructure mapping'
     };
     
     const dashboardDesc = document.getElementById('dashboardDescription');
@@ -596,7 +620,7 @@ function initializeDataForScale(scale, config) {
                 status: 'Active',
                 devices: 67,
                 services: 12,
-                vulnerabilities: 0,
+                vulnerabilities: 1,
                 bandwidth: '1Gbps'
             },
             {
@@ -791,7 +815,6 @@ function populateAllContent() {
     updateMetrics();
     populateIPRangesGrid();
     populateOverviewGrid();
-    populateScanningGrid();
     populateDeviceGrid();
 }
 
@@ -811,7 +834,7 @@ function updateMetrics() {
     if (totalNetworks) totalNetworks.textContent = totalRanges.toString();
     if (discoveredDevices) discoveredDevices.textContent = totalDevices.toLocaleString();
     if (openServices) openServices.textContent = totalServices.toString();
-    if (newDevices) newDevices.textContent = Math.floor(Math.random() * 5 + 1).toString();
+    if (newDevices) newDevices.textContent = Math.floor(Math.random() * 5 + 12).toString();
 }
 
 // Populate IP ranges grid
@@ -932,198 +955,6 @@ function getOverviewData() {
     }
 }
 
-// Populate scanning grid
-function populateScanningGrid() {
-    const grid = document.getElementById('scanningGrid');
-    if (!grid) return;
-
-    grid.innerHTML = '';
-
-    const scanPanels = getScanPanels();
-    
-    scanPanels.forEach(panel => {
-        const panelDiv = document.createElement('div');
-        panelDiv.className = 'scan-panel';
-        
-        let servicesHTML = '';
-        if (panel.services) {
-            servicesHTML = panel.services.map(service => `
-                <div class="service-item" onclick="showServiceDetails('${service.name}')">
-                    <div class="service-info">
-                        <div class="service-name">${service.name}</div>
-                        <div class="service-details">${service.details}</div>
-                        <div class="service-encryption">${service.encryption}</div>
-                    </div>
-                    <div class="service-status ${service.statusClass}">${service.status}</div>
-                </div>
-            `).join('');
-        }
-
-        let resultsHTML = '';
-        if (panel.results) {
-            resultsHTML = panel.results.map(result => `
-                <div class="result-item">
-                    <span class="result-label">${result.label}</span>
-                    <span class="result-value">${result.value}</span>
-                </div>
-            `).join('');
-        }
-        
-        panelDiv.innerHTML = `
-            <div class="panel-header">
-                <h3 class="panel-title">${panel.title}</h3>
-                <div class="scan-status active">
-                    <div class="status-dot"></div>
-                    <span>ACTIVE</span>
-                </div>
-            </div>
-            ${resultsHTML ? `<div class="scan-results">${resultsHTML}</div>` : ''}
-            ${servicesHTML ? `<div class="service-list">${servicesHTML}</div>` : ''}
-        `;
-        
-        grid.appendChild(panelDiv);
-    });
-}
-
-function getScanPanels() {
-    if (currentScale === 'individual') {
-        return [
-            {
-                title: 'External Exposure',
-                results: [
-                    { label: 'Public IP', value: '203.0.113.42' },
-                    { label: 'Open Ports', value: '3' },
-                    { label: 'SSL Rating', value: 'A+' },
-                    { label: 'Exposure Score', value: 'Low' }
-                ]
-            },
-            {
-                title: 'Running Services',
-                services: [
-                    {
-                        name: 'HTTPS Web Server',
-                        details: 'Port 443 • TLS 1.3',
-                        encryption: 'Hybrid-resistant encryption',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    },
-                    {
-                        name: 'SSH Server',
-                        details: 'Port 22 • Key-based auth',
-                        encryption: 'Ed25519 + Post-quantum',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    },
-                    {
-                        name: 'DNS Server',
-                        details: 'Port 53 • Recursive disabled',
-                        encryption: 'DoT + DNSSEC',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    }
-                ]
-            }
-        ];
-    } else if (currentScale === 'business') {
-        return [
-            {
-                title: 'Multi-Site Status',
-                results: [
-                    { label: 'Headquarters', value: 'Online' },
-                    { label: 'Atlanta Office', value: 'Online' },
-                    { label: 'Charlotte Office', value: 'Online' },
-                    { label: 'VPN Tunnels', value: '3 Active' }
-                ]
-            },
-            {
-                title: 'Business Services',
-                services: [
-                    {
-                        name: 'Active Directory',
-                        details: 'Domain Controller • LDAPS',
-                        encryption: 'Kerberos + Hybrid',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    },
-                    {
-                        name: 'Exchange Server',
-                        details: 'Email • EWS • Mobile sync',
-                        encryption: 'S/MIME + Hybrid',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    },
-                    {
-                        name: 'File Shares',
-                        details: 'SMB 3.0 • DFS replication',
-                        encryption: 'SMB encryption + Hybrid',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    },
-                    {
-                        name: 'VPN Gateway',
-                        details: 'Site-to-site • IPSec',
-                        encryption: 'IKEv2 + Post-quantum',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    }
-                ]
-            }
-        ];
-    } else { // enterprise
-        return [
-            {
-                title: 'Global Infrastructure',
-                results: [
-                    { label: 'Primary DC (VA)', value: 'Operational' },
-                    { label: 'Secondary DC (OR)', value: 'Operational' },
-                    { label: 'Backup DC (EU)', value: 'Operational' },
-                    { label: 'Global Load Balancing', value: 'Active' }
-                ]
-            },
-            {
-                title: 'Enterprise Services',
-                services: [
-                    {
-                        name: 'Core Routing',
-                        details: 'BGP • OSPF • MPLS backbone',
-                        encryption: 'IPSec + Hybrid mesh',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    },
-                    {
-                        name: 'Load Balancer Cluster',
-                        details: 'Global • Health checks • SSL termination',
-                        encryption: 'TLS 1.3 + Post-quantum',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    },
-                    {
-                        name: 'Database Cluster',
-                        details: 'PostgreSQL HA • Read replicas',
-                        encryption: 'TDE + Hybrid at-rest',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    },
-                    {
-                        name: 'Security Operations',
-                        details: 'SIEM • IDS/IPS • Threat intelligence',
-                        encryption: 'End-to-end hybrid encryption',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    },
-                    {
-                        name: 'Backup Systems',
-                        details: 'Multi-region • Incremental • Versioned',
-                        encryption: 'AES-256 + Post-quantum',
-                        status: 'Secure',
-                        statusClass: 'status-secure'
-                    }
-                ]
-            }
-        ];
-    }
-}
-
 // Populate device grid
 function populateDeviceGrid() {
     const grid = document.getElementById('deviceGrid');
@@ -1152,6 +983,151 @@ function populateDeviceGrid() {
         card.onclick = () => showDeviceDetails(device);
         grid.appendChild(card);
     });
+}
+
+// Populate scanning panels with dual-layer data
+function populateScanningPanels() {
+    // External services data
+    const externalServices = [
+        {
+            name: 'HTTPS (443/tcp)',
+            details: 'nginx/1.18.0 • TLS 1.3',
+            encryption: '🔐 AES-256-GCM + CRYSTALS-Kyber',
+            status: 'Secure',
+            statusClass: 'status-secure'
+        },
+        {
+            name: 'SSH (22/tcp)',
+            details: 'OpenSSH_7.4 • Key Auth Only',
+            encryption: '🔐 Hybrid: Classical + PQ Keys',
+            status: 'Secure',
+            statusClass: 'status-secure'
+        },
+        {
+            name: 'RDP (3389/tcp)',
+            details: 'Windows Server 2019 • NLA + TLS 1.2',
+            encryption: '⚠️ Classical only - upgrade needed',
+            status: 'Monitor',
+            statusClass: 'status-update'
+        },
+        {
+            name: 'SMB (445/tcp)',
+            details: 'SMBv2 • Outdated',
+            encryption: '❌ Weak encryption',
+            status: 'Vulnerable',
+            statusClass: 'status-vulnerable'
+        }
+    ];
+
+    const internalServices = [
+        {
+            name: 'Domain Controllers',
+            details: '2 servers • AD DS • Kerberos',
+            encryption: '🔐 Full hybrid encryption',
+            status: 'Secure',
+            statusClass: 'status-secure'
+        },
+        {
+            name: 'Database Servers',
+            details: '5 instances • TDE enabled',
+            encryption: '🔐 AES-256 + Kyber-1024',
+            status: 'Secure',
+            statusClass: 'status-secure'
+        },
+        {
+            name: 'IoT Devices',
+            details: '47 devices • Mixed security',
+            encryption: '⚠️ Partial encryption support',
+            status: 'Monitor',
+            statusClass: 'status-update'
+        },
+        {
+            name: 'Workstations',
+            details: '189 systems • BitLocker enabled',
+            encryption: '🔐 Hybrid disk encryption',
+            status: 'Update',
+            statusClass: 'status-update'
+        }
+    ];
+
+    // Populate external services
+    const externalList = document.getElementById('externalServicesList');
+    if (externalList) {
+        externalList.innerHTML = '';
+        externalServices.forEach(service => {
+            const item = createServiceItem(service);
+            externalList.appendChild(item);
+        });
+    }
+    
+    // Populate internal services
+    const internalList = document.getElementById('internalServicesList');
+    if (internalList) {
+        internalList.innerHTML = '';
+        internalServices.forEach(service => {
+            const item = createServiceItem(service);
+            internalList.appendChild(item);
+        });
+    }
+}
+
+function createServiceItem(service) {
+    const item = document.createElement('div');
+    item.className = 'service-item';
+    item.onclick = () => showServiceDetails(service.name);
+    
+    item.innerHTML = `
+        <div class="service-info">
+            <div class="service-name">${service.name}</div>
+            <div class="service-details">${service.details}</div>
+            <div class="service-encryption">${service.encryption}</div>
+        </div>
+        <div class="service-status ${service.statusClass}">${service.status.toUpperCase()}</div>
+    `;
+    
+    return item;
+}
+
+// Enhanced network feed initialization
+function initializeNetworkFeed() {
+    const feed = document.getElementById('networkFeed');
+    const feedContent = document.getElementById('networkFeedContent');
+    
+    if (feed && feedContent && window.currentScale) {
+        // Show the feed
+        feed.style.display = 'flex';
+        feed.classList.add('active');
+        
+        // Initialize feed with ActivityFeedManager
+        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
+            const feedId = `network-${window.currentScale}`;
+            activityFeedManager.initializeFeed(feedId, 'network');
+            activityFeedManager.setFeedContainer(feedId, 'networkFeedContent');
+            
+            // Add initial messages based on scale
+            if (window.currentScale === 'individual') {
+                activityFeedManager.addMessage(feedId, '🌐 NetworkMapper: External scan via Shodan API - 1 public IP detected', '', 'NetworkMapper');
+                activityFeedManager.addMessage(feedId, '🔍 NetworkMapper: Internal agent deployed - scanning 192.168.1.0/24', '', 'NetworkMapper');
+                activityFeedManager.addMessage(feedId, '✅ ThreatScanner: No critical vulnerabilities on external surface', '', 'NetworkMapper → ThreatScanner');
+                activityFeedManager.addMessage(feedId, '🔐 EncryptionDeployer: Hybrid encryption verified on primary server', 'encryption', 'NetworkMapper → EncryptionDeployer');
+            } else if (window.currentScale === 'business') {
+                activityFeedManager.addMessage(feedId, '🏢 NetworkMapper: Multi-site scan initiated - 3 locations detected', '', 'NetworkMapper');
+                activityFeedManager.addMessage(feedId, '🌐 External scan: 3 public IPs across Columbia, Atlanta, Charlotte', '', 'NetworkMapper');
+                activityFeedManager.addMessage(feedId, '🔍 Internal discovery: 127 devices mapped across all sites', '', 'NetworkMapper');
+                activityFeedManager.addMessage(feedId, '⚠️ ThreatScanner: 2 medium-risk vulnerabilities detected', 'warning', 'NetworkMapper → ThreatScanner');
+                activityFeedManager.addMessage(feedId, '🔐 EncryptionDeployer: Deploying hybrid encryption to 18 devices', 'encryption', 'NetworkMapper → EncryptionDeployer');
+            } else if (window.currentScale === 'enterprise') {
+                activityFeedManager.addMessage(feedId, '🏭 NetworkMapper: Enterprise scan across 3 data centers', '', 'NetworkMapper');
+                activityFeedManager.addMessage(feedId, '🌐 External reconnaissance: 12 public IPs, 156 services mapped', '', 'NetworkMapper');
+                activityFeedManager.addMessage(feedId, '🔍 Internal discovery: 1,926 devices across global infrastructure', '', 'NetworkMapper');
+                activityFeedManager.addMessage(feedId, '🛡️ ThreatScanner: Advanced persistent threat indicators analyzed', '', 'NetworkMapper → ThreatScanner');
+                activityFeedManager.addMessage(feedId, '🔐 Full hybrid encryption deployment coordinated', 'encryption', 'NetworkMapper → EncryptionDeployer');
+            }
+            
+            // Start auto-generation
+            activityFeedManager.startAutoGeneration(feedId, 5000);
+        }
+    }
 }
 
 // Modal and interaction functions
@@ -1227,7 +1203,7 @@ function addIPRange() {
     
     if (SentinelState.chatOpen) {
         setTimeout(() => {
-            sentinelChat.addMessage(`NetworkMapper: New ${currentScale} range ${name} (${range}) added to monitoring. Initiating discovery scan across ${newRange.devices} estimated devices...`, false);
+            sentinelChat.addMessage(`NetworkMapper: New ${currentScale} range ${name} (${range}) added to monitoring. Initiating dual-layer discovery scan. External scan via Shodan, internal scan via deployed agent across ${newRange.devices} estimated devices...`, false);
         }, 1000);
     }
 }
@@ -1263,7 +1239,7 @@ function confirmRescan() {
     }, 1200);
     
     setTimeout(() => {
-        sentinelChat.addMessage('NetworkMapper: Re-initializing adaptive detection engine...', false, 'system');
+        sentinelChat.addMessage('NetworkMapper: Re-initializing dual-layer detection engine...', false, 'system');
     }, 2000);
     
     setTimeout(() => {
@@ -1286,7 +1262,7 @@ function resetToInitialState() {
     deviceCounter = 1;
     
     // Hide all main sections EXCEPT sub-agent status
-    const sections = ['ipRangeManager', 'dashboardInteractive', 'networkOverview', 'scanningGrid', 'deviceDiscovery'];
+    const sections = ['ipRangeManager', 'dashboardInteractive', 'networkOverview', 'scanningSections', 'deviceDiscovery', 'checkoutSection'];
     sections.forEach(sectionId => {
         const element = document.getElementById(sectionId);
         if (element) {
@@ -1333,12 +1309,6 @@ function resetToInitialState() {
     // Remove scale class from body
     document.body.className = '';
     
-    // Clear scale option selections
-    const scaleOptions = document.querySelectorAll('.scale-option');
-    scaleOptions.forEach(option => {
-        option.classList.remove('selected');
-    });
-    
     // Show environment detection
     const envDetection = document.getElementById('environmentDetection');
     if (envDetection) {
@@ -1354,12 +1324,18 @@ function resetToInitialState() {
     }
     
     if (detectionDescription) {
-        detectionDescription.textContent = 'AI Sentinel-X has reset the network discovery configuration. Please select your current infrastructure scale to restart adaptive monitoring and analysis.';
+        detectionDescription.textContent = 'AI Sentinel-X has reset the network discovery configuration. Please run the dual-layer scan to re-analyze your infrastructure and configure the optimal security solution.';
+    }
+    
+    // Stop activity feed if running
+    if (typeof activityFeedManager !== 'undefined' && activityFeedManager && window.currentScale) {
+        const feedId = `network-${window.currentScale}`;
+        activityFeedManager.stopAutoGeneration(feedId);
     }
     
     // Add final chat message
     setTimeout(() => {
-        sentinelChat.addMessage('✅ Network discovery reset complete. Environment detection reinitialized. Please select your infrastructure scale to continue.', false, 'system');
+        sentinelChat.addMessage('✅ Network discovery reset complete. Environment detection reinitialized. Please run the dual-layer scan to continue.', false, 'system');
     }, 500);
 }
 
@@ -1367,14 +1343,14 @@ function resetToInitialState() {
 function showRangeDetails(range) {
     if (!SentinelState.chatOpen) sentinelChat.toggle();
     setTimeout(() => {
-        sentinelChat.addMessage(`NetworkMapper: Analyzing ${range.name} (${range.range}) in ${range.location}. ${range.devices} devices, ${range.services} services, ${range.vulnerabilities} vulnerabilities. Bandwidth: ${range.bandwidth}.`, false);
+        sentinelChat.addMessage(`NetworkMapper: Analyzing ${range.name} (${range.range}) in ${range.location}. ${range.devices} devices, ${range.services} services, ${range.vulnerabilities} vulnerabilities. Bandwidth: ${range.bandwidth}. Coordinating with ThreatScanner for vulnerability assessment and EncryptionDeployer for security posture.`, false);
     }, 300);
 }
 
 function showDeviceDetails(device) {
     if (!SentinelState.chatOpen) sentinelChat.toggle();
     setTimeout(() => {
-        sentinelChat.addMessage(`NetworkMapper: Device ${device.name} (${device.ip}) - ${device.type}. Services: ${device.services}. Status: ${device.status}. Encryption: ${device.encryption}.`, false);
+        sentinelChat.addMessage(`NetworkMapper: Device ${device.name} (${device.ip}) - ${device.type}. Services: ${device.services}. Status: ${device.status}. Encryption: ${device.encryption}. AI sub-agents monitoring: NetworkMapper → ThreatScanner → EncryptionManager.`, false);
     }, 300);
 }
 
@@ -1382,64 +1358,102 @@ function showOverviewDetails(type) {
     if (!SentinelState.chatOpen) sentinelChat.toggle();
     setTimeout(() => {
         const messages = {
-            serverIP: 'NetworkMapper: Server IP analysis - Single public address with hybrid-ready protection.',
-            serverServices: 'NetworkMapper: Server services analysis - All services secured and optimized.',
-            businessSites: 'NetworkMapper: Multi-site business deployment with site-to-site VPN.',
-            enterpriseRanges: 'NetworkMapper: Enterprise multi-range deployment across data centers.',
-            devices: 'NetworkMapper: Device inventory analysis - All endpoints monitored and secured.',
-            services: 'NetworkMapper: Service portfolio analysis - All services hybrid-encrypted.',
-            encryption: 'NetworkMapper: Encryption status - Hybrid-resistant protocols active across all systems.',
-            threats: 'NetworkMapper: Threat landscape analysis - Current risk level assessed.',
-            alerts: 'NetworkMapper: Alert summary - All critical alerts resolved.',
-            uptime: 'NetworkMapper: Availability metrics - System performance optimal.',
-            critical: 'NetworkMapper: Critical issue analysis - No unresolved critical issues.',
-            availability: 'NetworkMapper: High availability status - All redundancy systems operational.',
-            monitoring: 'NetworkMapper: 24/7 monitoring active - Global surveillance operational.',
-            regions: 'NetworkMapper: Multi-region deployment - Geographic redundancy active.'
+            serverIP: 'NetworkMapper: Server IP analysis - Single public address detected via Shodan with hybrid-ready protection.',
+            serverServices: 'NetworkMapper: Server services analysis - All services secured and optimized. Coordinating with EncryptionManager.',
+            businessSites: 'NetworkMapper: Multi-site business deployment with site-to-site VPN. VPNMonitor sub-agent active.',
+            enterpriseRanges: 'NetworkMapper: Enterprise multi-range deployment across data centers. Full correlation with ThreatScanner.',
+            devices: 'NetworkMapper: Device inventory analysis - All endpoints monitored by agent. EncryptionDeployer verified.',
+            services: 'NetworkMapper: Service portfolio analysis - All services hybrid-encrypted. CertificateManager monitoring.',
+            encryption: 'NetworkMapper: Encryption status - Hybrid-resistant protocols active. Coordinating with EncryptionManager.',
+            threats: 'NetworkMapper: Threat landscape analysis - Current risk level assessed by ThreatScanner.',
+            alerts: 'NetworkMapper: Alert summary - All critical alerts resolved by DefenseOrchestrator.',
+            uptime: 'NetworkMapper: Availability metrics - System performance optimal. AnalyticsEngine tracking.',
+            critical: 'NetworkMapper: Critical issue analysis - No unresolved critical issues. DefenseOrchestrator ready.',
+            availability: 'NetworkMapper: High availability status - All redundancy systems operational. LogAgent recording.',
+            monitoring: 'NetworkMapper: 24/7 monitoring active - Global surveillance operational. All sub-agents coordinated.',
+            regions: 'NetworkMapper: Multi-region deployment - Geographic redundancy active. ComplianceMonitor verified.'
         };
-        sentinelChat.addMessage(messages[type] || 'NetworkMapper: Network component analysis complete.', false);
+        sentinelChat.addMessage(messages[type] || 'NetworkMapper: Network component analysis complete. All sub-agents coordinated.', false);
     }, 300);
 }
 
 function showServiceDetails(service) {
     if (!SentinelState.chatOpen) sentinelChat.toggle();
     setTimeout(() => {
-        sentinelChat.addMessage(`NetworkMapper: Service ${service} analysis - Configuration optimized for ${currentScale} deployment. All protocols hybrid-encrypted.`, false);
+        sentinelChat.addMessage(`NetworkMapper: Service ${service} analysis - Configuration optimized for ${currentScale} deployment. All protocols hybrid-encrypted. ThreatScanner monitoring for vulnerabilities. EncryptionDeployer ready for upgrades.`, false);
     }, 300);
 }
 
-// Chat and interaction functions
-function toggleScanning() {
-    scanningActive = !scanningActive;
-    const toggle = document.getElementById('scanToggle');
+// V4 Encryption Gap Detection
+function simulateEncryptionGaps() {
+    const gapDeviceCount = Math.floor(Math.random() * 5) + 1;
+    showEncryptionGapAlert(gapDeviceCount);
+}
+
+function checkEncryptionGaps() {
+    // Periodically check for new encryption gaps
+    if (window.currentScale && Math.random() > 0.95) {
+        simulateEncryptionGaps();
+    }
+}
+
+function showEncryptionGapAlert(deviceCount) {
+    const alert = document.getElementById('encryptionGapAlert');
+    const description = document.getElementById('gapDescription');
     
-    if (toggle) {
-        if (scanningActive) {
-            toggle.textContent = 'Auto-Scan Active';
-            toggle.className = 'scan-toggle';
-        } else {
-            toggle.textContent = 'Auto-Scan Paused';
-            toggle.className = 'scan-toggle paused';
+    if (alert && description) {
+        description.textContent = `${deviceCount} devices are not encrypted and require immediate attention.`;
+        alert.classList.add('active');
+        
+        // Add to chat if open
+        if (window.sentinelChat && SentinelState.chatOpen) {
+            sentinelChat.addMessage(`⚠️ NetworkMapper: Encryption gap detected! ${deviceCount} devices lack proper encryption. Coordinating with EncryptionDeployer for immediate remediation.`, false, 'system');
         }
     }
-    
-    if (SentinelState.chatOpen) {
-        const status = scanningActive ? 'resumed' : 'paused';
-        sentinelChat.addMessage(`NetworkMapper: ${currentScale} scanning ${status}. Discovery mode: ${scanningActive ? 'ACTIVE' : 'PAUSED'}.`, false, 'system');
+}
+
+function hideEncryptionGapAlert() {
+    const alert = document.getElementById('encryptionGapAlert');
+    if (alert) {
+        alert.classList.remove('active');
     }
 }
 
-// Agent shutdown modal functions
-function confirmAgentShutdown() {
-    if (window.SentinelEventHandlers) {
-        SentinelEventHandlers.confirmAgentShutdown();
+function remediateEncryptionGaps() {
+    if (!window.sentinelChat) {
+        console.error('Chat system not available');
+        return;
     }
-}
 
-function closeModal() {
-    if (window.SentinelEventHandlers) {
-        SentinelEventHandlers.closeModal();
+    // Open chat if not already open
+    if (!SentinelState.chatOpen) {
+        sentinelChat.toggle();
     }
+
+    setTimeout(() => {
+        sentinelChat.addMessage('remediate encryption gaps', true);
+        
+        setTimeout(() => {
+            sentinelChat.addMessage('NetworkMapper: Initiating encryption gap remediation. Coordinating with EncryptionDeployer and CertificateManager...', false, 'system');
+        }, 500);
+        
+        setTimeout(() => {
+            sentinelChat.addMessage(`EncryptionDeployer: Analyzing unencrypted devices. Deploying hybrid-resistant encryption modules. Working with CertificateManager for key distribution.`, false);
+        }, 1200);
+        
+        setTimeout(() => {
+            sentinelChat.addMessage('EncryptionDeployer: Deployment in progress. Using TLS 1.3 + Kyber-1024 for network traffic, AES-256-GCM + Dilithium-3 for data at rest.', false);
+        }, 2500);
+        
+        // Simulate completion
+        setTimeout(() => {
+            sentinelChat.addMessage(`✅ EncryptionDeployer: Remediation complete! All devices now protected with hybrid-resistant encryption. NetworkMapper verified. No gaps detected.`, false);
+            
+            // Hide the alert
+            hideEncryptionGapAlert();
+        }, 4000);
+        
+    }, 300);
 }
 
 // Chat handlers
@@ -1483,9 +1497,9 @@ function toggleChat() {
 // Global function exports
 window.startAutoScan = startAutoScan;
 window.selectScale = selectScale;
-window.acceptRecommendation = acceptRecommendation;
+window.proceedToCheckout = proceedToCheckout;
+window.processCheckout = processCheckout;
 window.closeScanResultsModal = closeScanResultsModal;
-window.requestConsultation = requestConsultation;
 window.showAddRangeModal = showAddRangeModal;
 window.closeAddRangeModal = closeAddRangeModal;
 window.addIPRange = addIPRange;
@@ -1502,12 +1516,44 @@ window.sendChatMessage = sendChatMessage;
 window.handleLogout = handleLogout;
 window.showAgentShutdownModal = showAgentShutdownModal;
 window.toggleChat = toggleChat;
-window.confirmAgentShutdown = confirmAgentShutdown;
-window.closeModal = closeModal;
+window.remediateEncryptionGaps = remediateEncryptionGaps;
+window.populateScanningPanels = populateScanningPanels;
+window.createServiceItem = createServiceItem;
+window.initializeNetworkFeed = initializeNetworkFeed;
+window.showCheckoutSection = showCheckoutSection;
+
+// Modal close handler
+function closeModalOnOverlay(event) {
+    if (event.target.classList.contains('modal-overlay')) {
+        const modalId = event.target.id;
+        if (modalId === 'addRangeModal') {
+            closeAddRangeModal();
+        } else if (modalId === 'rescanModal') {
+            closeRescanModal();
+        } else if (modalId === 'agentShutdownModal') {
+            if (window.SentinelEventHandlers) {
+                SentinelEventHandlers.closeModal(modalId);
+            }
+        }
+    }
+}
+
+// Agent shutdown functions
+function confirmAgentShutdown() {
+    if (window.SentinelEventHandlers) {
+        SentinelEventHandlers.confirmAgentShutdown();
+    }
+}
+
+function closeModal() {
+    if (window.SentinelEventHandlers) {
+        SentinelEventHandlers.closeModal();
+    }
+}
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Network core module loaded');
+    console.log('Network core V4 module loaded');
     initializeEnvironmentDetection();
     
     // Auto-update metrics periodically
@@ -1529,6 +1575,11 @@ if (typeof module !== 'undefined' && module.exports) {
         addIPRange,
         confirmRescan,
         populateAllContent,
-        showMainSections
+        showMainSections,
+        startAutoScan,
+        proceedToCheckout,
+        processCheckout,
+        populateScanningPanels,
+        initializeNetworkFeed
     };
 }
