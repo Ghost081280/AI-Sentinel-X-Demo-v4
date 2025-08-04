@@ -741,22 +741,27 @@
             border: 1px solid var(--danger);
         }
 
-        /* Security Overview - Fixed to match Live Connections bottom alignment */
+        /* Security Overview - Extended to match Live Connections bottom alignment */
         .security-overview-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
             margin-bottom: 25px;
+            min-height: 160px;
         }
 
         .overview-card {
             background: rgba(0, 204, 255, 0.05);
             border: 1px solid rgba(0, 204, 255, 0.2);
             border-radius: 12px;
-            padding: 18px;
+            padding: 15px;
             text-align: center;
             transition: all 0.3s ease;
             cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 70px;
         }
 
         .overview-card:hover {
@@ -765,24 +770,24 @@
         }
 
         .overview-value {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             color: var(--secondary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             text-shadow: 0 0 15px currentColor;
         }
 
         .overview-label {
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 1px;
             line-height: 1.2;
+            margin-bottom: 4px;
         }
 
         .overview-trend {
-            font-size: 9px;
-            margin-top: 5px;
+            font-size: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -801,13 +806,14 @@
             color: var(--text-secondary);
         }
 
-        /* Protocols List - Increased height to match Live Connections bottom */
+        /* Protocols List - Significantly increased height to match Live Connections bottom */
         .protocols-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            height: 300px;
+            gap: 10px;
+            height: 240px;
             overflow-y: auto;
+            padding-right: 5px;
         }
 
         .protocol-item {
