@@ -185,7 +185,7 @@
             align-items: center;
         }
 
-        /* Encryption Status Badges */
+        /* Updated Encryption Status Badge - Single Hybrid Mode Button */
         .encryption-badges {
             display: flex;
             gap: 15px;
@@ -197,54 +197,34 @@
             align-items: center;
             gap: 10px;
             padding: 8px 16px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            border: 2px solid;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .encryption-badge.classical {
             background: rgba(0, 255, 136, 0.1);
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .encryption-badge.quantum {
-            background: rgba(124, 58, 237, 0.1);
-            border-color: var(--accent);
-            color: var(--accent);
+            border: 1px solid var(--primary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .encryption-badge:hover {
+            background: rgba(0, 255, 136, 0.15);
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 255, 136, 0.2);
         }
 
         .status-light {
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            animation: statusPulse 2s ease-in-out infinite;
-        }
-
-        .status-light.active {
             background: var(--success);
-            box-shadow: 0 0 10px var(--success);
-        }
-
-        .status-light.inactive {
-            background: var(--danger);
-            box-shadow: 0 0 10px var(--danger);
+            box-shadow: 0 0 8px var(--success);
+            animation: statusPulse 3s ease-in-out infinite;
         }
 
         @keyframes statusPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.7; transform: scale(1.2); }
+            50% { opacity: 0.8; transform: scale(1.1); }
         }
 
         .agent-status {
@@ -346,19 +326,20 @@
             font-weight: bold;
         }
 
-        /* Sub-Agent Status Banner */
+        /* Sub-Agent Status Banner - Standardized */
         .sub-agent-status {
             background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(0, 255, 136, 0.05) 100%);
             border: 1px solid rgba(124, 58, 237, 0.3);
             border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 25px;
+            padding: 15px 20px !important;
+            margin-bottom: 25px !important;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
             gap: 20px;
             backdrop-filter: blur(15px);
+            min-height: 90px !important;
+            max-height: 90px !important;
             position: relative;
             overflow: hidden;
         }
@@ -383,6 +364,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            flex: 1;
         }
 
         .sub-agent-icon {
@@ -395,6 +377,7 @@
             justify-content: center;
             font-size: 24px;
             box-shadow: 0 4px 20px rgba(124, 58, 237, 0.3);
+            flex-shrink: 0;
         }
 
         .sub-agent-details h3 {
@@ -411,6 +394,7 @@
         .sub-agent-metrics {
             display: flex;
             gap: 30px;
+            flex-shrink: 0;
         }
 
         .metric {
@@ -418,13 +402,14 @@
         }
 
         .metric-value {
-            font-size: 24px;
+            font-size: 24px !important;
             font-weight: bold;
             color: var(--accent);
+            margin-bottom: 3px;
         }
 
         .metric-label {
-            font-size: 12px;
+            font-size: 12px !important;
             color: var(--text-secondary);
             text-transform: uppercase;
         }
@@ -798,121 +783,106 @@
             color: var(--text-primary);
         }
 
-        /* Activity Feed */
-        .activity-feed {
+        /* Success Message */
+        .success-message {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: var(--gradient-1);
+            color: var(--bg-darker);
+            padding: 18px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            transform: translateX(500px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .success-message.show {
+            transform: translateX(0);
+        }
+
+        /* Agent Shutdown Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal {
             background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 15px;
-            padding: 25px;
-            height: 500px;
-            display: flex;
-            flex-direction: column;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: modalSlideIn 0.3s ease;
         }
 
-        .feed-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--border);
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
-        .feed-title {
-            font-size: 18px;
+        .modal-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-title {
+            font-size: 24px;
             font-weight: bold;
-            color: var(--primary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            color: var(--warning);
+            margin-bottom: 10px;
         }
 
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--accent);
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 50%;
-            animation: livePulse 2s ease-in-out infinite;
-        }
-
-        @keyframes livePulse {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.5); opacity: 0.5; }
-        }
-
-        .feed-content {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        .feed-item {
-            background: rgba(124, 58, 237, 0.05);
-            border-left: 3px solid var(--accent);
-            padding: 15px 20px;
-            margin-bottom: 12px;
-            border-radius: 0 10px 10px 0;
-            transition: all 0.3s ease;
-            animation: feedSlide 0.3s ease;
-        }
-
-        @keyframes feedSlide {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        .feed-item:hover {
-            background: rgba(124, 58, 237, 0.1);
-            transform: translateX(5px);
-        }
-
-        .feed-item.warning {
-            background: rgba(255, 170, 0, 0.05);
-            border-left-color: var(--warning);
-        }
-
-        .feed-item.danger {
-            background: rgba(255, 0, 68, 0.05);
-            border-left-color: var(--danger);
-        }
-
-        .feed-item.encryption {
-            background: rgba(0, 255, 136, 0.05);
-            border-left-color: var(--primary);
-        }
-
-        .feed-time {
-            font-size: 11px;
+        .modal-content {
             color: var(--text-secondary);
-            margin-bottom: 5px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
 
-        .feed-message {
-            font-size: 13px;
-            line-height: 1.4;
-            margin-bottom: 5px;
+        .modal-btn-primary {
+            background: var(--gradient-1);
+            color: var(--bg-darker);
         }
 
-        .feed-agent {
-            font-size: 11px;
-            color: var(--accent);
-            font-style: italic;
+        .modal-btn-secondary {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .modal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
         }
 
         /* AI Chat Widget */
@@ -1115,108 +1085,6 @@
             display: block;
         }
 
-        /* Agent Shutdown Modal */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 10000;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-            animation: modalSlideIn 0.3s ease;
-        }
-
-        @keyframes modalSlideIn {
-            from { opacity: 0; transform: translateY(-20px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .modal-title {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--warning);
-            margin-bottom: 10px;
-        }
-
-        .modal-content {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .modal-btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .modal-btn-primary {
-            background: var(--gradient-1);
-            color: var(--bg-darker);
-        }
-
-        .modal-btn-secondary {
-            background: transparent;
-            border: 2px solid var(--border);
-            color: var(--text-secondary);
-        }
-
-        .modal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        /* Success Message */
-        .success-message {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            background: var(--gradient-1);
-            color: var(--bg-darker);
-            padding: 18px 30px;
-            border-radius: 10px;
-            font-weight: bold;
-            transform: translateX(500px);
-            transition: transform 0.3s ease;
-            z-index: 1000;
-        }
-
-        .success-message.show {
-            transform: translateX(0);
-        }
-
         /* Mobile Responsive */
         @media (max-width: 1200px) {
             .settings-grid {
@@ -1230,6 +1098,13 @@
             .sub-agent-metrics {
                 flex-direction: column;
                 gap: 15px;
+            }
+
+            .sub-agent-status {
+                flex-direction: column;
+                text-align: center;
+                min-height: auto !important;
+                max-height: none !important;
             }
         }
 
@@ -1369,13 +1244,9 @@
                 </div>
                 <div class="header-right">
                     <div class="encryption-badges">
-                        <div class="encryption-badge classical" onclick="showEncryptionStatus('classical')">
-                            <div class="status-light active" id="classicalStatus"></div>
-                            <span>CLASSICAL</span>
-                        </div>
-                        <div class="encryption-badge quantum" onclick="showEncryptionStatus('hybrid')">
-                            <div class="status-light active" id="quantumStatus"></div>
-                            <span>HYBRID</span>
+                        <div class="encryption-badge" onclick="showEncryptionStatus('hybrid')">
+                            <div class="status-light"></div>
+                            <span>HYBRID MODE ACTIVE</span>
                         </div>
                     </div>
                     <div class="agent-status" onclick="showAgentShutdownModal()">
@@ -2080,23 +1951,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Settings Activity Feed -->
-        <div class="activity-feed">
-            <div class="feed-header">
-                <h2 class="feed-title">
-                    <span>⚙️</span>
-                    <span>Settings Activity Feed</span>
-                </h2>
-                <div class="live-indicator">
-                    <div class="live-dot"></div>
-                    <span>LIVE</span>
-                </div>
-            </div>
-            <div class="feed-content" id="settingsActivityFeed">
-                <!-- Feed items will be populated by ActivityFeedManager -->
-            </div>
-        </div>
     </div>
 
     <!-- Success Message -->
@@ -2216,33 +2070,11 @@
                 initializePageContext();
             }
 
-            // Initialize settings activity feed using shared.js ActivityFeedManager
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                // Initialize settings feed
-                activityFeedManager.initializeFeed(settingsFeedId, 'dashboard');
-                activityFeedManager.setFeedContainer(settingsFeedId, 'settingsActivityFeed');
-                
-                // Add initial messages
-                activityFeedManager.addMessage(settingsFeedId, '⚙️ Settings interface initialized with V2.2 Hybrid configuration', '', 'Main Agent');
-                activityFeedManager.addMessage(settingsFeedId, '🔐 All configuration data protected with hybrid-resistant encryption', 'encryption', 'EncryptionManager');
-                activityFeedManager.addMessage(settingsFeedId, '🔧 EncryptionDeployer policies loaded: auto-encrypt, port detection, compliance remediation', '', 'EncryptionDeployer');
-                activityFeedManager.addMessage(settingsFeedId, '📜 CertificateManager: 247 certificates monitored with auto-renewal', '', 'CertificateManager');
-                activityFeedManager.addMessage(settingsFeedId, '✅ ComplianceMonitor: SOC2, ISO27001, NIST frameworks active', '', 'ComplianceMonitor');
-                
-                // Start auto-generation every 8 seconds for settings feed
-                activityFeedManager.startAutoGeneration(settingsFeedId, 8000);
-            } else {
-                console.log('ActivityFeedManager not available yet, retrying...');
-                setTimeout(initializeSettingsPage, 200);
-                return;
-            }
-
             // Initialize chat system
             if (typeof SentinelChat !== 'undefined') {
                 window.sentinelChat = new SentinelChat();
             }
 
-            // Load saved settings
             loadSettings();
             
             // Start periodic updates
@@ -2285,21 +2117,7 @@
         }
 
         function simulateSettingsActivity() {
-            const activities = [
-                'Configuration backup completed with hybrid encryption',
-                'Policy deployment verification successful',
-                'Certificate auto-renewal executed for 3 certificates',
-                'Compliance scan completed: all frameworks passing',
-                'Key rotation scheduled for next maintenance window',
-                'Encryption policy updated across all sub-agents',
-                'VPNMonitor configuration synchronized'
-            ];
-            
-            const activity = activities[Math.floor(Math.random() * activities.length)];
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                const messageType = activity.includes('encryption') || activity.includes('Certificate') ? 'encryption' : '';
-                activityFeedManager.addMessage(settingsFeedId, `🔧 ${activity}`, messageType, 'Settings Manager');
-            }
+            // Removed activity feed generation since we removed the activity feed
         }
 
         function updateSettingsMetrics() {
@@ -2343,11 +2161,6 @@
             
             // Add active class to clicked sidebar item
             event.target.closest('.sidebar-item').classList.add('active');
-            
-            // Add activity feed message
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(settingsFeedId, `⚙️ Switched to ${sectionName} configuration panel`, '', 'Settings Manager');
-            }
         }
 
         // Toggle setting checkbox
@@ -2361,11 +2174,6 @@
 
         // Update setting
         function updateSetting(key, value) {
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager && Math.random() > 0.7) {
-                const messageType = key.includes('encryption') || key.includes('hybrid') ? 'encryption' : '';
-                activityFeedManager.addMessage(settingsFeedId, `🔧 Setting "${key}" updated to "${value}"`, messageType, 'Settings Manager');
-            }
-            
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && SentinelState.chatOpen) {
                 window.sentinelChat.addMessage(`Settings Manager: Configuration "${key}" updated to "${value}". Change protected with hybrid-resistant encryption.`, false, 'system');
             }
@@ -2407,10 +2215,6 @@
                     
                     settingsAutoExecution = true;
                     startSettingsSimulation();
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.startAutoGeneration(settingsFeedId, 8000);
-                        activityFeedManager.addMessage(settingsFeedId, '🤖 Main Agent resumed: Autonomous configuration management enabled', '', 'Main Agent');
-                    }
                     
                     showSuccessMessage('AI Agent resumed autonomous operation');
                     
@@ -2439,10 +2243,6 @@
                     
                     settingsAutoExecution = false;
                     if (settingsUpdateInterval) clearInterval(settingsUpdateInterval);
-                    if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                        activityFeedManager.stopAutoGeneration(settingsFeedId);
-                        activityFeedManager.addMessage(settingsFeedId, '⚠️ Main Agent paused: Manual configuration control only', 'warning', 'Main Agent');
-                    }
                     
                     showSuccessMessage('AI Agent paused - Manual control available');
                 }
@@ -2491,10 +2291,6 @@
                 
                 settingsAutoExecution = false;
                 if (settingsUpdateInterval) clearInterval(settingsUpdateInterval);
-                if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                    activityFeedManager.stopAutoGeneration(settingsFeedId);
-                    activityFeedManager.addMessage(settingsFeedId, '🚨 EMERGENCY SHUTDOWN: All AI operations halted', 'danger', 'Emergency Protocol');
-                }
                 
                 showSuccessMessage('EMERGENCY SHUTDOWN: AI halted');
             }
@@ -2521,10 +2317,6 @@
                 localStorage.setItem('sentinel_settings_v4', JSON.stringify(settings));
                 showSuccessMessage('V2.2 Settings saved with hybrid-resistant encryption!');
                 
-                if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                    activityFeedManager.addMessage(settingsFeedId, '💾 Configuration saved and encrypted with hybrid algorithms', 'encryption', 'Settings Manager');
-                }
-                
                 if (window.sentinelChat && typeof SentinelState !== 'undefined' && SentinelState.chatOpen) {
                     window.sentinelChat.addMessage('Settings Manager: V2.2 configuration saved and encrypted. All sub-agents including EncryptionDeployer, CertificateManager, and ComplianceMonitor updated.', false, 'system');
                 }
@@ -2535,9 +2327,6 @@
 
         function saveDeploymentPolicies() {
             showSuccessMessage('Encryption deployment policies saved!');
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(settingsFeedId, '🔧 EncryptionDeployer policies updated: auto-encryption, port detection, compliance remediation active', 'encryption', 'EncryptionDeployer');
-            }
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && SentinelState.chatOpen) {
                 window.sentinelChat.addMessage('EncryptionDeployer: Deployment policies updated. Auto-encryption, port detection, and compliance remediation rules are now active.', false);
             }
@@ -2545,9 +2334,6 @@
 
         function testDeploymentPolicies() {
             showSuccessMessage('Testing deployment policies...');
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(settingsFeedId, '🧪 EncryptionDeployer policy test: Simulating device discovery... Auto-encryption triggered successfully', '', 'EncryptionDeployer');
-            }
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && SentinelState.chatOpen) {
                 window.sentinelChat.addMessage('EncryptionDeployer: Policy test initiated. Simulating new device discovery... Auto-encryption triggered successfully. All policies operational.', false);
             }
@@ -2555,9 +2341,6 @@
 
         function saveCertificateSettings() {
             showSuccessMessage('Certificate management settings saved!');
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(settingsFeedId, '📜 CertificateManager configuration updated: auto-renewal threshold, hybrid signatures enabled', 'encryption', 'CertificateManager');
-            }
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && SentinelState.chatOpen) {
                 window.sentinelChat.addMessage('CertificateManager: Configuration updated. Auto-renewal threshold set, hybrid key rotation enabled with Dilithium-3 signatures.', false);
             }
@@ -2565,9 +2348,6 @@
 
         function testCertificateRenewal() {
             showSuccessMessage('Testing certificate renewal...');
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(settingsFeedId, '🔑 CertificateManager renewal test: Generating hybrid certificate with RSA-4096 + Dilithium-3', 'encryption', 'CertificateManager');
-            }
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && SentinelState.chatOpen) {
                 window.sentinelChat.addMessage('CertificateManager: Renewal test initiated. Generating new hybrid certificate with RSA-4096 + Dilithium-3 signature. Test completed successfully.', false);
             }
@@ -2575,9 +2355,6 @@
 
         function saveComplianceSettings() {
             showSuccessMessage('Compliance configuration saved!');
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(settingsFeedId, '✅ ComplianceMonitor framework configuration updated with automated gap detection', '', 'ComplianceMonitor');
-            }
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && SentinelState.chatOpen) {
                 window.sentinelChat.addMessage('ComplianceMonitor: Framework configuration updated. Active monitoring for enabled compliance standards with automated gap detection and remediation.', false);
             }
@@ -2585,9 +2362,6 @@
 
         function generateComplianceReport() {
             showSuccessMessage('Generating compliance report...');
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(settingsFeedId, '📋 ComplianceMonitor: Comprehensive report generation with Dilithium-3 signatures', 'encryption', 'ComplianceMonitor');
-            }
             if (window.sentinelChat && typeof SentinelState !== 'undefined' && SentinelState.chatOpen) {
                 window.sentinelChat.addMessage('ComplianceMonitor: Comprehensive compliance report generation initiated. Including SOC2, ISO27001, and NIST frameworks. Report will be Dilithium-signed and hybrid encrypted.', false);
             }
@@ -2607,9 +2381,6 @@
                 });
                 
                 showSuccessMessage('V2.2 Settings reset to secure defaults');
-                if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                    activityFeedManager.addMessage(settingsFeedId, '🔄 Configuration reset to V2.2 secure defaults', '', 'Settings Manager');
-                }
             }
         }
 
@@ -2645,9 +2416,6 @@
             URL.revokeObjectURL(url);
             
             showSuccessMessage('V2.2 Configuration exported successfully!');
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.addMessage(settingsFeedId, '📤 Configuration exported with hybrid encryption protection', 'encryption', 'Settings Manager');
-            }
         }
 
         // Encryption status functions
@@ -2657,11 +2425,7 @@
             }
             setTimeout(() => {
                 if (window.sentinelChat) {
-                    if (type === 'classical') {
-                        window.sentinelChat.addMessage('EncryptionManager: Classical encryption status - AES-256-GCM, ChaCha20-Poly1305 active across all settings systems. Performance: 2.1M ops/sec. All configuration data encrypted.', false);
-                    } else {
-                        window.sentinelChat.addMessage('EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all configuration data. Settings Manager reports all data hybrid-resistant.', false);
-                    }
+                    window.sentinelChat.addMessage('EncryptionManager: Hybrid encryption status - Post-quantum algorithms (Kyber-1024, Dilithium-3) protecting all configuration data. Settings Manager reports all data hybrid-resistant.', false);
                 }
             }, 300);
         }
@@ -2703,9 +2467,6 @@
 
         // Cleanup on page unload
         window.addEventListener('beforeunload', () => {
-            if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-                activityFeedManager.stopAutoGeneration(settingsFeedId);
-            }
             if (settingsUpdateInterval) clearInterval(settingsUpdateInterval);
         });
 
