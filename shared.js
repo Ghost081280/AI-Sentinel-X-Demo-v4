@@ -1214,6 +1214,63 @@ class BannerBalanceManager {
     }
 }
 
+// NEW: Helper function for pages to easily set up their activity feeds
+function setupPageActivityFeed(pageType, containerId, feedId) {
+    // Initialize feed with the page type
+    activityFeedManager.initializeFeed(feedId, pageType);
+    activityFeedManager.setFeedContainer(feedId, containerId);
+    
+    // Add initial messages based on page type
+    const initialMessages = {
+        dashboard: [
+            { msg: '🤖 Main Agent: System initialized with all sub-agents operational', type: '', agent: 'Main Agent' },
+            { msg: '🛡️ Global threat intelligence synchronized across all modules', type: '', agent: 'ThreatScanner' },
+            { msg: '🌐 Network discovery active - monitoring all connected devices', type: '', agent: 'NetworkMapper' }
+        ],
+        network: [
+            { msg: '🌐 NetworkMapper: Dual-layer scanning initialized', type: '', agent: 'NetworkMapper' },
+            { msg: '🔍 External scan via Shodan API active', type: '', agent: 'NetworkMapper' },
+            { msg: '🔐 EncryptionDeployer: Standing by for gap remediation', type: '', agent: 'EncryptionDeployer' }
+        ],
+        threats: [
+            { msg: '🛡️ ThreatScanner: Real-time threat monitoring active', type: '', agent: 'ThreatScanner' },
+            { msg: '📊 ML models loaded - 99.7% accuracy achieved', type: '', agent: 'ThreatScanner' },
+            { msg: '🔍 Behavioral analysis engine operational', type: '', agent: 'ThreatScanner → AnalyticsEngine' }
+        ],
+        defense: [
+            { msg: '⚔️ DefenseOrchestrator: All honeypots deployed', type: '', agent: 'DefenseOrchestrator' },
+            { msg: '🛡️ Auto-mitigation playbooks loaded and ready', type: '', agent: 'DefenseOrchestrator' },
+            { msg: '🚫 IP blacklist synchronized with global threat feed', type: '', agent: 'DefenseOrchestrator' }
+        ],
+        encryption: [
+            { msg: '🔐 EncryptionManager: Hybrid encryption active', type: 'encryption', agent: 'EncryptionManager' },
+            { msg: '🔧 EncryptionDeployer: All modules operational', type: '', agent: 'EncryptionDeployer' },
+            { msg: '📜 CertificateManager: Certificate monitoring active', type: '', agent: 'CertificateManager' }
+        ],
+        analytics: [
+            { msg: '📊 AnalyticsEngine: Real-time processing active', type: '', agent: 'AnalyticsEngine' },
+            { msg: '📋 ComplianceMonitor: All frameworks monitored', type: '', agent: 'ComplianceMonitor' },
+            { msg: '📝 LogAgent: Audit trail secured with Dilithium-3', type: '', agent: 'LogAgent' }
+        ],
+        vpn: [
+            { msg: '🔒 VPNMonitor: All tunnels operational', type: '', agent: 'VPNMonitor' },
+            { msg: '🌍 Geographic anomaly detection active', type: '', agent: 'VPNMonitor' },
+            { msg: '🔐 Hybrid key exchange enabled on all connections', type: 'encryption', agent: 'VPNMonitor' }
+        ]
+    };
+    
+    // Add initial messages for the page
+    const messages = initialMessages[pageType] || initialMessages.dashboard;
+    messages.forEach(msgData => {
+        activityFeedManager.addMessage(feedId, msgData.msg, msgData.type, msgData.agent);
+    });
+    
+    // Start auto-generation
+    activityFeedManager.startAutoGeneration(feedId, 5000);
+    
+    return feedId;
+}
+
 // Auto-initialize on page load - MUCH SIMPLER NOW
 document.addEventListener('DOMContentLoaded', () => {
     // Initialize page context
@@ -1228,38 +1285,40 @@ document.addEventListener('DOMContentLoaded', () => {
         window.SentinelState = SentinelState;
         window.SubAgentConfigs = SubAgentConfigs;
         window.VPNConfigs = VPNConfigs;
-        window.SharedGlobalUpdates = SharedGlobalUpdates;
-        window.SentinelChat = SentinelChat;
-        window.BannerBalanceManager = BannerBalanceManager;
-        window.initializePageContext = initializePageContext;
-        window.initNeuralBackground = initNeuralBackground;
-        
-        // Configuration exports
-        window.EncryptionDeploymentConfigs = EncryptionDeploymentConfigs;
-        window.CertificateConfigs = CertificateConfigs;
-        window.ComplianceConfigs = ComplianceConfigs;
-        window.EncryptionPlaybooks = EncryptionPlaybooks;
-        window.ScaleConfigs = ScaleConfigs;
-    }
+       window.SharedGlobalUpdates = SharedGlobalUpdates;
+       window.SentinelChat = SentinelChat;
+       window.BannerBalanceManager = BannerBalanceManager;
+       window.initializePageContext = initializePageContext;
+       window.initNeuralBackground = initNeuralBackground;
+       window.setupPageActivityFeed = setupPageActivityFeed;
+       
+       // Configuration exports
+       window.EncryptionDeploymentConfigs = EncryptionDeploymentConfigs;
+       window.CertificateConfigs = CertificateConfigs;
+       window.ComplianceConfigs = ComplianceConfigs;
+       window.EncryptionPlaybooks = EncryptionPlaybooks;
+       window.ScaleConfigs = ScaleConfigs;
+   }
 });
 
 // Export for use in other modules
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        SentinelState,
-        SubAgentConfigs,
-        VPNConfigs,
-        SharedGlobalUpdates,
-        ActivityFeedManager,
-        SentinelChat,
-        BannerBalanceManager,
-        activityFeedManager,
-        initializePageContext,
-        initNeuralBackground,
-        EncryptionDeploymentConfigs,
-        CertificateConfigs,
-        ComplianceConfigs,
-        EncryptionPlaybooks,
-        ScaleConfigs
-    };
+   module.exports = {
+       SentinelState,
+       SubAgentConfigs,
+       VPNConfigs,
+       SharedGlobalUpdates,
+       ActivityFeedManager,
+       SentinelChat,
+       BannerBalanceManager,
+       activityFeedManager,
+       initializePageContext,
+       initNeuralBackground,
+       setupPageActivityFeed,
+       EncryptionDeploymentConfigs,
+       CertificateConfigs,
+       ComplianceConfigs,
+       EncryptionPlaybooks,
+       ScaleConfigs
+   };
 }
