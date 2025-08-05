@@ -11,6 +11,29 @@ let deviceCounter = 1;
 let scanningActive = true;
 let discoveryActive = true;
 
+// Utility functions
+const SentinelUtils = {
+    validateCIDR: function(cidr) {
+        const cidrRegex = /^(\d{1,3}\.){3}\d{1,3}\/\d{1,2}$/;
+        if (!cidrRegex.test(cidr)) return false;
+        
+        const [ip, mask] = cidr.split('/');
+        const octets = ip.split('.');
+        const maskNum = parseInt(mask);
+        
+        // Validate octets
+        for (const octet of octets) {
+            const num = parseInt(octet);
+            if (num < 0 || num > 255) return false;
+        }
+        
+        // Validate mask
+        if (maskNum < 0 || maskNum > 32) return false;
+        
+        return true;
+    }
+};
+
 // Initialize environment detection
 function initializeEnvironmentDetection() {
     // Auto-detect based on stored preference or simulate detection
@@ -248,6 +271,32 @@ function showEnhancedScanResultsModal(recommendation) {
                 color: var(--primary);
                 text-align: right;
             }
+            
+            .recommendation-banner {
+                background: linear-gradient(135deg, rgba(0, 255, 136, 0.1) 0%, rgba(0, 204, 255, 0.05) 100%);
+                border: 2px solid var(--primary);
+                border-radius: 15px;
+                padding: 25px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+            
+            .banner-icon {
+                font-size: 48px;
+                filter: drop-shadow(0 0 20px var(--primary));
+            }
+            
+            .banner-content h3 {
+                font-size: 20px;
+                color: var(--primary);
+                margin-bottom: 8px;
+            }
+            
+            .banner-content p {
+                font-size: 16px;
+                color: var(--text-secondary);
+            }
         `;
         document.head.appendChild(style);
     }
@@ -389,8 +438,10 @@ function processCheckout() {
                 checkoutSection.style.display = 'none';
             }
             
-            // Start showing activity feed
-            initializeNetworkFeed();
+            // Start showing activity feed using page-specific implementation
+            if (typeof setupNetworkActivityFeed === 'function') {
+                setupNetworkActivityFeed();
+            }
             
             // Simulate finding encryption gaps after activation
             setTimeout(() => {
@@ -407,6 +458,7 @@ function selectScale(scale, userSelected = true) {
     if (!ScaleConfigs[scale]) return;
 
     currentScale = scale;
+    window.currentScale = scale;
     if (window.SentinelState) {
         SentinelState.currentScale = scale;
     }
@@ -448,6 +500,11 @@ function selectScale(scale, userSelected = true) {
         localStorage.setItem('sentinel_scale', scale);
     }
 
+    // Setup network activity feed for this scale
+    if (typeof setupNetworkActivityFeed === 'function') {
+        setupNetworkActivityFeed();
+    }
+
     // Update chat context with comprehensive cyber defense focus
     if (window.sentinelChat && SentinelState.chatOpen && userSelected) {
         sentinelChat.addMessage(`NetworkMapper: Configured for ${config.text.toLowerCase()} scale. Dual-layer scanning active: external via Shodan, internal via deployed agent. Coordinating with ThreatScanner, EncryptionDeployer, and DefenseOrchestrator for comprehensive ${config.chatContext}.`, false, 'system');
@@ -462,11 +519,11 @@ function showMainSections() {
         subAgentStatus.style.display = 'flex';
     }
     
-    const sections = ['ipRangeManager', 'dashboardInteractive', 'networkOverview', 'deviceDiscovery'];
+    const sections = ['ipRangeManager', 'dashboardInteractive', 'networkOverview', 'scanningSections', 'deviceDiscovery'];
     sections.forEach(sectionId => {
         const element = document.getElementById(sectionId);
         if (element) {
-            element.style.display = 'block';
+            element.style.display = sectionId === 'scanningSections' ? 'grid' : 'block';
         }
     });
 }
@@ -892,606 +949,524 @@ function populateIPRangesGrid() {
         `;
         
         card.onclick = () => showRangeDetails(range);
-        grid.appendChild(card);
-    });
+       grid.appendChild(card);
+   });
 }
 
 // Populate overview grid
 function populateOverviewGrid() {
-    const grid = document.getElementById('overviewGrid');
-    if (!grid) return;
+   const grid = document.getElementById('overviewGrid');
+   if (!grid) return;
 
-    grid.innerHTML = '';
+   grid.innerHTML = '';
 
-    const overviewData = getOverviewData();
-    
-    overviewData.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'overview-card';
-        card.onclick = () => showOverviewDetails(item.type);
-        
-        card.innerHTML = `
-            <div class="overview-icon">${item.icon}</div>
-            <div class="overview-value">${item.value}</div>
-            <div class="overview-label">${item.label}</div>
-        `;
-        
-        grid.appendChild(card);
-    });
+   const overviewData = getOverviewData();
+   
+   overviewData.forEach(item => {
+       const card = document.createElement('div');
+       card.className = 'overview-card';
+       card.onclick = () => showOverviewDetails(item.type);
+       
+       card.innerHTML = `
+           <div class="overview-icon">${item.icon}</div>
+           <div class="overview-value">${item.value}</div>
+           <div class="overview-label">${item.label}</div>
+       `;
+       
+       grid.appendChild(card);
+   });
 }
 
 function getOverviewData() {
-    const totalDevices = ipRanges.reduce((sum, range) => sum + range.devices, 0);
-    const totalServices = ipRanges.reduce((sum, range) => sum + range.services, 0);
-    const totalVulnerabilities = ipRanges.reduce((sum, range) => sum + range.vulnerabilities, 0);
+   const totalDevices = ipRanges.reduce((sum, range) => sum + range.devices, 0);
+   const totalServices = ipRanges.reduce((sum, range) => sum + range.services, 0);
+   const totalVulnerabilities = ipRanges.reduce((sum, range) => sum + range.vulnerabilities, 0);
 
-    if (currentScale === 'individual') {
-        return [
-            { icon: '🖥️', value: '1', label: 'Server', type: 'serverIP' },
-            { icon: '🌐', value: totalServices.toString(), label: 'Services', type: 'serverServices' },
-            { icon: '🔒', value: 'Hybrid', label: 'Encryption', type: 'encryption' },
-            { icon: '🛡️', value: totalVulnerabilities.toString(), label: 'Threats', type: 'threats' }
-        ];
-    } else if (currentScale === 'business') {
-        return [
-            { icon: '🏢', value: ipRanges.length.toString(), label: 'Sites', type: 'businessSites' },
-            { icon: '💻', value: totalDevices.toLocaleString(), label: 'Devices', type: 'devices' },
-            { icon: '🌐', value: totalServices.toString(), label: 'Services', type: 'services' },
-            { icon: '🔐', value: 'Active', label: 'Encryption', type: 'encryption' },
-            { icon: '⚠️', value: totalVulnerabilities.toString(), label: 'Alerts', type: 'alerts' },
-            { icon: '📊', value: '99.8%', label: 'Uptime', type: 'uptime' }
-        ];
-    } else { // enterprise
-        return [
-            { icon: '🏭', value: ipRanges.length.toString(), label: 'Data Centers', type: 'enterpriseRanges' },
-            { icon: '💻', value: totalDevices.toLocaleString(), label: 'Devices', type: 'devices' },
-            { icon: '🌐', value: totalServices.toString(), label: 'Services', type: 'services' },
-            { icon: '🔐', value: 'Hybrid', label: 'Encryption', type: 'encryption' },
-            { icon: '⚠️', value: totalVulnerabilities.toString(), label: 'Critical', type: 'critical' },
-            { icon: '📊', value: '99.9%', label: 'Availability', type: 'availability' },
-            { icon: '🔄', value: '24/7', label: 'Monitoring', type: 'monitoring' },
-            { icon: '🌍', value: '3', label: 'Regions', type: 'regions' }
-        ];
-    }
+   if (currentScale === 'individual') {
+       return [
+           { icon: '🖥️', value: '1', label: 'Server', type: 'serverIP' },
+           { icon: '🌐', value: totalServices.toString(), label: 'Services', type: 'serverServices' },
+           { icon: '🔒', value: 'Hybrid', label: 'Encryption', type: 'encryption' },
+           { icon: '🛡️', value: totalVulnerabilities.toString(), label: 'Threats', type: 'threats' }
+       ];
+   } else if (currentScale === 'business') {
+       return [
+           { icon: '🏢', value: ipRanges.length.toString(), label: 'Sites', type: 'businessSites' },
+           { icon: '💻', value: totalDevices.toLocaleString(), label: 'Devices', type: 'devices' },
+           { icon: '🌐', value: totalServices.toString(), label: 'Services', type: 'services' },
+           { icon: '🔐', value: 'Active', label: 'Encryption', type: 'encryption' },
+           { icon: '⚠️', value: totalVulnerabilities.toString(), label: 'Alerts', type: 'alerts' },
+           { icon: '📊', value: '99.8%', label: 'Uptime', type: 'uptime' }
+       ];
+   } else { // enterprise
+       return [
+           { icon: '🏭', value: ipRanges.length.toString(), label: 'Data Centers', type: 'enterpriseRanges' },
+           { icon: '💻', value: totalDevices.toLocaleString(), label: 'Devices', type: 'devices' },
+           { icon: '🌐', value: totalServices.toString(), label: 'Services', type: 'services' },
+           { icon: '🔐', value: 'Hybrid', label: 'Encryption', type: 'encryption' },
+           { icon: '⚠️', value: totalVulnerabilities.toString(), label: 'Critical', type: 'critical' },
+           { icon: '📊', value: '99.9%', label: 'Availability', type: 'availability' },
+           { icon: '🔄', value: '24/7', label: 'Monitoring', type: 'monitoring' },
+           { icon: '🌍', value: '3', label: 'Regions', type: 'regions' }
+       ];
+   }
 }
 
 // Populate device grid
 function populateDeviceGrid() {
-    const grid = document.getElementById('deviceGrid');
-    if (!grid) return;
+   const grid = document.getElementById('deviceGrid');
+   if (!grid) return;
 
-    grid.innerHTML = '';
+   grid.innerHTML = '';
 
-    internalDevices.forEach((device, index) => {
-        const card = document.createElement('div');
-        card.className = 'device-card';
-        if (index < 2) card.classList.add('new-device'); // Mark first two as new
-        
-        card.innerHTML = `
-            <div class="device-header">
-                <div class="device-icon">${device.icon}</div>
-            </div>
-            <div class="device-name">${device.name}</div>
-            <div class="device-ip">${device.ip}</div>
-            <div class="device-services">Services: ${device.services}</div>
-            <div class="device-ai-status">AI Status: ${device.aiStatus}</div>
-            <div class="device-encryption">
-                🔐 ${device.encryption}
-            </div>
-        `;
-        
-        card.onclick = () => showDeviceDetails(device);
-        grid.appendChild(card);
-    });
+   internalDevices.forEach((device, index) => {
+       const card = document.createElement('div');
+       card.className = 'device-card';
+       if (index < 2) card.classList.add('new-device'); // Mark first two as new
+       
+       card.innerHTML = `
+           <div class="device-header">
+               <div class="device-icon">${device.icon}</div>
+           </div>
+           <div class="device-name">${device.name}</div>
+           <div class="device-ip">${device.ip}</div>
+           <div class="device-services">Services: ${device.services}</div>
+           <div class="device-ai-status">AI Status: ${device.aiStatus}</div>
+           <div class="device-encryption">
+               🔐 ${device.encryption}
+           </div>
+       `;
+       
+       card.onclick = () => showDeviceDetails(device);
+       grid.appendChild(card);
+   });
 }
 
 // Populate scanning panels with dual-layer data
 function populateScanningPanels() {
-    // External services data
-    const externalServices = [
-        {
-            name: 'HTTPS (443/tcp)',
-            details: 'nginx/1.18.0 • TLS 1.3',
-            encryption: '🔐 AES-256-GCM + CRYSTALS-Kyber',
-            status: 'Secure',
-            statusClass: 'status-secure'
-        },
-        {
-            name: 'SSH (22/tcp)',
-            details: 'OpenSSH_7.4 • Key Auth Only',
-            encryption: '🔐 Hybrid: Classical + PQ Keys',
-            status: 'Secure',
-            statusClass: 'status-secure'
-        },
-        {
-            name: 'RDP (3389/tcp)',
-            details: 'Windows Server 2019 • NLA + TLS 1.2',
-            encryption: '⚠️ Classical only - upgrade needed',
-            status: 'Monitor',
-            statusClass: 'status-update'
-        },
-        {
-            name: 'SMB (445/tcp)',
-            details: 'SMBv2 • Outdated',
-            encryption: '❌ Weak encryption',
-            status: 'Vulnerable',
-            statusClass: 'status-vulnerable'
-        }
-    ];
+   // External services data
+   const externalServices = window.externalServices || [
+       {
+           name: 'HTTPS (443/tcp)',
+           details: 'nginx/1.18.0 • TLS 1.3',
+           encryption: '🔐 AES-256-GCM + CRYSTALS-Kyber',
+           status: 'Secure',
+           statusClass: 'status-secure'
+       },
+       {
+           name: 'SSH (22/tcp)',
+           details: 'OpenSSH_7.4 • Key Auth Only',
+           encryption: '🔐 Hybrid: Classical + PQ Keys',
+           status: 'Secure',
+           statusClass: 'status-secure'
+       },
+       {
+           name: 'RDP (3389/tcp)',
+           details: 'Windows Server 2019 • NLA + TLS 1.2',
+           encryption: '⚠️ Classical only - upgrade needed',
+           status: 'Monitor',
+           statusClass: 'status-update'
+       },
+       {
+           name: 'SMB (445/tcp)',
+           details: 'SMBv2 • Outdated',
+           encryption: '❌ Weak encryption',
+           status: 'Vulnerable',
+           statusClass: 'status-vulnerable'
+       }
+   ];
 
-    const internalServices = [
-        {
-            name: 'Domain Controllers',
-            details: '2 servers • AD DS • Kerberos',
-            encryption: '🔐 Full hybrid encryption',
-            status: 'Secure',
-            statusClass: 'status-secure'
-        },
-        {
-            name: 'Database Servers',
-            details: '5 instances • TDE enabled',
-            encryption: '🔐 AES-256 + Kyber-1024',
-            status: 'Secure',
-            statusClass: 'status-secure'
-        },
-        {
-            name: 'IoT Devices',
-            details: '47 devices • Mixed security',
-            encryption: '⚠️ Partial encryption support',
-            status: 'Monitor',
-            statusClass: 'status-update'
-        },
-        {
-            name: 'Workstations',
-            details: '189 systems • BitLocker enabled',
-            encryption: '🔐 Hybrid disk encryption',
-            status: 'Update',
-            statusClass: 'status-update'
-        }
-    ];
+   const internalServices = window.internalServices || [
+       {
+           name: 'Domain Controllers',
+           details: '2 servers • AD DS • Kerberos',
+           encryption: '🔐 Full hybrid encryption',
+           status: 'Secure',
+           statusClass: 'status-secure'
+       },
+       {
+           name: 'Database Servers',
+           details: '5 instances • TDE enabled',
+           encryption: '🔐 AES-256 + Kyber-1024',
+           status: 'Secure',
+           statusClass: 'status-secure'
+       },
+       {
+           name: 'IoT Devices',
+           details: '47 devices • Mixed security',
+           encryption: '⚠️ Partial encryption support',
+           status: 'Monitor',
+           statusClass: 'status-update'
+       },
+       {
+           name: 'Workstations',
+           details: '189 systems • BitLocker enabled',
+           encryption: '🔐 Hybrid disk encryption',
+           status: 'Update',
+           statusClass: 'status-update'
+       }
+   ];
 
-    // Populate external services
-    const externalList = document.getElementById('externalServicesList');
-    if (externalList) {
-        externalList.innerHTML = '';
-        externalServices.forEach(service => {
-            const item = createServiceItem(service);
-            externalList.appendChild(item);
-        });
-    }
-    
-    // Populate internal services
-    const internalList = document.getElementById('internalServicesList');
-    if (internalList) {
-        internalList.innerHTML = '';
-        internalServices.forEach(service => {
-            const item = createServiceItem(service);
-            internalList.appendChild(item);
-        });
-    }
+   // Populate external services
+   const externalList = document.getElementById('externalServicesList');
+   if (externalList) {
+       externalList.innerHTML = '';
+       externalServices.forEach(service => {
+           const item = createServiceItem(service);
+           externalList.appendChild(item);
+       });
+   }
+   
+   // Populate internal services
+   const internalList = document.getElementById('internalServicesList');
+   if (internalList) {
+       internalList.innerHTML = '';
+       internalServices.forEach(service => {
+           const item = createServiceItem(service);
+           internalList.appendChild(item);
+       });
+   }
 }
 
 function createServiceItem(service) {
-    const item = document.createElement('div');
-    item.className = 'service-item';
-    item.onclick = () => showServiceDetails(service.name);
-    
-    item.innerHTML = `
-        <div class="service-info">
-            <div class="service-name">${service.name}</div>
-            <div class="service-details">${service.details}</div>
-            <div class="service-encryption">${service.encryption}</div>
-        </div>
-        <div class="service-status ${service.statusClass}">${service.status.toUpperCase()}</div>
-    `;
-    
-    return item;
-}
-
-// Enhanced network feed initialization
-function initializeNetworkFeed() {
-    const feed = document.getElementById('networkFeed');
-    const feedContent = document.getElementById('networkFeedContent');
-    
-    if (feed && feedContent && window.currentScale) {
-        // Show the feed
-        feed.style.display = 'flex';
-        feed.classList.add('active');
-        
-        // Initialize feed with ActivityFeedManager
-        if (typeof activityFeedManager !== 'undefined' && activityFeedManager) {
-            const feedId = `network-${window.currentScale}`;
-            activityFeedManager.initializeFeed(feedId, 'network');
-            activityFeedManager.setFeedContainer(feedId, 'networkFeedContent');
-            
-            // Add initial messages based on scale
-            if (window.currentScale === 'individual') {
-                activityFeedManager.addMessage(feedId, '🌐 NetworkMapper: External scan via Shodan API - 1 public IP detected', '', 'NetworkMapper');
-                activityFeedManager.addMessage(feedId, '🔍 NetworkMapper: Internal agent deployed - scanning 192.168.1.0/24', '', 'NetworkMapper');
-                activityFeedManager.addMessage(feedId, '✅ ThreatScanner: No critical vulnerabilities on external surface', '', 'NetworkMapper → ThreatScanner');
-                activityFeedManager.addMessage(feedId, '🔐 EncryptionDeployer: Hybrid encryption verified on primary server', 'encryption', 'NetworkMapper → EncryptionDeployer');
-            } else if (window.currentScale === 'business') {
-                activityFeedManager.addMessage(feedId, '🏢 NetworkMapper: Multi-site scan initiated - 3 locations detected', '', 'NetworkMapper');
-                activityFeedManager.addMessage(feedId, '🌐 External scan: 3 public IPs across Columbia, Atlanta, Charlotte', '', 'NetworkMapper');
-                activityFeedManager.addMessage(feedId, '🔍 Internal discovery: 127 devices mapped across all sites', '', 'NetworkMapper');
-                activityFeedManager.addMessage(feedId, '⚠️ ThreatScanner: 2 medium-risk vulnerabilities detected', 'warning', 'NetworkMapper → ThreatScanner');
-                activityFeedManager.addMessage(feedId, '🔐 EncryptionDeployer: Deploying hybrid encryption to 18 devices', 'encryption', 'NetworkMapper → EncryptionDeployer');
-            } else if (window.currentScale === 'enterprise') {
-                activityFeedManager.addMessage(feedId, '🏭 NetworkMapper: Enterprise scan across 3 data centers', '', 'NetworkMapper');
-                activityFeedManager.addMessage(feedId, '🌐 External reconnaissance: 12 public IPs, 156 services mapped', '', 'NetworkMapper');
-                activityFeedManager.addMessage(feedId, '🔍 Internal discovery: 1,926 devices across global infrastructure', '', 'NetworkMapper');
-                activityFeedManager.addMessage(feedId, '🛡️ ThreatScanner: Advanced persistent threat indicators analyzed', '', 'NetworkMapper → ThreatScanner');
-                activityFeedManager.addMessage(feedId, '🔐 Full hybrid encryption deployment coordinated', 'encryption', 'NetworkMapper → EncryptionDeployer');
-            }
-            
-            // Start auto-generation
-            activityFeedManager.startAutoGeneration(feedId, 5000);
-        }
-    }
+   const item = document.createElement('div');
+   item.className = 'service-item';
+   item.onclick = () => showServiceDetails(service.name);
+   
+   item.innerHTML = `
+       <div class="service-info">
+           <div class="service-name">${service.name}</div>
+           <div class="service-details">${service.details}</div>
+           <div class="service-encryption">${service.encryption}</div>
+       </div>
+       <div class="service-status ${service.statusClass}">${service.status.toUpperCase()}</div>
+   `;
+   
+   return item;
 }
 
 // Modal and interaction functions
 function showAddRangeModal() {
-    const modal = document.getElementById('addRangeModal');
-    if (modal) modal.style.display = 'flex';
+   const modal = document.getElementById('addRangeModal');
+   if (modal) modal.style.display = 'flex';
 }
 
 function closeAddRangeModal() {
-    const modal = document.getElementById('addRangeModal');
-    if (modal) modal.style.display = 'none';
+   const modal = document.getElementById('addRangeModal');
+   if (modal) modal.style.display = 'none';
 }
 
 function addIPRange() {
-    const name = document.getElementById('rangeName').value.trim();
-    const range = document.getElementById('ipRange').value.trim();
-    const location = document.getElementById('location').value.trim();
-    const organization = document.getElementById('organization').value.trim();
-    
-    if (!name || !range || !location || !organization) {
-        alert('Please fill in all fields');
-        return;
-    }
-    
-    // Basic CIDR validation
-    if (!SentinelUtils.validateCIDR(range)) {
-        alert('Please enter a valid CIDR notation (e.g., 192.168.1.0/24)');
-        return;
-    }
-    
-    // Check scale limits
-    const config = ScaleConfigs[currentScale];
-    if (ipRanges.length >= config.maxRanges) {
-        alert(`Maximum ${config.maxRanges} IP ranges allowed for ${currentScale} scale. Upgrade to enterprise for unlimited ranges.`);
-        return;
-    }
-    
-    const newRange = {
-        id: `range-${Date.now()}`,
-        name: name,
-        range: range,
-        location: location,
-        organization: organization,
-        status: 'Scanning',
-        devices: Math.floor(Math.random() * (config.deviceRange[1] - config.deviceRange[0])) + config.deviceRange[0],
-        services: Math.floor(Math.random() * (config.serviceRange[1] - config.serviceRange[0])) + config.serviceRange[0],
-        vulnerabilities: Math.floor(Math.random() * 2),
-        bandwidth: currentScale === 'individual' ? '100Mbps' : 
-                 currentScale === 'business' ? (Math.random() * 2 + 0.5).toFixed(1) + 'Gbps' :
-                 (Math.random() * 20 + 1).toFixed(1) + 'GB/s'
-    };
-    
-    ipRanges.push(newRange);
-    populateIPRangesGrid();
-    updateMetrics();
-    populateOverviewGrid(); // Update overview with new data
-    closeAddRangeModal();
-    
-    // Clear form
-    document.getElementById('rangeName').value = '';
-    document.getElementById('ipRange').value = '';
-    document.getElementById('location').value = '';
-    document.getElementById('organization').value = '';
-    
-    // Update add range button state for individual mode
-    if (currentScale === 'individual') {
-        const addRangeBtn = document.getElementById('addRangeBtn');
-        if (addRangeBtn && ipRanges.length >= ScaleConfigs[currentScale].maxRanges) {
-            addRangeBtn.disabled = true;
-            addRangeBtn.title = 'Maximum ranges reached for single IP deployment';
-        }
-    }
-    
-    if (SentinelState.chatOpen) {
-        setTimeout(() => {
-            sentinelChat.addMessage(`NetworkMapper: New ${currentScale} range ${name} (${range}) added to monitoring. Initiating dual-layer discovery scan. External scan via Shodan, internal scan via deployed agent across ${newRange.devices} estimated devices...`, false);
-        }, 1000);
-    }
+   const name = document.getElementById('rangeName').value.trim();
+   const range = document.getElementById('ipRange').value.trim();
+   const location = document.getElementById('location').value.trim();
+   const organization = document.getElementById('organization').value.trim();
+   
+   if (!name || !range || !location || !organization) {
+       alert('Please fill in all fields');
+       return;
+   }
+   
+   // Basic CIDR validation
+   if (!SentinelUtils.validateCIDR(range)) {
+       alert('Please enter a valid CIDR notation (e.g., 192.168.1.0/24)');
+       return;
+   }
+   
+   // Check scale limits
+   const config = ScaleConfigs[currentScale];
+   if (ipRanges.length >= config.maxRanges) {
+       alert(`Maximum ${config.maxRanges} IP ranges allowed for ${currentScale} scale. Upgrade to enterprise for unlimited ranges.`);
+       return;
+   }
+   
+   const newRange = {
+       id: `range-${Date.now()}`,
+       name: name,
+       range: range,
+       location: location,
+       organization: organization,
+       status: 'Scanning',
+       devices: Math.floor(Math.random() * (config.deviceRange[1] - config.deviceRange[0])) + config.deviceRange[0],
+       services: Math.floor(Math.random() * (config.serviceRange[1] - config.serviceRange[0])) + config.serviceRange[0],
+       vulnerabilities: Math.floor(Math.random() * 2),
+       bandwidth: currentScale === 'individual' ? '100Mbps' : 
+                currentScale === 'business' ? (Math.random() * 2 + 0.5).toFixed(1) + 'Gbps' :
+                (Math.random() * 20 + 1).toFixed(1) + 'GB/s'
+   };
+   
+   ipRanges.push(newRange);
+   populateIPRangesGrid();
+   updateMetrics();
+   populateOverviewGrid(); // Update overview with new data
+   closeAddRangeModal();
+   
+   // Clear form
+   document.getElementById('rangeName').value = '';
+   document.getElementById('ipRange').value = '';
+   document.getElementById('location').value = '';
+   document.getElementById('organization').value = '';
+   
+   // Update add range button state for individual mode
+   if (currentScale === 'individual') {
+       const addRangeBtn = document.getElementById('addRangeBtn');
+       if (addRangeBtn && ipRanges.length >= ScaleConfigs[currentScale].maxRanges) {
+           addRangeBtn.disabled = true;
+           addRangeBtn.title = 'Maximum ranges reached for single IP deployment';
+       }
+   }
+   
+   if (SentinelState.chatOpen) {
+       setTimeout(() => {
+           sentinelChat.addMessage(`NetworkMapper: New ${currentScale} range ${name} (${range}) added to monitoring. Initiating dual-layer discovery scan. External scan via Shodan, internal scan via deployed agent across ${newRange.devices} estimated devices...`, false);
+       }, 1000);
+   }
 }
 
 // Rescan Infrastructure Functions
 function showRescanModal() {
-    const modal = document.getElementById('rescanModal');
-    if (modal) modal.style.display = 'flex';
+   const modal = document.getElementById('rescanModal');
+   if (modal) modal.style.display = 'flex';
 }
 
 function closeRescanModal() {
-    const modal = document.getElementById('rescanModal');
-    if (modal) modal.style.display = 'none';
+   const modal = document.getElementById('rescanModal');
+   if (modal) modal.style.display = 'none';
 }
 
 function confirmRescan() {
-    closeRescanModal();
-    
-    // Show rescan progress in chat
-    if (!SentinelState.chatOpen) {
-        sentinelChat.toggle();
-    }
-    
-    sentinelChat.addMessage('🔄 Infrastructure rescan initiated...', false, 'system');
-    
-    // Simulate rescan process with realistic steps
-    setTimeout(() => {
-        sentinelChat.addMessage('NetworkMapper: Stopping current discovery processes...', false, 'system');
-    }, 500);
-    
-    setTimeout(() => {
-        sentinelChat.addMessage('NetworkMapper: Clearing discovery cache and resetting configuration...', false, 'system');
-    }, 1200);
-    
-    setTimeout(() => {
-        sentinelChat.addMessage('NetworkMapper: Re-initializing dual-layer detection engine...', false, 'system');
-    }, 2000);
-    
-    setTimeout(() => {
-        sentinelChat.addMessage('NetworkMapper: Discovery process reset complete. Please reconfigure your environment.', false, 'system');
-        
-        // Reset to initial state
-        resetToInitialState();
-    }, 3000);
+   closeRescanModal();
+   
+   // Show rescan progress in chat
+   if (!SentinelState.chatOpen) {
+       sentinelChat.toggle();
+   }
+   
+   sentinelChat.addMessage('🔄 Infrastructure rescan initiated...', false, 'system');
+   
+   // Simulate rescan process with realistic steps
+   setTimeout(() => {
+       sentinelChat.addMessage('NetworkMapper: Stopping current discovery processes...', false, 'system');
+   }, 500);
+   
+   setTimeout(() => {
+       sentinelChat.addMessage('NetworkMapper: Clearing discovery cache and resetting configuration...', false, 'system');
+   }, 1200);
+   
+   setTimeout(() => {
+       sentinelChat.addMessage('NetworkMapper: Re-initializing dual-layer detection engine...', false, 'system');
+   }, 2000);
+   
+   setTimeout(() => {
+       sentinelChat.addMessage('NetworkMapper: Discovery process reset complete. Please reconfigure your environment.', false, 'system');
+       
+       // Reset to initial state
+       resetToInitialState();
+   }, 3000);
 }
 
 function resetToInitialState() {
-    // Clear saved scale preference to force re-selection
-    localStorage.removeItem('sentinel_scale');
-    
-    // Reset global state
-    currentScale = null;
-    SentinelState.currentScale = null;
-    ipRanges = [];
-    internalDevices = [];
-    deviceCounter = 1;
-    
-    // Hide all main sections EXCEPT sub-agent status
-    const sections = ['ipRangeManager', 'dashboardInteractive', 'networkOverview', 'scanningSections', 'deviceDiscovery', 'checkoutSection'];
-    sections.forEach(sectionId => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            element.style.display = 'none';
-        }
-    });
-    
-    // IMPORTANT: Keep sub-agent status visible but reset its state
-    const subAgentStatus = document.getElementById('subAgentStatus');
-    if (subAgentStatus) {
-        subAgentStatus.style.display = 'flex';
-        
-        // Reset sub-agent description to initial state
-        const subAgentDesc = document.getElementById('subAgentDescription');
-        if (subAgentDesc) {
-            subAgentDesc.textContent = 'Network discovery reset • Awaiting configuration • Reports to Main Agent';
-        }
-        
-        // Reset metrics to dashes
-        const totalNetworks = document.getElementById('totalNetworks');
-        const discoveredDevices = document.getElementById('discoveredDevices');
-        const openServices = document.getElementById('openServices');
-        const newDevices = document.getElementById('newDevices');
-        const networksLabel = document.getElementById('networksLabel');
-        
-        if (totalNetworks) totalNetworks.textContent = '-';
-        if (discoveredDevices) discoveredDevices.textContent = '-';
-        if (openServices) openServices.textContent = '-';
-        if (newDevices) newDevices.textContent = '-';
-        if (networksLabel) networksLabel.textContent = 'Scanning';
-    }
-    
-    // Reset scale indicator
-    const scaleIndicator = document.getElementById('scaleIndicator');
-    const scaleIcon = document.getElementById('scaleIcon');
-    const scaleText = document.getElementById('scaleText');
-    
-    if (scaleIndicator && scaleIcon && scaleText) {
-        scaleIndicator.className = 'scale-indicator scale-individual';
-        scaleIcon.textContent = '🔍';
-        scaleText.textContent = 'DETECTING';
-    }
-    
-    // Remove scale class from body
-    document.body.className = '';
-    
-    // Show environment detection
-    const envDetection = document.getElementById('environmentDetection');
-    if (envDetection) {
-        envDetection.style.display = 'block';
-    }
-    
-    // Update detection title for rescan context
-    const detectionTitle = document.querySelector('.detection-title');
-    const detectionDescription = document.querySelector('.detection-description');
-    
-    if (detectionTitle) {
-        detectionTitle.textContent = '🔄 Network Discovery Reset';
-    }
-    
-    if (detectionDescription) {
-        detectionDescription.textContent = 'AI Sentinel-X has reset the network discovery configuration. Please run the dual-layer scan to re-analyze your infrastructure and configure the optimal security solution.';
-    }
-    
-    // Stop activity feed if running
-    if (typeof activityFeedManager !== 'undefined' && activityFeedManager && window.currentScale) {
-        const feedId = `network-${window.currentScale}`;
-        activityFeedManager.stopAutoGeneration(feedId);
-    }
-    
-    // Add final chat message
-    setTimeout(() => {
-        sentinelChat.addMessage('✅ Network discovery reset complete. Environment detection reinitialized. Please run the dual-layer scan to continue.', false, 'system');
-    }, 500);
+   // Clear saved scale preference to force re-selection
+   localStorage.removeItem('sentinel_scale');
+   
+   // Reset global state
+   currentScale = null;
+   window.currentScale = null;
+   if (window.SentinelState) {
+       SentinelState.currentScale = null;
+   }
+   ipRanges = [];
+   internalDevices = [];
+   deviceCounter = 1;
+   
+   // Hide all main sections
+   const sections = ['ipRangeManager', 'dashboardInteractive', 'networkOverview', 'scanningSections', 'deviceDiscovery', 'checkoutSection', 'networkActivityFeed'];
+   sections.forEach(sectionId => {
+       const element = document.getElementById(sectionId);
+       if (element) {
+           element.style.display = 'none';
+       }
+   });
+   
+   // IMPORTANT: Keep sub-agent status visible but reset its state
+   const subAgentStatus = document.getElementById('subAgentStatus');
+   if (subAgentStatus) {
+       subAgentStatus.style.display = 'flex';
+       
+       // Reset sub-agent description to initial state
+       const subAgentDesc = document.getElementById('subAgentDescription');
+       if (subAgentDesc) {
+           subAgentDesc.textContent = 'Network discovery reset • Awaiting configuration • Reports to Main Agent';
+       }
+       
+       // Reset metrics to dashes
+       const totalNetworks = document.getElementById('totalNetworks');
+       const discoveredDevices = document.getElementById('discoveredDevices');
+       const openServices = document.getElementById('openServices');
+       const newDevices = document.getElementById('newDevices');
+       const networksLabel = document.getElementById('networksLabel');
+       
+       if (totalNetworks) totalNetworks.textContent = '-';
+       if (discoveredDevices) discoveredDevices.textContent = '-';
+       if (openServices) openServices.textContent = '-';
+       if (newDevices) newDevices.textContent = '-';
+       if (networksLabel) networksLabel.textContent = 'Scanning';
+   }
+   
+   // Reset scale indicator
+   const scaleIndicator = document.getElementById('scaleIndicator');
+   const scaleIcon = document.getElementById('scaleIcon');
+   const scaleText = document.getElementById('scaleText');
+   
+   if (scaleIndicator && scaleIcon && scaleText) {
+       scaleIndicator.className = 'scale-indicator scale-individual';
+       scaleIcon.textContent = '🔍';
+       scaleText.textContent = 'DETECTING';
+   }
+   
+   // Remove scale class from body
+   document.body.className = '';
+   
+   // Show environment detection
+   const envDetection = document.getElementById('environmentDetection');
+   if (envDetection) {
+       envDetection.style.display = 'block';
+   }
+   
+   // Update detection title for rescan context
+   const detectionTitle = document.querySelector('.detection-title');
+   const detectionDescription = document.querySelector('.detection-description');
+   
+   if (detectionTitle) {
+       detectionTitle.textContent = '🔄 Network Discovery Reset';
+   }
+   
+   if (detectionDescription) {
+       detectionDescription.textContent = 'AI Sentinel-X has reset the network discovery configuration. Please run the dual-layer scan to re-analyze your infrastructure and configure the optimal security solution.';
+   }
+   
+   // Add final chat message
+   setTimeout(() => {
+       sentinelChat.addMessage('✅ Network discovery reset complete. Environment detection reinitialized. Please run the dual-layer scan to continue.', false, 'system');
+   }, 500);
 }
 
 // Detail functions
 function showRangeDetails(range) {
-    if (!SentinelState.chatOpen) sentinelChat.toggle();
-    setTimeout(() => {
-        sentinelChat.addMessage(`NetworkMapper: Analyzing ${range.name} (${range.range}) in ${range.location}. ${range.devices} devices, ${range.services} services, ${range.vulnerabilities} vulnerabilities. Bandwidth: ${range.bandwidth}. Coordinating with ThreatScanner for vulnerability assessment and EncryptionDeployer for security posture.`, false);
-    }, 300);
+   if (!SentinelState.chatOpen) sentinelChat.toggle();
+   setTimeout(() => {
+       sentinelChat.addMessage(`NetworkMapper: Analyzing ${range.name} (${range.range}) in ${range.location}. ${range.devices} devices, ${range.services} services, ${range.vulnerabilities} vulnerabilities. Bandwidth: ${range.bandwidth}. Coordinating with ThreatScanner for vulnerability assessment and EncryptionDeployer for security posture.`, false);
+   }, 300);
 }
 
 function showDeviceDetails(device) {
-    if (!SentinelState.chatOpen) sentinelChat.toggle();
-    setTimeout(() => {
-        sentinelChat.addMessage(`NetworkMapper: Device ${device.name} (${device.ip}) - ${device.type}. Services: ${device.services}. Status: ${device.status}. Encryption: ${device.encryption}. AI sub-agents monitoring: NetworkMapper → ThreatScanner → EncryptionManager.`, false);
-    }, 300);
+   if (!SentinelState.chatOpen) sentinelChat.toggle();
+   setTimeout(() => {
+       sentinelChat.addMessage(`NetworkMapper: Device ${device.name} (${device.ip}) - ${device.type}. Services: ${device.services}. Status: ${device.status}. Encryption: ${device.encryption}. AI sub-agents monitoring: NetworkMapper → ThreatScanner → EncryptionManager.`, false);
+   }, 300);
 }
 
 function showOverviewDetails(type) {
-    if (!SentinelState.chatOpen) sentinelChat.toggle();
-    setTimeout(() => {
-        const messages = {
-            serverIP: 'NetworkMapper: Server IP analysis - Single public address detected via Shodan with hybrid-ready protection.',
-            serverServices: 'NetworkMapper: Server services analysis - All services secured and optimized. Coordinating with EncryptionManager.',
-            businessSites: 'NetworkMapper: Multi-site business deployment with site-to-site VPN. VPNMonitor sub-agent active.',
-            enterpriseRanges: 'NetworkMapper: Enterprise multi-range deployment across data centers. Full correlation with ThreatScanner.',
-            devices: 'NetworkMapper: Device inventory analysis - All endpoints monitored by agent. EncryptionDeployer verified.',
-            services: 'NetworkMapper: Service portfolio analysis - All services hybrid-encrypted. CertificateManager monitoring.',
-            encryption: 'NetworkMapper: Encryption status - Hybrid-resistant protocols active. Coordinating with EncryptionManager.',
-            threats: 'NetworkMapper: Threat landscape analysis - Current risk level assessed by ThreatScanner.',
-            alerts: 'NetworkMapper: Alert summary - All critical alerts resolved by DefenseOrchestrator.',
-            uptime: 'NetworkMapper: Availability metrics - System performance optimal. AnalyticsEngine tracking.',
-            critical: 'NetworkMapper: Critical issue analysis - No unresolved critical issues. DefenseOrchestrator ready.',
-            availability: 'NetworkMapper: High availability status - All redundancy systems operational. LogAgent recording.',
-            monitoring: 'NetworkMapper: 24/7 monitoring active - Global surveillance operational. All sub-agents coordinated.',
-            regions: 'NetworkMapper: Multi-region deployment - Geographic redundancy active. ComplianceMonitor verified.'
-        };
-        sentinelChat.addMessage(messages[type] || 'NetworkMapper: Network component analysis complete. All sub-agents coordinated.', false);
-    }, 300);
+   if (!SentinelState.chatOpen) sentinelChat.toggle();
+   setTimeout(() => {
+       const messages = {
+           serverIP: 'NetworkMapper: Server IP analysis - Single public address detected via Shodan with hybrid-ready protection.',
+           serverServices: 'NetworkMapper: Server services analysis - All services secured and optimized. Coordinating with EncryptionManager.',
+           businessSites: 'NetworkMapper: Multi-site business deployment with site-to-site VPN. VPNMonitor sub-agent active.',
+           enterpriseRanges: 'NetworkMapper: Enterprise multi-range deployment across data centers. Full correlation with ThreatScanner.',
+           devices: 'NetworkMapper: Device inventory analysis - All endpoints monitored by agent. EncryptionDeployer verified.',
+           services: 'NetworkMapper: Service portfolio analysis - All services hybrid-encrypted. CertificateManager monitoring.',
+           encryption: 'NetworkMapper: Encryption status - Hybrid-resistant protocols active. Coordinating with EncryptionManager.',
+           threats: 'NetworkMapper: Threat landscape analysis - Current risk level assessed by ThreatScanner.',
+           alerts: 'NetworkMapper: Alert summary - All critical alerts resolved by DefenseOrchestrator.',
+           uptime: 'NetworkMapper: Availability metrics - System performance optimal. AnalyticsEngine tracking.',
+           critical: 'NetworkMapper: Critical issue analysis - No unresolved critical issues. DefenseOrchestrator ready.',
+           availability: 'NetworkMapper: High availability status - All redundancy systems operational. LogAgent recording.',
+           monitoring: 'NetworkMapper: 24/7 monitoring active - Global surveillance operational. All sub-agents coordinated.',
+           regions: 'NetworkMapper: Multi-region deployment - Geographic redundancy active. ComplianceMonitor verified.'
+       };
+       sentinelChat.addMessage(messages[type] || 'NetworkMapper: Network component analysis complete. All sub-agents coordinated.', false);
+   }, 300);
 }
 
 function showServiceDetails(service) {
-    if (!SentinelState.chatOpen) sentinelChat.toggle();
-    setTimeout(() => {
-        sentinelChat.addMessage(`NetworkMapper: Service ${service} analysis - Configuration optimized for ${currentScale} deployment. All protocols hybrid-encrypted. ThreatScanner monitoring for vulnerabilities. EncryptionDeployer ready for upgrades.`, false);
-    }, 300);
+   if (!SentinelState.chatOpen) sentinelChat.toggle();
+   setTimeout(() => {
+       sentinelChat.addMessage(`NetworkMapper: Service ${service} analysis - Configuration optimized for ${currentScale} deployment. All protocols hybrid-encrypted. ThreatScanner monitoring for vulnerabilities. EncryptionDeployer ready for upgrades.`, false);
+   }, 300);
 }
 
 // V4 Encryption Gap Detection
 function simulateEncryptionGaps() {
-    const gapDeviceCount = Math.floor(Math.random() * 5) + 1;
-    showEncryptionGapAlert(gapDeviceCount);
+   const gapDeviceCount = Math.floor(Math.random() * 5) + 1;
+   showEncryptionGapAlert(gapDeviceCount);
 }
 
 function checkEncryptionGaps() {
-    // Periodically check for new encryption gaps
-    if (window.currentScale && Math.random() > 0.95) {
-        simulateEncryptionGaps();
-    }
+   // Periodically check for new encryption gaps
+   if (window.currentScale && Math.random() > 0.95) {
+       simulateEncryptionGaps();
+   }
 }
 
 function showEncryptionGapAlert(deviceCount) {
-    const alert = document.getElementById('encryptionGapAlert');
-    const description = document.getElementById('gapDescription');
-    
-    if (alert && description) {
-        description.textContent = `${deviceCount} devices are not encrypted and require immediate attention.`;
-        alert.classList.add('active');
-        
-        // Add to chat if open
-        if (window.sentinelChat && SentinelState.chatOpen) {
-            sentinelChat.addMessage(`⚠️ NetworkMapper: Encryption gap detected! ${deviceCount} devices lack proper encryption. Coordinating with EncryptionDeployer for immediate remediation.`, false, 'system');
-        }
-    }
+   const alert = document.getElementById('encryptionGapAlert');
+   const description = document.getElementById('gapDescription');
+   
+   if (alert && description) {
+       description.textContent = `${deviceCount} devices are not encrypted and require immediate attention.`;
+       alert.classList.add('active');
+       
+       // Add to chat if open
+       if (window.sentinelChat && SentinelState.chatOpen) {
+           sentinelChat.addMessage(`⚠️ NetworkMapper: Encryption gap detected! ${deviceCount} devices lack proper encryption. Coordinating with EncryptionDeployer for immediate remediation.`, false, 'system');
+       }
+   }
 }
 
 function hideEncryptionGapAlert() {
-    const alert = document.getElementById('encryptionGapAlert');
-    if (alert) {
-        alert.classList.remove('active');
-    }
-}
-
-function remediateEncryptionGaps() {
-    if (!window.sentinelChat) {
-        console.error('Chat system not available');
-        return;
-    }
-
-    // Open chat if not already open
-    if (!SentinelState.chatOpen) {
-        sentinelChat.toggle();
-    }
-
-    setTimeout(() => {
-        sentinelChat.addMessage('remediate encryption gaps', true);
-        
-        setTimeout(() => {
-            sentinelChat.addMessage('NetworkMapper: Initiating encryption gap remediation. Coordinating with EncryptionDeployer and CertificateManager...', false, 'system');
-        }, 500);
-        
-        setTimeout(() => {
-            sentinelChat.addMessage(`EncryptionDeployer: Analyzing unencrypted devices. Deploying hybrid-resistant encryption modules. Working with CertificateManager for key distribution.`, false);
-        }, 1200);
-        
-        setTimeout(() => {
-            sentinelChat.addMessage('EncryptionDeployer: Deployment in progress. Using TLS 1.3 + Kyber-1024 for network traffic, AES-256-GCM + Dilithium-3 for data at rest.', false);
-        }, 2500);
-        
-        // Simulate completion
-        setTimeout(() => {
-            sentinelChat.addMessage(`✅ EncryptionDeployer: Remediation complete! All devices now protected with hybrid-resistant encryption. NetworkMapper verified. No gaps detected.`, false);
-            
-            // Hide the alert
-            hideEncryptionGapAlert();
-        }, 4000);
-        
-    }, 300);
+   const alert = document.getElementById('encryptionGapAlert');
+   if (alert) {
+       alert.classList.remove('active');
+   }
 }
 
 // Chat handlers
 function handleChatKeyPress(event) {
-    if (event.key === 'Enter') {
-        sendChatMessage();
-    }
+   if (event.key === 'Enter') {
+       sendChatMessage();
+   }
 }
 
 function sendChatMessage() {
-    const input = document.getElementById('aiChatInput');
-    if (input && window.sentinelChat) {
-        const message = input.value.trim();
-        if (message) {
-            sentinelChat.sendMessage(message);
-            input.value = '';
-        }
-    }
+   const input = document.getElementById('aiChatInput');
+   if (input && window.sentinelChat) {
+       const message = input.value.trim();
+       if (message) {
+           sentinelChat.sendMessage(message);
+           input.value = '';
+       }
+   }
 }
 
 function handleLogout() {
-    if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously.')) {
-        localStorage.removeItem('sentinel_auth');
-        localStorage.removeItem('sentinel_scale');
-        window.location.href = 'index.html';
-    }
+   if (confirm('Are you sure you want to logout? The AI agent will continue protecting your network autonomously.')) {
+       localStorage.removeItem('sentinel_auth');
+       localStorage.removeItem('sentinel_scale');
+       window.location.href = 'index.html';
+   }
 }
 
 function showAgentShutdownModal() {
-    if (window.SentinelEventHandlers) {
-        SentinelEventHandlers.showAgentShutdownModal();
-    }
+   if (window.SentinelEventHandlers) {
+       SentinelEventHandlers.showAgentShutdownModal();
+   }
 }
 
 function toggleChat() {
-    if (window.sentinelChat) {
-        sentinelChat.toggle();
-    }
+   if (window.sentinelChat) {
+       sentinelChat.toggle();
+   }
 }
 
 // Global function exports
@@ -1519,67 +1494,74 @@ window.toggleChat = toggleChat;
 window.remediateEncryptionGaps = remediateEncryptionGaps;
 window.populateScanningPanels = populateScanningPanels;
 window.createServiceItem = createServiceItem;
-window.initializeNetworkFeed = initializeNetworkFeed;
 window.showCheckoutSection = showCheckoutSection;
+window.hideEncryptionGapAlert = hideEncryptionGapAlert;
+window.checkEncryptionGaps = checkEncryptionGaps;
+window.simulateEncryptionGaps = simulateEncryptionGaps;
+window.resetToInitialState = resetToInitialState;
+window.updateMetrics = updateMetrics;
 
 // Modal close handler
 function closeModalOnOverlay(event) {
-    if (event.target.classList.contains('modal-overlay')) {
-        const modalId = event.target.id;
-        if (modalId === 'addRangeModal') {
-            closeAddRangeModal();
-        } else if (modalId === 'rescanModal') {
-            closeRescanModal();
-        } else if (modalId === 'agentShutdownModal') {
-            if (window.SentinelEventHandlers) {
-                SentinelEventHandlers.closeModal(modalId);
-            }
-        }
-    }
+   if (event.target.classList.contains('modal-overlay')) {
+       const modalId = event.target.id;
+       if (modalId === 'addRangeModal') {
+           closeAddRangeModal();
+       } else if (modalId === 'rescanModal') {
+           closeRescanModal();
+       } else if (modalId === 'agentShutdownModal') {
+           if (window.SentinelEventHandlers) {
+               SentinelEventHandlers.closeModal(modalId);
+           }
+       }
+   }
 }
 
 // Agent shutdown functions
 function confirmAgentShutdown() {
-    if (window.SentinelEventHandlers) {
-        SentinelEventHandlers.confirmAgentShutdown();
-    }
+   if (window.SentinelEventHandlers) {
+       SentinelEventHandlers.confirmAgentShutdown();
+   }
 }
 
 function closeModal() {
-    if (window.SentinelEventHandlers) {
-        SentinelEventHandlers.closeModal();
-    }
+   if (window.SentinelEventHandlers) {
+       SentinelEventHandlers.closeModal();
+   }
 }
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Network core V4 module loaded');
-    initializeEnvironmentDetection();
-    
-    // Auto-update metrics periodically
-    setInterval(() => {
-        if (currentScale) {
-            updateMetrics();
-        }
-    }, 5000);
+   console.log('Network core V4 module loaded');
+   initializeEnvironmentDetection();
+   
+   // Auto-update metrics periodically
+   setInterval(() => {
+       if (currentScale) {
+           updateMetrics();
+       }
+   }, 5000);
 });
 
 // Export for module systems
 if (typeof module !== 'undefined' && module.exports) {
-    module.exports = {
-        selectScale,
-        initializeEnvironmentDetection,
-        resetToInitialState,
-        updateMetrics,
-        showAddRangeModal,
-        addIPRange,
-        confirmRescan,
-        populateAllContent,
-        showMainSections,
-        startAutoScan,
-        proceedToCheckout,
-        processCheckout,
-        populateScanningPanels,
-        initializeNetworkFeed
-    };
+   module.exports = {
+       selectScale,
+       initializeEnvironmentDetection,
+       resetToInitialState,
+       updateMetrics,
+       showAddRangeModal,
+       addIPRange,
+       confirmRescan,
+       populateAllContent,
+       showMainSections,
+       startAutoScan,
+       proceedToCheckout,
+       processCheckout,
+       populateScanningPanels,
+       showCheckoutSection,
+       hideEncryptionGapAlert,
+       checkEncryptionGaps,
+       simulateEncryptionGaps
+   };
 }
